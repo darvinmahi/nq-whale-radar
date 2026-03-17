@@ -1,0 +1,66 @@
+:root {
+  --neon-cyan: #00f2ff;
+  --deep-purple: #1a1a2e;
+  --terminal-green: #00ff41;
+  --alert-orange: #ff9f1c;
+  --glass-bg: rgba(10, 10, 15, 0.85);
+  --border-glow: rgba(0, 242, 255, 0.2);
+}
+
+body {
+  background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+  color: #e2e8f0;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.02em;
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+}
+
+.neon-text {
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+}
+
+.data-grid-line {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  height: 1px;
+}
+
+.profile-bar-container {
+  height: 24px;
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid rgba(255,255,255,0.1);
+  position: relative;
+}
+
+.profile-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1e293b, var(--neon-cyan));
+  opacity: 0.8;
+}
+
+.poc-highlight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #fff;
+  filter: drop-shadow(0 0 5px #fff);
+  z-index: 20;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #020617; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }

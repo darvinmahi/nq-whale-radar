@@ -1,0 +1,51 @@
+[build]
+  publish = "."
+
+# ──────────────────────────────────────────────
+#  NO CACHEAR los archivos de datos dinámicos
+# ──────────────────────────────────────────────
+[[headers]]
+  for = "/agent_live_data.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma        = "no-cache"
+    Expires       = "0"
+
+[[headers]]
+  for = "/agent_live_data_v2.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma        = "no-cache"
+    Expires       = "0"
+
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# ──────────────────────────────────────────────
+#  HTML: siempre fresco
+# ──────────────────────────────────────────────
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+    X-Frame-Options = "SAMEORIGIN"
+
+# ──────────────────────────────────────────────
+#  Routing: evitar 404 en navegación directa
+# ──────────────────────────────────────────────
+[[redirects]]
+  from   = "/"
+  to     = "/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/orderflow"
+  to     = "/analisis_orderflow.html"
+  status = 200
+
+[[redirects]]
+  from   = "/promax"
+  to     = "/analisis_promax.html.html"
+  status = 200

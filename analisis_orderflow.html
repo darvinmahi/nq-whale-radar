@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPHA ORDER FLOW | QUANTUM TERMINAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="orderflow_design.css">
+    <style>
+        body { font-family: 'JetBrains Mono', monospace; }
+        .tab-active { color: var(--neon-cyan); border-bottom: 2px solid var(--neon-cyan); }
+    </style>
+</head>
+<body class="bg-[#020617] text-[#e2e8f0] min-h-screen">
+    
+    <!-- Top HUD Navigation -->
+    <nav class="border-b border-white/5 bg-black/40 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-[1400px] mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-neon-cyan/10 rounded-lg flex items-center justify-center border border-neon-cyan/30">
+                    <span class="material-symbols-outlined text-neon-cyan neon-text">monitoring</span>
+                </div>
+                <div>
+                    <h1 class="text-lg font-extrabold tracking-tighter text-white">ALPHA <span class="text-neon-cyan">ORDER FLOW</span></h1>
+                    <div class="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-cyan-500/60">
+                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                        Neural Engine v4.0 Active
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center gap-8">
+                <div class="hidden md:flex gap-6 text-[11px] font-bold uppercase tracking-widest text-slate-500">
+                    <a href="index.html" class="hover:text-neon-cyan transition-colors">Dashboard</a>
+                    <a href="#" class="tab-active py-1">Order Flow</a>
+                    <a href="#" class="hover:text-neon-cyan transition-colors">Volatilidad</a>
+                </div>
+                <div class="px-4 py-2 bg-white/5 rounded-full border border-white/10 flex items-center gap-3">
+                    <span class="text-[10px] mono text-slate-400">NQ1!</span>
+                    <span class="text-xs font-bold text-white" id="nav-price">24,394.25</span>
+                    <span class="text-[10px] text-emerald-400 font-bold">+1.2%</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-[1400px] mx-auto p-6 lg:p-10">
+        
+        <!-- Header Metrics -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="glass-panel p-4 rounded-xl">
+                <div class="text-[9px] text-slate-500 uppercase mb-1">POC Semanal</div>
+                <div class="text-lg font-bold text-white mono" id="of-weekly-poc">24,120.50</div>
+            </div>
+            <div class="glass-panel p-4 rounded-xl border-l-2 border-l-emerald-500">
+                <div class="text-[9px] text-slate-500 uppercase mb-1">Delta Diario</div>
+                <div class="text-lg font-bold text-emerald-400 mono" id="of-delta">+2,482</div>
+            </div>
+            <div class="glass-panel p-4 rounded-xl">
+                <div class="text-[9px] text-slate-500 uppercase mb-1">Sesión Asia POC</div>
+                <div class="text-lg font-bold text-white mono" id="of-asia-poc">--</div>
+            </div>
+            <div class="glass-panel p-4 rounded-xl">
+                <div class="text-[9px] text-slate-500 uppercase mb-1">Sesión London POC</div>
+                <div class="text-lg font-bold text-white mono" id="of-london-poc">--</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Column: Volume Profile Visualizer -->
+            <div class="lg:col-span-8 space-y-8">
+                <div class="glass-panel p-8 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <span class="material-symbols-outlined text-8xl text-neon-cyan">layers</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-10">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Value Area Distribution</h3>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest">Visualización de Aceptación Institucional</p>
+                        </div>
+                        <div class="px-3 py-1 bg-neon-cyan/10 border border-neon-cyan/30 rounded text-neon-cyan text-[10px] font-bold">LIVE FOOTPRINT</div>
+                    </div>
+
+                    <div class="space-y-12">
+                        <!-- VAH -->
+                        <div class="group">
+                            <div class="flex justify-between text-xs mb-3 items-end">
+                                <span class="text-slate-400 flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-slate-600"></span> 
+                                    Value Area High (VAH)
+                                </span>
+                                <span class="text-lg font-bold text-white" id="of-vah">24,472.00</span>
+                            </div>
+                            <div class="profile-bar-container rounded-sm overflow-hidden">
+                                <div class="profile-bar-fill w-[82%]"></div>
+                            </div>
+                        </div>
+
+                        <!-- POC -->
+                        <div class="relative py-2 group">
+                            <div class="flex justify-between text-xs mb-3 items-end">
+                                <span class="text-neon-cyan flex items-center gap-2 font-bold neon-text">
+                                    <span class="w-3 h-3 rounded-full bg-neon-cyan animate-pulse"></span> 
+                                    Point of Control (POC)
+                                </span>
+                                <span class="text-2xl font-black text-white" id="of-poc">24,394.50</span>
+                            </div>
+                            <div class="profile-bar-container h-12 rounded-sm overflow-hidden bg-white/5">
+                                <div class="profile-bar-fill w-full"></div>
+                                <div class="poc-highlight left-[65%]"></div>
+                            </div>
+                        </div>
+
+                        <!-- VAL -->
+                        <div class="group">
+                            <div class="flex justify-between text-xs mb-3 items-end">
+                                <span class="text-slate-400 flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-slate-600"></span> 
+                                    Value Area Low (VAL)
+                                </span>
+                                <span class="text-lg font-bold text-white" id="of-val">24,312.00</span>
+                            </div>
+                            <div class="profile-bar-container rounded-sm overflow-hidden">
+                                <div class="profile-bar-fill w-[45%]"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acceptance Status Badge -->
+                    <div class="mt-12 p-6 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center border border-white/10">
+                                <span class="material-symbols-outlined text-slate-400">psychology_alt</span>
+                            </div>
+                            <div>
+                                <div class="text-[9px] text-slate-500 uppercase font-bold mb-1 tracking-tighter">Current Thesis</div>
+                                <div class="text-sm font-bold text-white italic" id="of-acceptance">"Consolidación rotacional sobre POC Londres detectada."</div>
+                            </div>
+                        </div>
+                        <button class="bg-neon-cyan/20 hover:bg-neon-cyan/30 text-neon-cyan px-4 py-2 rounded-lg text-[10px] font-bold border border-neon-cyan/40 transition-all">VER PLAN</button>
+                    </div>
+                </div>
+
+                <!-- Secondary Intel Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl border-b border-b-emerald-500/30">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-emerald-400">bubble_chart</span>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Absorción IA</h4>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed italic" id="of-ia-note">
+                            "Detectada absorción pasiva en el extremo inferior del rango..."
+                        </p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl border-b border-b-rose-500/30">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-rose-500">warning</span>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Imbalances Críticos</h4>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-rose-400 font-bold" id="of-imbalance">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW: Repetition Study (User Request) -->
+                <div class="glass-panel p-8 rounded-2xl border-t-2 border-t-indigo-500">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Estudio de Repetición (NQ)</h3>
+                            <p class="text-[9px] text-slate-500 uppercase tracking-widest">Patrones de Apertura NY vs Asia/Lon POC</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[9px] text-indigo-400 font-bold uppercase">Sesgo de Imán</div>
+                            <div class="text-2xl font-black text-white mono" id="study-prob">--%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5 text-center">
+                            <div class="text-[9px] text-slate-500 uppercase mb-1">Imán (Test)</div>
+                            <div class="text-sm font-bold text-emerald-400" id="study-magnet">--%</div>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5 text-center">
+                            <div class="text-[9px] text-slate-500 uppercase mb-1">Fuga (Trend)</div>
+                            <div class="text-sm font-bold text-sky-400" id="study-runaway">--%</div>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5 text-center">
+                            <div class="text-[9px] text-slate-500 uppercase mb-1">Fallo (Reverse)</div>
+                            <div class="text-sm font-bold text-rose-400" id="study-fail">--%</div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-indigo-500/5 rounded-xl border border-indigo-500/20">
+                        <div class="flex items-center gap-2 mb-2 text-indigo-400">
+                            <span class="material-symbols-outlined text-sm">auto_awesome</span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest">Estrategia sugerida</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed italic" id="study-strategy">
+                            "Aguardando datos del backtest de repetición..."
+                        </p>
+                    </div>
+                </div>
+                        <!-- NEW: Master Repetition Database (6 Movements) -->
+                <div class="glass-panel p-8 rounded-2xl border-t-2 border-t-vibrant-blue bg-gradient-to-br from-vibrant-blue/5 to-transparent">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Base de Datos de Movimientos (3 Meses)</h3>
+                            <p class="text-[9px] text-slate-500 uppercase tracking-widest">Estadística de Fuga vs Sweep en Apertura NY</p>
+                        </div>
+                        <span class="px-4 py-1 bg-vibrant-blue/20 border border-vibrant-blue/30 rounded text-vibrant-blue text-[10px] font-bold">ALPHA ENGINE</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6" id="master-patterns-grid">
+                        <div class="space-y-2">
+                            <div class="text-[9px] text-slate-500 uppercase">Sweep H (Falso)</div>
+                            <div class="text-xl font-bold text-white mono" id="m-sweep-h">--%</div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-[9px] text-slate-500 uppercase">Sweep L (Falso)</div>
+                            <div class="text-xl font-bold text-white mono" id="m-sweep-l">--%</div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-[9px] text-slate-500 uppercase">Expansion H (Fuga)</div>
+                            <div class="text-xl font-bold text-emerald-400 mono" id="m-exp-h">--%</div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-[9px] text-slate-500 uppercase">Expansion L (Fuga)</div>
+                            <div class="text-xl font-bold text-rose-400 mono" id="m-exp-l">--%</div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-[9px] text-slate-500 uppercase">Rotation POC</div>
+                            <div class="text-xl font-bold text-sky-400 mono" id="m-rotate">--%</div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-[9px] text-slate-500 uppercase">News Drive</div>
+                            <div class="text-xl font-bold text-orange-400 mono" id="m-news">--%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Mentorship & Backtest Lab -->
+            <div class="lg:col-span-4 space-y-8">
+                
+                <!-- Mentorship Section -->
+                <div class="glass-panel p-8 rounded-2xl border border-neon-cyan/20">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="relative">
+                            <img src="https://img.freepik.com/premium-photo/futuristic-robot-cyborg-reading-data_1020697-39396.jpg" className="w-14 h-14 rounded-full object-cover border-2 border-neon-cyan" alt="AI Mentor">
+                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-slate-900 animate-pulse"></div>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white">ALPHA MENTOR</h4>
+                            <div class="text-[9px] text-neon-cyan uppercase">Neural Study Active</div>
+                        </div>
+                    </div>
+
+                    <div id="mentorship-content" class="space-y-4">
+                        <div class="bg-black/40 p-4 rounded-xl border border-white/5">
+                            <div class="text-[10px] text-neon-cyan font-bold uppercase mb-2 tracking-widest" id="lesson-id">MOD 01</div>
+                            <h5 class="text-xs font-bold text-white mb-2" id="lesson-title">Absorción pasiva</h5>
+                            <p class="text-[11px] text-slate-400 leading-relaxed mb-4" id="ai-lesson-content">
+                                "Observa cómo el volumen crece pero el precio no se mueve. Alguien está 'comiendo' todas las órdenes a mercado."
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="changeLesson('absorcion')" class="bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-md text-[9px] font-bold transition-all">ABSORCIÓN</button>
+                                <button onclick="changeLesson('delta')" class="bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-md text-[9px] font-bold transition-all">DELTA</button>
+                                <button onclick="changeLesson('area')" class="bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-md text-[9px] font-bold transition-all">ZONAS</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backtesting Stats -->
+                <div class="glass-panel p-8 rounded-2xl border border-orange-500/20">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-orange-500 text-sm">history_edu</span>
+                            <h4 class="text-xs font-bold text-white tracking-widest uppercase">Resultados Lab (3Y)</h4>
+                        </div>
+                        <div class="text-xl font-black text-orange-500 mono" id="bt-winrate">50.8%</div>
+                    </div>
+                    
+                    <div class="space-y-4" id="bt-yearly-grid">
+                        <!-- Dynamic items -->
+                        <div class="flex justify-between p-2 border-b border-white/5">
+                            <span class="text-[10px] text-slate-500">2021 Performance</span>
+                            <span class="text-xs font-bold text-white">--%</span>
+                        </div>
+                        <div class="flex justify-between p-2 border-b border-white/5">
+                            <span class="text-[10px] text-slate-500">2022 Performance</span>
+                            <span class="text-xs font-bold text-white">--%</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-orange-500/5 rounded-xl border border-orange-500/10">
+                        <p class="text-[10px] text-slate-400 italic leading-snug" id="bt-recommendation">
+                            Analizando consistencia histórica para validación de perfiles...
+                        </p>
+                    </div>
+                </div>
+
+                <!-- NEW: Level Balance of Power (Updated with Combined POC) -->
+                <div class="glass-panel p-8 rounded-2xl border-l-4 border-emerald-500">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-emerald-400">bolt</span>
+                        <h4 class="text-xs font-bold text-white tracking-widest uppercase">Jerarquía de Poder</h4>
+                    </div>
+                    
+                    <div id="strength-ranking" class="space-y-4">
+                        <!-- Dynamic items will be injected here -->
+                    </div>
+
+                    <div class="mt-6 p-4 bg-emerald-500/5 rounded-xl border border-emerald-500/10">
+                        <div class="text-[9px] text-emerald-500 font-bold uppercase mb-1">Punto de Máxima Reacción</div>
+                        <p class="text-[11px] text-slate-300 font-bold" id="strongest-point-label">Combined Asia+Lon POC</p>
+                    </div>
+                </div>
+
+                <!-- Quick Protocols -->
+                <div class="glass-panel p-6 rounded-2xl bg-gradient-to-br from-indigo-500/5 to-transparent">
+                    <h4 class="text-[11px] font-bold text-white uppercase mb-4 opacity-50">Reglas de Oro</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 bg-white/5 rounded flex items-center justify-center text-[10px] text-emerald-400 font-bold">1</div>
+                            <p class="text-[10px] text-slate-400">Aclaro: El punto con mayor reacción histórica es el POC de ASIA.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Terminal -->
+        <footer class="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-[9px] text-slate-600 font-mono flex items-center gap-4">
+                <span>SYSTEM STATUS: NORMAL</span>
+                <span>Uptime: 142h 12m</span>
+                <span class="text-slate-400">Handshake established with CME Globex</span>
+            </div>
+            <div class="text-[9px] text-slate-700 mono">
+                © 2026 QUANTUM TRADING SYSTEMS // NO FINANCIAL ADVICE
+            </div>
+        </footer>
+    </main>
+
+    <script src="agent_live_data.js"></script>
+    <script>
+        function updateOrderFlowUI() {
+            if (!window.NQ_LIVE || !window.NQ_LIVE.ORDERFLOW) return;
+            const O = window.NQ_LIVE.ORDERFLOW;
+            const B = window.NQ_LIVE.BACKTEST;
+            const S = window.NQ_LIVE.STUDY;
+            
+            // Perfil Principal
+            if(document.getElementById("of-poc")) document.getElementById("of-poc").innerText = O.volume_profile.POC.toLocaleString();
+            if(document.getElementById("of-vah")) document.getElementById("of-vah").innerText = O.volume_profile.VAH.toLocaleString();
+            if(document.getElementById("of-val")) document.getElementById("of-val").innerText = O.volume_profile.VAL.toLocaleString();
+            
+            // Sesiones
+            if (O.sessions) {
+                if(document.getElementById("of-asia-poc")) document.getElementById("of-asia-poc").innerText = O.sessions.asia.poc.toLocaleString();
+                if(document.getElementById("of-london-poc")) document.getElementById("of-london-poc").innerText = O.sessions.london.poc.toLocaleString();
+            }
+            if (O.weekly) {
+                if(document.getElementById("of-weekly-poc")) document.getElementById("of-weekly-poc").innerText = O.weekly.poc.toLocaleString();
+            }
+            if (O.acceptance) {
+                if(document.getElementById("of-acceptance")) document.getElementById("of-acceptance").innerText = `"${O.acceptance}"`;
+            }
+            
+            const deltaEl = document.getElementById("of-delta");
+            if (deltaEl && O.delta) {
+                deltaEl.innerText = O.delta.cumulative;
+                deltaEl.style.color = O.delta.cumulative.includes("+") ? "#10b981" : "#ef4444";
+            }
+            
+            if (document.getElementById("of-ia-note")) {
+                document.getElementById("of-ia-note").innerText = O.tape_reading || "Analizando flujo...";
+            }
+
+            // Backtesting Results (3Y)
+            if (B) {
+                if(document.getElementById("bt-winrate")) document.getElementById("bt-winrate").innerText = B.overall_win_rate;
+                if(document.getElementById("bt-recommendation")) document.getElementById("bt-recommendation").innerText = B.recommendation;
+                
+                const grid = document.getElementById("bt-yearly-grid");
+                if (B.yearly_performance && grid) {
+                    grid.innerHTML = Object.entries(B.yearly_performance).slice(-4).map(([year, rate]) => `
+                        <div class="flex justify-between p-2 border-b border-white/5 group hover:bg-white/5 transition-all">
+                            <span class="text-[10px] text-slate-500 uppercase">${year} ACC. Performance</span>
+                            <span class="text-xs font-bold text-white">${rate.toFixed(1)}%</span>
+                        </div>
+                    `).join("");
+                }
+            }
+
+            // Repetition Study (User Request)
+            if (S) {
+                if(document.getElementById("study-prob")) document.getElementById("study-prob").innerText = S.magnet_prob;
+                if(document.getElementById("study-magnet")) document.getElementById("study-magnet").innerText = S.magnet_prob;
+                if(document.getElementById("study-runaway")) document.getElementById("study-runaway").innerText = S.runaway_prob;
+                const failRate = (100 - (parseFloat(S.magnet_prob) || 0 + parseFloat(S.runaway_prob) || 0)).toFixed(1);
+                if(document.getElementById("study-fail")) document.getElementById("study-fail").innerText = failRate + "%";
+                if(document.getElementById("study-strategy")) document.getElementById("study-strategy").innerText = `"${S.strategy}"`;
+            }
+
+            // Level Strength (User Request)
+            const ST = window.NQ_LIVE.STRENGTH;
+            if (ST) {
+                if(document.getElementById("strongest-point-label")) document.getElementById("strongest-point-label").innerText = ST.strongest_level;
+                const rankingList = document.getElementById("strength-ranking");
+                if (rankingList && ST.ranking) {
+                    rankingList.innerHTML = ST.ranking.slice(0, 5).map(r => `
+                        <div class="p-3 bg-white/5 rounded-lg border border-white/5 flex justify-between items-center group hover:border-emerald-500/30 transition-all">
+                            <span class="text-[10px] text-slate-400 group-hover:text-white uppercase">${r.level}</span>
+                            <span class="text-xs font-bold text-emerald-400">Pwr: ${r.avg_reaction}</span>
+                        </div>
+                    `).join("");
+                }
+            }
+
+            // Master DB Patterns (User Request)
+            const M = window.NQ_LIVE.STUDY_MASTER;
+            if (M && M.patterns) {
+                if(document.getElementById("m-sweep-h")) document.getElementById("m-sweep-h").innerText = M.patterns.SWEEP_H_RETURN;
+                if(document.getElementById("m-sweep-l")) document.getElementById("m-sweep-l").innerText = M.patterns.SWEEP_L_RETURN;
+                if(document.getElementById("m-exp-h")) document.getElementById("m-exp-h").innerText = M.patterns.EXPANSION_H;
+                if(document.getElementById("m-exp-l")) document.getElementById("m-exp-l").innerText = M.patterns.EXPANSION_L;
+                if(document.getElementById("m-rotate")) document.getElementById("m-rotate").innerText = M.patterns.ROTATION_POC;
+                if(document.getElementById("m-news")) document.getElementById("m-news").innerText = M.patterns.NEWS_DRIVE;
+            }
+        }
+
+        setInterval(() => {
+            const oldScript = document.querySelector('script[src="agent_live_data.js"]');
+            if (oldScript) {
+                const newScript = document.createElement('script');
+                newScript.src = `agent_live_data.js?t=${Date.now()}`;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+                updateOrderFlowUI();
+            }
+        }, 30000);
+
+        window.onload = updateOrderFlowUI;
+
+        const lessons = {
+            'absorcion': {
+                id: 'MOD 01',
+                title: 'Absorción Pasiva',
+                content: '"La absorción es el muro invisible. Los compradores atacan con todo (Delta disparado), pero el precio no puede romper un nivel porque una ballena está vendiendo de forma pasiva." '
+            },
+            'delta': {
+                id: 'MOD 02',
+                title: 'Delta Divergence',
+                content: '"Si el precio sube pero el Delta baja, no hay gasolina real en el movimiento. Es probable que sea una trampa para atrapar liquidez antes de un reverso." '
+            },
+            'area': {
+                id: 'MOD 03',
+                title: 'Value Area Migration',
+                content: '"Cuando el valor migra (el POC se mueve de lugar), la tendencia es real. Si el POC se queda clavado, estamos en rotación." '
+            }
+        };
+
+        function changeLesson(type) {
+            const lesson = lessons[type];
+            if (lesson) {
+                document.getElementById('lesson-id').innerText = lesson.id;
+                document.getElementById('lesson-title').innerText = lesson.title;
+                document.getElementById('ai-lesson-content').innerText = lesson.content;
+                
+                const content = document.getElementById('ai-lesson-content');
+                content.style.opacity = 0;
+                setTimeout(() => content.style.opacity = 1, 100);
+            }
+        }
+    </script>
+</body>
+</html>
