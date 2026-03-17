@@ -6,18 +6,114 @@
  * Actualización: cada 60s
  */
 
-const PROXY = 'https://corsproxy.io/?';
+// ── PROXY WATERFALL — intenta en orden hasta obtener respuesta 2xx ───────────
+const PROXIES = [
+  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  url => `https://proxy.cors.sh/${url}`,
+];
 
-// ── COT — Actualización manual cada viernes 3:30pm ET ────────────────────────
+async function proxyFetch(url, opts = {}) {
+  for (const makeProxy of PROXIES) {
+    try {
+      const res = await fetch(makeProxy(url), { ...opts, signal: AbortSignal.timeout(8000) });
+      if (res.ok) return res;
+    } catch(e) { /* try next */ }
+  }
+  throw new Error('All proxies failed for: ' + url);
+}
+
+// ── COT — Auto-fetch CFTC Disaggregated Futures ──────────────────────────────
 const COT_DATA = {
-  date: '07 Mar 2026',
-  asset_managers_net: 67583,
-  prev_week_net: 65197,
-  consecutive_weeks: -3,   // negativo = reduciendo
-  cot_index: 27,            // 0-100 vs 3 años
+  date: 'cargando...',
+  asset_managers_net: 0,
+  prev_week_net: 0,
+  consecutive_weeks: 0,
+  cot_index: 50,
   hist_min: 52000,
   hist_max: 142000,
 };
+
+// ── FETCH COT AUTOMÁTICO ──────────────────────────────────────────────────────
+async function fetchCOT() {
+  try {
+    // CFTC Disaggregated Futures — current year report (Fixed Width TXT, ~1MB)
+    const url = 'https://www.cftc.gov/dea/newcot/f_disagg.txt';
+    const res = await proxyFetch(url);
+    const text = await res.text();
+    const lines = text.trim().split('\n');
+
+    // Contract code 209742 = NASDAQ-100 E-MINI (or search for NASDAQ)
+    const nqLines = lines.filter(line =>
+      line.includes('209742') || line.toUpperCase().includes('NASDAQ-100')
+    );
+
+    if (nqLines.length === 0) {
+      console.warn('[NQ] COT: No se encontró NASDAQ-100 en CFTC data');
+      return;
+    }
+
+    // Parse CSV — CFTC Disaggregated format columns:
+    // The file is comma-separated with many columns. Key columns:
+    //   col 0: Market Name
+    //   col 2: Report Date (YYYY-MM-DD)
+    //   col 9: Asset Manager/Institutional Longs
+    //  col 10: Asset Manager/Institutional Shorts
+    const parsed = nqLines.map(line => {
+      const cols = line.split(',').map(c => c.trim().replace(/"/g, ''));
+      return {
+        name: cols[0],
+        date: cols[2],
+        am_long:  parseInt(cols[9])  || 0,
+        am_short: parseInt(cols[10]) || 0,
+        am_net:   (parseInt(cols[9]) || 0) - (parseInt(cols[10]) || 0),
+      };
+    }).filter(r => !isNaN(r.am_long)).sort((a, b) => a.date > b.date ? 1 : -1);
+
+    if (parsed.length === 0) {
+      console.warn('[NQ] COT: No se pudieron parsear los datos');
+      return;
+    }
+
+    const latest = parsed[parsed.length - 1];
+    const prev   = parsed.length > 1 ? parsed[parsed.length - 2] : null;
+
+    // Update COT_DATA
+    LIVE.cot.asset_managers_net = latest.am_net;
+    LIVE.cot.prev_week_net = prev ? prev.am_net : latest.am_net;
+    LIVE.cot.date = latest.date;
+
+    // Consecutive weeks direction
+    if (prev) {
+      const change = latest.am_net - prev.am_net;
+      if (change > 0)      LIVE.cot.consecutive_weeks = Math.max(1, LIVE.cot.consecutive_weeks + 1);
+      else if (change < 0) LIVE.cot.consecutive_weeks = Math.min(-1, LIVE.cot.consecutive_weeks - 1);
+      else                 LIVE.cot.consecutive_weeks = 0;
+    }
+
+    // Update historical min/max from all available data
+    const allNets = parsed.map(r => r.am_net);
+    LIVE.cot.hist_min = Math.min(LIVE.cot.hist_min, ...allNets);
+    LIVE.cot.hist_max = Math.max(LIVE.cot.hist_max, ...allNets);
+
+    // Recalculate COT Index (0-100)
+    const range = LIVE.cot.hist_max - LIVE.cot.hist_min;
+    LIVE.cot.cot_index = range > 0
+      ? Math.max(0, Math.min(100, Math.round((latest.am_net - LIVE.cot.hist_min) / range * 100)))
+      : 50;
+
+    // Update DOM
+    const dateEl = document.getElementById('cot-last-date');
+    if (dateEl) dateEl.innerText = LIVE.cot.date;
+
+    console.log('[NQ] COT auto-fetched:', LIVE.cot);
+    // Actualizar panel visual si ya está en el DOM
+    if (typeof updateCOTPanel === 'function') updateCOTPanel();
+  } catch(e) {
+    console.warn('[NQ] COT fetch error:', e.message);
+  }
+}
 
 // ── ESTADO GLOBAL ─────────────────────────────────────────────────────────────
 const LIVE = {
@@ -37,22 +133,55 @@ const LIVE = {
   ts:        null,
 };
 
-// ── FETCH YAHOO FINANCE ───────────────────────────────────────────────────────
+// ── FETCH STOOQ (sustituye Yahoo Finance — CSV público, sin auth) ─────────────
+// Mapa: símbolo Yahoo → símbolo Stooq
+const STOOQ_SYMBOLS = {
+  '%5ENDX':  '^ndx',
+  '^NDX':    '^ndx',
+  'NQ%3DF':  'nq.f',
+  'NQ=F':    'nq.f',
+  '%5EVXN':  '^vxn',
+  '^VXN':    '^vxn',
+  '%5EVIX':  '^vix',
+  '^VIX':    '^vix',
+  '%5EPCCE': '^pcce',
+  '^PCCE':   '^pcce',
+  'QQQ':     'qqq.us',
+  'SPY':     'spy.us',
+  'XLK':     'xlk.us',
+  'SOXX':    'soxx.us',
+};
+
 async function fetchYahoo(symbol) {
+  const stooq = STOOQ_SYMBOLS[symbol] || symbol.toLowerCase();
   try {
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=5d`;
-    const res = await fetch(PROXY + encodeURIComponent(url));
-    const data = await res.json();
-    const result = data?.chart?.result?.[0];
-    if (!result) return null;
-    const meta = result.meta;
-    const price = meta.regularMarketPrice;
-    const prev  = meta.previousClose || meta.chartPreviousClose;
+    // Últimos 10 días de datos diarios — pequeño, rápido, sin auth
+    const url = `https://stooq.com/q/d/l/?s=${encodeURIComponent(stooq)}&i=d`;
+    const res  = await proxyFetch(url);
+    const text = await res.text();
+
+    // CSV: Symbol,Date,Open,High,Low,Close,Volume  (sin header o con header)
+    const lines = text.trim().split('\n').filter(l => l && !l.toLowerCase().startsWith('symbol'));
+    if (lines.length === 0) return null;
+
+    // Parsear las últimas 10 filas para el histórico cercano
+    const rows = lines.slice(-10).map(l => {
+      const cols = l.split(',');
+      return { date: cols[1]?.trim(), close: parseFloat(cols[5] || cols[4]) };
+    }).filter(r => !isNaN(r.close));
+
+    if (rows.length === 0) return null;
+
+    const last  = rows[rows.length - 1];
+    const prev2 = rows.length > 1 ? rows[rows.length - 2] : last;
+    const price = last.close;
+    const prev  = prev2.close;
     const chg   = prev ? ((price - prev) / prev * 100) : 0;
-    const closes = result.indicators?.quote?.[0]?.close?.filter(Boolean) || [];
+    const closes = rows.map(r => r.close);
+
     return { price, prev, chg, closes };
   } catch(e) {
-    console.warn(`[NQ] Yahoo ${symbol} error:`, e.message);
+    console.warn(`[NQ] Stooq ${stooq} error:`, e.message);
     return null;
   }
 }
@@ -61,7 +190,7 @@ async function fetchYahoo(symbol) {
 async function fetchDIX() {
   try {
     const url = 'https://squeezemetrics.com/monitor/static/DIX.csv';
-    const res = await fetch(PROXY + encodeURIComponent(url));
+    const res = await proxyFetch(url);
     const text = await res.text();
     const rows = text.trim().split('\n');
     const recent = rows.slice(-5).map(r => {
@@ -517,50 +646,149 @@ function updateCOT(assetManagersNet, leveragedFundsNet, prevWeekNet) {
   refreshAll();
 }
 
-// ── WIDGET COT ────────────────────────────────────────────────────────────────
-function injectCOTWidget() {
-  if (document.getElementById('cot-update-widget')) return;
-  const target = document.querySelector('[id*="cot"]');
-  if (!target) return;
+// ── PANEL COT VISUAL ──────────────────────────────────────────────────────────
+const COT_HISTORY = [];  // historial de net positions para mini barras
 
-  const w = document.createElement('div');
-  w.id = 'cot-update-widget';
-  w.innerHTML = `
-    <div style="background:rgba(0,242,255,.04);border:1px solid rgba(0,242,255,.15);border-radius:12px;padding:18px;margin-top:16px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#00f2ff;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;">
-        ⚡ Actualizar COT · Viernes 3:30pm ET
+function buildCOTPanelHTML() {
+  const c        = LIVE.cot;
+  const net      = c.asset_managers_net;
+  const change   = net - c.prev_week_net;
+  const idx      = c.cot_index;
+  const wks      = c.consecutive_weeks;
+  const idxColor = idx > 60 ? '#00ff88' : idx < 40 ? '#ff3355' : '#ffd60a';
+  const chgColor = change >= 0 ? '#00ff88' : '#ff3355';
+  const chgArrow = change >= 0 ? '▲' : '▼';
+  const wksColor = wks > 0 ? '#00ff88' : wks < 0 ? '#ff3355' : '#94a3b8';
+  const markerPos = Math.max(1, Math.min(99, idx));
+
+  // Mini barras (últimas 8 semanas de historial)
+  const hist = COT_HISTORY.slice(-8);
+  const maxAbsNet = hist.length ? Math.max(...hist.map(v => Math.abs(v)), 1) : 1;
+  const minBar = 4;
+  const barsHTML = hist.map((v, i) => {
+    const pct    = Math.max(minBar, Math.abs(v) / maxAbsNet * 100);
+    const col    = v >= 0 ? '#00ff88' : '#ff3355';
+    const isLast = i === hist.length - 1;
+    const opacity = 0.35 + (i / hist.length) * 0.65;
+    return `<div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:2px">
+      <div style="width:100%;background:rgba(255,255,255,.05);border-radius:3px 3px 0 0;height:52px;
+                  display:flex;align-items:flex-end;overflow:hidden;opacity:${opacity}">
+        <div style="width:100%;height:${pct}%;background:${col};border-radius:2px 2px 0 0;
+          ${isLast ? `box-shadow:0 0 10px ${col}77` : ''}"></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end">
-        <div>
-          <div style="font-size:9px;color:#4a5a7a;margin-bottom:4px;font-family:monospace">Asset Mgr Net</div>
-          <input id="cot-in-am" type="number" placeholder="${LIVE.cot.asset_managers_net}" style="background:#0a0f1e;border:1px solid rgba(0,242,255,.2);color:#e2e8f8;padding:6px 10px;border-radius:6px;font-family:monospace;font-size:11px;width:100%">
-        </div>
-        <div>
-          <div style="font-size:9px;color:#4a5a7a;margin-bottom:4px;font-family:monospace">Lev. Funds Net</div>
-          <input id="cot-in-lf" type="number" placeholder="-42317" style="background:#0a0f1e;border:1px solid rgba(0,242,255,.2);color:#e2e8f8;padding:6px 10px;border-radius:6px;font-family:monospace;font-size:11px;width:100%">
-        </div>
-        <div>
-          <div style="font-size:9px;color:#4a5a7a;margin-bottom:4px;font-family:monospace">Semana Anterior</div>
-          <input id="cot-in-prev" type="number" placeholder="${LIVE.cot.prev_week_net}" style="background:#0a0f1e;border:1px solid rgba(0,242,255,.2);color:#e2e8f8;padding:6px 10px;border-radius:6px;font-family:monospace;font-size:11px;width:100%">
-        </div>
-        <button onclick="
-          const am=parseInt(document.getElementById('cot-in-am').value);
-          const lf=parseInt(document.getElementById('cot-in-lf').value)||0;
-          const pv=parseInt(document.getElementById('cot-in-prev').value);
-          if(!isNaN(am)&&!isNaN(pv)){updateCOT(am,lf,pv);this.innerText='✓ OK';this.style.color='#00ff88';}
-        " style="background:rgba(0,242,255,.08);border:1px solid rgba(0,242,255,.3);color:#00f2ff;padding:7px 16px;border-radius:6px;font-family:monospace;font-size:10px;cursor:pointer;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap">
-          Actualizar
-        </button>
-      </div>
-      <div style="margin-top:10px;font-size:9px;color:#4a5a7a;font-family:monospace">
-        Fuente: <a href="https://www.cftc.gov/dea/futures/financial_lf.htm" target="_blank" style="color:#00f2ff">cftc.gov</a>
-        · Último: <span id="cot-last-date" style="color:#94a3b8">${LIVE.cot.date}</span>
-        · COT Index: <span style="color:#ffd60a">${LIVE.cot.cot_index}/100</span>
-        · ${Math.abs(LIVE.cot.consecutive_weeks)} sem. ${LIVE.cot.consecutive_weeks < 0 ? 'reduciendo ▼' : 'acumulando ▲'}
-      </div>
+      <div style="font-size:7px;color:${isLast ? idxColor : '#2a3a5a'}">${isLast ? '▲' : ''}</div>
     </div>`;
+  }).join('');
 
-  target.parentNode?.insertBefore(w, target.nextSibling) || document.body.appendChild(w);
+  return `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+      <div>
+        <div style="font-size:9px;color:#00f2ff;letter-spacing:.16em;text-transform:uppercase">
+          📊 COT · Asset Managers — NQ-100 E-Mini
+        </div>
+        <div style="font-size:8px;color:#4a5a7a;margin-top:3px">
+          <a href="https://www.cftc.gov/dea/futures/financial_lf.htm" target="_blank"
+             style="color:#00f2ff;text-decoration:none">CFTC Disaggregated</a>
+          &nbsp;·&nbsp;
+          <span style="color:#94a3b8">Actualizado: <span id="cot-last-date">${c.date}</span></span>
+        </div>
+      </div>
+      <div style="text-align:right;line-height:1.1">
+        <div style="font-size:26px;font-weight:700;color:${idxColor}">${idx}
+          <span style="font-size:13px;color:#4a5a7a">/100</span>
+        </div>
+        <div style="font-size:8px;color:#4a5a7a">COT Index</div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:11px">
+        <div style="font-size:8px;color:#4a5a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em">Net posición</div>
+        <div id="cot-net-val" style="font-size:17px;font-weight:700;color:#e2e8f8">
+          ${net > 0 ? '+' : ''}${(net / 1000).toFixed(1)}k
+        </div>
+      </div>
+      <div style="background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:11px">
+        <div style="font-size:8px;color:#4a5a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em">Cambio sem.</div>
+        <div id="cot-chg-val" style="font-size:17px;font-weight:700;color:${chgColor}">
+          ${chgArrow} ${Math.abs(change / 1000).toFixed(1)}k
+        </div>
+      </div>
+      <div style="background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:11px">
+        <div style="font-size:8px;color:#4a5a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em">Racha</div>
+        <div id="cot-wks-val" style="font-size:17px;font-weight:700;color:${wksColor}">
+          ${wks === 0 ? 'Estable' : Math.abs(wks) + ' sem ' + (wks > 0 ? '▲' : '▼')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra Índice COT -->
+    <div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;font-size:8px;color:#4a5a7a;margin-bottom:5px">
+        <span>🔴 Extremo Bajista</span>
+        <span style="color:${idxColor};font-weight:600">Índice ${idx} / 100</span>
+        <span>🟢 Extremo Alcista</span>
+      </div>
+      <div style="position:relative;height:12px;border-radius:20px;overflow:visible;
+                  background:linear-gradient(90deg,#ff335577 0%,#ffd60a77 50%,#00ff8877 100%);
+                  border:1px solid rgba(255,255,255,.08)">
+        <div id="cot-marker" style="
+          position:absolute;top:50%;left:${markerPos}%;
+          transform:translate(-50%,-50%);
+          width:20px;height:20px;border-radius:50%;
+          background:${idxColor};
+          box-shadow:0 0 12px ${idxColor},0 0 4px #000;
+          border:2px solid #0a0f1e;
+          transition:left .8s cubic-bezier(.34,1.56,.64,1)">
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:7px;color:#2a3a5a;margin-top:4px;padding:0 2px">
+        <span>0</span><span>25</span><span>50</span><span>75</span><span>100</span>
+      </div>
+    </div>
+
+    <!-- Mini barras historial -->
+    <div>
+      <div style="font-size:8px;color:#4a5a7a;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">
+        Historial Net Position — últimas ${hist.length || '?'} semanas
+      </div>
+      <div id="cot-bars" style="display:flex;gap:5px;height:66px;align-items:flex-end">
+        ${hist.length > 0 ? barsHTML
+          : '<div style="color:#2a3a5a;font-size:9px;align-self:center">Cargando datos CFTC...</div>'}
+      </div>
+    </div>
+  `;
+}
+
+function injectCOTWidget() {
+  if (document.getElementById('cot-panel')) { updateCOTPanel(); return; }
+  const target = document.querySelector('[id*="cot"], [class*="cot"]') || document.body;
+  const panel  = document.createElement('div');
+  panel.id     = 'cot-panel';
+  panel.style.cssText = [
+    'background:linear-gradient(135deg,rgba(0,242,255,.05) 0%,rgba(0,255,136,.03) 100%)',
+    'border:1px solid rgba(0,242,255,.18)',
+    'border-radius:16px',
+    'padding:20px 22px',
+    'margin-top:20px',
+    'font-family:"JetBrains Mono","Courier New",monospace',
+  ].join(';');
+  panel.innerHTML = buildCOTPanelHTML();
+  if (target === document.body) document.body.appendChild(panel);
+  else target.parentNode?.insertBefore(panel, target.nextSibling) || document.body.appendChild(panel);
+}
+
+function updateCOTPanel() {
+  // Agregar al historial si es dato nuevo
+  const last = COT_HISTORY[COT_HISTORY.length - 1];
+  if (LIVE.cot.asset_managers_net !== 0 && last !== LIVE.cot.asset_managers_net) {
+    COT_HISTORY.push(LIVE.cot.asset_managers_net);
+    if (COT_HISTORY.length > 12) COT_HISTORY.shift();
+  }
+  const panel = document.getElementById('cot-panel');
+  if (panel) panel.innerHTML = buildCOTPanelHTML();
+  else injectCOTWidget();
 }
 
 // ── CICLO PRINCIPAL ───────────────────────────────────────────────────────────
@@ -608,9 +836,11 @@ async function refreshAll() {
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
+  await fetchCOT();           // COT auto desde CFTC
   await refreshAll();
   setTimeout(injectCOTWidget, 1500);
   setInterval(refreshAll, 60_000);
+  setInterval(fetchCOT, 30 * 60_000);  // Re-check COT cada 30 min
 });
 
 window.NQ = { LIVE, calcBiasEngine, updateCOT, refreshAll };
