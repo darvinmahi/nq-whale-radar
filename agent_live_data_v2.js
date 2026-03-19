@@ -163,17 +163,18 @@ async function fetchYahoo(symbol) {
     const text = await res.text();
 
     // Reject HTML error pages from proxy (not CSV data)
-    if (text.trim().startsWith('<') || text.includes('<!DOCTYPE')) return null;
+    const trimmed = text.trim();
+    if (trimmed.startsWith('<') || trimmed.includes('<!DOCTYPE') || trimmed.toLowerCase().includes('<html')) return null;
 
     // CSV: Symbol,Date,Open,High,Low,Close,Volume  (sin header o con header)
-    const lines = text.trim().split('\n').filter(l => l && !l.toLowerCase().startsWith('symbol') && !l.toLowerCase().startsWith('date'));
+    const lines = trimmed.split('\n').filter(l => l && !l.toLowerCase().startsWith('symbol') && !l.toLowerCase().startsWith('date'));
     if (lines.length === 0) return null;
 
     // Parsear las últimas 10 filas para el histórico cercano
     const rows = lines.slice(-10).map(l => {
       const cols = l.split(',');
       return { date: cols[1]?.trim(), close: parseFloat(cols[5] || cols[4]) };
-    }).filter(r => !isNaN(r.close));
+    }).filter(r => !isNaN(r.close) && isFinite(r.close) && r.close > 0);
 
     if (rows.length === 0) return null;
 
@@ -183,6 +184,13 @@ async function fetchYahoo(symbol) {
     const prev  = prev2.close;
     const chg   = prev ? ((price - prev) / prev * 100) : 0;
     const closes = rows.map(r => r.close);
+
+    // Sanity: reject absurd prices (proxy garbage surviving CSV parse)
+    // Indices like NDX max ~50k, ETFs max ~1000, ratios max ~5
+    if (price > 100_000 || price < 0.001) {
+      console.warn(`[NQ] Stooq ${stooq}: price ${price} out of sane range, discarding`);
+      return null;
+    }
 
     return { price, prev, chg, closes };
   } catch(e) {
@@ -197,7 +205,8 @@ async function fetchDIX() {
     const url = 'https://squeezemetrics.com/monitor/static/DIX.csv';
     const res = await proxyFetch(url);
     const text = await res.text();
-    if (text.trim().startsWith('<') || text.includes('<!DOCTYPE')) return null;
+    const trimmedDIX = text.trim();
+    if (trimmedDIX.startsWith('<') || trimmedDIX.includes('<!DOCTYPE') || trimmedDIX.toLowerCase().includes('<html')) return null;
     const rows = text.trim().split('\n');
     const recent = rows.slice(-5).map(r => {
       const c = r.split(',');
@@ -818,18 +827,20 @@ async function refreshAll() {
     ]);
 
   const ok = r => r.status === 'fulfilled' && r.value;
-  // Only apply fetched data if price is a valid number (not NaN from corrupted proxy responses)
-  const validPrice = r => ok(r) && typeof r.value.price === 'number' && !isNaN(r.value.price);
+  // Only apply fetched data if price is a valid, in-range number (not NaN/Infinity/garbage)
+  const validPrice = (r, min = 0.001, max = 100_000) =>
+    ok(r) && typeof r.value.price === 'number' && !isNaN(r.value.price)
+    && isFinite(r.value.price) && r.value.price >= min && r.value.price <= max;
 
-  if (validPrice(ndxR))  LIVE.ndx     = ndxR.value;
-  if (validPrice(futR))  LIVE.nq_fut  = futR.value;
-  if (validPrice(vxnR))  LIVE.vxn     = vxnR.value;
-  if (validPrice(vixR))  LIVE.vix     = vixR.value;
-  if (validPrice(pcR))   LIVE.putcall = pcR.value;
-  if (validPrice(qqqR))  LIVE.qqq     = qqqR.value;
-  if (validPrice(spyR))  LIVE.spy     = spyR.value;
-  if (validPrice(xlkR))  LIVE.xlk     = xlkR.value;
-  if (validPrice(soxxR)) LIVE.soxx    = soxxR.value;
+  if (validPrice(ndxR, 1000, 60000))  LIVE.ndx     = ndxR.value;
+  if (validPrice(futR, 1000, 60000))  LIVE.nq_fut  = futR.value;
+  if (validPrice(vxnR, 0, 200))       LIVE.vxn     = vxnR.value;
+  if (validPrice(vixR, 0, 200))       LIVE.vix     = vixR.value;
+  if (validPrice(pcR, 0, 10))         LIVE.putcall = pcR.value;
+  if (validPrice(qqqR, 10, 2000))     LIVE.qqq     = qqqR.value;
+  if (validPrice(spyR, 10, 2000))     LIVE.spy     = spyR.value;
+  if (validPrice(xlkR, 5, 1000))      LIVE.xlk     = xlkR.value;
+  if (validPrice(soxxR, 5, 1000))     LIVE.soxx    = soxxR.value;
 
   if (ok(dixR) && !isNaN(dixR.value.dix) && !isNaN(dixR.value.gex)) {
     LIVE.dix       = dixR.value.dix;

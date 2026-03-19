@@ -1,16 +1,16 @@
 {
-  "cycle": 13,
-  "timestamp": "2026-03-19T03:56:59.066278+00:00Z",
-  "last_update_human": "2026-03-19 03:56:59 UTC",
+  "cycle": 10,
+  "timestamp": "2026-03-19T04:19:46.578326+00:00Z",
+  "last_update_human": "2026-03-19 04:19:46 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 9.2,
-  "agents_ok": 18,
+  "total_time_sec": 44.2,
+  "agents_ok": 19,
   "agents_failed": 0,
   "details": {
     "Agent 0 · QA Commander [PRE]": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 5.0
     },
     "Agent 3 · Volatility Analyst": {
       "status": "✅ OK",
@@ -18,17 +18,13 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 2.3
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 8.4
+      "time": 34.8
     },
     "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.1
     },
@@ -36,49 +32,57 @@
       "status": "✅ OK",
       "time": 0.1
     },
+    "Agent 7 · Probability Analyst": {
+      "status": "✅ OK",
+      "time": 0.2
+    },
     "Agent 6 · SMC Detective": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.7
     },
-    "Agent 13 · Research Scout": {
+    "Agent 4 · Bias Engine": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
-      "time": 0.1
-    },
-    "Agent 4 · Bias Engine": {
-      "status": "✅ OK",
-      "time": 0.1
+      "time": 0.4
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.1
-    },
-    "Agent 12 · Backtest Engine": {
-      "status": "✅ OK",
-      "time": 0.2
+      "time": 0.3
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.5
+    },
+    "Agent 16 · Outcome Tracker": {
+      "status": "✅ OK",
+      "time": 0.7
+    },
+    "Agent 13 · Research Scout": {
+      "status": "✅ OK",
+      "time": 1.2
+    },
+    "Agent 12 · Backtest Engine": {
+      "status": "✅ OK",
+      "time": 2.1
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.2
     },
     "Agent Sentinel · Guardian": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.2
     },
     "Agent 5 · File Injector": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.2
     },
     "Agent 0 · QA Commander [POST]": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.4
     }
   }
 }

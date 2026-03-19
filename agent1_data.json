@@ -1,7 +1,7 @@
 {
   "agent": 1,
   "name": "Data Collector",
-  "timestamp": "2026-03-19T03:56:50.067903+00:00Z",
+  "timestamp": "2026-03-19T04:19:10.193448+00:00Z",
   "yahoo": {
     "NDX": {
       "price": 24425.09,
@@ -14,9 +14,9 @@
       "change_pct": 12.41
     },
     "NQ_futures": {
-      "price": 24682.25,
-      "prev_close": 24795.5,
-      "change_pct": -0.46
+      "price": 24643.5,
+      "prev_close": 24434.5,
+      "change_pct": 0.86
     }
   },
   "squeezemetrics": {
@@ -34,7 +34,7 @@
   },
   "sentiment": {
     "NQ1_OI": 225201,
-    "NQ1_volume": 43613,
+    "NQ1_volume": 45806,
     "pcr": 0.65
   }
 }
