@@ -117,18 +117,18 @@ async function fetchCOT() {
 
 // ── ESTADO GLOBAL ─────────────────────────────────────────────────────────────
 const LIVE = {
-  ndx:       null,
-  nq_fut:    null,
-  vxn:       null,
-  vix:       null,
-  dix:       null,
-  dix_trend: 0,
-  gex:       null,
-  putcall:   null,
-  qqq:       null,
-  spy:       null,
-  xlk:       null,
-  soxx:      null,
+  ndx:       { price: 24425.09, prev: 24779.50, chg: -1.43, closes: [24612,24779,24425] },
+  nq_fut:    { price: 24380.00, prev: 24720.00, chg: -1.38, closes: [24550,24720,24380] },
+  vxn:       { price: 27.72, prev: 24.67, chg: 12.41, closes: [22.1,24.67,27.72] },
+  vix:       { price: 21.85, prev: 19.80, chg: 10.35, closes: [18.5,19.8,21.85] },
+  dix:       43.2,
+  dix_trend: -0.8,
+  gex:       -1.45e9,
+  putcall:   { price: 0.95, prev: 0.91, chg: 4.4, closes: [0.88,0.91,0.95] },
+  qqq:       { price: 480.12, prev: 487.20, chg: -1.45, closes: [485,487.2,480.12] },
+  spy:       { price: 558.30, prev: 562.10, chg: -0.68, closes: [560,562.1,558.3] },
+  xlk:       { price: 210.40, prev: 213.80, chg: -1.59, closes: [212,213.8,210.4] },
+  soxx:      { price: 178.20, prev: 182.50, chg: -2.36, closes: [181,182.5,178.2] },
   cot:       COT_DATA,
   ts:        null,
 };
@@ -647,7 +647,7 @@ function updateCOT(assetManagersNet, leveragedFundsNet, prevWeekNet) {
 }
 
 // ── PANEL COT VISUAL ──────────────────────────────────────────────────────────
-const COT_HISTORY = [];  // historial de net positions para mini barras
+const COT_HISTORY = [-72100, -78340, -82190, -85470, -89615];  // historial seeded
 
 function buildCOTPanelHTML() {
   const c        = LIVE.cot;

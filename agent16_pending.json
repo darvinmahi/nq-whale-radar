@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-03-19T02:32:53.079973+00:00",
-  "prediction_price": 24703.5,
-  "prediction_bias": "NEUTRAL",
-  "prediction_score": 51,
+  "timestamp": "2026-03-19T03:03:00.394881+00:00",
+  "prediction_price": 24695.5,
+  "prediction_bias": "NEUTRAL-BULLISH",
+  "prediction_score": 54,
   "agent_signals": {
     "COT": {
       "dir": -1,
-      "raw": "BEARISH"
+      "raw": "NEUTRAL-BAJISTA"
     },
     "VOLATILITY": {
       "dir": 0,

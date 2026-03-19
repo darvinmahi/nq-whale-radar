@@ -1,68 +1,68 @@
 {
-  "generated_at": "2026-03-19T02:32:53.079973+00:00",
-  "total_predictions": 2,
+  "generated_at": "2026-03-19T03:03:00.394881+00:00",
+  "total_predictions": 5,
   "validated": 0,
   "win_rate_real": null,
   "wins": 0,
   "losses": 0,
-  "neutrals": 2,
+  "neutrals": 5,
   "current_streak": {
     "type": "NONE",
     "count": 0
   },
   "agent_accuracy": {
     "COT": {
-      "accuracy_pct": 0.0,
-      "wins": 0,
-      "losses": 2,
-      "neutrals": 0,
-      "total_calls": 2
+      "accuracy_pct": 25.0,
+      "wins": 1,
+      "losses": 3,
+      "neutrals": 1,
+      "total_calls": 4
     },
     "VOLATILITY": {
       "accuracy_pct": null,
       "wins": 0,
       "losses": 0,
-      "neutrals": 2,
+      "neutrals": 5,
       "total_calls": 0
     },
     "SMC": {
-      "accuracy_pct": 100.0,
-      "wins": 2,
-      "losses": 0,
-      "neutrals": 0,
-      "total_calls": 2
+      "accuracy_pct": 75.0,
+      "wins": 3,
+      "losses": 1,
+      "neutrals": 1,
+      "total_calls": 4
     },
     "PROBABILITY": {
       "accuracy_pct": null,
       "wins": 0,
       "losses": 0,
-      "neutrals": 2,
+      "neutrals": 5,
       "total_calls": 0
     },
     "SENTIMENT": {
       "accuracy_pct": null,
       "wins": 0,
       "losses": 0,
-      "neutrals": 2,
+      "neutrals": 5,
       "total_calls": 0
     },
     "SILVER_BULLET": {
       "accuracy_pct": 100.0,
       "wins": 1,
       "losses": 0,
-      "neutrals": 1,
+      "neutrals": 4,
       "total_calls": 1
     },
     "ORDERFLOW": {
-      "accuracy_pct": 100.0,
-      "wins": 2,
-      "losses": 0,
-      "neutrals": 0,
-      "total_calls": 2
+      "accuracy_pct": 75.0,
+      "wins": 3,
+      "losses": 1,
+      "neutrals": 1,
+      "total_calls": 4
     }
   },
-  "best_agent": "SMC (100.0%)",
-  "worst_agent": "COT (0.0%)",
+  "best_agent": "SILVER_BULLET (100.0%)",
+  "worst_agent": "COT (25.0%)",
   "last_10_outcomes": [
     {
       "time": "2026-03-19T02:02:43.447958+00:00",
@@ -75,6 +75,24 @@
       "outcome": "NEUTRAL",
       "delta": 34.75,
       "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-03-19T02:32:53.079973+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 12.0,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-03-19T02:47:56.736635+00:00",
+      "outcome": "NEUTRAL",
+      "delta": -22.5,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-03-19T03:02:41.727762+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 2.5,
+      "bias": "NEUTRAL-BULLISH"
     }
   ],
   "status": "APRENDIENDO — 0 predicciones validadas (mínimo 5)"
