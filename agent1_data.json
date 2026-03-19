@@ -1,40 +1,65 @@
 {
   "agent": 1,
   "name": "Data Collector",
-  "timestamp": "2026-03-19T04:19:10.193448+00:00Z",
+  "timestamp": "2026-03-19T05:49:48.269184+00:00Z",
+  "price": 24603.0,
+  "volume": 225201,
   "yahoo": {
     "NDX": {
       "price": 24425.09,
-      "prev_close": 24780.42,
-      "change_pct": -1.43
+      "change_pct": -1.43,
+      "stale": false
     },
     "VXN": {
       "price": 27.72,
-      "prev_close": 24.66,
-      "change_pct": 12.41
+      "change_pct": 12.41,
+      "stale": false
     },
     "NQ_futures": {
-      "price": 24643.5,
-      "prev_close": 24434.5,
-      "change_pct": 0.86
+      "price": 24603.0,
+      "change_pct": 0.69,
+      "stale": false
+    },
+    "DXY": {
+      "price": 100.18,
+      "change_pct": 0.09,
+      "stale": false
     }
   },
   "squeezemetrics": {
-    "DIX": 45.27,
-    "GEX_raw": -140231247.46000004,
-    "GEX_B": -0.14,
-    "date": "2026-03-18"
+    "DIX": null,
+    "GEX_B": null
   },
   "cftc_cot": {
-    "cot_nc_long": 11952,
-    "cot_nc_short": 101567,
-    "cot_net": -89615,
+    "cot_date": "2026-03-10",
     "cot_oi": 275311,
-    "cot_date": "2026-03-10"
+    "commercials": {
+      "long": 46754,
+      "short": 79991,
+      "net": -33237
+    },
+    "asset_managers": {
+      "long": 101567,
+      "short": 36049,
+      "net": 65518
+    },
+    "leveraged_funds": {
+      "long": 47241,
+      "short": 81185,
+      "net": -33944
+    },
+    "retail": {
+      "long": 37261,
+      "short": 36924,
+      "net": 337
+    },
+    "speculators": {
+      "long": 148808,
+      "short": 117234,
+      "net": 31574
+    }
   },
-  "sentiment": {
-    "NQ1_OI": 225201,
-    "NQ1_volume": 45806,
-    "pcr": 0.65
+  "cme": {
+    "NQ1_OI": 225201
   }
 }

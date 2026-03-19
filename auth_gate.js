@@ -17,12 +17,8 @@
   // ═══ Authorized Users ═══
   const USERS = {
     'darvinmahia@gmail.com': {
-      hash: 'dfdd90b025b37abb27bffb90eecd01794759c2b835754c082391bd341d4090ab',
+      hash: 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f',
       name: 'Darvin Mahia'
-    },
-    'darvin@iafundamental.com': {
-      hash: 'dfdd90b025b37abb27bffb90eecd01794759c2b835754c082391bd341d4090ab',
-      name: 'Darvin'
     }
   };
 
@@ -73,24 +69,35 @@
     #nq-auth-overlay.active #nq-auth-modal {
       transform: translateY(0) scale(1);
     }
+    .nq-m-logo-wrap {
+      text-align: center; margin-bottom: 12px;
+    }
+    .nq-m-logo-wrap img {
+      height: 44px; width: auto;
+      filter: drop-shadow(0 0 10px rgba(168,85,247,0.5));
+    }
+    .nq-m-logo-text {
+      text-align: center; margin-bottom: 4px;
+    }
+    .nq-m-logo-text .ai { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800;
+      background: linear-gradient(90deg, #a855f7, #00f2ff); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .nq-m-logo-text .fundamental { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 600;
+      color: rgba(248,250,252,0.85); text-transform: uppercase; letter-spacing: 0.15em; margin-left: 4px;
+    }
     .nq-m-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 22px; font-weight: 700; color: #f8fafc;
-      text-transform: uppercase; letter-spacing: 0.12em;
-      margin-bottom: 4px; text-align: center;
+      font-size: 11px; font-weight: 600; color: rgba(0,242,255,0.6);
+      text-transform: uppercase; letter-spacing: 0.2em;
+      margin-bottom: 20px; text-align: center;
+      font-family: 'JetBrains Mono', monospace;
     }
     .nq-m-subtitle {
       font-size: 11px; color: rgba(148,163,184,0.7);
       text-align: center; margin-bottom: 24px;
       font-family: 'JetBrains Mono', monospace;
       letter-spacing: 0.08em;
-    }
-    .nq-m-icon {
-      text-align: center; margin-bottom: 16px;
-    }
-    .nq-m-icon span {
-      font-size: 42px; color: #a855f7;
-      text-shadow: 0 0 20px rgba(168,85,247,0.5);
     }
     .nq-m-field {
       position: relative; margin-bottom: 14px;
@@ -176,9 +183,12 @@
     <div id="nq-auth-modal" style="position:relative">
       <button class="nq-m-close" onclick="document.getElementById('nq-auth-overlay').classList.remove('active')">close</button>
       <div id="nq-auth-form-area">
-        <div class="nq-m-icon"><span class="material-symbols-outlined">shield_lock</span></div>
-        <div class="nq-m-title">Acceso Requerido</div>
-        <div class="nq-m-subtitle">// AUTENTICACIÓN PARA CONTINUAR</div>
+        <div class="nq-m-logo-wrap">
+          <div class="nq-m-logo-text">
+            <span class="ai">IA</span><span class="fundamental">Fundamental</span>
+          </div>
+        </div>
+        <div class="nq-m-title">// ACCESO RESTRINGIDO — NQ WHALE RADAR</div>
         <div id="nq-auth-error" class="nq-m-error"></div>
         <form id="nq-auth-form">
           <div class="nq-m-field">

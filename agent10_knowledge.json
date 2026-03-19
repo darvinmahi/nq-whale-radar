@@ -1,6 +1,6 @@
 {
-    "last_updated": "2026-03-19T04:19:43.461364+00:00",
-    "total_cycles_analyzed": 44,
+    "last_updated": "2026-03-19T05:49:48.302923+00:00",
+    "total_cycles_analyzed": 45,
     "current_win_rate": 50.84,
     "current_bias": "ALCISTA",
     "status": "Adaptando — WR 50.8% [BACKTEST (estimado)] (bajo target 55.0%)",
@@ -12,22 +12,27 @@
         },
         {
             "type": "weight_evolution",
-            "text": "Macro & Sentiment (layer2) subió 17.6% desde el primer ciclo",
+            "text": "Macro & Sentiment (layer2) subió 17.7% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Liquidez (layer3) bajó 8.5% desde el primer ciclo",
+            "text": "Liquidez (layer3) bajó 8.6% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Timing & Session (layer4) subió 20.5% desde el primer ciclo",
+            "text": "Timing & Session (layer4) subió 20.8% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Algorítmico (SMC/Prob) (layer5) bajó 15.4% desde el primer ciclo",
+            "text": "Algorítmico (SMC/Prob) (layer5) bajó 15.6% desde el primer ciclo",
+            "confidence": 100
+        },
+        {
+            "type": "warning",
+            "text": "Datos faltantes: dix, gex",
             "confidence": 100
         },
         {
@@ -39,7 +44,7 @@
     "agent_performance": {
         "COT": {
             "alignment_pct": 0.0,
-            "samples": 41,
+            "samples": 42,
             "source": "COT"
         },
         "VOLATILITY": {
@@ -49,7 +54,7 @@
         },
         "SMC": {
             "alignment_pct": 0.0,
-            "samples": 44,
+            "samples": 45,
             "source": "SMC"
         },
         "PROBABILITY": {
@@ -69,7 +74,7 @@
         },
         "ORDERFLOW": {
             "alignment_pct": 0.0,
-            "samples": 44,
+            "samples": 45,
             "source": "ORDERFLOW"
         }
     },
@@ -81,16 +86,16 @@
         "triple_confluence_bull": 1
     },
     "weight_evolution": {
-        "layer1": -0.1902,
-        "layer2": 0.1757,
-        "layer3": -0.0848,
-        "layer4": 0.2049,
-        "layer5": -0.154
+        "layer1": -0.1903,
+        "layer2": 0.177,
+        "layer3": -0.0865,
+        "layer4": 0.2075,
+        "layer5": -0.1561
     },
     "system_health": {
-        "data_quality": "100% — Todos los datos disponibles",
+        "data_quality": "60% — 2 campos sin datos",
         "weight_stability": "EN AJUSTE",
-        "memory_size": 44
+        "memory_size": 45
     },
     "faq": [
         {
@@ -107,7 +112,7 @@
         },
         {
             "q": "¿Cuántos ciclos ha analizado?",
-            "a": "44 ciclos en memoria. Win rate del backtest: 50.8%"
+            "a": "45 ciclos en memoria. Win rate del backtest: 50.8%"
         },
         {
             "q": "¿Hay algún patrón recurrente?",
@@ -115,15 +120,15 @@
         },
         {
             "q": "¿Los pesos han cambiado?",
-            "a": "Sí: layer1 ↓19.0%, layer2 ↑17.6%, layer3 ↓8.5%, layer4 ↑20.5%, layer5 ↓15.4%"
+            "a": "Sí: layer1 ↓19.0%, layer2 ↑17.7%, layer3 ↓8.6%, layer4 ↑20.8%, layer5 ↓15.6%"
         }
     ],
     "weights": {
-        "layer1": 0.0484,
-        "layer2": 0.394,
-        "layer3": 0.0523,
-        "layer4": 0.3572,
-        "layer5": 0.0998,
-        "layer6": 0.0484
+        "layer1": 0.0483,
+        "layer2": 0.3953,
+        "layer3": 0.0506,
+        "layer4": 0.3598,
+        "layer5": 0.0977,
+        "layer6": 0.0483
     }
 }

@@ -1,8 +1,9 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-03-19T04:19:08.279198Z",
-  "input_source": "agent1_data.json",
+  "timestamp": "2026-03-19T05:49:36.614510Z",
+  "vix_value": 27.72,
+  "vix_status": "ELEVATED",
   "raw_inputs": {
     "VXN": 27.72,
     "GEX_B": -0.14,
@@ -12,15 +13,15 @@
     "level": "ELEVATED",
     "signal": "NEUTRAL",
     "score": 35,
-    "description": "VXN 27.72 — Volatilidad elevada. Reducir tamaño de posiciones.",
-    "risk": "Probable continuación de movimientos erráticos"
+    "description": "VXN 27.72 — Volatilidad elevada. Reducir tamaño.",
+    "risk": "Movimientos erráticos probables"
   },
   "gex_analysis": {
     "level": "NEAR_ZERO",
     "signal": "NEUTRAL",
     "score": 50,
-    "description": "GEX -0.14B — GEX cerca de cero. Flujo de dealers neutro.",
-    "impact": "Mercado puede moverse libremente en cualquier dirección."
+    "description": "GEX -0.14B — Flujo neutro.",
+    "impact": "Mercado libre en cualquier dirección."
   },
   "signal": "NEUTRAL",
   "score": 40
