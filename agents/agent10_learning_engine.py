@@ -8,7 +8,8 @@ Fases:
   2. Memoria Histórica: guarda snapshot en agent10_memory.jsonl
   3. Knowledge Base: genera insights, correlaciones, FAQ
 
-Inputs:  agent*_data.json, agent12_backtest_results.json, agent10_ict_stats.json
+Inputs:  agent*_data.json, agent12_backtest_results.json, agent10_ict_stats.json,
+         agent16_scorecard.json (NUEVO — outcomes reales del Outcome Tracker)
 Outputs: ai_weights.json, agent10_memory.jsonl, agent10_knowledge.json
 """
 
@@ -18,9 +19,10 @@ import datetime
 
 BASE_DIR      = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WEIGHTS_FILE  = os.path.join(BASE_DIR, "ai_weights.json")
-MEMORY_FILE   = os.path.join(BASE_DIR, "agent10_memory.jsonl")
-KNOWLEDGE_FILE= os.path.join(BASE_DIR, "agent10_knowledge.json")
-BACKTEST_FILE = os.path.join(BASE_DIR, "agent12_backtest_results.json")
+MEMORY_FILE    = os.path.join(BASE_DIR, "agent10_memory.jsonl")
+KNOWLEDGE_FILE = os.path.join(BASE_DIR, "agent10_knowledge.json")
+BACKTEST_FILE  = os.path.join(BASE_DIR, "agent12_backtest_results.json")
+SCORECARD_FILE = os.path.join(BASE_DIR, "agent16_scorecard.json")
 
 NOW = datetime.datetime.now(datetime.timezone.utc)
 
@@ -214,14 +216,15 @@ def extract_all_signals():
 LAYER_MAP = {
     "layer1": {"name": "Posicionamiento (COT)",     "signals": ["COT"]},
     "layer2": {"name": "Macro & Sentiment",          "signals": ["SENTIMENT"]},
-    "layer3": {"name": "Liquidez & OrderFlow",       "signals": ["ORDERFLOW"]},
+    "layer3": {"name": "Liquidez",                   "signals": []},
     "layer4": {"name": "Timing & Session",           "signals": ["SILVER_BULLET", "VOLATILITY"]},
     "layer5": {"name": "Algorítmico (SMC/Prob)",     "signals": ["SMC", "PROBABILITY"]},
+    "layer6": {"name": "Order Flow & Value Profile", "signals": ["ORDERFLOW"]},
 }
 
 DEFAULT_WEIGHTS = {
-    "layer1": 0.25, "layer2": 0.20, "layer3": 0.15,
-    "layer4": 0.15, "layer5": 0.25
+    "layer1": 0.15, "layer2": 0.15, "layer3": 0.12,
+    "layer4": 0.13, "layer5": 0.15, "layer6": 0.30
 }
 
 def load_weights():
@@ -230,38 +233,79 @@ def load_weights():
         return dict(DEFAULT_WEIGHTS)
     return {k: w.get(k, DEFAULT_WEIGHTS.get(k, 0.2)) for k in DEFAULT_WEIGHTS}
 
-def adjust_weights(current_weights, win_rate, signals, memory):
-    """Gradient-based weight adjustment using win_rate delta and signal alignment."""
+def load_scorecard():
+    """Load real outcome data from Agent 16."""
+    if not os.path.exists(SCORECARD_FILE):
+        return None
+    try:
+        with open(SCORECARD_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+def adjust_weights(current_weights, win_rate, signals, memory, scorecard=None):
+    """
+    Gradient-based weight adjustment using REAL outcome data when available.
+    Falls back to backtest win_rate if no scorecard yet.
+    """
     new_w = dict(current_weights)
+
+    # ── Use REAL win rate from outcomes if available ──
+    real_wr = None
+    if scorecard and scorecard.get("win_rate_real") is not None:
+        real_wr = scorecard["win_rate_real"]
+        effective_wr = real_wr
+        wr_source = "REAL (outcomes)"
+    else:
+        effective_wr = win_rate
+        wr_source = "BACKTEST (estimado)"
 
     # How far from 55% (our target edge)?
     target = 55.0
-    delta = win_rate - target  # positive = above target, negative = below
+    delta = effective_wr - target
 
     # Scale factor: small adjustments, max ±0.03 per cycle
     scale = max(min(delta / 100.0, 0.03), -0.03)
 
+    # ── Per-agent accuracy adjustments (the real learning) ──
+    agent_boosts = {}  # signal_name -> boost factor
+    if scorecard and scorecard.get("agent_accuracy"):
+        for sig_name, acc_data in scorecard["agent_accuracy"].items():
+            acc = acc_data.get("accuracy_pct")
+            if acc is not None and acc_data.get("total_calls", 0) >= 3:
+                # Agents above 55% get boosted, below 45% get reduced
+                agent_boosts[sig_name] = (acc - 50) / 100.0  # e.g. 60% → +0.10
+
     # Count how many signals in each layer are "active" (non-zero direction)
     layer_activity = {}
     for lk, linfo in LAYER_MAP.items():
-        active = sum(1 for sn in linfo["signals"]
+        sigs = linfo["signals"]
+        if not sigs:
+            layer_activity[lk] = 0.5  # neutral for layers with no direct signal mapping
+            continue
+        active = sum(1 for sn in sigs
                      if signals.get(sn, {}).get("direction", 0) != 0)
-        total = len(linfo["signals"])
+        total = len(sigs)
         layer_activity[lk] = active / total if total > 0 else 0
 
-    # If WR < target: boost layers with most active signals
-    # If WR > target: reinforce current balance
+    # ── Apply adjustments ──
     if delta < -3:
-        # Below target: boost most active layers, reduce quiet ones
-        for lk in new_w:
+        # Below target: use agent accuracy to decide WHO gets more weight
+        for lk, linfo in LAYER_MAP.items():
             activity = layer_activity.get(lk, 0)
-            new_w[lk] += scale * (activity - 0.5)  # active layers go up, inactive down
-        status = f"Adaptando — WR {win_rate:.1f}% (bajo target {target}%)"
+            # Base adjustment from activity
+            base_adj = scale * (activity - 0.5)
+            # Accuracy boost: layers with accurate agents get more weight
+            acc_boost = 0
+            for sig_name in linfo["signals"]:
+                if sig_name in agent_boosts:
+                    acc_boost += agent_boosts[sig_name] * 0.01  # small per-cycle
+            new_w[lk] += base_adj + acc_boost
+        status = f"Adaptando — WR {effective_wr:.1f}% [{wr_source}] (bajo target {target}%)"
     elif delta > 5:
-        # Well above target: lock in, minor trim to prevent overfit
-        status = f"Reforzado — WR {win_rate:.1f}% (sobre target)"
+        status = f"Reforzado — WR {effective_wr:.1f}% [{wr_source}] (sobre target)"
     else:
-        status = f"Equilibrado — WR {win_rate:.1f}% (zona neutral)"
+        status = f"Equilibrado — WR {effective_wr:.1f}% [{wr_source}] (zona neutral)"
 
     # Clamp: no layer below 0.05
     for lk in new_w:
@@ -272,7 +316,7 @@ def adjust_weights(current_weights, win_rate, signals, memory):
     for lk in new_w:
         new_w[lk] = round(new_w[lk] / total, 4)
 
-    return new_w, status
+    return new_w, status, wr_source
 
 
 # ═════════════════════════════════════════════════════════════
@@ -493,8 +537,19 @@ def generate_knowledge(signals, market_state, weights, win_rate,
 # ═════════════════════════════════════════════════════════════
 def run():
     print("=" * 60)
-    print("  AGENTE 10 · LEARNING ENGINE v3.0 (MONSTER)")
+    print("  AGENTE 10 · LEARNING ENGINE v4.0 (STUDY MODE)")
     print("=" * 60)
+    print()
+
+    # FASE 0: Load real outcome data from Agent 16
+    print("📊 FASE 0 — Cargando outcomes reales del Agent 16...")
+    scorecard = load_scorecard()
+    if scorecard and scorecard.get("win_rate_real") is not None:
+        print(f"   ✅ Scorecard cargado: WR Real={scorecard['win_rate_real']}% | {scorecard['validated']} predicciones validadas")
+        print(f"   Mejor agente: {scorecard.get('best_agent', '—')}")
+        print(f"   Peor agente:  {scorecard.get('worst_agent', '—')}")
+    else:
+        print(f"   ⏸ Sin datos de outcomes — usando WR del backtester como fallback")
     print()
 
     # FASE 1: Extract signals from all agents
@@ -506,15 +561,21 @@ def run():
     print(f"   Market: NQ={market.get('nq_price')} | VXN={market.get('vxn')} | DIX={market.get('dix')}")
     print(f"   WR Backtest: {win_rate:.1f}%")
 
-    # Adjust weights
+    # Adjust weights — NOW WITH REAL OUTCOME DATA
     old_weights = load_weights()
-    new_weights, status = adjust_weights(old_weights, win_rate, signals, read_memory())
+    new_weights, status, wr_source = adjust_weights(
+        old_weights, win_rate, signals, read_memory(), scorecard
+    )
+
+    # Use real WR if available for knowledge base
+    effective_wr = scorecard["win_rate_real"] if (scorecard and scorecard.get("win_rate_real") is not None) else win_rate
 
     # Save weights
     weight_data = dict(new_weights)
     weight_data["status"] = status
     weight_data["last_learning"] = NOW.isoformat()
-    weight_data["version"] = "3.0"
+    weight_data["version"] = "4.0"
+    weight_data["wr_source"] = wr_source
     save(WEIGHTS_FILE, weight_data)
     print(f"   ⚖️  Pesos: {' | '.join(f'{k}={v}' for k,v in new_weights.items())}")
     print(f"   📊 {status}")
@@ -523,7 +584,7 @@ def run():
     # FASE 2: Save memory snapshot
     print("💾 FASE 2 — Guardando snapshot en memoria...")
     snapshot, cycle, patterns = save_memory_snapshot(
-        signals, market, consensus_score, new_weights, old_weights, status, win_rate
+        signals, market, consensus_score, new_weights, old_weights, status, effective_wr
     )
     print(f"   Ciclo #{cycle} guardado. Patrones: {patterns if patterns else 'ninguno'}")
     print()
@@ -531,16 +592,18 @@ def run():
     # FASE 3: Generate knowledge base
     print("🧠 FASE 3 — Generando Knowledge Base...")
     knowledge = generate_knowledge(
-        signals, market, new_weights, win_rate, cycle, patterns, status
+        signals, market, new_weights, effective_wr, cycle, patterns, status
     )
     n_insights = len(knowledge["insights"])
     n_faq = len(knowledge["faq"])
     print(f"   {n_insights} insights | {n_faq} FAQ | {knowledge['system_health']['memory_size']} ciclos en memoria")
     print(f"   Sesgo actual: {knowledge['current_bias']}")
     print(f"   Best predictor: {knowledge['summary']['best_predictor']}")
+    if scorecard:
+        print(f"   🎯 WR Real: {scorecard.get('win_rate_real', '—')}% [{wr_source}]")
     print()
 
-    print("✅ Agent 10 v3.0 completado.")
+    print("✅ Agent 10 v4.0 (Study Mode) completado.")
     return f"Aprendizaje completado — {status}"
 
 

@@ -1,10 +1,10 @@
 {
-  "cycle": 3,
-  "timestamp": "2026-03-19T01:32:47.478839+00:00Z",
-  "last_update_human": "2026-03-19 01:32:47 UTC",
+  "cycle": 8,
+  "timestamp": "2026-03-19T02:41:26.510576+00:00Z",
+  "last_update_human": "2026-03-19 02:41:26 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 4.0,
+  "total_time_sec": 4.1,
   "agents_ok": 18,
   "agents_failed": 0,
   "details": {
@@ -22,13 +22,13 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.9
+      "time": 4.0
     },
-    "Agent 9 · Silver Bullet": {
+    "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 8 · Morgan Psychologist": {
+    "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -44,10 +44,6 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 14 · Order Flow Expert": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Agent 4 · Bias Engine": {
       "status": "✅ OK",
       "time": 0.0
@@ -56,11 +52,15 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 10 · Learning Engine": {
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 12 · Backtest Engine": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
+    "Agent 10 · Learning Engine": {
       "status": "✅ OK",
       "time": 0.0
     },

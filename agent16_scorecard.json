@@ -1,0 +1,81 @@
+{
+  "generated_at": "2026-03-19T02:32:53.079973+00:00",
+  "total_predictions": 2,
+  "validated": 0,
+  "win_rate_real": null,
+  "wins": 0,
+  "losses": 0,
+  "neutrals": 2,
+  "current_streak": {
+    "type": "NONE",
+    "count": 0
+  },
+  "agent_accuracy": {
+    "COT": {
+      "accuracy_pct": 0.0,
+      "wins": 0,
+      "losses": 2,
+      "neutrals": 0,
+      "total_calls": 2
+    },
+    "VOLATILITY": {
+      "accuracy_pct": null,
+      "wins": 0,
+      "losses": 0,
+      "neutrals": 2,
+      "total_calls": 0
+    },
+    "SMC": {
+      "accuracy_pct": 100.0,
+      "wins": 2,
+      "losses": 0,
+      "neutrals": 0,
+      "total_calls": 2
+    },
+    "PROBABILITY": {
+      "accuracy_pct": null,
+      "wins": 0,
+      "losses": 0,
+      "neutrals": 2,
+      "total_calls": 0
+    },
+    "SENTIMENT": {
+      "accuracy_pct": null,
+      "wins": 0,
+      "losses": 0,
+      "neutrals": 2,
+      "total_calls": 0
+    },
+    "SILVER_BULLET": {
+      "accuracy_pct": 100.0,
+      "wins": 1,
+      "losses": 0,
+      "neutrals": 1,
+      "total_calls": 1
+    },
+    "ORDERFLOW": {
+      "accuracy_pct": 100.0,
+      "wins": 2,
+      "losses": 0,
+      "neutrals": 0,
+      "total_calls": 2
+    }
+  },
+  "best_agent": "SMC (100.0%)",
+  "worst_agent": "COT (0.0%)",
+  "last_10_outcomes": [
+    {
+      "time": "2026-03-19T02:02:43.447958+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 14.75,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-03-19T02:17:48.543592+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 34.75,
+      "bias": "NEUTRAL"
+    }
+  ],
+  "status": "APRENDIENDO — 0 predicciones validadas (mínimo 5)"
+}

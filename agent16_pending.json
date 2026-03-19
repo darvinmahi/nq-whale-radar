@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-03-19T02:32:53.079973+00:00",
+  "prediction_price": 24703.5,
+  "prediction_bias": "NEUTRAL",
+  "prediction_score": 51,
+  "agent_signals": {
+    "COT": {
+      "dir": -1,
+      "raw": "BEARISH"
+    },
+    "VOLATILITY": {
+      "dir": 0,
+      "raw": "NEUTRAL"
+    },
+    "SMC": {
+      "dir": 1,
+      "raw": "BULLISH"
+    },
+    "PROBABILITY": {
+      "dir": 0,
+      "raw": "DISTRIBUCIÓN / NEUTRAL — ESPERAR CLARIDAD ⏳"
+    },
+    "SENTIMENT": {
+      "dir": 0,
+      "raw": "ESTABLE"
+    },
+    "SILVER_BULLET": {
+      "dir": 0,
+      "raw": "INACTIVO"
+    },
+    "ORDERFLOW": {
+      "dir": 1,
+      "raw": "BULLISH (CONFLUENCIA SEMANAL + LONDRES)"
+    }
+  }
+}

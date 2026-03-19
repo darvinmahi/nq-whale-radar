@@ -1,10 +1,10 @@
 {
   "agent": 4,
-  "timestamp": "2026-03-19T01:32:47.401258Z",
-  "verdict": "🟡 NEUTRAL-BEARISH (46/100) — Ligera inclinación bajista — preferir coberturas.",
-  "global_score": 46,
-  "global_label": "NEUTRAL-BEARISH",
-  "icon": "🟡",
+  "timestamp": "2026-03-19T02:41:26.429880Z",
+  "verdict": "⚪ NEUTRAL (51/100) — Sin sesgo claro — operar el rango o esperar catalizador.",
+  "global_score": 51,
+  "global_label": "NEUTRAL",
+  "icon": "⚪",
   "layers": {
     "positioning": 24,
     "macro": 50,

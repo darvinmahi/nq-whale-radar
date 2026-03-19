@@ -38,6 +38,7 @@ def generate_live_js():
     a13 = load_json("agent13_data.json")
     a14 = load_json("agent14_orderflow_data.json")
     a15 = load_json("agent15_journal_data.json")  # ← Agent 15 Journal
+    a16 = load_json("agent16_scorecard.json")  # ← Agent 16 Outcome Tracker
     study = load_json("data/research/repetition_study.json")
     master_db = load_json("data/research/master_repetition_db.json")
     strength = load_json("data/research/level_strength.json")
@@ -117,7 +118,8 @@ window.NQ_LIVE = {{
     any_stale: {"true" if any_stale else "false"}
   }},
   ENGINE_STATUS: "{engine_state}",
-  BRAIN_KNOWLEDGE: {json.dumps(brain, ensure_ascii=False)}
+  BRAIN_KNOWLEDGE: {json.dumps(brain, ensure_ascii=False)},
+  SCORECARD: {json.dumps(a16, ensure_ascii=False)}
 }};
 
 (function sync() {{
@@ -170,6 +172,21 @@ window.NQ_LIVE = {{
     set("engine-fail",     H.agents_failed + " FAIL");
     set("engine-time",     H.total_time_sec + "s");
     set("engine-quality",  H.data_quality + (H.any_stale ? " ⚠️" : " ✅"));
+
+    // ─── SCORECARD WIDGET (Agent 16) ──────────────────────
+    const SC = D.SCORECARD || {{}};
+    const scSummary = SC.summary || {{}};
+    set("sc-win-rate", (scSummary.win_rate_pct || 0) + "%");
+    set("sc-total-trades", scSummary.total_evaluated || 0);
+    set("sc-net-profit", (scSummary.net_profit_factor || 0).toFixed(2));
+    set("sc-best-streak", "W" + (scSummary.best_win_streak || 0));
+    set("sc-worst-streak", "L" + (scSummary.worst_loss_streak || 0));
+    set("sc-grade", scSummary.overall_grade || "—");
+    const scEl = document.getElementById("sc-grade");
+    if (scEl) {{
+      const g = (scSummary.overall_grade || "").charAt(0);
+      scEl.style.color = g === "A" ? "#22c55e" : g === "B" ? "#3b82f6" : g === "C" ? "#eab308" : g === "D" ? "#f97316" : "#ef4444";
+    }}
 }})();
 """
     with open(OUTPUT_JS, "w", encoding="utf-8") as f:

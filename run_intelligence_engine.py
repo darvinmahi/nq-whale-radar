@@ -1,20 +1,21 @@
 """
-ORCHESTRATOR — NQ Intelligence Engine v2.1 (PARALLEL MODE)
+ORCHESTRATOR — NQ Intelligence Engine v2.2 (PARALLEL MODE)
 ═══════════════════════════════════════════════════════════
-Mejoras v2.1:
+Mejoras v2.2:
   ✅ Paralelismo real:  Agent 1/2/3/6/7/8/9  corren en PARALELO
-  ✅ Dependencias:      Agent 4/10/11/12/13/14/15 esperan los datos base
+  ✅ Dependencias:      Agent 4/10/11/12/13/14/15/16 esperan los datos base
   ✅ Error handling:    Cada agente tiene timeout y reintento
   ✅ Health log:        Escribe engine_health.json después de cada ciclo
   ✅ Fallback:          Si un agente falla, el resto continúan
   ✅ Agent 15:          Journal Writer — genera entradas diarias del diario
+  ✅ Agent 16:          Outcome Tracker — mide resultados reales vs predicciones
 
 Frecuencia: Cada 15 minutos.
 Pipeline:
   [PRE-QA]        → Agent 0
   [PARALELO 1]    → Agent 1, 2, 3 (fetch de datos independientes)
   [PARALELO 2]    → Agent 6, 7, 8, 9 (análisis, esperan datos base)
-  [PARALELO 3]    → Agent 4, 10, 11, 12, 13, 14, 15 (síntesis + journal)
+  [PARALELO 3]    → Agent 4, 10, 11, 12, 13, 14, 15, 16 (síntesis + outcomes)
   [INJECTOR]      → Agent 5 (siempre último)
   [POST-QA]       → Agent 0
 """
@@ -143,14 +144,15 @@ def run_pipeline(cycle_num):
 
     # ── GRUPO 3: Síntesis (dependen de A1-A9) ─────────────────────
     grupo3 = [
-        ("agent4_bias_engine",        "Agent 4 · Bias Engine"),
-        ("agent10_learning_engine",   "Agent 10 · Learning Engine"),
-        ("agent12_backtester",        "Agent 12 · Backtest Engine"),
-        ("agent13_research_scout",    "Agent 13 · Research Scout"),
-        ("agent14_orderflow_expert",  "Agent 14 · Order Flow Expert"),
-        ("agent15_journal_writer",    "Agent 15 · Journal Writer"),
+        ("agent4_bias_engine",          "Agent 4 · Bias Engine"),
+        ("agent10_learning_engine",     "Agent 10 · Learning Engine"),
+        ("agent12_backtester",          "Agent 12 · Backtest Engine"),
+        ("agent13_research_scout",      "Agent 13 · Research Scout"),
+        ("agent14_orderflow_expert",    "Agent 14 · Order Flow Expert"),
+        ("agent15_journal_writer",      "Agent 15 · Journal Writer"),
+        ("agent16_outcome_tracker",     "Agent 16 · Outcome Tracker"),
     ]
-    run_parallel(grupo3, results, "3 (Síntesis + Journal)")
+    run_parallel(grupo3, results, "3 (Síntesis + Outcomes)")
 
     # ── GRUPO 4: Strategy (depende de Bias) ───────────────────────
     run_sequential("agent11_strategy_crafter", "Agent 11 · Strategy Crafter", results)
