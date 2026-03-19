@@ -12,9 +12,9 @@
   const SESSION_MAX_AGE = 24 * 60 * 60 * 1000; // 24 hours
   const LOGIN_PAGE = 'login.html';
 
-  // Don't guard the login page itself
+  // Don't guard the login page or the index (index uses auth_gate.js modal)
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  if (currentPage === LOGIN_PAGE) return;
+  if (currentPage === LOGIN_PAGE || currentPage === 'index.html') return;
 
   // Check for valid session
   let session = null;
