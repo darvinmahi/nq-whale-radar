@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <script src="auth.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noticias NQ — Whale Radar Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -101,6 +102,73 @@
             background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.04), transparent);
             animation: sweep 6s infinite;
         }
+        /* SIDEBAR PANELS */
+        .sidebar-panel {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .sidebar-panel h4 {
+            font-family: 'Barlow', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--electric-cyan);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sidebar-panel h4 .material-symbols-outlined { font-size: 16px; }
+        .cal-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 11px;
+        }
+        .cal-row:last-child { border-bottom: none; }
+        .cal-date { font-family: 'JetBrains Mono', monospace; color: var(--data-gray); min-width: 44px; }
+        .cal-event { flex: 1; margin: 0 8px; color: #e2e8f0; font-weight: 500; }
+        .cal-impact-high { color: #FF3D00; font-weight: 700; }
+        .cal-impact-medium { color: #FFA726; }
+        .cal-impact-low { color: var(--data-gray); }
+        .fear-gauge {
+            width: 100%; height: 8px; border-radius: 4px;
+            background: linear-gradient(90deg, #FF3D00, #FFA726, #4CAF50, #2196F3);
+            position: relative; margin: 10px 0;
+        }
+        .fear-gauge .indicator {
+            position: absolute; top: -4px; width: 16px; height: 16px;
+            border-radius: 50%; border: 2px solid #fff;
+            background: var(--navy-void); transform: translateX(-50%);
+            box-shadow: 0 0 8px rgba(255,255,255,0.3);
+        }
+        .stat-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 4px 0; font-size: 11px;
+        }
+        .stat-label { color: var(--data-gray); }
+        .stat-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+        .prob-bar {
+            height: 6px; border-radius: 3px;
+            background: rgba(255,255,255,0.05);
+            margin-top: 4px; overflow: hidden;
+        }
+        .prob-fill {
+            height: 100%; border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+            align-items: start;
+        }
+        @media (max-width: 1024px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
         @keyframes sweep {
             0% { left: -100%; }
             50% { left: 100%; }
@@ -173,42 +241,83 @@
             </button>
         </div>
 
-        <!-- NEWS GRID -->
-        <div id="newsContainer" class="space-y-3">
-            <!-- Skeleton loaders shown while fetching -->
-            <div class="glass-panel p-6 space-y-3">
-                <div class="skeleton h-4 w-3/4"></div>
-                <div class="skeleton h-3 w-full"></div>
-                <div class="skeleton h-3 w-5/6"></div>
-            </div>
-            <div class="glass-panel p-6 space-y-3">
-                <div class="skeleton h-4 w-2/3"></div>
-                <div class="skeleton h-3 w-full"></div>
-                <div class="skeleton h-3 w-4/6"></div>
-            </div>
-            <div class="glass-panel p-6 space-y-3">
-                <div class="skeleton h-4 w-4/5"></div>
-                <div class="skeleton h-3 w-full"></div>
-                <div class="skeleton h-3 w-3/6"></div>
-            </div>
-        </div>
+        <!-- ═══ 2-COLUMN GRID: NEWS + SIDEBAR ═══ -->
+        <div class="main-grid">
 
-        <!-- ERROR STATE (hidden by default) -->
-        <div id="errorState" class="hidden glass-panel p-12 text-center" style="border: 1px solid rgba(255, 61, 0, 0.2);">
-            <span class="material-symbols-outlined text-5xl mb-4 block" style="color: var(--risk-red);">cloud_off</span>
-            <h3 class="text-lg font-barlow font-bold uppercase mb-2">Error de Conexión</h3>
-            <p class="text-sm mb-6" style="color: var(--data-gray);">No se pudieron cargar las noticias. Verifica tu conexión a internet.</p>
-            <button onclick="refreshAllFeeds()" class="px-6 py-2 rounded text-xs font-bold uppercase tracking-widest transition-all" style="background: var(--electric-cyan); color: var(--navy-void);">
-                Reintentar
-            </button>
-        </div>
+            <!-- LEFT: NEWS FEED -->
+            <div>
+                <!-- NEWS GRID -->
+                <div id="newsContainer" class="space-y-3">
+                    <div class="glass-panel p-6 space-y-3"><div class="skeleton h-4 w-3/4"></div><div class="skeleton h-3 w-full"></div><div class="skeleton h-3 w-5/6"></div></div>
+                    <div class="glass-panel p-6 space-y-3"><div class="skeleton h-4 w-2/3"></div><div class="skeleton h-3 w-full"></div><div class="skeleton h-3 w-4/6"></div></div>
+                    <div class="glass-panel p-6 space-y-3"><div class="skeleton h-4 w-4/5"></div><div class="skeleton h-3 w-full"></div><div class="skeleton h-3 w-3/6"></div></div>
+                </div>
 
-        <!-- EMPTY STATE (hidden by default) -->
-        <div id="emptyState" class="hidden glass-panel p-12 text-center">
-            <span class="material-symbols-outlined text-5xl mb-4 block" style="color: var(--data-gray);">inbox</span>
-            <h3 class="text-lg font-barlow font-bold uppercase mb-2">Sin Noticias</h3>
-            <p class="text-sm" style="color: var(--data-gray);">No hay noticias disponibles en este momento. Se actualizará automáticamente.</p>
-        </div>
+                <!-- ERROR STATE -->
+                <div id="errorState" class="hidden glass-panel p-12 text-center" style="border: 1px solid rgba(255, 61, 0, 0.2);">
+                    <span class="material-symbols-outlined text-5xl mb-4 block" style="color: var(--risk-red);">cloud_off</span>
+                    <h3 class="text-lg font-barlow font-bold uppercase mb-2">Error de Conexión</h3>
+                    <p class="text-sm mb-6" style="color: var(--data-gray);">No se pudieron cargar las noticias.</p>
+                    <button onclick="refreshAllFeeds()" class="px-6 py-2 rounded text-xs font-bold uppercase" style="background: var(--electric-cyan); color: var(--navy-void);">Reintentar</button>
+                </div>
+
+                <!-- EMPTY STATE -->
+                <div id="emptyState" class="hidden glass-panel p-12 text-center">
+                    <span class="material-symbols-outlined text-5xl mb-4 block" style="color: var(--data-gray);">inbox</span>
+                    <h3 class="text-lg font-barlow font-bold uppercase mb-2">Sin Noticias</h3>
+                    <p class="text-sm" style="color: var(--data-gray);">Se actualizará automáticamente.</p>
+                </div>
+            </div>
+
+            <!-- RIGHT: SIDEBAR PANELS -->
+            <aside id="sidebarPanels">
+
+                <!-- 1. ECONOMIC CALENDAR -->
+                <div class="sidebar-panel">
+                    <h4><span class="material-symbols-outlined">calendar_month</span> Calendario Económico</h4>
+                    <div id="calendarPanel">
+                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
+                        <div class="skeleton h-3 w-4/5" style="margin-bottom:6px"></div>
+                        <div class="skeleton h-3 w-3/4"></div>
+                    </div>
+                </div>
+
+                <!-- 2. MARKET SENTIMENT -->
+                <div class="sidebar-panel">
+                    <h4><span class="material-symbols-outlined">psychology</span> Sentimiento de Mercado</h4>
+                    <div id="sentimentPanel">
+                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
+                        <div class="skeleton h-3 w-2/3"></div>
+                    </div>
+                </div>
+
+                <!-- 3. FED WATCH -->
+                <div class="sidebar-panel">
+                    <h4><span class="material-symbols-outlined">account_balance</span> FED Watch</h4>
+                    <div id="fedWatchPanel">
+                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
+                        <div class="skeleton h-3 w-3/5"></div>
+                    </div>
+                </div>
+
+                <!-- 4. AGENT13 STRATEGY -->
+                <div class="sidebar-panel" style="border-color: rgba(168,85,247,0.15);">
+                    <h4 style="color: #a855f7;"><span class="material-symbols-outlined">smart_toy</span> Agent13 Estrategia</h4>
+                    <div id="agent13Panel">
+                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
+                        <div class="skeleton h-3 w-4/5"></div>
+                    </div>
+                </div>
+
+                <!-- 5. SENTINEL VERDICT -->
+                <div class="sidebar-panel" style="border-color: rgba(255,61,0,0.15);">
+                    <h4 style="color: #FF3D00;"><span class="material-symbols-outlined">shield</span> Sentinel Verdict</h4>
+                    <p id="sentinelPanel" class="text-[11px] leading-relaxed" style="color: var(--data-gray);">Cargando...</p>
+                </div>
+
+            </aside>
+
+        </div><!-- /main-grid -->
 
     </main>
 
@@ -540,6 +649,7 @@ function startTimer() {
 document.addEventListener('DOMContentLoaded', () => {
     refreshAllFeeds();
     startTimer();
+    loadSidebarData();
 });
 
 const styleSheet = document.createElement('style');
@@ -548,6 +658,108 @@ styleSheet.textContent = `
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 `;
 document.head.appendChild(styleSheet);
+
+// ═══════════════════════════════════════════════════════
+// SIDEBAR — Load from news_research_data.json
+// ═══════════════════════════════════════════════════════
+async function loadSidebarData() {
+    try {
+        const resp = await fetch('data/news_research_data.json?t=' + Date.now());
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+        renderCalendar(data.economic_calendar || []);
+        renderSentiment(data.market_sentiment || {});
+        renderFedWatch(data.fed_watch || {});
+        renderAgent13(data.agent13_strategy || {});
+        renderSentinel(data.sentinel_verdict || '', data.cycle_stats || {});
+    } catch (e) {
+        console.warn('[Sidebar] No se pudo cargar news_research_data.json:', e.message);
+        document.getElementById('calendarPanel').innerHTML = '<p class="text-[10px]" style="color:var(--data-gray)">Datos no disponibles. Ejecuta update_news_research.py</p>';
+    }
+}
+
+function renderCalendar(events) {
+    const el = document.getElementById('calendarPanel');
+    if (!events.length) { el.innerHTML = '<p class="text-[10px]" style="color:var(--data-gray)">Sin eventos próximos</p>'; return; }
+    el.innerHTML = events.slice(0, 7).map(ev => {
+        const impClass = ev.impact === 'high' ? 'cal-impact-high' : ev.impact === 'medium' ? 'cal-impact-medium' : 'cal-impact-low';
+        return `<div class="cal-row">
+            <span class="cal-date">${ev.icon} ${ev.day}</span>
+            <span class="cal-event ${impClass}">${ev.event}</span>
+            <span class="cal-date">${ev.time_et || ''}</span>
+        </div>`;
+    }).join('');
+}
+
+function renderSentiment(s) {
+    const el = document.getElementById('sentimentPanel');
+    const fgColor = s.fear_greed_index < 30 ? '#FF3D00' : s.fear_greed_index < 50 ? '#FFA726' : s.fear_greed_index < 70 ? '#4CAF50' : '#2196F3';
+    el.innerHTML = `
+        <div style="text-align:center;margin-bottom:8px">
+            <span class="text-2xl font-barlow font-extrabold" style="color:${fgColor}">${s.fear_greed_index}</span>
+            <span class="text-[10px] font-mono uppercase block" style="color:${fgColor}">${s.fear_greed_label}</span>
+        </div>
+        <div class="fear-gauge"><div class="indicator" style="left:${s.fear_greed_index}%"></div></div>
+        <div class="stat-row"><span class="stat-label">VIX</span><span class="stat-value" style="color:${s.vix > 25 ? '#FF3D00' : s.vix > 18 ? '#FFA726' : '#4CAF50'}">${s.vix}</span></div>
+        <div class="stat-row"><span class="stat-label">VXN (Nasdaq)</span><span class="stat-value" style="color:${s.vxn > 28 ? '#FF3D00' : s.vxn > 20 ? '#FFA726' : '#4CAF50'}">${s.vxn}</span></div>
+        <div class="stat-row"><span class="stat-label">Put/Call</span><span class="stat-value" style="color:${s.put_call_ratio > 1.0 ? '#FF3D00' : '#4CAF50'}">${s.put_call_ratio} (${s.put_call_signal})</span></div>
+        <div class="stat-row"><span class="stat-label">AAII Bulls</span><span class="stat-value" style="color:#4CAF50">${s.aaii_bulls}%</span></div>
+        <div class="stat-row"><span class="stat-label">AAII Bears</span><span class="stat-value" style="color:#FF3D00">${s.aaii_bears}%</span></div>
+    `;
+}
+
+function renderFedWatch(fw) {
+    const el = document.getElementById('fedWatchPanel');
+    const probs = fw.probabilities || {};
+    const barItems = [
+        { label: 'HOLD', val: probs.hold || 0, color: '#94A3B8' },
+        { label: 'CUT 25bp', val: probs.cut_25bp || 0, color: '#4CAF50' },
+        { label: 'CUT 50bp', val: probs.cut_50bp || 0, color: '#2196F3' },
+        { label: 'HIKE 25bp', val: probs.hike_25bp || 0, color: '#FF3D00' }
+    ];
+    el.innerHTML = `
+        <div class="stat-row"><span class="stat-label">Next Meeting</span><span class="stat-value" style="color:var(--electric-cyan)">${fw.next_meeting || 'N/A'}</span></div>
+        <div class="stat-row"><span class="stat-label">Current Rate</span><span class="stat-value">${fw.current_rate || 'N/A'}</span></div>
+        <div style="margin-top:8px">
+            ${barItems.map(b => `
+                <div class="stat-row" style="margin-bottom:2px">
+                    <span class="stat-label">${b.label}</span>
+                    <span class="stat-value" style="color:${b.color}">${b.val.toFixed(1)}%</span>
+                </div>
+                <div class="prob-bar"><div class="prob-fill" style="width:${b.val}%;background:${b.color}"></div></div>
+            `).join('')}
+        </div>
+        <div class="stat-row" style="margin-top:8px;border-top:1px solid rgba(255,255,255,0.05);padding-top:6px">
+            <span class="stat-label">Cuts Priced 2026</span>
+            <span class="stat-value" style="color:#4CAF50">${fw.cuts_priced_2026 || 0}x</span>
+        </div>
+        <div class="stat-row"><span class="stat-label">Dot Plot Median</span><span class="stat-value">${fw.dot_plot_median_2026 || 'N/A'}</span></div>
+    `;
+}
+
+function renderAgent13(a) {
+    const el = document.getElementById('agent13Panel');
+    const reglas = (a.reglas || []).map(r => `<li style="margin-bottom:3px">${r}</li>`).join('');
+    el.innerHTML = `
+        <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:4px">${a.nombre || 'N/A'}</div>
+        <div class="text-[10px] font-mono" style="color:#a855f7;margin-bottom:6px">${a.tipo || ''} · Score: ${a.score_alpha || 'N/A'}</div>
+        <p class="text-[11px]" style="color:var(--data-gray);margin-bottom:6px">${a.descripcion || ''}</p>
+        ${reglas ? `<ol class="text-[10px]" style="color:var(--data-gray);padding-left:14px;margin:0">${reglas}</ol>` : ''}
+    `;
+}
+
+function renderSentinel(verdict, stats) {
+    const el = document.getElementById('sentinelPanel');
+    let statsHtml = '';
+    if (stats && Object.keys(stats).length) {
+        statsHtml = `<div style="margin-top:8px;border-top:1px solid rgba(255,255,255,0.05);padding-top:6px">
+            <div class="stat-row"><span class="stat-label">W1 Expansion</span><span class="stat-value">${stats.w1_expansion || 0}%</span></div>
+            <div class="stat-row"><span class="stat-label">W2 Megaphone</span><span class="stat-value">${stats.w2_megaphone || 0}%</span></div>
+            <div class="stat-row"><span class="stat-label">W3 Traps</span><span class="stat-value" style="color:#FF3D00">${stats.w3_traps || 0}%</span></div>
+        </div>`;
+    }
+    el.innerHTML = `<p class="text-[11px] leading-relaxed" style="color:#FFA726">${verdict}</p>${statsHtml}`;
+}
 </script>
 </body>
 </html>

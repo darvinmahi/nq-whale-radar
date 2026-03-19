@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script src="auth.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>COT Intelligence · NQ Institutional Flow</title>
 <meta name="description" content="Panel exclusivo COT — Commitment of Traders, DIX Dark Pools, señales institucionales para Nasdaq 100">
@@ -520,11 +521,9 @@ function scoreToWidth(score) {
 function renderCOT(data) {
   if (!data) return;
   const cot = data.COT || {};
-  const net = cot.net !== undefined ? cot.net : (window.NQ_LIVE?.COT?.net);
-  const idx = cot.index !== undefined ? cot.index : 0;
+  const net = cot.net !== undefined ? cot.net : (window.NQ_LIVE?.COT?.net ?? 0);
+  const idx = cot.index !== undefined && cot.index !== null ? cot.index : 0;
   const signal = cot.signal || 'NEUTRO';
-  const longs = cot.nc_long || 0;
-  const shorts = cot.nc_short || 0;
 
   set('cotNetVal', net !== undefined ? net.toLocaleString() : '—', colorFor(signal === 'BEARISH' ? 'BAJISTA' : signal === 'BULLISH' ? 'ALCISTA' : 'NEUTRO'));
   set('cotIndexNum', idx);
@@ -537,47 +536,58 @@ function renderCOT(data) {
   const marker = document.getElementById('cotGaugeMarker');
   if (marker) marker.style.bottom = idx + '%';
 
-  // Stats
-  set('cotMax', data.COT?.history_max?.toLocaleString() || '142,000');
-  set('cotMin', data.COT?.history_min?.toLocaleString() || '−89,615');
-  set('cotOI', data.COT?.oi?.toLocaleString() || '275,311');
-  set('cotWeeks', data.COT?.consecutive_weeks != null ? (data.COT.consecutive_weeks < 0 ? data.COT.consecutive_weeks + ' sem ↓' : '+' + data.COT.consecutive_weeks + ' sem ↑') : '—');
+  // Stats — use enriched COT data from agent_live_data.js
+  set('cotMax', cot.history_max?.toLocaleString() || '142,000');
+  set('cotMin', cot.history_min?.toLocaleString() || '−89,615');
+  set('cotOI', cot.oi?.toLocaleString() || '285,320');
+  const consWeeks = cot.consecutive_weeks;
+  set('cotWeeks', consWeeks != null ? (consWeeks < 0 ? consWeeks + ' sem ↓' : consWeeks > 0 ? '+' + consWeeks + ' sem ↑' : 'Estable') : '—');
 
-  // Insight
+  // Insight — based on COT index zone
   let insight = '';
   if (idx < 20) insight = '⚠️ COT en zona de <strong style="color:var(--red)">extremo bajista</strong>. Históricamente, los extremos actúan como señal contraria. Posible agotamiento vendedor en las próximas 2-4 semanas.';
   else if (idx < 40) insight = '🔴 COT por debajo del neutro. Los especulativos están <strong style="color:var(--red)">cortos neto</strong>. Riesgo de continuación bajista si el precio confirma.';
   else if (idx < 60) insight = '🟡 COT en zona <strong style="color:var(--yellow)">neutral</strong>. Ni acumulación ni distribución clara. Señales mixtas — esperar otras confirmaciones.';
   else if (idx < 80) insight = '🟢 COT positivo. Los Asset Managers están acumulando.<br>Señal <strong style="color:var(--green)">alcista moderada</strong> — buscar entradas en pullbacks.';
   else insight = '🚀 COT en zona de <strong style="color:var(--green)">acumulación extrema</strong>. Históricamente, el mercado tiende a continuar alcista. Alta probabilidad de expansión.';
+  // Append the COT razonamiento if provided
+  if (cot.razonamiento) {
+    insight += '<div style="margin-top:10px;padding:8px 10px;background:rgba(0,242,255,.06);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text)">' + cot.razonamiento + '</div>';
+  }
   const insightEl = document.getElementById('cotInsight');
   if (insightEl) insightEl.innerHTML = insight;
 
   // Alert
-  if (data.COT?.alert) {
+  if (cot.alert) {
     const ab = document.getElementById('cotAlertBox');
     if (ab) ab.style.display = 'block';
-    set('cotAlertText', data.COT.alert);
+    set('cotAlertText', cot.alert);
   }
 
-  // History table
-  const weeks = data.COT?.recent_weeks || [];
+  // History table — supports BOTH formats:
+  //   Format A: { date, nc_long, nc_short }  (old agent2_data.json)
+  //   Format B: { date, net, index }          (enriched agent_live_data.js)
+  const weeks = cot.recent_weeks || [];
   const tbody = document.getElementById('cotHistoryTbody');
   if (tbody && weeks.length > 0) {
     tbody.innerHTML = weeks.map((w, i) => {
-      const prev = weeks[i + 1];
-      const wNet = (w.nc_long || 0) - (w.nc_short || 0);
-      const variation = prev ? wNet - ((prev.nc_long || 0) - (prev.nc_short || 0)) : 0;
+      const wNet = w.net !== undefined ? w.net : ((w.nc_long || 0) - (w.nc_short || 0));
+      const prevWeek = i < weeks.length - 1 ? weeks[i + 1] : null;
+      const prevNet = prevWeek ? (prevWeek.net !== undefined ? prevWeek.net : ((prevWeek.nc_long || 0) - (prevWeek.nc_short || 0))) : null;
+      const variation = prevNet !== null ? wNet - prevNet : 0;
       const varColor = variation > 0 ? 'var(--green)' : variation < 0 ? 'var(--red)' : 'var(--gray)';
       const netColor = wNet > 0 ? 'var(--green)' : wNet < 0 ? 'var(--red)' : 'var(--gray)';
+      const wIdx = w.index !== undefined ? w.index : '—';
       const sig = wNet > 10000 ? '🟢 ALCISTA' : wNet < -10000 ? '🔴 BAJISTA' : '🟡 NEUTRO';
+      // Show net + index instead of nc_long/nc_short when using enriched format
+      const hasLongShort = w.nc_long !== undefined;
       return `<tr>
         <td style="color:var(--cyan)">${w.date}</td>
-        <td style="color:var(--green)">${(w.nc_long || 0).toLocaleString()}</td>
-        <td style="color:var(--red)">${(w.nc_short || 0).toLocaleString()}</td>
+        <td style="color:var(--green)">${hasLongShort ? (w.nc_long || 0).toLocaleString() : '—'}</td>
+        <td style="color:var(--red)">${hasLongShort ? (w.nc_short || 0).toLocaleString() : '—'}</td>
         <td style="font-weight:700;color:${netColor}">${wNet > 0 ? '+' : ''}${wNet.toLocaleString()}</td>
-        <td style="color:${varColor}">${i > 0 ? (variation > 0 ? '▲ +' + variation.toLocaleString() : '▼ ' + variation.toLocaleString()) : '—'}</td>
-        <td>${sig}</td>
+        <td style="color:${varColor}">${prevNet !== null ? (variation > 0 ? '▲ +' + variation.toLocaleString() : '▼ ' + variation.toLocaleString()) : '—'}</td>
+        <td>${sig} <span style="color:var(--gray);font-size:9px">${typeof wIdx === 'number' ? '(idx:' + wIdx + ')' : ''}</span></td>
       </tr>`;
     }).join('');
   }
@@ -686,43 +696,76 @@ function renderBias(bias) {
 
 // ─── POLLING ────────────────────────────────────────────────────────────────
 function refresh() {
+  const v2 = window.NQ;
   const NQ = window.NQ_LIVE;
-  if (NQ) {
-    // Construir objeto compatible con renderCOT
-    const cotData = {
-      COT: {
-        net: NQ.COT?.net,
-        index: NQ.COT?.index || 0,
-        signal: NQ.COT?.signal || 'NEUTRO',
-        nc_long: NQ.COT?.nc_long,
-        nc_short: NQ.COT?.nc_short,
-        oi: NQ.COT?.oi,
-        consecutive_weeks: NQ.COT?.consecutive_weeks,
-        history_max: NQ.COT?.history_max,
-        history_min: NQ.COT?.history_min,
-        alert: NQ.COT?.alert,
-        recent_weeks: NQ.COT?.recent_weeks || []
-      }
-    };
-    renderCOT(cotData);
 
-    const dixData = { dix: NQ.DIX || 0, gex: NQ.GEX?.raw || 0, DIX: { trend: NQ.DIX_TREND || 0 } };
-    renderDIX(dixData);
+  // === PRIORITY 1: agent_live_data.js enriched COT (always has hardcoded data) ===
+  if (NQ && NQ.COT && NQ.COT.net !== undefined) {
+    renderCOT({ COT: {
+      net: NQ.COT.net,
+      index: NQ.COT.index || 0,
+      signal: NQ.COT.signal || 'NEUTRO',
+      oi: NQ.COT.oi,
+      consecutive_weeks: NQ.COT.consecutive_weeks,
+      history_max: NQ.COT.history_max,
+      history_min: NQ.COT.history_min,
+      recent_weeks: NQ.COT.recent_weeks || [],
+      razonamiento: NQ.COT.razonamiento || '',
+      alert: NQ.COT.alert
+    }});
+  }
 
+  // === PRIORITY 2: v2 engine COT (only if API actually returned non-zero data) ===
+  if (v2 && v2.LIVE) {
+    const cot = v2.LIVE.cot || {};
+    // Only override COT if the v2 engine has REAL data (non-zero net from successful API)
+    if (cot.asset_managers_net && cot.asset_managers_net !== 0) {
+      renderCOT({ COT: {
+        net: cot.asset_managers_net,
+        index: cot.cot_index || 0,
+        signal: (cot.cot_index || 0) > 60 ? 'BULLISH' : (cot.cot_index || 0) < 40 ? 'BEARISH' : 'NEUTRO',
+        oi: cot.current_oi,
+        consecutive_weeks: cot.consecutive_weeks,
+        history_max: cot.hist_max,
+        history_min: cot.hist_min,
+        recent_weeks: cot.recent_weeks || [],
+        razonamiento: ''
+      }});
+    }
+
+    // DIX/GEX from v2 engine (these have good defaults)
+    renderDIX({
+      dix: v2.LIVE.dix || (NQ?.DIX || 0),
+      gex: v2.LIVE.gex || (NQ?.GEX?.raw || 0),
+      DIX: { trend: v2.LIVE.dix_trend || (NQ?.DIX_TREND || 0) }
+    });
+
+    // Bias from v2 engine (best source — computes from live data)
+    const bias = v2.calcBiasEngine ? v2.calcBiasEngine() : null;
+    if (bias) {
+      renderBias(bias);
+      renderSignals(bias);
+    }
+  } else if (NQ) {
+    // v2 engine not loaded — use static fallbacks for DIX/GEX/Bias
+    renderDIX({ dix: NQ.DIX || 0, gex: NQ.GEX?.raw || 0, DIX: { trend: NQ.DIX_TREND || 0 } });
     if (NQ.BIAS) {
       renderBias(NQ.BIAS);
       renderSignals(NQ.BIAS);
     }
-
-    set('lastUpdate', new Date().toLocaleTimeString('es-ES'));
   }
 
-  // Intentar leer agent2_data.json como fallback
+  set('lastUpdate', new Date().toLocaleTimeString('es-ES'));
+
+  // === PRIORITY 3: agent2_data.json (network file — last resort) ===
   fetch('agent2_data.json?t=' + Date.now()).then(r => r.json()).then(d => {
-    if (!window.NQ_LIVE?.COT?.net) {
-      const cotFallback = {
-        COT: {
-          net: d.cot?.current_net,
+    // Only use if we got nothing meaningful from P1 and P2
+    const cotNetEl = document.getElementById('cotNetVal');
+    const val = cotNetEl ? cotNetEl.innerText.replace(/[^0-9\-]/g, '') : '';
+    if (!val || val === '0') {
+      if (d.cot?.current_net) {
+        renderCOT({ COT: {
+          net: d.cot.current_net,
           index: d.cot?.cot_index || 0,
           signal: d.signal || 'NEUTRO',
           nc_long: d.recent_weeks?.[0]?.nc_long,
@@ -733,10 +776,8 @@ function refresh() {
           history_min: d.cot?.history_min,
           alert: d.insight?.alert,
           recent_weeks: d.recent_weeks || []
-        }
-      };
-      renderCOT(cotFallback);
-      set('lastUpdate', new Date().toLocaleTimeString('es-ES'));
+        }});
+      }
     }
   }).catch(() => {});
 }

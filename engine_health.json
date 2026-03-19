@@ -1,68 +1,68 @@
 {
-  "cycle": 9,
-  "timestamp": "2026-03-19T03:03:09.398360+00:00Z",
-  "last_update_human": "2026-03-19 03:03:09 UTC",
+  "cycle": 13,
+  "timestamp": "2026-03-19T03:56:59.066278+00:00Z",
+  "last_update_human": "2026-03-19 03:56:59 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 3.7,
+  "total_time_sec": 9.2,
   "agents_ok": 18,
   "agents_failed": 0,
   "details": {
     "Agent 0 · QA Commander [PRE]": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 3 · Volatility Analyst": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.5
-    },
-    "Agent 7 · Probability Analyst": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 9 · Silver Bullet": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 8.4
     },
     "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 6 · SMC Detective": {
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.1
     },
-    "Agent 4 · Bias Engine": {
+    "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
+    },
+    "Agent 6 · SMC Detective": {
+      "status": "✅ OK",
+      "time": 0.1
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 15 · Journal Writer": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
+    },
+    "Agent 4 · Bias Engine": {
+      "status": "✅ OK",
+      "time": 0.1
+    },
+    "Agent 15 · Journal Writer": {
+      "status": "✅ OK",
+      "time": 0.1
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.2
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.3
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
@@ -74,11 +74,11 @@
     },
     "Agent 5 · File Injector": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 0 · QA Commander [POST]": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     }
   }
 }

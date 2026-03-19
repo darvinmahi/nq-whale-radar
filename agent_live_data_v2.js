@@ -25,14 +25,16 @@ async function proxyFetch(url, opts = {}) {
 }
 
 // ── COT — Auto-fetch CFTC Disaggregated Futures ──────────────────────────────
+const _NQ = typeof window !== 'undefined' && window.NQ_LIVE ? window.NQ_LIVE : {};
+const _COT = _NQ.COT || {};
 const COT_DATA = {
-  date: 'cargando...',
-  asset_managers_net: 0,
-  prev_week_net: 0,
-  consecutive_weeks: 0,
-  cot_index: 50,
-  hist_min: 52000,
-  hist_max: 142000,
+  date: _NQ.last_update || 'cargando...',
+  asset_managers_net: _COT.net || 0,
+  prev_week_net: (_COT.recent_weeks && _COT.recent_weeks[1] ? _COT.recent_weeks[1].net : 0),
+  consecutive_weeks: _COT.consecutive_weeks || 0,
+  cot_index: _COT.index || 50,
+  hist_min: _COT.history_min || 52000,
+  hist_max: _COT.history_max || 142000,
 };
 
 // ── FETCH COT AUTOMÁTICO ──────────────────────────────────────────────────────
@@ -160,8 +162,11 @@ async function fetchYahoo(symbol) {
     const res  = await proxyFetch(url);
     const text = await res.text();
 
+    // Reject HTML error pages from proxy (not CSV data)
+    if (text.trim().startsWith('<') || text.includes('<!DOCTYPE')) return null;
+
     // CSV: Symbol,Date,Open,High,Low,Close,Volume  (sin header o con header)
-    const lines = text.trim().split('\n').filter(l => l && !l.toLowerCase().startsWith('symbol'));
+    const lines = text.trim().split('\n').filter(l => l && !l.toLowerCase().startsWith('symbol') && !l.toLowerCase().startsWith('date'));
     if (lines.length === 0) return null;
 
     // Parsear las últimas 10 filas para el histórico cercano
@@ -192,13 +197,16 @@ async function fetchDIX() {
     const url = 'https://squeezemetrics.com/monitor/static/DIX.csv';
     const res = await proxyFetch(url);
     const text = await res.text();
+    if (text.trim().startsWith('<') || text.includes('<!DOCTYPE')) return null;
     const rows = text.trim().split('\n');
     const recent = rows.slice(-5).map(r => {
       const c = r.split(',');
       return { date: c[0], dix: parseFloat(c[1]) * 100, gex: parseFloat(c[2]) };
-    });
+    }).filter(r => !isNaN(r.dix) && !isNaN(r.gex));
+    if (recent.length === 0) return null;
     const last = recent[recent.length - 1];
-    const prev = recent[recent.length - 2];
+    const prev = recent.length > 1 ? recent[recent.length - 2] : null;
+    if (isNaN(last.dix) || isNaN(last.gex)) return null;
     return {
       dix: last.dix,
       gex: last.gex,
@@ -647,7 +655,9 @@ function updateCOT(assetManagersNet, leveragedFundsNet, prevWeekNet) {
 }
 
 // ── PANEL COT VISUAL ──────────────────────────────────────────────────────────
-const COT_HISTORY = [-72100, -78340, -82190, -85470, -89615];  // historial seeded
+const COT_HISTORY = (_COT.recent_weeks && _COT.recent_weeks.length
+  ? _COT.recent_weeks.slice().reverse().map(w => w.net)
+  : [-72100, -78340, -82190, -85470, -89615]);
 
 function buildCOTPanelHTML() {
   const c        = LIVE.cot;
@@ -808,18 +818,20 @@ async function refreshAll() {
     ]);
 
   const ok = r => r.status === 'fulfilled' && r.value;
+  // Only apply fetched data if price is a valid number (not NaN from corrupted proxy responses)
+  const validPrice = r => ok(r) && typeof r.value.price === 'number' && !isNaN(r.value.price);
 
-  if (ok(ndxR))  LIVE.ndx     = ndxR.value;
-  if (ok(futR))  LIVE.nq_fut  = futR.value;
-  if (ok(vxnR))  LIVE.vxn     = vxnR.value;
-  if (ok(vixR))  LIVE.vix     = vixR.value;
-  if (ok(pcR))   LIVE.putcall = pcR.value;
-  if (ok(qqqR))  LIVE.qqq     = qqqR.value;
-  if (ok(spyR))  LIVE.spy     = spyR.value;
-  if (ok(xlkR))  LIVE.xlk     = xlkR.value;
-  if (ok(soxxR)) LIVE.soxx    = soxxR.value;
+  if (validPrice(ndxR))  LIVE.ndx     = ndxR.value;
+  if (validPrice(futR))  LIVE.nq_fut  = futR.value;
+  if (validPrice(vxnR))  LIVE.vxn     = vxnR.value;
+  if (validPrice(vixR))  LIVE.vix     = vixR.value;
+  if (validPrice(pcR))   LIVE.putcall = pcR.value;
+  if (validPrice(qqqR))  LIVE.qqq     = qqqR.value;
+  if (validPrice(spyR))  LIVE.spy     = spyR.value;
+  if (validPrice(xlkR))  LIVE.xlk     = xlkR.value;
+  if (validPrice(soxxR)) LIVE.soxx    = soxxR.value;
 
-  if (ok(dixR)) {
+  if (ok(dixR) && !isNaN(dixR.value.dix) && !isNaN(dixR.value.gex)) {
     LIVE.dix       = dixR.value.dix;
     LIVE.gex       = dixR.value.gex;
     LIVE.dix_trend = dixR.value.dix_trend;

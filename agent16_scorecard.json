@@ -1,75 +1,69 @@
 {
-  "generated_at": "2026-03-19T03:03:00.394881+00:00",
-  "total_predictions": 5,
+  "generated_at": "2026-03-19T03:48:25.877130+00:00",
+  "total_predictions": 11,
   "validated": 0,
   "win_rate_real": null,
   "wins": 0,
   "losses": 0,
-  "neutrals": 5,
+  "neutrals": 11,
   "current_streak": {
     "type": "NONE",
     "count": 0
   },
   "agent_accuracy": {
     "COT": {
-      "accuracy_pct": 25.0,
-      "wins": 1,
-      "losses": 3,
-      "neutrals": 1,
-      "total_calls": 4
+      "accuracy_pct": 33.3,
+      "wins": 2,
+      "losses": 4,
+      "neutrals": 5,
+      "total_calls": 6
     },
     "VOLATILITY": {
       "accuracy_pct": null,
       "wins": 0,
       "losses": 0,
-      "neutrals": 5,
+      "neutrals": 11,
       "total_calls": 0
     },
     "SMC": {
-      "accuracy_pct": 75.0,
-      "wins": 3,
-      "losses": 1,
-      "neutrals": 1,
-      "total_calls": 4
+      "accuracy_pct": 66.7,
+      "wins": 4,
+      "losses": 2,
+      "neutrals": 5,
+      "total_calls": 6
     },
     "PROBABILITY": {
       "accuracy_pct": null,
       "wins": 0,
       "losses": 0,
-      "neutrals": 5,
+      "neutrals": 11,
       "total_calls": 0
     },
     "SENTIMENT": {
       "accuracy_pct": null,
       "wins": 0,
       "losses": 0,
-      "neutrals": 5,
+      "neutrals": 11,
       "total_calls": 0
     },
     "SILVER_BULLET": {
       "accuracy_pct": 100.0,
       "wins": 1,
       "losses": 0,
-      "neutrals": 4,
+      "neutrals": 10,
       "total_calls": 1
     },
     "ORDERFLOW": {
-      "accuracy_pct": 75.0,
-      "wins": 3,
-      "losses": 1,
-      "neutrals": 1,
-      "total_calls": 4
+      "accuracy_pct": 66.7,
+      "wins": 4,
+      "losses": 2,
+      "neutrals": 5,
+      "total_calls": 6
     }
   },
   "best_agent": "SILVER_BULLET (100.0%)",
-  "worst_agent": "COT (25.0%)",
+  "worst_agent": "COT (33.3%)",
   "last_10_outcomes": [
-    {
-      "time": "2026-03-19T02:02:43.447958+00:00",
-      "outcome": "NEUTRAL",
-      "delta": 14.75,
-      "bias": "NEUTRAL"
-    },
     {
       "time": "2026-03-19T02:17:48.543592+00:00",
       "outcome": "NEUTRAL",
@@ -93,6 +87,42 @@
       "outcome": "NEUTRAL",
       "delta": 2.5,
       "bias": "NEUTRAL-BULLISH"
+    },
+    {
+      "time": "2026-03-19T03:03:00.394881+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 3.25,
+      "bias": "NEUTRAL-BULLISH"
+    },
+    {
+      "time": "2026-03-19T03:17:46.599296+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 2.5,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-03-19T03:18:03.748527+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 5.0,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-03-19T03:33:12.886446+00:00",
+      "outcome": "NEUTRAL",
+      "delta": -1.5,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-03-19T03:33:20.179789+00:00",
+      "outcome": "NEUTRAL",
+      "delta": -25.0,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-03-19T03:48:19.414906+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 0.75,
+      "bias": "NEUTRAL"
     }
   ],
   "status": "APRENDIENDO — 0 predicciones validadas (mínimo 5)"

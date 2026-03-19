@@ -114,6 +114,29 @@
     inner.appendChild(a);
   });
 
+  // ═══ User / Logout button ═══
+  if (window.NQ_AUTH && window.NQ_AUTH.user) {
+    const sep = document.createElement('div');
+    sep.className = 'nav-sep';
+    inner.appendChild(sep);
+
+    const userBtn = document.createElement('a');
+    userBtn.className = 'nav-item';
+    userBtn.href = '#';
+    userBtn.setAttribute('aria-label', 'Logout');
+    userBtn.title = window.NQ_AUTH.user + ' — Click to logout';
+    const initial = window.NQ_AUTH.user.charAt(0).toUpperCase();
+    userBtn.innerHTML = `
+      <span class="nav-icon" style="font-family:inherit;font-weight:800;font-size:14px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;color:#fff;line-height:1;">${initial}</span>
+      <span class="nav-label">Salir</span>
+    `;
+    userBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (window.NQ_AUTH) window.NQ_AUTH.logout();
+    });
+    inner.appendChild(userBtn);
+  }
+
   nav.appendChild(inner);
   document.body.appendChild(nav);
 })();

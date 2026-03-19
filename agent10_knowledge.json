@@ -1,45 +1,45 @@
 {
-    "last_updated": "2026-03-19T03:03:09.264628+00:00",
-    "total_cycles_analyzed": 24,
+    "last_updated": "2026-03-19T03:56:58.641983+00:00",
+    "total_cycles_analyzed": 37,
     "current_win_rate": 50.84,
     "current_bias": "ALCISTA",
     "status": "Adaptando — WR 50.8% [BACKTEST (estimado)] (bajo target 55.0%)",
     "insights": [
         {
             "type": "weight_evolution",
-            "text": "Posicionamiento (COT) (layer1) bajó 18.8% desde el primer ciclo",
+            "text": "Posicionamiento (COT) (layer1) bajó 19.0% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Macro & Sentiment (layer2) subió 14.1% desde el primer ciclo",
+            "text": "Macro & Sentiment (layer2) subió 16.4% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Liquidez (layer3) bajó 3.3% desde el primer ciclo",
+            "text": "Liquidez (layer3) bajó 7.1% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Timing & Session (layer4) subió 13.4% desde el primer ciclo",
+            "text": "Timing & Session (layer4) subió 18.3% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Algorítmico (SMC/Prob) (layer5) bajó 10.4% desde el primer ciclo",
+            "text": "Algorítmico (SMC/Prob) (layer5) bajó 13.4% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "current_state",
-            "text": "Ahora: 3 señales alcistas, 1 bajistas, 3 neutrales de 7 totales",
+            "text": "Ahora: 2 señales alcistas, 1 bajistas, 4 neutrales de 7 totales",
             "confidence": 100
         }
     ],
     "agent_performance": {
         "COT": {
             "alignment_pct": 0.0,
-            "samples": 21,
+            "samples": 34,
             "source": "COT"
         },
         "VOLATILITY": {
@@ -49,7 +49,7 @@
         },
         "SMC": {
             "alignment_pct": 0.0,
-            "samples": 24,
+            "samples": 37,
             "source": "SMC"
         },
         "PROBABILITY": {
@@ -69,7 +69,7 @@
         },
         "ORDERFLOW": {
             "alignment_pct": 0.0,
-            "samples": 24,
+            "samples": 37,
             "source": "ORDERFLOW"
         }
     },
@@ -81,21 +81,21 @@
         "triple_confluence_bull": 1
     },
     "weight_evolution": {
-        "layer1": -0.1883,
-        "layer2": 0.141,
-        "layer3": -0.0328,
-        "layer4": 0.1335,
-        "layer5": -0.1044
+        "layer1": -0.1903,
+        "layer2": 0.1637,
+        "layer3": -0.071,
+        "layer4": 0.1831,
+        "layer5": -0.1339
     },
     "system_health": {
         "data_quality": "100% — Todos los datos disponibles",
         "weight_stability": "EN AJUSTE",
-        "memory_size": 24
+        "memory_size": 37
     },
     "faq": [
         {
             "q": "¿Cuál es el sesgo actual?",
-            "a": "ALCISTA — 3 de 7 señales alineadas. Agentes activos: COT, SMC, SILVER_BULLET, ORDERFLOW"
+            "a": "ALCISTA — 2 de 7 señales alineadas. Agentes activos: COT, SMC, ORDERFLOW"
         },
         {
             "q": "¿Qué agente acierta más?",
@@ -107,7 +107,7 @@
         },
         {
             "q": "¿Cuántos ciclos ha analizado?",
-            "a": "24 ciclos en memoria. Win rate del backtest: 50.8%"
+            "a": "37 ciclos en memoria. Win rate del backtest: 50.8%"
         },
         {
             "q": "¿Hay algún patrón recurrente?",
@@ -115,15 +115,15 @@
         },
         {
             "q": "¿Los pesos han cambiado?",
-            "a": "Sí: layer1 ↓18.8%, layer2 ↑14.1%, layer3 ↓3.3%, layer4 ↑13.4%, layer5 ↓10.4%"
+            "a": "Sí: layer1 ↓19.0%, layer2 ↑16.4%, layer3 ↓7.1%, layer4 ↑18.3%, layer5 ↓13.4%"
         }
     ],
     "weights": {
-        "layer1": 0.0503,
-        "layer2": 0.3593,
-        "layer3": 0.1043,
-        "layer4": 0.2858,
-        "layer5": 0.1494,
-        "layer6": 0.051
+        "layer1": 0.0483,
+        "layer2": 0.382,
+        "layer3": 0.0661,
+        "layer4": 0.3354,
+        "layer5": 0.1199,
+        "layer6": 0.0483
     }
 }

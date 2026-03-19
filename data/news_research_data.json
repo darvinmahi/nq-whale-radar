@@ -1,0 +1,111 @@
+{
+    "last_updated": "2026-03-19T03:27:08.992930Z",
+    "economic_calendar": [
+        {
+            "event": "Philly Fed Index",
+            "impact": "low",
+            "icon": "⚪",
+            "time_et": "08:30",
+            "date": "2026-03-19",
+            "day": "Thu",
+            "week": 3,
+            "previous": null,
+            "forecast": null,
+            "actual": null
+        },
+        {
+            "event": "PMI Flash",
+            "impact": "medium",
+            "icon": "🟡",
+            "time_et": "09:45",
+            "date": "2026-03-20",
+            "day": "Fri",
+            "week": 3,
+            "previous": null,
+            "forecast": null,
+            "actual": null
+        },
+        {
+            "event": "Consumer Confidence",
+            "impact": "medium",
+            "icon": "🟡",
+            "time_et": "10:00",
+            "date": "2026-03-24",
+            "day": "Tue",
+            "week": 4,
+            "previous": null,
+            "forecast": null,
+            "actual": null
+        },
+        {
+            "event": "GDP (Preliminary)",
+            "impact": "high",
+            "icon": "🔴",
+            "time_et": "08:30",
+            "date": "2026-03-26",
+            "day": "Thu",
+            "week": 4,
+            "previous": null,
+            "forecast": null,
+            "actual": null
+        },
+        {
+            "event": "Core PCE (Fed Preferred)",
+            "impact": "high",
+            "icon": "🔴",
+            "time_et": "08:30",
+            "date": "2026-03-27",
+            "day": "Fri",
+            "week": 4,
+            "previous": null,
+            "forecast": null,
+            "actual": null
+        }
+    ],
+    "market_sentiment": {
+        "fear_greed_index": 38,
+        "fear_greed_label": "FEAR",
+        "vix": 25.1,
+        "vxn": 27.7,
+        "put_call_ratio": 1.0,
+        "put_call_signal": "NEUTRAL",
+        "aaii_bulls": 33.0,
+        "aaii_bears": 33.0,
+        "aaii_neutral": 34.0,
+        "smart_money_confidence": 50,
+        "dumb_money_confidence": 50
+    },
+    "fed_watch": {
+        "next_meeting": "2026-05-06",
+        "current_rate": "4.25-4.50%",
+        "probabilities": {
+            "hold": 82.0,
+            "cut_25bp": 18.0,
+            "cut_50bp": 0.0,
+            "hike_25bp": 0.0
+        },
+        "dot_plot_median_2026": "3.75%",
+        "cuts_priced_2026": 2,
+        "market_terminal_rate": "3.50%"
+    },
+    "agent13_strategy": {
+        "nombre": "Aceptación de Apertura NY sobre POC Londres",
+        "tipo": "Session Profile / Trend",
+        "descripcion": "Si la apertura de las 9:30 AM ocurre por encima del POC de la sesión de Londres y se mantiene así por 15 minutos, la probabilidad de visitar el VAH semanal aumenta al 78%.",
+        "reglas": [
+            "1. Definir POC de Londres antes de las 9:30 AM.",
+            "2. Apertura de NY (9:30) por encima del POC de Londres.",
+            "3. Primera vela de 15m cierra por encima con Delta positivo."
+        ],
+        "fuente": "Metodología de Usuario / Alpha Flow",
+        "score_alpha": "9.2/10",
+        "external_bias": "ESTUDIO DE BACKTESTING 3 AÑOS EN CURSO"
+    },
+    "sentinel_verdict": "ALERTA: Ciclo FOMC (W3). Dominio de TRAMPAS (31.6%). El precio suele barrer liquidez antes de la FED.",
+    "cycle_stats": {
+        "w1_expansion": 67.9,
+        "w2_megaphone": 34.5,
+        "w3_traps": 31.6,
+        "yearly_megaphone": 31.5
+    }
+}
