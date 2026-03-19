@@ -1,28 +1,40 @@
 {
   "agent": 1,
   "name": "Data Collector",
-  "timestamp": "2026-03-18T14:17:57.064707+00:00Z",
+  "timestamp": "2026-03-19T01:32:43.483338+00:00Z",
   "yahoo": {
-    "NDX": null,
-    "VXN": null,
-    "NQ_futures": null
+    "NDX": {
+      "price": 24425.09,
+      "prev_close": 24780.42,
+      "change_pct": -1.43
+    },
+    "VXN": {
+      "price": 27.72,
+      "prev_close": 24.66,
+      "change_pct": 12.41
+    },
+    "NQ_futures": {
+      "price": 24625.25,
+      "prev_close": 24795.5,
+      "change_pct": -0.69
+    }
   },
   "squeezemetrics": {
-    "DIX": null,
-    "GEX_raw": null,
-    "GEX_B": null,
-    "date": null
+    "DIX": 45.27,
+    "GEX_raw": -140231247.46000004,
+    "GEX_B": -0.14,
+    "date": "2026-03-18"
   },
   "cftc_cot": {
-    "cot_nc_long": null,
-    "cot_nc_short": null,
-    "cot_net": null,
-    "cot_oi": null,
-    "cot_date": null
+    "cot_nc_long": 11952,
+    "cot_nc_short": 101567,
+    "cot_net": -89615,
+    "cot_oi": 275311,
+    "cot_date": "2026-03-10"
   },
   "sentiment": {
-    "NQ1_OI": null,
-    "NQ1_volume": null,
-    "pcr": null
+    "NQ1_OI": 203054,
+    "NQ1_volume": 25723,
+    "pcr": 0.65
   }
 }

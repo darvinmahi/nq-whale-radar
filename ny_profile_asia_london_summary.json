@@ -1,0 +1,123 @@
+{
+    "title": "NY PM Profile Asia+London — VAH/POC/VAL Strategy",
+    "periodo": "2025-09-12 → 2026-03-17",
+    "dias": 126,
+    "trades": 177,
+    "por_dia": {
+        "LUNES": {
+            "n": 25,
+            "avg_va_range": 134.0,
+            "avg_pm_range": 185.0,
+            "touches_vah_pct": 76.0,
+            "touches_val_pct": 44.0,
+            "touches_poc_pct": 32.0,
+            "breaks_vah_pct": 72.0,
+            "breaks_val_pct": 36.0,
+            "vah_bounce_pct": 5.0,
+            "val_bounce_pct": 18.0,
+            "strategy": "💥 BREAKOUT VAH LONG (72% days)"
+        },
+        "MARTES": {
+            "n": 27,
+            "avg_va_range": 133.0,
+            "avg_pm_range": 240.0,
+            "touches_vah_pct": 85.0,
+            "touches_val_pct": 67.0,
+            "touches_poc_pct": 63.0,
+            "breaks_vah_pct": 78.0,
+            "breaks_val_pct": 56.0,
+            "vah_bounce_pct": 9.0,
+            "val_bounce_pct": 17.0,
+            "strategy": "💥 BREAKOUT VAH LONG (78% days)"
+        },
+        "MIÉRCOLES": {
+            "n": 25,
+            "avg_va_range": 128.0,
+            "avg_pm_range": 247.0,
+            "touches_vah_pct": 64.0,
+            "touches_val_pct": 64.0,
+            "touches_poc_pct": 44.0,
+            "breaks_vah_pct": 60.0,
+            "breaks_val_pct": 60.0,
+            "vah_bounce_pct": 6.0,
+            "val_bounce_pct": 6.0,
+            "strategy": "💥 BREAKOUT VAH LONG (60% days)"
+        },
+        "JUEVES": {
+            "n": 23,
+            "avg_va_range": 154.0,
+            "avg_pm_range": 277.0,
+            "touches_vah_pct": 39.0,
+            "touches_val_pct": 83.0,
+            "touches_poc_pct": 52.0,
+            "breaks_vah_pct": 30.0,
+            "breaks_val_pct": 83.0,
+            "vah_bounce_pct": 22.0,
+            "val_bounce_pct": 0.0,
+            "strategy": "⚠️  Sin señal dominante — esperar confirmación"
+        },
+        "VIERNES": {
+            "n": 26,
+            "avg_va_range": 142.0,
+            "avg_pm_range": 258.0,
+            "touches_vah_pct": 73.0,
+            "touches_val_pct": 58.0,
+            "touches_poc_pct": 54.0,
+            "breaks_vah_pct": 65.0,
+            "breaks_val_pct": 54.0,
+            "vah_bounce_pct": 11.0,
+            "val_bounce_pct": 7.0,
+            "strategy": "💥 BREAKOUT VAH LONG (65% days)"
+        }
+    },
+    "best_strategies": [
+        {
+            "strategy": "VAH_REJECTION_SHORT",
+            "n": 2,
+            "wr": 100.0,
+            "rr": 0,
+            "total_pnl": -80.2,
+            "dollar_est": -1604.0
+        },
+        {
+            "strategy": "VAL_REJECTION_LONG",
+            "n": 4,
+            "wr": 100.0,
+            "rr": 0,
+            "total_pnl": 176.8,
+            "dollar_est": 3536.0
+        },
+        {
+            "strategy": "POC_SHORT",
+            "n": 32,
+            "wr": 0.0,
+            "rr": 0.0,
+            "total_pnl": 854.3,
+            "dollar_est": 17086.0
+        },
+        {
+            "strategy": "POC_LONG",
+            "n": 25,
+            "wr": 4.0,
+            "rr": 3.82,
+            "total_pnl": -489.7,
+            "dollar_est": -9794.0
+        },
+        {
+            "strategy": "BREAKOUT_VAH_LONG",
+            "n": 55,
+            "wr": 25.5,
+            "rr": 1.56,
+            "total_pnl": -830.3000000000001,
+            "dollar_est": -16606.0
+        },
+        {
+            "strategy": "BREAKDOWN_VAL_SHORT",
+            "n": 55,
+            "wr": 27.3,
+            "rr": 1.58,
+            "total_pnl": 702.9000000000001,
+            "dollar_est": 14058.000000000002
+        }
+    ]
+}

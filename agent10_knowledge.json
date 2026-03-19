@@ -1,0 +1,126 @@
+{
+    "last_updated": "2026-03-19T01:32:47.395406+00:00",
+    "total_cycles_analyzed": 6,
+    "current_win_rate": 50.84,
+    "current_bias": "NEUTRAL",
+    "status": "Adaptando — WR 50.8% (bajo target 55.0%)",
+    "insights": [
+        {
+            "type": "weight_evolution",
+            "text": "Posicionamiento (COT) (layer1) bajó 3.9% desde el primer ciclo",
+            "confidence": 100
+        },
+        {
+            "type": "weight_evolution",
+            "text": "Macro & Sentiment (layer2) subió 8.4% desde el primer ciclo",
+            "confidence": 100
+        },
+        {
+            "type": "weight_evolution",
+            "text": "Liquidez & OrderFlow (layer3) bajó 7.3% desde el primer ciclo",
+            "confidence": 100
+        },
+        {
+            "type": "weight_evolution",
+            "text": "Timing & Session (layer4) subió 2.0% desde el primer ciclo",
+            "confidence": 100
+        },
+        {
+            "type": "weight_evolution",
+            "text": "Algorítmico (SMC/Prob) (layer5) subió 0.8% desde el primer ciclo",
+            "confidence": 100
+        },
+        {
+            "type": "current_state",
+            "text": "Ahora: 2 señales alcistas, 2 bajistas, 3 neutrales de 7 totales",
+            "confidence": 100
+        }
+    ],
+    "agent_performance": {
+        "COT": {
+            "alignment_pct": null,
+            "samples": 5,
+            "source": "COT"
+        },
+        "VOLATILITY": {
+            "alignment_pct": null,
+            "samples": 0,
+            "source": "VOLATILITY"
+        },
+        "SMC": {
+            "alignment_pct": 0.0,
+            "samples": 6,
+            "source": "SMC"
+        },
+        "PROBABILITY": {
+            "alignment_pct": null,
+            "samples": 0,
+            "source": "PROBABILITY"
+        },
+        "SENTIMENT": {
+            "alignment_pct": null,
+            "samples": 0,
+            "source": "SENTIMENT"
+        },
+        "SILVER_BULLET": {
+            "alignment_pct": null,
+            "samples": 5,
+            "source": "SILVER_BULLET"
+        },
+        "ORDERFLOW": {
+            "alignment_pct": 0.0,
+            "samples": 6,
+            "source": "ORDERFLOW"
+        }
+    },
+    "summary": {
+        "best_predictor": "SMC (0.0% alineación)",
+        "worst_predictor": "ORDERFLOW (0.0% alineación)"
+    },
+    "pattern_history": {},
+    "weight_evolution": {
+        "layer1": -0.039,
+        "layer2": 0.0839,
+        "layer3": -0.0728,
+        "layer4": 0.02,
+        "layer5": 0.0078
+    },
+    "system_health": {
+        "data_quality": "100% — Todos los datos disponibles",
+        "weight_stability": "EN AJUSTE",
+        "memory_size": 6
+    },
+    "faq": [
+        {
+            "q": "¿Cuál es el sesgo actual?",
+            "a": "NEUTRAL — 2 de 7 señales alineadas. Agentes activos: COT, SMC, SILVER_BULLET, ORDERFLOW"
+        },
+        {
+            "q": "¿Qué agente acierta más?",
+            "a": "Necesito más datos (6 ciclos, mínimo 10)"
+        },
+        {
+            "q": "¿Qué agente acierta menos?",
+            "a": "Necesito más datos (6 ciclos, mínimo 10)"
+        },
+        {
+            "q": "¿Cuántos ciclos ha analizado?",
+            "a": "6 ciclos en memoria. Win rate del backtest: 50.8%"
+        },
+        {
+            "q": "¿Hay algún patrón recurrente?",
+            "a": "Aún no hay suficientes datos para detectar patrones"
+        },
+        {
+            "q": "¿Los pesos han cambiado?",
+            "a": "Sí: layer1 ↓3.9%, layer2 ↑8.4%, layer3 ↓7.3%, layer4 ↑2.0%, layer5 ↑0.8%"
+        }
+    ],
+    "weights": {
+        "layer1": 0.1996,
+        "layer2": 0.3022,
+        "layer3": 0.0643,
+        "layer4": 0.1723,
+        "layer5": 0.2616
+    }
+}

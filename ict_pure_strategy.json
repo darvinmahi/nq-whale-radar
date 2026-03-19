@@ -1,0 +1,14 @@
+{
+    "strategy": "ICT Puro \u2014 Asia Range + Londres Sweep + NY Reversion",
+    "total_setups": 355,
+    "wins": 112,
+    "losses": 190,
+    "flats": 53,
+    "win_rate": 37.1,
+    "buy_wr": 40.0,
+    "sell_wr": 35.0,
+    "avg_win_pts": 93.0,
+    "avg_loss_pts": -94.8,
+    "rr_ratio": 0.98,
+    "total_pnl_pts": -7602.4
+}

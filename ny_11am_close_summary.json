@@ -1,0 +1,125 @@
+{
+    "title": "Backtest NY Session 11 AM → Close | NQ NASDAQ | 6 Meses",
+    "period": "2025-09-12 → 2026-03-17",
+    "days_analyzed": 126,
+    "total_trades_simulated": 50,
+    "by_day": {
+        "LUNES": {
+            "n": 25,
+            "dominant_model": "CONTINUATION",
+            "pct_dom": 32.0,
+            "pct_cont": 43.47826086956522,
+            "pct_rev": 34.78260869565217,
+            "pm_bull_pct": 60.0,
+            "pm_bear_pct": 20.0,
+            "avg_pm_range": 184.56400000000002,
+            "avg_am_range": 221.60000000000002,
+            "sweep_hi_pct": 68.0,
+            "sweep_lo_pct": 20.0,
+            "poc_test_pct": 40.0,
+            "strategy": "⚠️ EVITAR — Sesión sin patrón claro (CONTINUATION)"
+        },
+        "MARTES": {
+            "n": 27,
+            "dominant_model": "LUNCH_TRAP",
+            "pct_dom": 37.03703703703704,
+            "pct_cont": 34.78260869565217,
+            "pct_rev": 47.82608695652174,
+            "pm_bull_pct": 40.74074074074074,
+            "pm_bear_pct": 40.74074074074074,
+            "avg_pm_range": 239.92592592592592,
+            "avg_am_range": 231.64444444444442,
+            "sweep_hi_pct": 59.25925925925925,
+            "sweep_lo_pct": 33.33333333333333,
+            "poc_test_pct": 22.22222222222222,
+            "strategy": "🔄 REVERSAL (48%) — Opera sweeps del rango AM"
+        },
+        "MIÉRCOLES": {
+            "n": 25,
+            "dominant_model": "CONTINUATION",
+            "pct_dom": 32.0,
+            "pct_cont": 41.66666666666667,
+            "pct_rev": 45.83333333333333,
+            "pm_bull_pct": 48.0,
+            "pm_bear_pct": 40.0,
+            "avg_pm_range": 246.70800000000003,
+            "avg_am_range": 251.92,
+            "sweep_hi_pct": 44.0,
+            "sweep_lo_pct": 56.00000000000001,
+            "poc_test_pct": 32.0,
+            "strategy": "🔄 REVERSAL (46%) — Opera sweeps del rango AM"
+        },
+        "JUEVES": {
+            "n": 23,
+            "dominant_model": "ROTATION",
+            "pct_dom": 30.434782608695656,
+            "pct_cont": 31.818181818181817,
+            "pct_rev": 54.54545454545454,
+            "pm_bull_pct": 34.78260869565217,
+            "pm_bear_pct": 52.17391304347826,
+            "avg_pm_range": 277.23913043478257,
+            "avg_am_range": 281.3434782608696,
+            "sweep_hi_pct": 13.043478260869565,
+            "sweep_lo_pct": 52.17391304347826,
+            "poc_test_pct": 21.73913043478261,
+            "strategy": "⚠️ EVITAR — Sesión sin patrón claro (ROTATION)"
+        },
+        "VIERNES": {
+            "n": 26,
+            "dominant_model": "EXPANSION_PM",
+            "pct_dom": 26.923076923076923,
+            "pct_cont": 36.36363636363637,
+            "pct_rev": 36.36363636363637,
+            "pm_bull_pct": 34.61538461538461,
+            "pm_bear_pct": 42.30769230769231,
+            "avg_pm_range": 258.2269230769231,
+            "avg_am_range": 270.1730769230769,
+            "sweep_hi_pct": 50.0,
+            "sweep_lo_pct": 34.61538461538461,
+            "poc_test_pct": 11.538461538461538,
+            "strategy": "⚠️ EVITAR — Sesión sin patrón claro (EXPANSION_PM)"
+        }
+    },
+    "trading_guide": {
+        "LUNES": {
+            "dominant_model": "CONTINUATION",
+            "continuacion_pct": 43.47826086956522,
+            "reversal_pct": 34.78260869565217,
+            "strategy": "⚠️ EVITAR — Sesión sin patrón claro (CONTINUATION)",
+            "avg_pm_range_pts": 185.0
+        },
+        "MARTES": {
+            "dominant_model": "LUNCH_TRAP",
+            "continuacion_pct": 34.78260869565217,
+            "reversal_pct": 47.82608695652174,
+            "strategy": "🔄 REVERSAL (48%) — Opera sweeps del rango AM",
+            "avg_pm_range_pts": 240.0
+        },
+        "MIÉRCOLES": {
+            "dominant_model": "CONTINUATION",
+            "continuacion_pct": 41.66666666666667,
+            "reversal_pct": 45.83333333333333,
+            "strategy": "🔄 REVERSAL (46%) — Opera sweeps del rango AM",
+            "avg_pm_range_pts": 247.0
+        },
+        "JUEVES": {
+            "dominant_model": "ROTATION",
+            "continuacion_pct": 31.818181818181817,
+            "reversal_pct": 54.54545454545454,
+            "strategy": "⚠️ EVITAR — Sesión sin patrón claro (ROTATION)",
+            "avg_pm_range_pts": 277.0
+        },
+        "VIERNES": {
+            "dominant_model": "EXPANSION_PM",
+            "continuacion_pct": 36.36363636363637,
+            "reversal_pct": 36.36363636363637,
+            "strategy": "⚠️ EVITAR — Sesión sin patrón claro (EXPANSION_PM)",
+            "avg_pm_range_pts": 258.0
+        }
+    },
+    "all_strategies_tested": [
+        "OTE_REVERSAL (61.8% Fib del sweep del rango AM)",
+        "POC_RETURN (retorno al POC del perfil AM)",
+        "CONTINUATION (en dirección del trend AM con EMA200/50)"
+    ]
+}

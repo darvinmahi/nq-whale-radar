@@ -1,0 +1,8 @@
+{
+    "title": "Patrones de Apertura NY vs POC Asia/Lon",
+    "days": 50,
+    "magnet_prob": "22.0%",
+    "runaway_prob": "34.0%",
+    "conclusion": "El Nasdaq tiene un sesgo de 'IMÁN' hacia el POC combinado en un 22.0% de los días sugeridos.",
+    "strategy": "Colocar órdenes limitadas en el POC combinado con stop bajo el VAL de Londres."
+}

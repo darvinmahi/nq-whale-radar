@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COT Intelligence · NQ Institutional Flow</title>
+<meta name="description" content="Panel exclusivo COT — Commitment of Traders, DIX Dark Pools, señales institucionales para Nasdaq 100">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+<style>
+  :root {
+    --bg: #020617;
+    --panel: rgba(15,23,42,0.85);
+    --border: rgba(0,242,255,0.12);
+    --cyan: #00f2ff;
+    --green: #00ff88;
+    --red: #ff3355;
+    --yellow: #ffd60a;
+    --gray: #475569;
+    --text: #e2e8f0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+
+  /* --- ANIMATED BG --- */
+  body::before{content:'';position:fixed;inset:0;background:
+    radial-gradient(ellipse at 20% 10%, rgba(0,242,255,.04) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(99,102,241,.04) 0%,transparent 55%);
+    pointer-events:none;z-index:0}
+
+  /* --- TOPBAR --- */
+  .topbar{position:sticky;top:0;z-index:100;background:rgba(2,6,23,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .topbar-left{display:flex;align-items:center;gap:12px}
+  .back-btn{display:flex;align-items:center;gap:6px;color:var(--gray);font-size:12px;font-family:'JetBrains Mono',monospace;text-decoration:none;padding:6px 12px;border:1px solid rgba(255,255,255,.08);border-radius:8px;transition:all .2s}
+  .back-btn:hover{color:var(--cyan);border-color:var(--border)}
+  .page-title{font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan)}
+  .page-subtitle{font-size:10px;color:var(--gray);font-family:'JetBrains Mono',monospace}
+  .live-badge{display:flex;align-items:center;gap:6px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--green);font-weight:700}
+  .live-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+
+  /* --- GRID --- */
+  .container{max-width:1400px;margin:0 auto;padding:24px;position:relative;z-index:1}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+  @media(max-width:1100px){.grid-4{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:1fr 1fr}}
+  @media(max-width:700px){.grid-4,.grid-2,.grid-3{grid-template-columns:1fr}}
+
+  /* --- PANEL --- */
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;backdrop-filter:blur(12px)}
+  .panel-header{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between}
+  .panel-title{font-size:10px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px;color:var(--gray);font-weight:700}
+  .panel-body{padding:16px}
+
+  /* --- KPI CARD --- */
+  .kpi{padding:20px;text-align:center}
+  .kpi-label{font-size:9px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray);margin-bottom:8px}
+  .kpi-val{font-size:30px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1;margin-bottom:4px}
+  .kpi-sub{font-size:10px;color:var(--gray)}
+  .kpi-signal{font-size:9px;font-family:'JetBrains Mono',monospace;padding:3px 8px;border-radius:6px;margin-top:8px;display:inline-block;font-weight:700}
+
+  /* --- PROGRESS BAR --- */
+  .bar-track{background:rgba(255,255,255,.06);border-radius:999px;height:8px;position:relative;overflow:hidden;margin:8px 0}
+  .bar-fill{height:100%;border-radius:999px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+  .bar-markers{display:flex;justify-content:space-between;font-size:8px;font-family:'JetBrains Mono',monospace;color:var(--gray);margin-top:4px}
+
+  /* --- TABLE --- */
+  table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px}
+  thead th{padding:10px 12px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--gray);border-bottom:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.2)}
+  tbody tr{border-bottom:1px solid rgba(255,255,255,.03);transition:background .2s}
+  tbody tr:hover{background:rgba(0,242,255,.04)}
+  tbody td{padding:10px 12px}
+
+  /* --- SIGNAL ROW --- */
+  .sig-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
+  .sig-row:last-child{border-bottom:none}
+  .sig-icon{font-size:20px;width:32px;text-align:center;flex-shrink:0}
+  .sig-name{font-size:11px;font-weight:600;color:var(--text);margin-bottom:2px}
+  .sig-detail{font-size:10px;color:var(--gray);font-family:'JetBrains Mono',monospace}
+  .sig-score{margin-left:auto;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;flex-shrink:0}
+  .sig-bar{width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;flex-shrink:0}
+  .sig-bar-fill{height:100%;border-radius:999px}
+
+  /* --- COT GAUGE (SVG) --- */
+  .gauge-wrap{display:flex;flex-direction:column;align-items:center;padding:20px}
+
+  /* --- CHIP --- */
+  .chip{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-family:'JetBrains Mono',monospace;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase}
+  .chip-bull{background:rgba(0,255,136,.15);color:var(--green);border:1px solid rgba(0,255,136,.2)}
+  .chip-bear{background:rgba(255,51,85,.15);color:var(--red);border:1px solid rgba(255,51,85,.2)}
+  .chip-neu{background:rgba(255,214,10,.12);color:var(--yellow);border:1px solid rgba(255,214,10,.2)}
+  .chip-info{background:rgba(0,242,255,.1);color:var(--cyan);border:1px solid var(--border)}
+
+  /* --- BLINK --- */
+  .blink{animation:blink .8s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* --- SCROLLBAR --- */
+  ::-webkit-scrollbar{width:4px;height:4px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:rgba(0,242,255,.2);border-radius:2px}
+
+  /* --- SECTION HEADER --- */
+  .section-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .section-line{flex:1;height:1px;background:rgba(255,255,255,.06)}
+  .section-label{font-size:9px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:2px;color:var(--gray)}
+
+  /* --- HISTORY CANVAS --- */
+  #cotHistoryCanvas{width:100%;height:160px;display:block}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back-btn" href="index.html">
+      <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span> Dashboard
+    </a>
+    <div>
+      <div class="page-title">COT Intelligence</div>
+      <div class="page-subtitle">Commitment of Traders · NQ Institutional Flow</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px">
+    <span style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--gray)">Actualizado: <span id="lastUpdate" style="color:var(--cyan)">—</span></span>
+    <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- KPI HEROES -->
+  <div class="grid-4">
+    <!-- COT Net -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">COT Net (NC)</span><span class="chip chip-info">CFTC Weekly</span></div>
+      <div class="kpi">
+        <div class="kpi-label">Non-Commercial Net</div>
+        <div class="kpi-val" id="cotNetVal" style="color:var(--red)">—</div>
+        <div class="kpi-sub">contratos</div>
+        <div class="kpi-signal" id="cotSignalChip" style="background:rgba(255,51,85,.15);color:var(--red)">BEARISH</div>
+        <div style="margin-top:10px">
+          <div class="bar-track">
+            <div class="bar-fill" id="cotIndexBar" style="width:0%;background:linear-gradient(90deg,var(--red),var(--yellow))"></div>
+          </div>
+          <div class="bar-markers"><span>−MAX</span><span>Neutro</span><span>+MAX</span></div>
+        </div>
+        <div style="font-size:9px;font-family:'JetBrains Mono',monospace;margin-top:8px;color:var(--gray)">COT Index: <span id="cotIndexNum" style="color:var(--cyan)">0</span>/100</div>
+      </div>
+    </div>
+
+    <!-- DIX Dark Pools -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">DIX — Dark Pools</span><span class="chip chip-info">SqueezeMetrics</span></div>
+      <div class="kpi">
+        <div class="kpi-label">Dark Index</div>
+        <div class="kpi-val" id="dixVal" style="color:var(--yellow)">—</div>
+        <div class="kpi-sub">% volumen dark</div>
+        <div class="kpi-signal" id="dixSignalChip">CARGANDO</div>
+        <div style="margin-top:10px">
+          <div class="bar-track"><div class="bar-fill" id="dixBar" style="width:0%"></div></div>
+          <div class="bar-markers"><span>38%</span><span>42%</span><span>50%</span></div>
+        </div>
+        <div style="font-size:9px;font-family:'JetBrains Mono',monospace;margin-top:8px;color:var(--gray)">Tendencia: <span id="dixTrend" style="color:var(--cyan)">—</span></div>
+      </div>
+    </div>
+
+    <!-- GEX -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">GEX · Gamma Exposure</span><span class="chip chip-info">Opciones</span></div>
+      <div class="kpi">
+        <div class="kpi-label">Net GEX</div>
+        <div class="kpi-val" id="gexVal" style="color:var(--cyan)">—</div>
+        <div class="kpi-sub">$ Billones</div>
+        <div class="kpi-signal" id="gexSignal">CARGANDO</div>
+        <div style="margin-top:12px;font-size:10px;color:var(--gray);text-align:left">
+          <div style="margin-bottom:4px">GEX + → Mercado anclado (menor volatilidad)</div>
+          <div>GEX − → Mercado libre (mayor volatilidad)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bias Global -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Bias Institucional</span><span class="chip chip-info">v2 Engine</span></div>
+      <div class="kpi">
+        <div class="kpi-label">Score Global</div>
+        <div class="kpi-val" id="biasScore" style="color:var(--yellow)">—</div>
+        <div class="kpi-sub">de 100 puntos</div>
+        <div class="kpi-signal" id="biasLabel">CARGANDO</div>
+        <div style="margin-top:10px">
+          <div class="bar-track"><div class="bar-fill" id="biasBar" style="width:50%"></div></div>
+          <div class="bar-markers"><span>BAJISTA</span><span>NEUTRO</span><span>ALCISTA</span></div>
+        </div>
+        <div style="font-size:9px;font-family:'JetBrains Mono',monospace;margin-top:8px;color:var(--gray)">Driver: <span id="biasDriver" style="color:var(--cyan)">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN: ANÁLISIS COT PROFUNDO -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-label">Análisis COT Profundo</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid-2">
+    <!-- Historial 5 semanas -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Historial 5 Semanas — Non-Commercial</span></div>
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>NC Longs</th>
+            <th>NC Shorts</th>
+            <th>Neto</th>
+            <th>Variación</th>
+            <th>Señal</th>
+          </tr>
+        </thead>
+        <tbody id="cotHistoryTbody">
+          <tr><td colspan="6" style="text-align:center;color:var(--gray);padding:20px">Cargando datos CFTC...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Interpretación + contexto -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Interpretación Institucional</span></div>
+      <div class="panel-body">
+        <!-- COT Index gauge vertical -->
+        <div style="display:flex;gap:20px;align-items:center;margin-bottom:16px">
+          <div style="flex:1">
+            <div style="font-size:10px;color:var(--gray);font-family:'JetBrains Mono',monospace;margin-bottom:8px">COT INDEX (0-100)</div>
+            <div style="position:relative;height:140px;background:linear-gradient(to top,rgba(255,51,85,.15),rgba(255,214,10,.1),rgba(0,255,136,.15));border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.06)">
+              <div style="position:absolute;bottom:0;left:0;right:0;height:33%;background:rgba(255,51,85,.1);border-top:1px dashed rgba(255,51,85,.3)"></div>
+              <div style="position:absolute;bottom:33%;left:0;right:0;height:34%;background:rgba(255,214,10,.05)"></div>
+              <div style="position:absolute;bottom:67%;left:0;right:0;height:33%;background:rgba(0,255,136,.08);border-bottom:1px dashed rgba(0,255,136,.3)"></div>
+              <div id="cotGaugeMarker" style="position:absolute;left:0;right:0;height:4px;background:var(--cyan);box-shadow:0 0 12px var(--cyan);bottom:0%;transition:bottom .8s cubic-bezier(.4,0,.2,1)"></div>
+              <div style="position:absolute;right:8px;bottom:2%;font-size:8px;font-family:'JetBrains Mono',monospace;color:var(--red)">0 — EXTREMO BAJISTA</div>
+              <div style="position:absolute;right:8px;bottom:48%;font-size:8px;font-family:'JetBrains Mono',monospace;color:var(--yellow)">50 — NEUTRO</div>
+              <div style="position:absolute;right:8px;top:2%;font-size:8px;font-family:'JetBrains Mono',monospace;color:var(--green)">100 — EXTREMO ALCISTA</div>
+            </div>
+          </div>
+          <div style="flex:2">
+            <div id="cotInsight" style="font-size:12px;line-height:1.7;color:var(--text)">Cargando análisis...</div>
+            <div style="margin-top:12px;padding:10px;background:rgba(0,242,255,.04);border-radius:8px;border:1px solid var(--border)">
+              <div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--gray);margin-bottom:6px">ESTADÍSTICO</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div><div style="font-size:8px;color:var(--gray)">Máximo hist.</div><div id="cotMax" style="font-size:13px;font-weight:700;color:var(--green);font-family:'JetBrains Mono',monospace">—</div></div>
+                <div><div style="font-size:8px;color:var(--gray)">Mínimo hist.</div><div id="cotMin" style="font-size:13px;font-weight:700;color:var(--red);font-family:'JetBrains Mono',monospace">—</div></div>
+                <div><div style="font-size:8px;color:var(--gray)">OI Total</div><div id="cotOI" style="font-size:13px;font-weight:700;color:var(--cyan);font-family:'JetBrains Mono',monospace">—</div></div>
+                <div><div style="font-size:8px;color:var(--gray)">Sem. consecutivas</div><div id="cotWeeks" style="font-size:13px;font-weight:700;color:var(--yellow);font-family:'JetBrains Mono',monospace">—</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alert box -->
+        <div id="cotAlertBox" style="display:none;padding:10px;background:rgba(255,214,10,.08);border:1px solid rgba(255,214,10,.2);border-radius:8px;font-size:11px;color:var(--yellow)">
+          ⚡ <span id="cotAlertText"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN: 7 SEÑALES BIAS ENGINE -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-label">7 Señales del Bias Engine</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid-2">
+    <!-- Señales diarias -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Señales Diarias (Intraday)</span>
+        <span style="font-size:9px;color:var(--gray);font-family:'JetBrains Mono',monospace">Peso 55% en bias global</span>
+      </div>
+      <div id="dailySignals">
+        <!-- VXN -->
+        <div class="sig-row">
+          <div class="sig-icon">📊</div>
+          <div style="flex:1">
+            <div class="sig-name">VXN · Volatilidad Nasdaq</div>
+            <div class="sig-detail" id="sig-vxn-detail">Aguardando datos...</div>
+          </div>
+          <div class="sig-bar"><div class="sig-bar-fill" id="sig-vxn-bar" style="width:50%;background:var(--yellow)"></div></div>
+          <div class="sig-score" id="sig-vxn-score" style="color:var(--yellow)">—</div>
+        </div>
+        <!-- Futuros NQ -->
+        <div class="sig-row">
+          <div class="sig-icon">⚡</div>
+          <div style="flex:1">
+            <div class="sig-name">NQ Futures Premium</div>
+            <div class="sig-detail" id="sig-fut-detail">Aguardando datos...</div>
+          </div>
+          <div class="sig-bar"><div class="sig-bar-fill" id="sig-fut-bar" style="width:50%;background:var(--yellow)"></div></div>
+          <div class="sig-score" id="sig-fut-score" style="color:var(--yellow)">—</div>
+        </div>
+        <!-- DIX -->
+        <div class="sig-row">
+          <div class="sig-icon">🌑</div>
+          <div style="flex:1">
+            <div class="sig-name">DIX · Dark Pool Index</div>
+            <div class="sig-detail" id="sig-dix-detail">Aguardando datos...</div>
+          </div>
+          <div class="sig-bar"><div class="sig-bar-fill" id="sig-dix-bar" style="width:50%;background:var(--yellow)"></div></div>
+          <div class="sig-score" id="sig-dix-score" style="color:var(--yellow)">—</div>
+        </div>
+        <!-- Put/Call -->
+        <div class="sig-row">
+          <div class="sig-icon">🎰</div>
+          <div style="flex:1">
+            <div class="sig-name">Put/Call Ratio (contraria)</div>
+            <div class="sig-detail" id="sig-pc-detail">Aguardando datos...</div>
+          </div>
+          <div class="sig-bar"><div class="sig-bar-fill" id="sig-pc-bar" style="width:50%;background:var(--yellow)"></div></div>
+          <div class="sig-score" id="sig-pc-score" style="color:var(--yellow)">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Señales semanales -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Señales Semanales (Institucional)</span>
+        <span style="font-size:9px;color:var(--gray);font-family:'JetBrains Mono',monospace">Peso 45% en bias global</span>
+      </div>
+      <div id="weeklySignals">
+        <!-- COT -->
+        <div class="sig-row">
+          <div class="sig-icon">🏦</div>
+          <div style="flex:1">
+            <div class="sig-name">COT · Commitment of Traders</div>
+            <div class="sig-detail" id="sig-cot-detail">Aguardando datos...</div>
+          </div>
+          <div class="sig-bar"><div class="sig-bar-fill" id="sig-cot-bar" style="width:50%;background:var(--yellow)"></div></div>
+          <div class="sig-score" id="sig-cot-score" style="color:var(--yellow)">—</div>
+        </div>
+        <!-- Rotación QQQ/SPY -->
+        <div class="sig-row">
+          <div class="sig-icon">↔️</div>
+          <div style="flex:1">
+            <div class="sig-name">Rotación QQQ vs SPY</div>
+            <div class="sig-detail" id="sig-rot-detail">Aguardando datos...</div>
+          </div>
+          <div class="sig-bar"><div class="sig-bar-fill" id="sig-rot-bar" style="width:50%;background:var(--yellow)"></div></div>
+          <div class="sig-score" id="sig-rot-score" style="color:var(--yellow)">—</div>
+        </div>
+        <!-- Sectores -->
+        <div class="sig-row">
+          <div class="sig-icon">🏭</div>
+          <div style="flex:1">
+            <div class="sig-name">Sectores XLK + SOXX</div>
+            <div class="sig-detail" id="sig-sec-detail">Aguardando datos...</div>
+          </div>
+          <div class="sig-bar"><div class="sig-bar-fill" id="sig-sec-bar" style="width:50%;background:var(--yellow)"></div></div>
+          <div class="sig-score" id="sig-sec-score" style="color:var(--yellow)">—</div>
+        </div>
+        <!-- Score Semanal -->
+        <div class="sig-row" style="background:rgba(0,242,255,.04)">
+          <div class="sig-icon">📈</div>
+          <div style="flex:1">
+            <div class="sig-name" style="color:var(--cyan)">Score Semanal Consolidado</div>
+            <div class="sig-detail" id="sig-weekly-detail">COT 50% + VXN 30% + Rotación 20%</div>
+          </div>
+          <div class="sig-bar"><div class="sig-bar-fill" id="sig-weekly-bar" style="width:50%;background:var(--cyan)"></div></div>
+          <div class="sig-score" id="sig-weekly-score" style="color:var(--cyan)">—/100</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN: DIX PROFUNDO + ANÁLISIS -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-label">Dark Pool Intelligence — DIX</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid-3">
+    <div class="panel" style="grid-column:span 2">
+      <div class="panel-header"><span class="panel-title">Cómo Leer el DIX</span></div>
+      <div class="panel-body" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--cyan);margin-bottom:8px">¿Qué es el DIX?</div>
+          <div style="font-size:11px;color:var(--gray);line-height:1.7">El <strong style="color:var(--text)">Dark Index (DIX)</strong> mide el porcentaje del volumen total que se ejecuta en <em>dark pools</em> — sistemas de trading privados donde los institucionales operan sin revelar sus intenciones al mercado público. Un DIX alto = institucionales comprando de forma silenciosa.</div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--cyan);margin-bottom:8px">Umbrales Clave</div>
+          <div style="font-size:11px;line-height:2">
+            <div><span style="color:var(--green);font-family:'JetBrains Mono',monospace">DIX &gt; 46%</span> → Acumulación Institucional Fuerte 🟢</div>
+            <div><span style="color:var(--green);font-family:'JetBrains Mono',monospace">DIX 42-46%</span> → Neutral / Vigilar tendencia 🟡</div>
+            <div><span style="color:var(--red);font-family:'JetBrains Mono',monospace">DIX &lt; 42%</span> → Distribución / Presión vendedora 🔴</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--cyan);margin-bottom:8px">GEX y su Relación</div>
+          <div style="font-size:11px;color:var(--gray);line-height:1.7">El <strong style="color:var(--text)">Gamma Exposure (GEX)</strong> representa la presión de cobertura de los market makers de opciones. GEX positivo ancla el precio (menor rango), GEX negativo amplifica movimientos. Úsalo junto al DIX para determinar la dirección de la amplitud.</div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--cyan);margin-bottom:8px">Combinación COT + DIX</div>
+          <div style="font-size:11px;line-height:2">
+            <div><span style="color:var(--green);font-size:10px">COT Alto + DIX Alto</span> → Mayor probabilidad alcista</div>
+            <div><span style="color:var(--red);font-size:10px">COT Bajo + DIX Bajo</span> → Distribución acelerada</div>
+            <div><span style="color:var(--yellow);font-size:10px">COT Bajo + DIX Alto</span> → Smart Money vs Trend</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Status Actual</span></div>
+      <div class="panel-body">
+        <div style="text-align:center;margin-bottom:16px">
+          <div id="dixBigVal" style="font-size:48px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--cyan)">—</div>
+          <div style="font-size:10px;color:var(--gray)">Dark Index Actual</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="text-align:center;padding:8px;background:rgba(0,0,0,.2);border-radius:8px">
+            <div style="font-size:8px;color:var(--gray)">Señal</div>
+            <div id="dixBigSignal" style="font-size:11px;font-weight:700;color:var(--yellow)">—</div>
+          </div>
+          <div style="text-align:center;padding:8px;background:rgba(0,0,0,.2);border-radius:8px">
+            <div style="font-size:8px;color:var(--gray)">GEX</div>
+            <div id="gexBigVal" style="font-size:11px;font-weight:700;color:var(--cyan)">—</div>
+          </div>
+        </div>
+        <div id="dixInterpText" style="font-size:11px;color:var(--gray);line-height:1.6;padding:10px;background:rgba(0,0,0,.2);border-radius:8px">
+          Interpretación calculando...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN: BIAS SEMANAL vs DIARIO -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-label">Bias Semanal vs Diario</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid-3">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Sesgo Semanal</span><span style="font-size:9px;color:var(--gray)">COT 50% · VXN 30% · Rot. 20%</span></div>
+      <div class="kpi">
+        <div class="kpi-label">Score Semanal</div>
+        <div class="kpi-val" id="weeklyScoreBig" style="color:var(--yellow)">—</div>
+        <div class="kpi-sub">de 100</div>
+        <div class="kpi-signal" id="weeklyLabelBig">—</div>
+        <div style="margin-top:12px"><div class="bar-track"><div class="bar-fill" id="weeklyBarBig" style="width:50%"></div></div></div>
+        <div style="font-size:9px;color:var(--gray);margin-top:8px">Confianza: <span id="weeklyConfBig" style="color:var(--cyan)">—</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Sesgo Diario</span><span style="font-size:9px;color:var(--gray)">VXN 25% · Fut 25% · DIX 20%…</span></div>
+      <div class="kpi">
+        <div class="kpi-label">Score Diario</div>
+        <div class="kpi-val" id="dailyScoreBig" style="color:var(--yellow)">—</div>
+        <div class="kpi-sub">de 100</div>
+        <div class="kpi-signal" id="dailyLabelBig">—</div>
+        <div style="margin-top:12px"><div class="bar-track"><div class="bar-fill" id="dailyBarBig" style="width:50%"></div></div></div>
+        <div style="font-size:9px;color:var(--gray);margin-top:8px">Confianza: <span id="dailyConfBig" style="color:var(--cyan)">—</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Análisis · Estrategia HOY</span></div>
+      <div class="panel-body">
+        <div id="biasAnalysis" style="font-size:11px;line-height:1.8;color:var(--text)">Calculando estrategia...</div>
+        <div style="margin-top:16px;padding:10px;border:1px solid var(--border);border-radius:8px;background:rgba(0,0,0,.2)">
+          <div style="font-size:9px;color:var(--gray);font-family:'JetBrains Mono',monospace;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Driver Dominante</div>
+          <div id="dominantSignal" style="font-size:13px;font-weight:700;color:var(--cyan)">—</div>
+          <div id="dominantDetail" style="font-size:10px;color:var(--gray);margin-top:4px">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="text-align:center;padding:32px;font-size:9px;font-family:'JetBrains Mono',monospace;color:rgba(71,85,105,.5);border-top:1px solid rgba(255,255,255,.04);margin-top:16px">
+    COT Intelligence · Motor Bias v2 · Datos CFTC + SqueezeMetrics · Actualización cada 60s<br>
+    <span style="color:rgba(71,85,105,.3)">Los datos COT tienen latencia de 3-5 días hábiles por política CFTC</span>
+  </div>
+</div>
+
+<script src="agent_live_data.js"></script>
+<script src="agent_live_data_v2.js"></script>
+<script>
+// ─── LECTURA DE DATOS Y RENDERIZADO ───────────────────────────────────────────
+const C = { ALCISTA:'#00ff88', BAJISTA:'#ff3355', NEUTRO:'#ffd60a', 'BULL':'#00ff88', 'BEAR':'#ff3355' };
+
+function chipClass(label) {
+  if (label === 'ALCISTA' || label === 'BULLISH') return 'chip-bull';
+  if (label === 'BAJISTA' || label === 'BEARISH') return 'chip-bear';
+  return 'chip-neu';
+}
+
+function colorFor(label) {
+  return C[label] || C.NEUTRO;
+}
+
+function set(id, val, color) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (val != null) el.innerText = val;
+  if (color) el.style.color = color;
+}
+
+function scoreToWidth(score) {
+  // score va de -1 a 1 → convertir a 0-100%
+  return Math.max(0, Math.min(100, ((score + 1) / 2) * 100));
+}
+
+function renderCOT(data) {
+  if (!data) return;
+  const cot = data.COT || {};
+  const net = cot.net !== undefined ? cot.net : (window.NQ_LIVE?.COT?.net);
+  const idx = cot.index !== undefined ? cot.index : 0;
+  const signal = cot.signal || 'NEUTRO';
+  const longs = cot.nc_long || 0;
+  const shorts = cot.nc_short || 0;
+
+  set('cotNetVal', net !== undefined ? net.toLocaleString() : '—', colorFor(signal === 'BEARISH' ? 'BAJISTA' : signal === 'BULLISH' ? 'ALCISTA' : 'NEUTRO'));
+  set('cotIndexNum', idx);
+  const bar = document.getElementById('cotIndexBar');
+  if (bar) { bar.style.width = idx + '%'; bar.style.background = idx > 60 ? 'linear-gradient(90deg,var(--yellow),var(--green))' : idx < 40 ? 'linear-gradient(90deg,var(--red),var(--yellow))' : 'var(--yellow)'; }
+  const chip = document.getElementById('cotSignalChip');
+  if (chip) { chip.className = 'kpi-signal ' + chipClass(signal === 'BEARISH' ? 'BAJISTA' : 'ALCISTA'); chip.innerText = signal; }
+
+  // Gauge marker
+  const marker = document.getElementById('cotGaugeMarker');
+  if (marker) marker.style.bottom = idx + '%';
+
+  // Stats
+  set('cotMax', data.COT?.history_max?.toLocaleString() || '142,000');
+  set('cotMin', data.COT?.history_min?.toLocaleString() || '−89,615');
+  set('cotOI', data.COT?.oi?.toLocaleString() || '275,311');
+  set('cotWeeks', data.COT?.consecutive_weeks != null ? (data.COT.consecutive_weeks < 0 ? data.COT.consecutive_weeks + ' sem ↓' : '+' + data.COT.consecutive_weeks + ' sem ↑') : '—');
+
+  // Insight
+  let insight = '';
+  if (idx < 20) insight = '⚠️ COT en zona de <strong style="color:var(--red)">extremo bajista</strong>. Históricamente, los extremos actúan como señal contraria. Posible agotamiento vendedor en las próximas 2-4 semanas.';
+  else if (idx < 40) insight = '🔴 COT por debajo del neutro. Los especulativos están <strong style="color:var(--red)">cortos neto</strong>. Riesgo de continuación bajista si el precio confirma.';
+  else if (idx < 60) insight = '🟡 COT en zona <strong style="color:var(--yellow)">neutral</strong>. Ni acumulación ni distribución clara. Señales mixtas — esperar otras confirmaciones.';
+  else if (idx < 80) insight = '🟢 COT positivo. Los Asset Managers están acumulando.<br>Señal <strong style="color:var(--green)">alcista moderada</strong> — buscar entradas en pullbacks.';
+  else insight = '🚀 COT en zona de <strong style="color:var(--green)">acumulación extrema</strong>. Históricamente, el mercado tiende a continuar alcista. Alta probabilidad de expansión.';
+  const insightEl = document.getElementById('cotInsight');
+  if (insightEl) insightEl.innerHTML = insight;
+
+  // Alert
+  if (data.COT?.alert) {
+    const ab = document.getElementById('cotAlertBox');
+    if (ab) ab.style.display = 'block';
+    set('cotAlertText', data.COT.alert);
+  }
+
+  // History table
+  const weeks = data.COT?.recent_weeks || [];
+  const tbody = document.getElementById('cotHistoryTbody');
+  if (tbody && weeks.length > 0) {
+    tbody.innerHTML = weeks.map((w, i) => {
+      const prev = weeks[i + 1];
+      const wNet = (w.nc_long || 0) - (w.nc_short || 0);
+      const variation = prev ? wNet - ((prev.nc_long || 0) - (prev.nc_short || 0)) : 0;
+      const varColor = variation > 0 ? 'var(--green)' : variation < 0 ? 'var(--red)' : 'var(--gray)';
+      const netColor = wNet > 0 ? 'var(--green)' : wNet < 0 ? 'var(--red)' : 'var(--gray)';
+      const sig = wNet > 10000 ? '🟢 ALCISTA' : wNet < -10000 ? '🔴 BAJISTA' : '🟡 NEUTRO';
+      return `<tr>
+        <td style="color:var(--cyan)">${w.date}</td>
+        <td style="color:var(--green)">${(w.nc_long || 0).toLocaleString()}</td>
+        <td style="color:var(--red)">${(w.nc_short || 0).toLocaleString()}</td>
+        <td style="font-weight:700;color:${netColor}">${wNet > 0 ? '+' : ''}${wNet.toLocaleString()}</td>
+        <td style="color:${varColor}">${i > 0 ? (variation > 0 ? '▲ +' + variation.toLocaleString() : '▼ ' + variation.toLocaleString()) : '—'}</td>
+        <td>${sig}</td>
+      </tr>`;
+    }).join('');
+  }
+}
+
+function renderDIX(data) {
+  const dix = data?.DIX?.value || data?.dix || 0;
+  const gex = data?.GEX?.value || data?.gex || 0;
+  const trend = data?.DIX?.trend || 0;
+
+  const dixColor = dix > 46 ? 'var(--green)' : dix < 42 ? 'var(--red)' : 'var(--yellow)';
+  const dixSignal = dix > 46 ? 'ACUMULACIÓN' : dix < 42 ? 'DISTRIBUCIÓN' : 'NEUTRAL';
+  const gexBn = (gex / 1e9).toFixed(2);
+  const gexColor = gex >= 0 ? 'var(--green)' : 'var(--red)';
+
+  set('dixVal', dix.toFixed(1) + '%', dixColor);
+  set('dixBigVal', dix.toFixed(1) + '%', dixColor);
+  set('dixBigSignal', dixSignal, dixColor);
+  set('gexVal', (gex >= 0 ? '+' : '') + gexBn + 'B', gexColor);
+  set('gexBigVal', (gex >= 0 ? '+' : '') + gexBn + 'B', gexColor);
+  set('dixTrend', trend > 0 ? '▲ +' + trend.toFixed(1) + '%' : '▼ ' + trend.toFixed(1) + '%', trend > 0 ? 'var(--green)' : 'var(--red)');
+  
+  const dixSig = document.getElementById('dixSignalChip');
+  if (dixSig) { dixSig.className = 'kpi-signal ' + chipClass(dix > 46 ? 'ALCISTA' : dix < 42 ? 'BAJISTA' : 'NEUTRO'); dixSig.innerText = dixSignal; }
+  const gexSig = document.getElementById('gexSignal');
+  if (gexSig) { gexSig.className = 'kpi-signal'; gexSig.style.background = gex >= 0 ? 'rgba(0,255,136,.15)' : 'rgba(255,51,85,.15)'; gexSig.style.color = gexColor; gexSig.innerText = gex >= 0 ? 'ANCLANDO PRECIO' : 'AMPLIFICANDO'; }
+
+  // DIX bar
+  const dixBar = document.getElementById('dixBar');
+  if (dixBar) { const pct = Math.max(0, Math.min(100, (dix - 38) / (52 - 38) * 100)); dixBar.style.width = pct + '%'; dixBar.style.background = dixColor; }
+
+  // Interpretación
+  let interp = '';
+  if (dix > 46) interp = '🟢 Los dark pools están comprando agresivamente. Los institucionales ocultan sus órdenes de compra. Señal alcista silenciosa — no te dejes engañar por el flujo superficial del mercado.';
+  else if (dix > 42) interp = '🟡 DIX en zona neutral. Sin señal fuerte de acumulación ni distribución. Monitorea la tendencia del DIX en los próximos días para detectar movimientos institucionales.';
+  else interp = '🔴 DIX bajo — los dark pools están inactivos o vendiendo. Los institucionales están reduciendo exposición. Precaución con posiciones largas agresivas.';
+  set('dixInterpText', interp);
+}
+
+function renderSignals(bias) {
+  if (!bias || !bias.signals) return;
+  const S = bias.signals;
+
+  function renderSig(sigKey, scoreId, detailId, barId) {
+    const s = S[sigKey];
+    if (!s) return;
+    const w = scoreToWidth(s.score);
+    const col = s.score > 0.2 ? 'var(--green)' : s.score < -0.2 ? 'var(--red)' : 'var(--yellow)';
+    set(scoreId, (s.score >= 0 ? '+' : '') + s.score.toFixed(2), col);
+    set(detailId, s.detail);
+    const bar = document.getElementById(barId);
+    if (bar) { bar.style.width = w + '%'; bar.style.background = col; }
+  }
+
+  renderSig('vxn', 'sig-vxn-score', 'sig-vxn-detail', 'sig-vxn-bar');
+  renderSig('futures', 'sig-fut-score', 'sig-fut-detail', 'sig-fut-bar');
+  renderSig('dix', 'sig-dix-score', 'sig-dix-detail', 'sig-dix-bar');
+  renderSig('putcall', 'sig-pc-score', 'sig-pc-detail', 'sig-pc-bar');
+  renderSig('cot_semanal', 'sig-cot-score', 'sig-cot-detail', 'sig-cot-bar');
+  renderSig('rotation', 'sig-rot-score', 'sig-rot-detail', 'sig-rot-bar');
+  renderSig('sectors', 'sig-sec-score', 'sig-sec-detail', 'sig-sec-bar');
+
+  // Weekly score
+  const wp = bias.weekly?.pct || 50;
+  const wl = bias.weekly?.label || 'NEUTRO';
+  set('sig-weekly-score', wp + '/100', colorFor(wl));
+  const wb = document.getElementById('sig-weekly-bar');
+  if (wb) { wb.style.width = wp + '%'; wb.style.background = colorFor(wl); }
+  set('sig-weekly-detail', `COT 50% · VXN 30% · Rotación 20% — ${wl}`);
+}
+
+function renderBias(bias) {
+  if (!bias) return;
+  const gp = bias.global?.pct || 50;
+  const gl = bias.global?.label || 'NEUTRO';
+  const gc = colorFor(gl);
+
+  set('biasScore', gp, gc);
+  const lbl = document.getElementById('biasLabel');
+  if (lbl) { lbl.className = 'kpi-signal ' + chipClass(gl === 'ALCISTA' ? 'ALCISTA' : gl === 'BAJISTA' ? 'BAJISTA' : 'NEUTRO'); lbl.innerText = gl; }
+  const bb = document.getElementById('biasBar');
+  if (bb) { bb.style.width = gp + '%'; bb.style.background = gc; }
+  set('biasDriver', bias.dominant?.name || '—');
+
+  // Semanal
+  set('weeklyScoreBig', bias.weekly?.pct || '—', colorFor(bias.weekly?.label || 'NEUTRO'));
+  const wlbl = document.getElementById('weeklyLabelBig');
+  if (wlbl) { wlbl.className = 'kpi-signal ' + chipClass(bias.weekly?.label || 'NEUTRO'); wlbl.innerText = bias.weekly?.label || '—'; }
+  const wbar = document.getElementById('weeklyBarBig');
+  if (wbar) { wbar.style.width = (bias.weekly?.pct || 50) + '%'; wbar.style.background = colorFor(bias.weekly?.label || 'NEUTRO'); }
+  set('weeklyConfBig', (bias.weekly?.confidence || '—') + '%');
+
+  // Diario
+  set('dailyScoreBig', bias.daily?.pct || '—', colorFor(bias.daily?.label || 'NEUTRO'));
+  const dlbl = document.getElementById('dailyLabelBig');
+  if (dlbl) { dlbl.className = 'kpi-signal ' + chipClass(bias.daily?.label || 'NEUTRO'); dlbl.innerText = bias.daily?.label || '—'; }
+  const dbar = document.getElementById('dailyBarBig');
+  if (dbar) { dbar.style.width = (bias.daily?.pct || 50) + '%'; dbar.style.background = colorFor(bias.daily?.label || 'NEUTRO'); }
+  set('dailyConfBig', (bias.daily?.confidence || '—') + '%');
+
+  // Análisis
+  set('biasAnalysis', bias.analysis || '—');
+  set('dominantSignal', bias.dominant?.name || '—', 'var(--cyan)');
+  set('dominantDetail', bias.dominant?.detail || '—');
+}
+
+// ─── POLLING ────────────────────────────────────────────────────────────────
+function refresh() {
+  const NQ = window.NQ_LIVE;
+  if (NQ) {
+    // Construir objeto compatible con renderCOT
+    const cotData = {
+      COT: {
+        net: NQ.COT?.net,
+        index: NQ.COT?.index || 0,
+        signal: NQ.COT?.signal || 'NEUTRO',
+        nc_long: NQ.COT?.nc_long,
+        nc_short: NQ.COT?.nc_short,
+        oi: NQ.COT?.oi,
+        consecutive_weeks: NQ.COT?.consecutive_weeks,
+        history_max: NQ.COT?.history_max,
+        history_min: NQ.COT?.history_min,
+        alert: NQ.COT?.alert,
+        recent_weeks: NQ.COT?.recent_weeks || []
+      }
+    };
+    renderCOT(cotData);
+
+    const dixData = { dix: NQ.DIX || 0, gex: NQ.GEX?.raw || 0, DIX: { trend: NQ.DIX_TREND || 0 } };
+    renderDIX(dixData);
+
+    if (NQ.BIAS) {
+      renderBias(NQ.BIAS);
+      renderSignals(NQ.BIAS);
+    }
+
+    set('lastUpdate', new Date().toLocaleTimeString('es-ES'));
+  }
+
+  // Intentar leer agent2_data.json como fallback
+  fetch('agent2_data.json?t=' + Date.now()).then(r => r.json()).then(d => {
+    if (!window.NQ_LIVE?.COT?.net) {
+      const cotFallback = {
+        COT: {
+          net: d.cot?.current_net,
+          index: d.cot?.cot_index || 0,
+          signal: d.signal || 'NEUTRO',
+          nc_long: d.recent_weeks?.[0]?.nc_long,
+          nc_short: d.recent_weeks?.[0]?.nc_short,
+          oi: d.cot?.current_oi,
+          consecutive_weeks: d.momentum?.consecutive_weeks,
+          history_max: d.cot?.history_max,
+          history_min: d.cot?.history_min,
+          alert: d.insight?.alert,
+          recent_weeks: d.recent_weeks || []
+        }
+      };
+      renderCOT(cotFallback);
+      set('lastUpdate', new Date().toLocaleTimeString('es-ES'));
+    }
+  }).catch(() => {});
+}
+
+// Esperar a que el motor bias esté listo
+setTimeout(refresh, 2000);
+setInterval(refresh, 30000);
+</script>
+</body>
+</html>
+

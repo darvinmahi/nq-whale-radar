@@ -1,0 +1,621 @@
+{
+    "title": "Backtest 5 Días × Sesión NQ · 6 Meses",
+    "period": "2025-09-14 → 2026-03-13",
+    "sessions_analyzed": [
+        "LONDON 03-08:29 ET",
+        "NY_AM 09:30-12:00 ET",
+        "NY_PM 12:01-16:00 ET"
+    ],
+    "by_day": {
+        "LUNES": {
+            "LONDON": {
+                "sessions": 8,
+                "dominant_pattern": "ROTATION_POC",
+                "dominant_pct": "62.5%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "62.5%",
+                    "NEWS_DRIVE": "37.5%"
+                },
+                "direction": {
+                    "BULLISH": 6,
+                    "BEARISH": 1,
+                    "NEUTRAL": 1
+                },
+                "dir_dominant": "BULLISH",
+                "avg_range": 189.8,
+                "best_level": "VAH",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "87.5%",
+                        "avg_react": 148.6
+                    },
+                    "poc": {
+                        "hit_rate": "75.0%",
+                        "avg_react": 152.3
+                    },
+                    "val": {
+                        "hit_rate": "75.0%",
+                        "avg_react": 166.1
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "62.5%",
+                    "avg_react": 139.4,
+                    "pct_above": "25.0%"
+                }
+            },
+            "NY_AM": {
+                "sessions": 8,
+                "dominant_pattern": "NEWS_DRIVE",
+                "dominant_pct": "87.5%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "12.5%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "0%",
+                    "NEWS_DRIVE": "87.5%"
+                },
+                "direction": {
+                    "BULLISH": 7,
+                    "BEARISH": 1,
+                    "NEUTRAL": 0
+                },
+                "dir_dominant": "BULLISH",
+                "avg_range": 331.7,
+                "best_level": "EMA200",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "50.0%",
+                        "avg_react": 357.0
+                    },
+                    "poc": {
+                        "hit_rate": "37.5%",
+                        "avg_react": 399.2
+                    },
+                    "val": {
+                        "hit_rate": "37.5%",
+                        "avg_react": 377.6
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "87.5%",
+                    "avg_react": 312.2,
+                    "pct_above": "50.0%"
+                }
+            },
+            "NY_PM": {
+                "sessions": 8,
+                "dominant_pattern": "EXPANSION_H",
+                "dominant_pct": "62.5%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "12.5%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "62.5%",
+                    "EXPANSION_L": "12.5%",
+                    "ROTATION_POC": "0%",
+                    "NEWS_DRIVE": "12.5%"
+                },
+                "direction": {
+                    "BULLISH": 2,
+                    "BEARISH": 5,
+                    "NEUTRAL": 1
+                },
+                "dir_dominant": "BEARISH",
+                "avg_range": 166.0,
+                "best_level": "EMA200",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "0.0%",
+                        "avg_react": 0.0
+                    },
+                    "poc": {
+                        "hit_rate": "12.5%",
+                        "avg_react": 141.5
+                    },
+                    "val": {
+                        "hit_rate": "12.5%",
+                        "avg_react": 141.5
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "25.0%",
+                    "avg_react": 279.1,
+                    "pct_above": "87.5%"
+                }
+            }
+        },
+        "MARTES": {
+            "LONDON": {
+                "sessions": 10,
+                "dominant_pattern": "ROTATION_POC",
+                "dominant_pct": "70.0%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "70.0%",
+                    "NEWS_DRIVE": "30.0%"
+                },
+                "direction": {
+                    "BULLISH": 1,
+                    "BEARISH": 6,
+                    "NEUTRAL": 3
+                },
+                "dir_dominant": "BEARISH",
+                "avg_range": 161.2,
+                "best_level": "VAH",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "90.0%",
+                        "avg_react": 136.0
+                    },
+                    "poc": {
+                        "hit_rate": "90.0%",
+                        "avg_react": 134.5
+                    },
+                    "val": {
+                        "hit_rate": "90.0%",
+                        "avg_react": 112.8
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "20.0%",
+                    "avg_react": 115.5,
+                    "pct_above": "60.0%"
+                }
+            },
+            "NY_AM": {
+                "sessions": 10,
+                "dominant_pattern": "NEWS_DRIVE",
+                "dominant_pct": "60.0%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "10.0%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "20.0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "10.0%",
+                    "NEWS_DRIVE": "60.0%"
+                },
+                "direction": {
+                    "BULLISH": 8,
+                    "BEARISH": 1,
+                    "NEUTRAL": 1
+                },
+                "dir_dominant": "BULLISH",
+                "avg_range": 294.3,
+                "best_level": "VAL",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "70.0%",
+                        "avg_react": 260.5
+                    },
+                    "poc": {
+                        "hit_rate": "70.0%",
+                        "avg_react": 258.1
+                    },
+                    "val": {
+                        "hit_rate": "70.0%",
+                        "avg_react": 312.4
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "50.0%",
+                    "avg_react": 337.4,
+                    "pct_above": "60.0%"
+                }
+            },
+            "NY_PM": {
+                "sessions": 10,
+                "dominant_pattern": "NEWS_DRIVE",
+                "dominant_pct": "50.0%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "10.0%",
+                    "EXPANSION_H": "30.0%",
+                    "EXPANSION_L": "10.0%",
+                    "ROTATION_POC": "0%",
+                    "NEWS_DRIVE": "50.0%"
+                },
+                "direction": {
+                    "BULLISH": 4,
+                    "BEARISH": 5,
+                    "NEUTRAL": 1
+                },
+                "dir_dominant": "BEARISH",
+                "avg_range": 201.7,
+                "best_level": "VAH",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "60.0%",
+                        "avg_react": 176.2
+                    },
+                    "poc": {
+                        "hit_rate": "50.0%",
+                        "avg_react": 176.3
+                    },
+                    "val": {
+                        "hit_rate": "40.0%",
+                        "avg_react": 183.6
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "40.0%",
+                    "avg_react": 143.1,
+                    "pct_above": "60.0%"
+                }
+            }
+        },
+        "MIÉRCOLES": {
+            "LONDON": {
+                "sessions": 11,
+                "dominant_pattern": "ROTATION_POC",
+                "dominant_pct": "81.8%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "81.8%",
+                    "NEWS_DRIVE": "18.2%"
+                },
+                "direction": {
+                    "BULLISH": 4,
+                    "BEARISH": 6,
+                    "NEUTRAL": 1
+                },
+                "dir_dominant": "BEARISH",
+                "avg_range": 148.0,
+                "best_level": "VAL",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "72.7%",
+                        "avg_react": 124.3
+                    },
+                    "poc": {
+                        "hit_rate": "72.7%",
+                        "avg_react": 135.3
+                    },
+                    "val": {
+                        "hit_rate": "72.7%",
+                        "avg_react": 135.8
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "45.5%",
+                    "avg_react": 173.0,
+                    "pct_above": "54.5%"
+                }
+            },
+            "NY_AM": {
+                "sessions": 11,
+                "dominant_pattern": "NEWS_DRIVE",
+                "dominant_pct": "90.9%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "9.1%",
+                    "NEWS_DRIVE": "90.9%"
+                },
+                "direction": {
+                    "BULLISH": 4,
+                    "BEARISH": 7,
+                    "NEUTRAL": 0
+                },
+                "dir_dominant": "BEARISH",
+                "avg_range": 306.8,
+                "best_level": "VAL",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "63.6%",
+                        "avg_react": 278.9
+                    },
+                    "poc": {
+                        "hit_rate": "63.6%",
+                        "avg_react": 274.8
+                    },
+                    "val": {
+                        "hit_rate": "72.7%",
+                        "avg_react": 286.5
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "45.5%",
+                    "avg_react": 272.6,
+                    "pct_above": "63.6%"
+                }
+            },
+            "NY_PM": {
+                "sessions": 11,
+                "dominant_pattern": "NEWS_DRIVE",
+                "dominant_pct": "45.5%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "9.1%",
+                    "SWEEP_L_RETURN": "9.1%",
+                    "EXPANSION_H": "18.2%",
+                    "EXPANSION_L": "9.1%",
+                    "ROTATION_POC": "9.1%",
+                    "NEWS_DRIVE": "45.5%"
+                },
+                "direction": {
+                    "BULLISH": 6,
+                    "BEARISH": 3,
+                    "NEUTRAL": 2
+                },
+                "dir_dominant": "BULLISH",
+                "avg_range": 226.2,
+                "best_level": "POC",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "45.5%",
+                        "avg_react": 231.9
+                    },
+                    "poc": {
+                        "hit_rate": "54.5%",
+                        "avg_react": 230.3
+                    },
+                    "val": {
+                        "hit_rate": "45.5%",
+                        "avg_react": 247.9
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "54.5%",
+                    "avg_react": 213.0,
+                    "pct_above": "45.5%"
+                }
+            }
+        },
+        "JUEVES": {
+            "LONDON": {
+                "sessions": 10,
+                "dominant_pattern": "ROTATION_POC",
+                "dominant_pct": "70.0%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "70.0%",
+                    "NEWS_DRIVE": "30.0%"
+                },
+                "direction": {
+                    "BULLISH": 5,
+                    "BEARISH": 3,
+                    "NEUTRAL": 2
+                },
+                "dir_dominant": "BULLISH",
+                "avg_range": 166.9,
+                "best_level": "POC",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "90.0%",
+                        "avg_react": 157.4
+                    },
+                    "poc": {
+                        "hit_rate": "90.0%",
+                        "avg_react": 158.2
+                    },
+                    "val": {
+                        "hit_rate": "80.0%",
+                        "avg_react": 161.5
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "50.0%",
+                    "avg_react": 115.3,
+                    "pct_above": "60.0%"
+                }
+            },
+            "NY_AM": {
+                "sessions": 10,
+                "dominant_pattern": "NEWS_DRIVE",
+                "dominant_pct": "70.0%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "10.0%",
+                    "EXPANSION_H": "10.0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "10.0%",
+                    "NEWS_DRIVE": "70.0%"
+                },
+                "direction": {
+                    "BULLISH": 1,
+                    "BEARISH": 6,
+                    "NEUTRAL": 3
+                },
+                "dir_dominant": "BEARISH",
+                "avg_range": 345.1,
+                "best_level": "POC",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "60.0%",
+                        "avg_react": 336.1
+                    },
+                    "poc": {
+                        "hit_rate": "70.0%",
+                        "avg_react": 310.7
+                    },
+                    "val": {
+                        "hit_rate": "70.0%",
+                        "avg_react": 310.7
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "60.0%",
+                    "avg_react": 388.1,
+                    "pct_above": "60.0%"
+                }
+            },
+            "NY_PM": {
+                "sessions": 10,
+                "dominant_pattern": "NEWS_DRIVE",
+                "dominant_pct": "70.0%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "20.0%",
+                    "EXPANSION_H": "0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "10.0%",
+                    "NEWS_DRIVE": "70.0%"
+                },
+                "direction": {
+                    "BULLISH": 3,
+                    "BEARISH": 5,
+                    "NEUTRAL": 2
+                },
+                "dir_dominant": "BEARISH",
+                "avg_range": 217.8,
+                "best_level": "EMA200",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "10.0%",
+                        "avg_react": 91.8
+                    },
+                    "poc": {
+                        "hit_rate": "10.0%",
+                        "avg_react": 91.8
+                    },
+                    "val": {
+                        "hit_rate": "10.0%",
+                        "avg_react": 283.5
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "30.0%",
+                    "avg_react": 189.2,
+                    "pct_above": "30.0%"
+                }
+            }
+        },
+        "VIERNES": {
+            "LONDON": {
+                "sessions": 11,
+                "dominant_pattern": "ROTATION_POC",
+                "dominant_pct": "54.5%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "54.5%",
+                    "NEWS_DRIVE": "45.5%"
+                },
+                "direction": {
+                    "BULLISH": 5,
+                    "BEARISH": 5,
+                    "NEUTRAL": 1
+                },
+                "dir_dominant": "BULLISH",
+                "avg_range": 207.9,
+                "best_level": "POC",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "90.9%",
+                        "avg_react": 179.1
+                    },
+                    "poc": {
+                        "hit_rate": "100.0%",
+                        "avg_react": 180.2
+                    },
+                    "val": {
+                        "hit_rate": "90.9%",
+                        "avg_react": 158.4
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "54.5%",
+                    "avg_react": 165.8,
+                    "pct_above": "45.5%"
+                }
+            },
+            "NY_AM": {
+                "sessions": 11,
+                "dominant_pattern": "NEWS_DRIVE",
+                "dominant_pct": "100.0%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "0%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "0%",
+                    "EXPANSION_L": "0%",
+                    "ROTATION_POC": "0%",
+                    "NEWS_DRIVE": "100.0%"
+                },
+                "direction": {
+                    "BULLISH": 7,
+                    "BEARISH": 4,
+                    "NEUTRAL": 0
+                },
+                "dir_dominant": "BULLISH",
+                "avg_range": 349.1,
+                "best_level": "VAH",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "81.8%",
+                        "avg_react": 324.3
+                    },
+                    "poc": {
+                        "hit_rate": "81.8%",
+                        "avg_react": 323.0
+                    },
+                    "val": {
+                        "hit_rate": "81.8%",
+                        "avg_react": 303.3
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "72.7%",
+                    "avg_react": 355.0,
+                    "pct_above": "27.3%"
+                }
+            },
+            "NY_PM": {
+                "sessions": 11,
+                "dominant_pattern": "NEWS_DRIVE",
+                "dominant_pct": "36.4%",
+                "patterns": {
+                    "SWEEP_H_RETURN": "9.1%",
+                    "SWEEP_L_RETURN": "0%",
+                    "EXPANSION_H": "18.2%",
+                    "EXPANSION_L": "27.3%",
+                    "ROTATION_POC": "9.1%",
+                    "NEWS_DRIVE": "36.4%"
+                },
+                "direction": {
+                    "BULLISH": 3,
+                    "BEARISH": 6,
+                    "NEUTRAL": 2
+                },
+                "dir_dominant": "BEARISH",
+                "avg_range": 184.5,
+                "best_level": "POC",
+                "value_area": {
+                    "vah": {
+                        "hit_rate": "36.4%",
+                        "avg_react": 137.4
+                    },
+                    "poc": {
+                        "hit_rate": "36.4%",
+                        "avg_react": 145.2
+                    },
+                    "val": {
+                        "hit_rate": "27.3%",
+                        "avg_react": 161.5
+                    }
+                },
+                "ema200": {
+                    "hit_rate": "18.2%",
+                    "avg_react": 253.4,
+                    "pct_above": "36.4%"
+                }
+            }
+        }
+    }
+}

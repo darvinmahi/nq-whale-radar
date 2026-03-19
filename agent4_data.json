@@ -1,16 +1,16 @@
 {
   "agent": 4,
-  "timestamp": "2026-03-18T14:21:22.495748Z",
-  "verdict": "🔵 NEUTRAL-BULLISH (54/100) — Ligera inclinación alcista — esperar confirmación.",
-  "global_score": 54,
-  "global_label": "NEUTRAL-BULLISH",
-  "icon": "🔵",
+  "timestamp": "2026-03-19T01:32:47.401258Z",
+  "verdict": "🟡 NEUTRAL-BEARISH (46/100) — Ligera inclinación bajista — preferir coberturas.",
+  "global_score": 46,
+  "global_label": "NEUTRAL-BEARISH",
+  "icon": "🟡",
   "layers": {
-    "positioning": 50,
+    "positioning": 24,
     "macro": 50,
-    "liquidity": 67.0,
-    "timing": 50.0,
-    "algorithmic": 65.0,
+    "liquidity": 41.0,
+    "timing": 53.5,
+    "algorithmic": 66.0,
     "order_flow": 50
   }
 }

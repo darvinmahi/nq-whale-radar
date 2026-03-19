@@ -43,6 +43,7 @@ def generate_live_js():
     strength = load_json("data/research/level_strength.json")
     pulse = load_json("pulse_data.json")
     health = load_json("engine_health.json")  # ← health check
+    brain = load_json("agent10_knowledge.json")  # ← Agent 10 Brain
 
     now = datetime.datetime.now(datetime.UTC)
     ts = now.isoformat() + "Z"
@@ -115,7 +116,8 @@ window.NQ_LIVE = {{
     data_quality: "{data_quality}",
     any_stale: {"true" if any_stale else "false"}
   }},
-  ENGINE_STATUS: "{engine_state}"
+  ENGINE_STATUS: "{engine_state}",
+  BRAIN_KNOWLEDGE: {json.dumps(brain, ensure_ascii=False)}
 }};
 
 (function sync() {{

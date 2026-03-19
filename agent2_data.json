@@ -1,30 +1,35 @@
 {
   "agent": 2,
   "name": "COT Analyst",
-  "timestamp": "2026-03-18T14:21:22.291022Z",
+  "timestamp": "2026-03-19T01:32:43.485946Z",
   "input_source": "agent1_data.json",
   "cot": {
-    "current_net": 2386,
-    "current_oi": 273307,
-    "date": "03 Mar 2026",
-    "cot_index": 27.3,
+    "current_net": -89615,
+    "current_oi": 275311,
+    "date": "2026-03-10",
+    "cot_index": 0,
     "history_min": -50000,
     "history_max": 142000,
     "history_mean": 95000
   },
   "momentum": {
     "direction": "BAJANDO",
-    "consecutive_weeks": 2,
+    "consecutive_weeks": 3,
     "weekly_velocity": -3658
   },
-  "signal": "NEUTRAL",
-  "strength": 50,
+  "signal": "BEARISH",
+  "strength": 76,
   "insight": {
-    "level_description": "🔵 ZONA NEUTRAL",
+    "level_description": "🔴 ZONA BAJISTA — Capitalización o capitulación",
     "weekly_velocity": -3658,
-    "alert": null
+    "alert": "COT en extremo bajo (0/100). Históricamente precede recuperación."
   },
   "recent_weeks": [
+    {
+      "date": "2026-03-10",
+      "nc_long": 11952,
+      "nc_short": 101567
+    },
     {
       "date": "03 Mar 2026",
       "nc_long": 76598,

@@ -1,0 +1,55 @@
+{
+    "title": "Base de Datos Maestra: Sesiones y Repetición",
+    "total_days": 50,
+    "patterns": {
+        "SWEEP_H_RETURN": "4.0%",
+        "SWEEP_L_RETURN": "4.0%",
+        "EXPANSION_H": "14.0%",
+        "EXPANSION_L": "2.0%",
+        "ROTATION_POC": "12.0%",
+        "NEWS_DRIVE": "64.0%"
+    },
+    "strongest_point": {
+        "name": "Combined Asia+Lon POC",
+        "stat": "100.0% Éxito",
+        "impact": "230.9 pts"
+    },
+    "conclusion": "El movimiento de 'SWEEP & RETURN' (Falla) domina los lunes/martes, mientras que la 'EXPANSION' se concentra en días de noticias rojas.",
+    "db_summary": [
+        {
+            "date": "2026-03-09",
+            "pattern": "NEWS_DRIVE",
+            "range_h": 24495.75,
+            "range_l": 24000.0,
+            "c_poc": 24275.98076923077
+        },
+        {
+            "date": "2026-03-10",
+            "pattern": "NEWS_DRIVE",
+            "range_h": 25150.5,
+            "range_l": 24830.0,
+            "c_poc": 24929.25
+        },
+        {
+            "date": "2026-03-11",
+            "pattern": "NEWS_DRIVE",
+            "range_h": 25125.0,
+            "range_l": 24895.75,
+            "c_poc": 25090.03205128205
+        },
+        {
+            "date": "2026-03-12",
+            "pattern": "NEWS_DRIVE",
+            "range_h": 24949.25,
+            "range_l": 24695.5,
+            "c_poc": 24751.666666666668
+        },
+        {
+            "date": "2026-03-13",
+            "pattern": "NEWS_DRIVE",
+            "range_h": 24680.0,
+            "range_l": 24397.0,
+            "c_poc": 24585.75
+        }
+    ]
+}

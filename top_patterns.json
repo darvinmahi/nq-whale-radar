@@ -1,0 +1,157 @@
+{
+    "metadata": {
+        "generated": "2026-03-13T22:24:27.376434+00:00Z",
+        "total_weeks_analyzed": 323,
+        "date_range": "2020-2026",
+        "min_sample": 8,
+        "min_win_rate": 60.0
+    },
+    "high_edge_patterns": [
+        {
+            "name": "COT_Idx=ALTO + VXN_Level=BAJO",
+            "conditions": {
+                "COT_Idx": "ALTO",
+                "VXN_Level": "BAJO"
+            },
+            "prediction": "LATERAL",
+            "count": 9,
+            "win_rate": 77.8,
+            "avg_return": 0.76,
+            "max_return": 3.41,
+            "min_return": -0.49,
+            "sharpe_proxy": 0.54,
+            "rank": 1
+        },
+        {
+            "name": "COT_Idx=BAJO + Trend=DOWNTREND",
+            "conditions": {
+                "COT_Idx": "BAJO",
+                "Trend": "DOWNTREND"
+            },
+            "prediction": "SUBE",
+            "count": 9,
+            "win_rate": 66.7,
+            "avg_return": 2.4,
+            "max_return": 10.18,
+            "min_return": -4.79,
+            "sharpe_proxy": 0.49,
+            "rank": 2
+        },
+        {
+            "name": "COT_DIR=ACUMULANDO + COT_Consec_Cat=1 + VXN_Level=BAJO",
+            "conditions": {
+                "COT_DIR": "ACUMULANDO",
+                "COT_Consec_Cat": "1",
+                "VXN_Level": "BAJO"
+            },
+            "prediction": "LATERAL",
+            "count": 8,
+            "win_rate": 62.5,
+            "avg_return": 0.53,
+            "max_return": 2.2,
+            "min_return": -1.14,
+            "sharpe_proxy": 0.43,
+            "rank": 3
+        },
+        {
+            "name": "COT_Consec_Cat=1 + COT_DIR=ACUMULANDO + VXN_Level=BAJO + Trend=UPTREND",
+            "conditions": {
+                "COT_Consec_Cat": "1",
+                "COT_DIR": "ACUMULANDO",
+                "VXN_Level": "BAJO",
+                "Trend": "UPTREND"
+            },
+            "prediction": "LATERAL",
+            "count": 8,
+            "win_rate": 62.5,
+            "avg_return": 0.53,
+            "max_return": 2.2,
+            "min_return": -1.14,
+            "sharpe_proxy": 0.43,
+            "rank": 4
+        },
+        {
+            "name": "COT_DIR=ACUMULANDO + COT_Consec_Cat=1 + VXN_Level=ALTO",
+            "conditions": {
+                "COT_DIR": "ACUMULANDO",
+                "COT_Consec_Cat": "1",
+                "VXN_Level": "ALTO"
+            },
+            "prediction": "SUBE",
+            "count": 20,
+            "win_rate": 60.0,
+            "avg_return": 1.16,
+            "max_return": 10.18,
+            "min_return": -6.44,
+            "sharpe_proxy": 0.26,
+            "rank": 5
+        },
+        {
+            "name": "COT_DIR=ACUMULANDO + COT_Consec_Cat=3+ + Trend=UPTREND",
+            "conditions": {
+                "COT_DIR": "ACUMULANDO",
+                "COT_Consec_Cat": "3+",
+                "Trend": "UPTREND"
+            },
+            "prediction": "SUBE",
+            "count": 15,
+            "win_rate": 60.0,
+            "avg_return": 1.39,
+            "max_return": 4.99,
+            "min_return": -1.83,
+            "sharpe_proxy": 0.75,
+            "rank": 6
+        },
+        {
+            "name": "COT_Consec_Cat=1 + COT_DIR=ACUMULANDO + VXN_Level=ALTO + Trend=DOWNTREND",
+            "conditions": {
+                "COT_Consec_Cat": "1",
+                "COT_DIR": "ACUMULANDO",
+                "VXN_Level": "ALTO",
+                "Trend": "DOWNTREND"
+            },
+            "prediction": "SUBE",
+            "count": 15,
+            "win_rate": 60.0,
+            "avg_return": 1.14,
+            "max_return": 10.18,
+            "min_return": -6.44,
+            "sharpe_proxy": 0.24,
+            "rank": 7
+        },
+        {
+            "name": "COT_DIR=ACUMULANDO + COT_Consec_Cat=3+ + VXN_Level=MEDIO",
+            "conditions": {
+                "COT_DIR": "ACUMULANDO",
+                "COT_Consec_Cat": "3+",
+                "VXN_Level": "MEDIO"
+            },
+            "prediction": "SUBE",
+            "count": 10,
+            "win_rate": 60.0,
+            "avg_return": 1.35,
+            "max_return": 4.99,
+            "min_return": -1.83,
+            "sharpe_proxy": 0.69,
+            "rank": 8
+        },
+        {
+            "name": "COT_Consec_Cat=3+ + COT_DIR=ACUMULANDO + VXN_Level=MEDIO + Trend=UPTREND",
+            "conditions": {
+                "COT_Consec_Cat": "3+",
+                "COT_DIR": "ACUMULANDO",
+                "VXN_Level": "MEDIO",
+                "Trend": "UPTREND"
+            },
+            "prediction": "SUBE",
+            "count": 10,
+            "win_rate": 60.0,
+            "avg_return": 1.35,
+            "max_return": 4.99,
+            "min_return": -1.83,
+            "sharpe_proxy": 0.69,
+            "rank": 9
+        }
+    ],
+    "total_patterns_found": 9
+}

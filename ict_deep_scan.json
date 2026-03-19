@@ -1,0 +1,2425 @@
+{
+    "top_patterns": [
+        {
+            "label": "day_name=Jueves | sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 5,
+            "wr": 80.0,
+            "avg_pnl": 102.8
+        },
+        {
+            "label": "day_name=Lunes | direction=BUY | sweep_cat=MEDIO(15-40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "UPTREND"
+            },
+            "n": 5,
+            "wr": 80.0,
+            "avg_pnl": 66.8
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 8,
+            "wr": 75.0,
+            "avg_pnl": 31.2
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "trend": "DOWNTREND"
+            },
+            "n": 12,
+            "wr": 66.7,
+            "avg_pnl": 52.7
+        },
+        {
+            "label": "day_name=Jueves | direction=SELL | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 12,
+            "wr": 66.7,
+            "avg_pnl": 4.8
+        },
+        {
+            "label": "day_name=Miércoles | direction=SELL | sweep_cat=MEDIO(15-40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 6,
+            "wr": 66.7,
+            "avg_pnl": 85.3
+        }
+    ],
+    "all_patterns": [
+        {
+            "label": "day_name=Jueves | sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 5,
+            "wr": 80.0,
+            "avg_pnl": 102.8
+        },
+        {
+            "label": "day_name=Lunes | direction=BUY | sweep_cat=MEDIO(15-40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "UPTREND"
+            },
+            "n": 5,
+            "wr": 80.0,
+            "avg_pnl": 66.8
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 8,
+            "wr": 75.0,
+            "avg_pnl": 31.2
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "trend": "DOWNTREND"
+            },
+            "n": 12,
+            "wr": 66.7,
+            "avg_pnl": 52.7
+        },
+        {
+            "label": "day_name=Jueves | direction=SELL | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 12,
+            "wr": 66.7,
+            "avg_pnl": 4.8
+        },
+        {
+            "label": "day_name=Miércoles | direction=SELL | sweep_cat=MEDIO(15-40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 6,
+            "wr": 66.7,
+            "avg_pnl": 85.3
+        },
+        {
+            "label": "day_name=Jueves | direction=SELL | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "SELL",
+                "trend": "DOWNTREND"
+            },
+            "n": 16,
+            "wr": 62.5,
+            "avg_pnl": 16.2
+        },
+        {
+            "label": "day_name=Lunes | direction=BUY | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 8,
+            "wr": 62.5,
+            "avg_pnl": 43.7
+        },
+        {
+            "label": "day_name=Lunes | direction=BUY | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "BUY",
+                "trend": "UPTREND"
+            },
+            "n": 13,
+            "wr": 61.5,
+            "avg_pnl": 18.6
+        },
+        {
+            "label": "day_name=Jueves | direction=SELL | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 28,
+            "wr": 57.1,
+            "avg_pnl": 0.7
+        },
+        {
+            "label": "day_name=Martes | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "trend": "DOWNTREND"
+            },
+            "n": 24,
+            "wr": 54.2,
+            "avg_pnl": 25.1
+        },
+        {
+            "label": "day_name=Jueves | direction=SELL",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "SELL"
+            },
+            "n": 39,
+            "wr": 53.8,
+            "avg_pnl": 10.0
+        },
+        {
+            "label": "day_name=Lunes | direction=BUY",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "BUY"
+            },
+            "n": 23,
+            "wr": 52.2,
+            "avg_pnl": -12.4
+        },
+        {
+            "label": "ny_pos=DENTRO",
+            "segment": [
+                "ny_pos"
+            ],
+            "keys": {
+                "ny_pos": "DENTRO"
+            },
+            "n": 131,
+            "wr": 51.1,
+            "avg_pnl": 33.1
+        },
+        {
+            "label": "day_name=Miércoles | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 16,
+            "wr": 50.0,
+            "avg_pnl": 51.4
+        },
+        {
+            "label": "day_name=Jueves | direction=SELL | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 16,
+            "wr": 50.0,
+            "avg_pnl": -2.4
+        },
+        {
+            "label": "day_name=Miércoles | direction=SELL | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 12,
+            "wr": 50.0,
+            "avg_pnl": 47.9
+        },
+        {
+            "label": "day_name=Miércoles | direction=SELL | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "SELL",
+                "trend": "DOWNTREND"
+            },
+            "n": 12,
+            "wr": 50.0,
+            "avg_pnl": 31.6
+        },
+        {
+            "label": "day_name=Lunes | direction=BUY | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 8,
+            "wr": 50.0,
+            "avg_pnl": -11.5
+        },
+        {
+            "label": "day_name=Jueves | direction=BUY | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 6,
+            "wr": 50.0,
+            "avg_pnl": -40.2
+        },
+        {
+            "label": "day_name=Jueves | direction=SELL | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "SELL",
+                "trend": "UPTREND"
+            },
+            "n": 23,
+            "wr": 47.8,
+            "avg_pnl": 5.7
+        },
+        {
+            "label": "day_name=Lunes | direction=BUY | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 15,
+            "wr": 46.7,
+            "avg_pnl": -42.3
+        },
+        {
+            "label": "day_name=Viernes | direction=BUY | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 15,
+            "wr": 46.7,
+            "avg_pnl": -46.3
+        },
+        {
+            "label": "day_name=Viernes | direction=BUY | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 15,
+            "wr": 46.7,
+            "avg_pnl": -46.3
+        },
+        {
+            "label": "day_name=Miércoles | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "trend": "DOWNTREND"
+            },
+            "n": 26,
+            "wr": 46.2,
+            "avg_pnl": 9.4
+        },
+        {
+            "label": "direction=BUY | sweep_cat=MEDIO(15-40%) | trend=UPTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "UPTREND"
+            },
+            "n": 13,
+            "wr": 46.2,
+            "avg_pnl": 23.9
+        },
+        {
+            "label": "day_name=Jueves | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 48,
+            "wr": 45.8,
+            "avg_pnl": -27.7
+        },
+        {
+            "label": "day_name=Jueves | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "trend": "UPTREND"
+            },
+            "n": 35,
+            "wr": 45.7,
+            "avg_pnl": -0.8
+        },
+        {
+            "label": "day_name=Miércoles | direction=BUY | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 11,
+            "wr": 45.5,
+            "avg_pnl": -23.9
+        },
+        {
+            "label": "day_name=Jueves",
+            "segment": [
+                "day_name"
+            ],
+            "keys": {
+                "day_name": "Jueves"
+            },
+            "n": 69,
+            "wr": 44.9,
+            "avg_pnl": -10.1
+        },
+        {
+            "label": "day_name=Jueves | direction=SELL | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 9,
+            "wr": 44.4,
+            "avg_pnl": 27.3
+        },
+        {
+            "label": "day_name=Jueves | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "trend": "DOWNTREND"
+            },
+            "n": 34,
+            "wr": 44.1,
+            "avg_pnl": -19.7
+        },
+        {
+            "label": "direction=SELL | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 60,
+            "wr": 43.3,
+            "avg_pnl": -41.8
+        },
+        {
+            "label": "sweep_cat=MEDIO(15-40%) | with_trend=True",
+            "segment": [
+                "sweep_cat",
+                "with_trend"
+            ],
+            "keys": {
+                "sweep_cat": "MEDIO(15-40%)",
+                "with_trend": "True"
+            },
+            "n": 35,
+            "wr": 42.9,
+            "avg_pnl": 28.8
+        },
+        {
+            "label": "day_name=Miércoles | direction=BUY | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "BUY",
+                "trend": "DOWNTREND"
+            },
+            "n": 14,
+            "wr": 42.9,
+            "avg_pnl": -9.6
+        },
+        {
+            "label": "day_name=Martes | direction=BUY | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 7,
+            "wr": 42.9,
+            "avg_pnl": 37.5
+        },
+        {
+            "label": "day_name=Lunes | direction=BUY | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 7,
+            "wr": 42.9,
+            "avg_pnl": -77.5
+        },
+        {
+            "label": "day_name=Jueves | direction=BUY | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "BUY",
+                "trend": "UPTREND"
+            },
+            "n": 12,
+            "wr": 41.7,
+            "avg_pnl": -13.3
+        },
+        {
+            "label": "day_name=Martes | direction=BUY | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "BUY",
+                "trend": "DOWNTREND"
+            },
+            "n": 12,
+            "wr": 41.7,
+            "avg_pnl": -2.6
+        },
+        {
+            "label": "direction=SELL | trend=DOWNTREND",
+            "segment": [
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "trend": "DOWNTREND"
+            },
+            "n": 92,
+            "wr": 41.3,
+            "avg_pnl": -15.4
+        },
+        {
+            "label": "direction=SELL | with_trend=True",
+            "segment": [
+                "direction",
+                "with_trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "with_trend": "True"
+            },
+            "n": 92,
+            "wr": 41.3,
+            "avg_pnl": -15.4
+        },
+        {
+            "label": "sweep_cat=GRANDE(>40%) | with_trend=True",
+            "segment": [
+                "sweep_cat",
+                "with_trend"
+            ],
+            "keys": {
+                "sweep_cat": "GRANDE(>40%)",
+                "with_trend": "True"
+            },
+            "n": 95,
+            "wr": 41.1,
+            "avg_pnl": -36.8
+        },
+        {
+            "label": "direction=SELL | sweep_cat=MEDIO(15-40%) | trend=DOWNTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 22,
+            "wr": 40.9,
+            "avg_pnl": 31.7
+        },
+        {
+            "label": "sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 113,
+            "wr": 40.7,
+            "avg_pnl": -48.4
+        },
+        {
+            "label": "with_trend=True",
+            "segment": [
+                "with_trend"
+            ],
+            "keys": {
+                "with_trend": "True"
+            },
+            "n": 146,
+            "wr": 40.4,
+            "avg_pnl": -12.8
+        },
+        {
+            "label": "direction=BUY | sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 10,
+            "wr": 40.0,
+            "avg_pnl": 44.5
+        },
+        {
+            "label": "day_name=Lunes | direction=BUY | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "BUY",
+                "trend": "DOWNTREND"
+            },
+            "n": 10,
+            "wr": 40.0,
+            "avg_pnl": -52.7
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 5,
+            "wr": 40.0,
+            "avg_pnl": 98.6
+        },
+        {
+            "label": "day_name=Martes | direction=BUY | sweep_cat=MEDIO(15-40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 5,
+            "wr": 40.0,
+            "avg_pnl": 40.5
+        },
+        {
+            "label": "trend=DOWNTREND",
+            "segment": [
+                "trend"
+            ],
+            "keys": {
+                "trend": "DOWNTREND"
+            },
+            "n": 167,
+            "wr": 39.5,
+            "avg_pnl": -22.9
+        },
+        {
+            "label": "direction=BUY | trend=UPTREND",
+            "segment": [
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "trend": "UPTREND"
+            },
+            "n": 54,
+            "wr": 38.9,
+            "avg_pnl": -8.3
+        },
+        {
+            "label": "direction=BUY | with_trend=True",
+            "segment": [
+                "direction",
+                "with_trend"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "with_trend": "True"
+            },
+            "n": 54,
+            "wr": 38.9,
+            "avg_pnl": -8.3
+        },
+        {
+            "label": "direction=BUY | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 31,
+            "wr": 38.7,
+            "avg_pnl": 21.2
+        },
+        {
+            "label": "sweep_cat=PEQUEÑO(<15%) | with_trend=False",
+            "segment": [
+                "sweep_cat",
+                "with_trend"
+            ],
+            "keys": {
+                "sweep_cat": "PEQUEÑO(<15%)",
+                "with_trend": "False"
+            },
+            "n": 13,
+            "wr": 38.5,
+            "avg_pnl": 47.6
+        },
+        {
+            "label": "day_name=Viernes | direction=BUY",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "BUY"
+            },
+            "n": 21,
+            "wr": 38.1,
+            "avg_pnl": -37.1
+        },
+        {
+            "label": "day_name=Viernes | direction=BUY | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "BUY",
+                "trend": "DOWNTREND"
+            },
+            "n": 21,
+            "wr": 38.1,
+            "avg_pnl": -37.1
+        },
+        {
+            "label": "direction=BUY",
+            "segment": [
+                "direction"
+            ],
+            "keys": {
+                "direction": "BUY"
+            },
+            "n": 129,
+            "wr": 38.0,
+            "avg_pnl": -22.1
+        },
+        {
+            "label": "direction=BUY | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 53,
+            "wr": 37.7,
+            "avg_pnl": -55.8
+        },
+        {
+            "label": "direction=BUY | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 88,
+            "wr": 37.5,
+            "avg_pnl": -44.9
+        },
+        {
+            "label": "sweep_cat=MEDIO(15-40%) | trend=DOWNTREND",
+            "segment": [
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 40,
+            "wr": 37.5,
+            "avg_pnl": 26.1
+        },
+        {
+            "label": "direction=BUY | trend=DOWNTREND",
+            "segment": [
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "trend": "DOWNTREND"
+            },
+            "n": 75,
+            "wr": 37.3,
+            "avg_pnl": -32.0
+        },
+        {
+            "label": "direction=BUY | with_trend=False",
+            "segment": [
+                "direction",
+                "with_trend"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "with_trend": "False"
+            },
+            "n": 75,
+            "wr": 37.3,
+            "avg_pnl": -32.0
+        },
+        {
+            "label": "direction=BUY | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 35,
+            "wr": 37.1,
+            "avg_pnl": -28.3
+        },
+        {
+            "label": "day_name=Viernes | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 38,
+            "wr": 36.8,
+            "avg_pnl": -50.3
+        },
+        {
+            "label": "day_name=Miércoles | direction=BUY | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 19,
+            "wr": 36.8,
+            "avg_pnl": -29.0
+        },
+        {
+            "label": "day_name=Miércoles | direction=BUY",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "BUY"
+            },
+            "n": 25,
+            "wr": 36.0,
+            "avg_pnl": -13.4
+        },
+        {
+            "label": "day_name=Martes | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 14,
+            "wr": 35.7,
+            "avg_pnl": 23.2
+        },
+        {
+            "label": "sweep_cat=PEQUEÑO(<15%) | trend=DOWNTREND",
+            "segment": [
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "sweep_cat": "PEQUEÑO(<15%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 14,
+            "wr": 35.7,
+            "avg_pnl": 43.2
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 20,
+            "wr": 35.0,
+            "avg_pnl": -46.2
+        },
+        {
+            "label": "sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "sweep_cat"
+            ],
+            "keys": {
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 29,
+            "wr": 34.5,
+            "avg_pnl": 42.9
+        },
+        {
+            "label": "day_name=Martes | direction=SELL",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL"
+            },
+            "n": 32,
+            "wr": 34.4,
+            "avg_pnl": -11.5
+        },
+        {
+            "label": "sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "sweep_cat"
+            ],
+            "keys": {
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 79,
+            "wr": 34.2,
+            "avg_pnl": 14.5
+        },
+        {
+            "label": "sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "sweep_cat"
+            ],
+            "keys": {
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 208,
+            "wr": 34.1,
+            "avg_pnl": -49.7
+        },
+        {
+            "label": "day_name=Martes",
+            "segment": [
+                "day_name"
+            ],
+            "keys": {
+                "day_name": "Martes"
+            },
+            "n": 62,
+            "wr": 33.9,
+            "avg_pnl": -11.7
+        },
+        {
+            "label": "day_name=Martes | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 39,
+            "wr": 33.3,
+            "avg_pnl": -42.1
+        },
+        {
+            "label": "day_name=Jueves | direction=BUY",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "BUY"
+            },
+            "n": 30,
+            "wr": 33.3,
+            "avg_pnl": -36.3
+        },
+        {
+            "label": "day_name=Martes | direction=BUY",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "BUY"
+            },
+            "n": 30,
+            "wr": 33.3,
+            "avg_pnl": -11.9
+        },
+        {
+            "label": "direction=BUY | sweep_cat=MEDIO(15-40%) | trend=DOWNTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 18,
+            "wr": 33.3,
+            "avg_pnl": 19.2
+        },
+        {
+            "label": "sweep_cat=PEQUEÑO(<15%) | trend=UPTREND",
+            "segment": [
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "sweep_cat": "PEQUEÑO(<15%)",
+                "trend": "UPTREND"
+            },
+            "n": 15,
+            "wr": 33.3,
+            "avg_pnl": 42.6
+        },
+        {
+            "label": "day_name=Martes | sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 9,
+            "wr": 33.3,
+            "avg_pnl": 65.6
+        },
+        {
+            "label": "direction=SELL | sweep_cat=PEQUEÑO(<15%) | trend=UPTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "sweep_cat": "PEQUEÑO(<15%)",
+                "trend": "UPTREND"
+            },
+            "n": 9,
+            "wr": 33.3,
+            "avg_pnl": 45.1
+        },
+        {
+            "label": "day_name=Lunes | sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 6,
+            "wr": 33.3,
+            "avg_pnl": 20.4
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL | sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL",
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 6,
+            "wr": 33.3,
+            "avg_pnl": 20.4
+        },
+        {
+            "label": "direction=BUY | sweep_cat=PEQUEÑO(<15%) | trend=UPTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "BUY",
+                "sweep_cat": "PEQUEÑO(<15%)",
+                "trend": "UPTREND"
+            },
+            "n": 6,
+            "wr": 33.3,
+            "avg_pnl": 38.7
+        },
+        {
+            "label": "day_name=Jueves | direction=SELL | sweep_cat=MEDIO(15-40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "UPTREND"
+            },
+            "n": 6,
+            "wr": 33.3,
+            "avg_pnl": 5.6
+        },
+        {
+            "label": "day_name=Martes | direction=BUY | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 6,
+            "wr": 33.3,
+            "avg_pnl": -58.3
+        },
+        {
+            "label": "day_name=Miércoles | direction=SELL | sweep_cat=MEDIO(15-40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "UPTREND"
+            },
+            "n": 6,
+            "wr": 33.3,
+            "avg_pnl": 10.6
+        },
+        {
+            "label": "day_name=Viernes",
+            "segment": [
+                "day_name"
+            ],
+            "keys": {
+                "day_name": "Viernes"
+            },
+            "n": 55,
+            "wr": 32.7,
+            "avg_pnl": -34.7
+        },
+        {
+            "label": "day_name=Viernes | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "trend": "DOWNTREND"
+            },
+            "n": 55,
+            "wr": 32.7,
+            "avg_pnl": -34.7
+        },
+        {
+            "label": "direction=SELL | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 120,
+            "wr": 31.7,
+            "avg_pnl": -53.2
+        },
+        {
+            "label": "direction=SELL",
+            "segment": [
+                "direction"
+            ],
+            "keys": {
+                "direction": "SELL"
+            },
+            "n": 187,
+            "wr": 31.6,
+            "avg_pnl": -27.3
+        },
+        {
+            "label": "direction=SELL | sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 19,
+            "wr": 31.6,
+            "avg_pnl": 42.0
+        },
+        {
+            "label": "day_name=Martes | direction=BUY | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 19,
+            "wr": 31.6,
+            "avg_pnl": -37.8
+        },
+        {
+            "label": "direction=SELL | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 48,
+            "wr": 31.2,
+            "avg_pnl": 10.2
+        },
+        {
+            "label": "day_name=Jueves | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 16,
+            "wr": 31.2,
+            "avg_pnl": 7.4
+        },
+        {
+            "label": "sweep_cat=PEQUEÑO(<15%) | with_trend=True",
+            "segment": [
+                "sweep_cat",
+                "with_trend"
+            ],
+            "keys": {
+                "sweep_cat": "PEQUEÑO(<15%)",
+                "with_trend": "True"
+            },
+            "n": 16,
+            "wr": 31.2,
+            "avg_pnl": 39.0
+        },
+        {
+            "label": "sweep_cat=MEDIO(15-40%) | trend=UPTREND",
+            "segment": [
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "UPTREND"
+            },
+            "n": 39,
+            "wr": 30.8,
+            "avg_pnl": 2.6
+        },
+        {
+            "label": "day_name=Martes | direction=BUY | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 13,
+            "wr": 30.8,
+            "avg_pnl": -28.3
+        },
+        {
+            "label": "day_name=Viernes | direction=SELL | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 23,
+            "wr": 30.4,
+            "avg_pnl": -52.9
+        },
+        {
+            "label": "day_name=Viernes | direction=SELL | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 23,
+            "wr": 30.4,
+            "avg_pnl": -52.9
+        },
+        {
+            "label": "day_name=Lunes | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "trend": "UPTREND"
+            },
+            "n": 40,
+            "wr": 30.0,
+            "avg_pnl": -19.9
+        },
+        {
+            "label": "day_name=Lunes | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 20,
+            "wr": 30.0,
+            "avg_pnl": -1.0
+        },
+        {
+            "label": "day_name=Jueves | direction=BUY | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 20,
+            "wr": 30.0,
+            "avg_pnl": -67.6
+        },
+        {
+            "label": "direction=SELL | sweep_cat=PEQUEÑO(<15%) | trend=DOWNTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "sweep_cat": "PEQUEÑO(<15%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 10,
+            "wr": 30.0,
+            "avg_pnl": 39.2
+        },
+        {
+            "label": "day_name=Lunes",
+            "segment": [
+                "day_name"
+            ],
+            "keys": {
+                "day_name": "Lunes"
+            },
+            "n": 68,
+            "wr": 29.4,
+            "avg_pnl": -42.4
+        },
+        {
+            "label": "day_name=Viernes | direction=SELL",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "SELL"
+            },
+            "n": 34,
+            "wr": 29.4,
+            "avg_pnl": -33.3
+        },
+        {
+            "label": "day_name=Viernes | direction=SELL | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "SELL",
+                "trend": "DOWNTREND"
+            },
+            "n": 34,
+            "wr": 29.4,
+            "avg_pnl": -33.3
+        },
+        {
+            "label": "day_name=Miércoles",
+            "segment": [
+                "day_name"
+            ],
+            "keys": {
+                "day_name": "Miércoles"
+            },
+            "n": 62,
+            "wr": 29.0,
+            "avg_pnl": -27.9
+        },
+        {
+            "label": "with_trend=False",
+            "segment": [
+                "with_trend"
+            ],
+            "keys": {
+                "with_trend": "False"
+            },
+            "n": 170,
+            "wr": 28.8,
+            "avg_pnl": -35.8
+        },
+        {
+            "label": "day_name=Lunes | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 42,
+            "wr": 28.6,
+            "avg_pnl": -71.1
+        },
+        {
+            "label": "day_name=Lunes | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "trend": "DOWNTREND"
+            },
+            "n": 28,
+            "wr": 28.6,
+            "avg_pnl": -74.5
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 7,
+            "wr": 28.6,
+            "avg_pnl": 8.8
+        },
+        {
+            "label": "sweep_cat=GRANDE(>40%) | with_trend=False",
+            "segment": [
+                "sweep_cat",
+                "with_trend"
+            ],
+            "keys": {
+                "sweep_cat": "GRANDE(>40%)",
+                "with_trend": "False"
+            },
+            "n": 113,
+            "wr": 28.3,
+            "avg_pnl": -60.5
+        },
+        {
+            "label": "trend=UPTREND",
+            "segment": [
+                "trend"
+            ],
+            "keys": {
+                "trend": "UPTREND"
+            },
+            "n": 149,
+            "wr": 28.2,
+            "avg_pnl": -27.7
+        },
+        {
+            "label": "day_name=Jueves | direction=BUY | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "BUY",
+                "trend": "DOWNTREND"
+            },
+            "n": 18,
+            "wr": 27.8,
+            "avg_pnl": -51.6
+        },
+        {
+            "label": "day_name=Martes | direction=BUY | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "BUY",
+                "trend": "UPTREND"
+            },
+            "n": 18,
+            "wr": 27.8,
+            "avg_pnl": -18.2
+        },
+        {
+            "label": "sweep_cat=MEDIO(15-40%) | with_trend=False",
+            "segment": [
+                "sweep_cat",
+                "with_trend"
+            ],
+            "keys": {
+                "sweep_cat": "MEDIO(15-40%)",
+                "with_trend": "False"
+            },
+            "n": 44,
+            "wr": 27.3,
+            "avg_pnl": 3.1
+        },
+        {
+            "label": "day_name=Miércoles | direction=BUY | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "BUY",
+                "trend": "UPTREND"
+            },
+            "n": 11,
+            "wr": 27.3,
+            "avg_pnl": -18.3
+        },
+        {
+            "label": "sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 95,
+            "wr": 26.3,
+            "avg_pnl": -51.2
+        },
+        {
+            "label": "day_name=Viernes | direction=SELL | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 8,
+            "wr": 25.0,
+            "avg_pnl": -3.1
+        },
+        {
+            "label": "day_name=Miércoles | direction=BUY | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 8,
+            "wr": 25.0,
+            "avg_pnl": -36.1
+        },
+        {
+            "label": "day_name=Viernes | direction=SELL | sweep_cat=MEDIO(15-40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 8,
+            "wr": 25.0,
+            "avg_pnl": -3.1
+        },
+        {
+            "label": "day_name=Miércoles | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 41,
+            "wr": 24.4,
+            "avg_pnl": -60.2
+        },
+        {
+            "label": "day_name=Miércoles | direction=SELL",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "SELL"
+            },
+            "n": 37,
+            "wr": 24.3,
+            "avg_pnl": -37.7
+        },
+        {
+            "label": "ny_pos=DEBAJO",
+            "segment": [
+                "ny_pos"
+            ],
+            "keys": {
+                "ny_pos": "DEBAJO"
+            },
+            "n": 68,
+            "wr": 23.5,
+            "avg_pnl": -68.8
+        },
+        {
+            "label": "direction=SELL | sweep_cat=MEDIO(15-40%) | trend=UPTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "UPTREND"
+            },
+            "n": 26,
+            "wr": 23.1,
+            "avg_pnl": -8.1
+        },
+        {
+            "label": "day_name=Viernes | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 13,
+            "wr": 23.1,
+            "avg_pnl": -7.8
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 13,
+            "wr": 23.1,
+            "avg_pnl": -115.9
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL",
+                "trend": "DOWNTREND"
+            },
+            "n": 18,
+            "wr": 22.2,
+            "avg_pnl": -86.6
+        },
+        {
+            "label": "direction=SELL | trend=UPTREND",
+            "segment": [
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "trend": "UPTREND"
+            },
+            "n": 95,
+            "wr": 22.1,
+            "avg_pnl": -38.8
+        },
+        {
+            "label": "direction=SELL | with_trend=False",
+            "segment": [
+                "direction",
+                "with_trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "with_trend": "False"
+            },
+            "n": 95,
+            "wr": 22.1,
+            "avg_pnl": -38.8
+        },
+        {
+            "label": "ny_pos=ENCIMA",
+            "segment": [
+                "ny_pos"
+            ],
+            "keys": {
+                "ny_pos": "ENCIMA"
+            },
+            "n": 117,
+            "wr": 21.4,
+            "avg_pnl": -65.0
+        },
+        {
+            "label": "day_name=Jueves | direction=BUY | sweep_cat=GRANDE(>40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "BUY",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 14,
+            "wr": 21.4,
+            "avg_pnl": -79.3
+        },
+        {
+            "label": "day_name=Martes | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "trend": "UPTREND"
+            },
+            "n": 38,
+            "wr": 21.1,
+            "avg_pnl": -35.0
+        },
+        {
+            "label": "direction=SELL | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 60,
+            "wr": 20.0,
+            "avg_pnl": -64.6
+        },
+        {
+            "label": "day_name=Viernes | direction=BUY | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 5,
+            "wr": 20.0,
+            "avg_pnl": -15.1
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL | sweep_cat=PEQUEÑO(<15%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL",
+                "sweep_cat": "PEQUEÑO(<15%)",
+                "trend": "UPTREND"
+            },
+            "n": 5,
+            "wr": 20.0,
+            "avg_pnl": 4.4
+        },
+        {
+            "label": "day_name=Viernes | direction=BUY | sweep_cat=MEDIO(15-40%) | trend=DOWNTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Viernes",
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "DOWNTREND"
+            },
+            "n": 5,
+            "wr": 20.0,
+            "avg_pnl": -15.1
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 27,
+            "wr": 18.5,
+            "avg_pnl": -87.0
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL",
+            "segment": [
+                "day_name",
+                "direction"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL"
+            },
+            "n": 45,
+            "wr": 17.8,
+            "avg_pnl": -57.7
+        },
+        {
+            "label": "day_name=Miércoles | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "trend": "UPTREND"
+            },
+            "n": 36,
+            "wr": 16.7,
+            "avg_pnl": -54.9
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | sweep_cat=MEDIO(15-40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "UPTREND"
+            },
+            "n": 6,
+            "wr": 16.7,
+            "avg_pnl": -15.1
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "trend": "UPTREND"
+            },
+            "n": 20,
+            "wr": 15.0,
+            "avg_pnl": -50.1
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL",
+                "trend": "UPTREND"
+            },
+            "n": 27,
+            "wr": 14.8,
+            "avg_pnl": -38.4
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 14,
+            "wr": 14.3,
+            "avg_pnl": -60.3
+        },
+        {
+            "label": "day_name=Jueves | direction=BUY | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Jueves",
+                "direction": "BUY",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 7,
+            "wr": 14.3,
+            "avg_pnl": -18.1
+        },
+        {
+            "label": "day_name=Miércoles | direction=SELL | sweep_cat=GRANDE(>40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)"
+            },
+            "n": 22,
+            "wr": 13.6,
+            "avg_pnl": -87.2
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL | sweep_cat=MEDIO(15-40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)",
+                "trend": "UPTREND"
+            },
+            "n": 8,
+            "wr": 12.5,
+            "avg_pnl": -27.1
+        },
+        {
+            "label": "day_name=Miércoles | direction=SELL | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "SELL",
+                "trend": "UPTREND"
+            },
+            "n": 25,
+            "wr": 12.0,
+            "avg_pnl": -71.0
+        },
+        {
+            "label": "day_name=Lunes | direction=SELL | sweep_cat=MEDIO(15-40%)",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Lunes",
+                "direction": "SELL",
+                "sweep_cat": "MEDIO(15-40%)"
+            },
+            "n": 12,
+            "wr": 8.3,
+            "avg_pnl": -30.8
+        },
+        {
+            "label": "day_name=Martes | direction=SELL | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Martes",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 12,
+            "wr": 8.3,
+            "avg_pnl": -97.8
+        },
+        {
+            "label": "day_name=Miércoles | direction=SELL | sweep_cat=GRANDE(>40%) | trend=UPTREND",
+            "segment": [
+                "day_name",
+                "direction",
+                "sweep_cat",
+                "trend"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "direction": "SELL",
+                "sweep_cat": "GRANDE(>40%)",
+                "trend": "UPTREND"
+            },
+            "n": 18,
+            "wr": 5.6,
+            "avg_pnl": -101.4
+        },
+        {
+            "label": "day_name=Miércoles | sweep_cat=PEQUEÑO(<15%)",
+            "segment": [
+                "day_name",
+                "sweep_cat"
+            ],
+            "keys": {
+                "day_name": "Miércoles",
+                "sweep_cat": "PEQUEÑO(<15%)"
+            },
+            "n": 5,
+            "wr": 0.0,
+            "avg_pnl": -17.0
+        }
+    ],
+    "total_setups": 355
+}

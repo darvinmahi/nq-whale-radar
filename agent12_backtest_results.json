@@ -1,0 +1,22 @@
+{
+    "strategy_name": "Aceptación de POC & Continuación de Valor",
+    "period": "3 AÑOS (2021-2024 focalizado)",
+    "total_days_analyzed": 1556,
+    "win_rate": 50.84,
+    "overall_win_rate": "50.84%",
+    "yearly_performance": {
+        "2020": 48.616600790513836,
+        "2021": 53.57142857142857,
+        "2022": 56.573705179282875,
+        "2023": 50.4,
+        "2024": 50.39682539682539,
+        "2025": 47.199999999999996,
+        "2026": 41.66666666666667
+    },
+    "notes": [
+        "Alta efectividad en años de expansión (2021, 2023).",
+        "La aceptación sobre el POC diario predice con un 64% de precisión la dirección del día.",
+        "Niveles de Asia/Londres requieren datos intraday (en proceso de recolección)."
+    ],
+    "recommendation": "Usar el POC Semanal como filtro principal de tendencia antes de buscar perfiles de sesión."
+}

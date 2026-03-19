@@ -1,0 +1,24 @@
+{
+    "youtube": [
+        {
+            "name": "World Class Edge",
+            "url": "https://www.youtube.com/@worldclassedge",
+            "priority": "High"
+        },
+        {
+            "name": "ICT",
+            "url": "https://www.youtube.com/@InnerCircleTrader",
+            "priority": "Essential"
+        },
+        {
+            "name": "Fabervaale ENG",
+            "url": "https://www.youtube.com/channel/UCQTN8r4TYJUk2OXrkHyfVSQ",
+            "priority": "High"
+        }
+    ],
+    "blogs": [
+        "ZeroHedge",
+        "Goldman Sachs Macro"
+    ],
+    "last_crawl": null
+}

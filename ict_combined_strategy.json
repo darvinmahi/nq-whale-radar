@@ -1,0 +1,12 @@
+{
+    "system": "ICT + Fundamentales (COT + VXN)",
+    "total_trades": 75,
+    "win_rate": 52.0,
+    "avg_win_pts": 102.5,
+    "avg_loss_pts": -57.0,
+    "rr_ratio": 1.8,
+    "total_pnl_pts": 1945.1,
+    "total_pnl_usd": 38902.0,
+    "vs_ict_only_wr": "62.9%",
+    "vs_ict_only_pnl": "$57,064"
+}

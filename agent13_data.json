@@ -1,0 +1,44 @@
+{
+    "agent": 13,
+    "name": "Explorador de Inteligencia Alpha",
+    "last_crawl": "2026-03-19T01:32:47.396675+00:00Z",
+    "insights": {
+        "source": "Web Research & User DNA",
+        "external_bias": "ESTUDIO DE BACKTESTING 3 AÑOS EN CURSO",
+        "confidence": 94,
+        "recommendation": "Enfocarse en la 'Aceptación' del precio respecto al POC de Londres en la primera hora de NY.",
+        "discoveries": [
+            {
+                "source": "Sistema de Backtesting",
+                "discovery": "Iniciando preparación para Backtest de 3 años sobre niveles de Asia/Londres."
+            },
+            {
+                "source": "User Intel",
+                "discovery": "Priorización de Niveles de Sesión Pre-Apertura (9:30 AM)."
+            },
+            {
+                "source": "Order Flow Page",
+                "discovery": "Nueva sección de Mentoría IA Activa."
+            }
+        ]
+    },
+    "estrategia_maestra": {
+        "nombre": "Fallo de Sesión Asia (Asia Low Sweep)",
+        "tipo": "Liquidity Sweep",
+        "descripcion": "El precio rompe el mínimo de la sesión de Asia durante Londres o NY para capturar liquidez, seguido de una recuperación inmediata del POC Diario.",
+        "reglas": [
+            "1. Barrido (Sweep) del mínimo de Asia (Asia Low).",
+            "2. Rechazo violento con volumen en el Footprint.",
+            "3. Re-entrada al Value Area diaria."
+        ],
+        "fuente": "Order Flow Masterclass",
+        "score_alpha": "8.7/10"
+    },
+    "backtest_config": {
+        "period": "3 AÑOS",
+        "focus": "Asia/London Profiles vs NY Opening",
+        "status": "DATA_COLLECTION_STAGE"
+    },
+    "knowledge_base_size": "4.1GB",
+    "status": "Aprendiendo patrones de Sesiones..."
+}

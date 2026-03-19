@@ -1,0 +1,12 @@
+{
+    "strategy": "ICT + Volume Profile",
+    "backtest_period": "2 a\u00f1os NQ=F horario",
+    "total_trades": 361,
+    "win_rate": 44.0,
+    "buy_wr": 42.0,
+    "sell_wr": 45.5,
+    "avg_win_pts": 78.7,
+    "avg_loss_pts": -94.3,
+    "rr_ratio": 0.83,
+    "logic": "NY abre fuera del Value Area de Asia + Londres sweepea extremo \u2192 entrada retorno al POC"
+}

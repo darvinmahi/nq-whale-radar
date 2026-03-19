@@ -1,0 +1,9 @@
+TABLA_REPETICIONES
+| MEGÁFONO        | 30    |  41.1% |
+| EXP_ALCISTA     | 19    |  26.0% |
+| EXP_BAJISTA     | 10    |  13.7% |
+| TRAMPA_BEAR     | 7     |   9.6% |
+| TRAMPA_BULL     | 6     |   8.2% |
+| RANGO           | 1     |   1.4% |
+
+TABLA_DIARIA

@@ -1,0 +1,265 @@
+{
+    "title": "NY PM — Profile Asia+London 15min VAH/POC/VAL",
+    "period": "2026-01-05 → 2026-03-17",
+    "bars": "15m",
+    "days": 50,
+    "trades": 46,
+    "por_dia": {
+        "LUNES": {
+            "n": 9,
+            "va_avg": 133.0,
+            "pm_avg": 216.0,
+            "tv": 8,
+            "bkv": 8,
+            "bnv": 0,
+            "tl": 1,
+            "bkl": 1,
+            "bnl": 0,
+            "tp": 2,
+            "vah_bounce_pct": 0.0,
+            "val_bounce_pct": 0.0,
+            "vah_break_pct": 100.0,
+            "val_break_pct": 100.0
+        },
+        "MARTES": {
+            "n": 11,
+            "va_avg": 97.0,
+            "pm_avg": 242.0,
+            "tv": 10,
+            "bkv": 10,
+            "bnv": 0,
+            "tl": 4,
+            "bkl": 4,
+            "bnl": 0,
+            "tp": 6,
+            "vah_bounce_pct": 0.0,
+            "val_bounce_pct": 0.0,
+            "vah_break_pct": 100.0,
+            "val_break_pct": 100.0
+        },
+        "MIÉRCOLES": {
+            "n": 10,
+            "va_avg": 114.0,
+            "pm_avg": 240.0,
+            "tv": 7,
+            "bkv": 6,
+            "bnv": 1,
+            "tl": 5,
+            "bkl": 5,
+            "bnl": 0,
+            "tp": 4,
+            "vah_bounce_pct": 14.0,
+            "val_bounce_pct": 0.0,
+            "vah_break_pct": 86.0,
+            "val_break_pct": 100.0
+        },
+        "JUEVES": {
+            "n": 10,
+            "va_avg": 124.0,
+            "pm_avg": 262.0,
+            "tv": 2,
+            "bkv": 2,
+            "bnv": 0,
+            "tl": 10,
+            "bkl": 10,
+            "bnl": 0,
+            "tp": 5,
+            "vah_bounce_pct": 0.0,
+            "val_bounce_pct": 0.0,
+            "vah_break_pct": 100.0,
+            "val_break_pct": 100.0
+        },
+        "VIERNES": {
+            "n": 10,
+            "va_avg": 158.0,
+            "pm_avg": 231.0,
+            "tv": 6,
+            "bkv": 6,
+            "bnv": 0,
+            "tl": 4,
+            "bkl": 4,
+            "bnl": 0,
+            "tp": 4,
+            "vah_bounce_pct": 0.0,
+            "val_bounce_pct": 0.0,
+            "vah_break_pct": 100.0,
+            "val_break_pct": 100.0
+        }
+    },
+    "strategies": [
+        {
+            "strategy": "VAH_REJ_SHORT",
+            "label": "🔻 VAH Rejection  → SHORT",
+            "n": 1,
+            "wr": 100.0,
+            "rr": 0,
+            "total_pnl": -79.5,
+            "dollar": -1590.0,
+            "by_day": [
+                {
+                    "day": "MIÉRCOLES",
+                    "wr": 100.0,
+                    "n": 1,
+                    "pnl": -79.5
+                }
+            ]
+        },
+        {
+            "strategy": "VAH_BO_RETEST_LONG",
+            "label": "🔺 VAH BO + Retest → LONG",
+            "n": 14,
+            "wr": 50.0,
+            "rr": 1.87,
+            "total_pnl": 180.59999999999997,
+            "dollar": 3611.999999999999,
+            "by_day": [
+                {
+                    "day": "LUNES",
+                    "wr": 50.0,
+                    "n": 2,
+                    "pnl": 33.6
+                },
+                {
+                    "day": "MARTES",
+                    "wr": 66.66666666666666,
+                    "n": 6,
+                    "pnl": 165.79999999999998
+                },
+                {
+                    "day": "MIÉRCOLES",
+                    "wr": 0.0,
+                    "n": 2,
+                    "pnl": -60.900000000000006
+                },
+                {
+                    "day": "JUEVES",
+                    "wr": 0.0,
+                    "n": 1,
+                    "pnl": -31.0
+                },
+                {
+                    "day": "VIERNES",
+                    "wr": 66.66666666666666,
+                    "n": 3,
+                    "pnl": 73.1
+                }
+            ]
+        },
+        {
+            "strategy": "VAH_BO_DIRECT_LONG",
+            "label": "🔺 VAH BO Directo  → LONG",
+            "n": 1,
+            "wr": 100.0,
+            "rr": 0,
+            "total_pnl": 36.8,
+            "dollar": 736.0,
+            "by_day": [
+                {
+                    "day": "VIERNES",
+                    "wr": 100.0,
+                    "n": 1,
+                    "pnl": 36.8
+                }
+            ]
+        },
+        {
+            "strategy": "VAL_BD_RETEST_SHORT",
+            "label": "🔻 VAL BD + Retest → SHORT",
+            "n": 10,
+            "wr": 10.0,
+            "rr": 1.29,
+            "total_pnl": 246.0,
+            "dollar": 4920.0,
+            "by_day": [
+                {
+                    "day": "MARTES",
+                    "wr": 33.33333333333333,
+                    "n": 3,
+                    "pnl": -0.20000000000000284
+                },
+                {
+                    "day": "MIÉRCOLES",
+                    "wr": 0.0,
+                    "n": 1,
+                    "pnl": 22.5
+                },
+                {
+                    "day": "JUEVES",
+                    "wr": 0.0,
+                    "n": 4,
+                    "pnl": 151.29999999999998
+                },
+                {
+                    "day": "VIERNES",
+                    "wr": 0.0,
+                    "n": 2,
+                    "pnl": 72.4
+                }
+            ]
+        },
+        {
+            "strategy": "POC_SUPPORT_LONG",
+            "label": "🎯 POC Soporte    → LONG",
+            "n": 12,
+            "wr": 58.3,
+            "rr": 1.28,
+            "total_pnl": 138.90000000000003,
+            "dollar": 2778.000000000001,
+            "by_day": [
+                {
+                    "day": "LUNES",
+                    "wr": 100.0,
+                    "n": 2,
+                    "pnl": 101.9
+                },
+                {
+                    "day": "MARTES",
+                    "wr": 50.0,
+                    "n": 2,
+                    "pnl": -1.4000000000000021
+                },
+                {
+                    "day": "MIÉRCOLES",
+                    "wr": 66.66666666666666,
+                    "n": 3,
+                    "pnl": 72.19999999999999
+                },
+                {
+                    "day": "JUEVES",
+                    "wr": 33.33333333333333,
+                    "n": 3,
+                    "pnl": -27.2
+                },
+                {
+                    "day": "VIERNES",
+                    "wr": 50.0,
+                    "n": 2,
+                    "pnl": -6.599999999999994
+                }
+            ]
+        },
+        {
+            "strategy": "POC_RESIST_SHORT",
+            "label": "🎯 POC Resistencia → SHORT",
+            "n": 5,
+            "wr": 60.0,
+            "rr": 2.2,
+            "total_pnl": -138.7,
+            "dollar": -2774.0,
+            "by_day": [
+                {
+                    "day": "MARTES",
+                    "wr": 33.33333333333333,
+                    "n": 3,
+                    "pnl": 22.600000000000005
+                },
+                {
+                    "day": "JUEVES",
+                    "wr": 100.0,
+                    "n": 2,
+                    "pnl": -161.3
+                }
+            ]
+        }
+    ]
+}

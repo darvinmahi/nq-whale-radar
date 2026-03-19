@@ -1,0 +1,44 @@
+{
+    "title": "Jerarquía de Poder de Niveles",
+    "strongest_level": "Asia POC",
+    "success_rate": "100.0%",
+    "avg_bounce": "229.1 pts",
+    "reasoning": "El Asia POC es el nivel con mayor 'poder de magnetismo y rechazo'. Cuando el precio lo toca, tiene un 100.0% de probabilidad de reaccionar al menos 40 puntos.",
+    "ranking": [
+        {
+            "level": "Asia POC",
+            "frequency": "100.0%",
+            "avg_reaction": "229.1 pts",
+            "score": 458.11460446247463,
+            "raw_rate": 100.0
+        },
+        {
+            "level": "London POC",
+            "frequency": "100.0%",
+            "avg_reaction": "220.5 pts",
+            "score": 441.07099391480665,
+            "raw_rate": 100.0
+        },
+        {
+            "level": "Prev Day Low",
+            "frequency": "100.0%",
+            "avg_reaction": "219.6 pts",
+            "score": 439.1304347826087,
+            "raw_rate": 100.0
+        },
+        {
+            "level": "Weekly POC",
+            "frequency": "100.0%",
+            "avg_reaction": "194.0 pts",
+            "score": 387.9424860853423,
+            "raw_rate": 100.0
+        },
+        {
+            "level": "Prev Day High",
+            "frequency": "100.0%",
+            "avg_reaction": "165.5 pts",
+            "score": 331.04347826086956,
+            "raw_rate": 100.0
+        }
+    ]
+}

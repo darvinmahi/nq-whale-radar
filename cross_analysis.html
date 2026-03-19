@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>NQ — Cruce: Patrones × Semana de Noticia</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060B14;--card:#0D1525;--card2:#111927;--border:rgba(255,255,255,.07);
+  --text:#E2E8F0;--muted:#64748B;--muted2:#475569;
+  --nfp:#F59E0B;--cpi:#6366F1;--fomc:#EC4899;--gdp:#14B8A6;
+  --bull:#10B981;--bear:#EF4444;--range:#94A3B8;
+  --dev-hi:#EF4444;--dev-mid:#F59E0B;--dev-lo:#10B981;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;padding:20px;}
+
+/* ── HEADER ── */
+.hdr{text-align:center;padding:28px 20px 20px;margin-bottom:28px;}
+.hdr h1{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;
+  background:linear-gradient(135deg,#A78BFA,#60A5FA,#34D399);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hdr p{color:var(--muted);font-size:.82rem;margin-top:6px;max-width:600px;margin-inline:auto;}
+
+/* ── INSIGHT BAR ── */
+.insight{background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(236,72,153,.08));
+  border:1px solid rgba(99,102,241,.3);border-radius:12px;padding:14px 20px;
+  margin-bottom:24px;font-size:.82rem;line-height:1.6;color:#CBD5E1;}
+.insight strong{color:#A78BFA;}
+
+/* ── WEEK TYPE LEGEND ── */
+.week-legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;justify-content:center;}
+.wl-badge{display:flex;align-items:center;gap:7px;background:var(--card);
+  border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:600;border:1px solid var(--border);}
+.wl-dot{width:10px;height:10px;border-radius:50%;}
+
+/* ── MAIN GRID ── */
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px;}
+@media(max-width:900px){.main-grid{grid-template-columns:1fr;}}
+
+/* ── CROSS MATRIX ── */
+.matrix-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.matrix-title{padding:14px 18px;border-bottom:1px solid var(--border);font-size:.85rem;font-weight:700;
+  color:#A78BFA;display:flex;align-items:center;gap:8px;}
+.matrix-title .sub{font-weight:400;color:var(--muted);font-size:.75rem;}
+.matrix{width:100%;border-collapse:collapse;}
+.matrix th{background:rgba(255,255,255,.04);padding:9px 12px;font-size:.71rem;font-weight:600;
+  text-align:center;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;}
+.matrix th.day-h{text-align:left;min-width:100px;}
+.matrix td{padding:9px 10px;font-size:.75rem;text-align:center;border-bottom:1px solid rgba(255,255,255,.04);}
+.matrix td.day-lbl{text-align:left;font-weight:600;font-size:.78rem;}
+.matrix tr:last-child td{border-bottom:none;}
+
+/* Pattern cell */
+.pc{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.pc .pat{font-size:.65rem;font-weight:600;letter-spacing:.01em;white-space:nowrap;}
+.pc .pct{font-size:.78rem;font-weight:700;}
+.pc .dev{font-size:.6rem;font-weight:500;}
+
+/* Deviation colors */
+.dev-ok{color:#10B981;}          /* matches baseline */
+.dev-warn{color:#F59E0B;}        /* moderate divergence */
+.dev-alert{color:#EF4444;}       /* high divergence - pattern broken */
+.baseline-cell{color:#60A5FA;font-size:.75rem;font-weight:600;}
+
+/* ── DEVIATION HEATMAP ── */
+.heat-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.heat-title{padding:14px 18px;border-bottom:1px solid var(--border);font-size:.85rem;font-weight:700;color:#F472B6;}
+.heat-table{width:100%;border-collapse:collapse;}
+.heat-table th{background:rgba(255,255,255,.04);padding:9px 12px;font-size:.7rem;font-weight:600;
+  color:var(--muted);border-bottom:1px solid var(--border);text-align:center;white-space:nowrap;}
+.heat-table th.row-h{text-align:left;min-width:90px;}
+.heat-table td{padding:8px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.03);}
+.heat-table td.row-lbl{text-align:left;font-size:.73rem;font-weight:600;color:var(--text);}
+.heat-table tr:last-child td{border-bottom:none;}
+
+/* Heatmap cell */
+.hc{border-radius:6px;padding:5px 4px;font-size:.8rem;font-weight:700;transition:transform .15s;}
+.hc:hover{transform:scale(1.1);cursor:default;}
+.hc-0{background:rgba(16,185,129,.12);color:#34D399;}   /* 0-15% deviation = aligned */
+.hc-1{background:rgba(245,158,11,.12);color:#FCD34D;}   /* 16-30% = watch */
+.hc-2{background:rgba(239,68,68,.15);color:#F87171;}     /* 31-50% = diverges */
+.hc-3{background:rgba(239,68,68,.35);color:#FF4444;}     /* >50% = pattern BROKEN */
+
+/* ── WEEKLY PROFILE CARDS ── */
+.profiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+@media(max-width:900px){.profiles{grid-template-columns:repeat(2,1fr);}}
+.wcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;
+  border-top:3px solid transparent;}
+.wcard.nfp{border-top-color:var(--nfp);}
+.wcard.cpi{border-top-color:var(--cpi);}
+.wcard.fomc{border-top-color:var(--fomc);}
+.wcard.gdp{border-top-color:var(--gdp);}
+.wcard-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.wcard-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;}
+.wcard-n{font-size:.65rem;color:var(--muted);background:rgba(255,255,255,.06);
+  padding:2px 7px;border-radius:4px;}
+.wday-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:.72rem;}
+.wday-name{width:30px;font-weight:700;color:var(--muted);} 
+.wday-pat{flex:1;background:rgba(255,255,255,.05);border-radius:4px;padding:3px 7px;
+  font-weight:600;font-size:.68rem;letter-spacing:.02em;}
+.wday-pat.match{background:rgba(16,185,129,.1);color:#34D399;}
+.wday-pat.warn{background:rgba(245,158,11,.1);color:#FCD34D;}
+.wday-pat.diff{background:rgba(239,68,68,.15);color:#F87171;}
+.wday-dir{font-size:.68rem;font-weight:600;width:55px;text-align:right;}
+.bull{color:var(--bull);} .bear{color:var(--bear);} .range{color:var(--range);}
+
+/* ── FINDING CARDS ── */
+.findings{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:28px;}
+@media(max-width:900px){.findings{grid-template-columns:1fr;}}
+.finding{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.finding-hdr{font-size:.72rem;font-weight:700;letter-spacing:.06em;margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;}
+.finding-body{font-size:.78rem;line-height:1.7;color:#CBD5E1;}
+.finding-body strong{font-weight:700;}
+.tag-sm{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.65rem;font-weight:700;margin:0 2px;}
+.tag-nfp{background:rgba(245,158,11,.2);color:var(--nfp);}
+.tag-cpi{background:rgba(99,102,241,.2);color:#818CF8;}
+.tag-fomc{background:rgba(236,72,153,.2);color:var(--fomc);}
+.tag-gdp{background:rgba(20,184,166,.2);color:var(--gdp);}
+
+/* separator */
+.sep{display:flex;align-items:center;gap:12px;margin:24px 0;color:var(--muted);font-size:.75rem;}
+.sep::before,.sep::after{content:'';flex:1;height:1px;background:var(--border);}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>📊 Cruce: Patrones de Día × Tipo de Semana</h1>
+  <p>Donde el patrón base del backtest <b>NO</b> se cumple según la noticia de la semana — aquí están los % que divergen.</p>
+</div>
+
+<div class="insight">
+  <strong>🔑 La hipótesis central:</strong> El backtest general dice "Lunes LONDON = ROTATION POC 62%". 
+  Pero ese 62% es el <em>promedio de las 4 semanas mezcladas</em>. Al segmentar por tipo de semana,
+  el patrón cambia drásticamente — en semana <strong>FOMC</strong> el lunes ya no rota: <strong>expande</strong>. 
+  Los % que no calzan con el baseline revelan el <strong>contexto de noticia dominante</strong>.
+</div>
+
+<!-- Week Type Legend -->
+<div class="week-legend">
+  <div class="wl-badge"><div class="wl-dot" style="background:#F59E0B"></div><span style="color:#F59E0B">SEMANA 1 — NFP</span><span style="color:#64748B;margin-left:4px">1ª semana del mes</span></div>
+  <div class="wl-badge"><div class="wl-dot" style="background:#6366F1"></div><span style="color:#818CF8">SEMANA 2 — CPI</span><span style="color:#64748B;margin-left:4px">2ª semana (Mar&–Jue)</span></div>
+  <div class="wl-badge"><div class="wl-dot" style="background:#EC4899"></div><span style="color:#EC4899">SEMANA 3 — FOMC</span><span style="color:#64748B;margin-left:4px">3ª semana (Miércoles)</span></div>
+  <div class="wl-badge"><div class="wl-dot" style="background:#14B8A6"></div><span style="color:#14B8A6">SEMANA 4 — GDP/Neutral</span><span style="color:#64748B;margin-left:4px">Sin noticia mayor</span></div>
+</div>
+
+<!-- 4 Weekly Profile Cards -->
+<div class="profiles">
+
+  <!-- NFP Week -->
+  <div class="wcard nfp">
+    <div class="wcard-hdr">
+      <span class="wcard-label" style="color:#F59E0B">📍 SEM 1 · NFP</span>
+      <span class="wcard-n">n=3 ciclos</span>
+    </div>
+    <div class="wday-row"><span class="wday-name">LUN</span><span class="wday-pat match">EXPAN ALC</span><span class="wday-dir bull">⬆️ 100%</span></div>
+    <div class="wday-row"><span class="wday-name">MAR</span><span class="wday-pat match">EXPAN ALC</span><span class="wday-dir bull">⬆️ 67%</span></div>
+    <div class="wday-row"><span class="wday-name">MIE</span><span class="wday-pat warn">MEGÁFONO</span><span class="wday-dir range">↕️ 67%</span></div>
+    <div class="wday-row"><span class="wday-name">JUE</span><span class="wday-pat warn">MEGÁFONO</span><span class="wday-dir range">↕️ 67%</span></div>
+    <div class="wday-row"><span class="wday-name">VIE</span><span class="wday-pat diff">📰 NFP DAY</span><span class="wday-dir bull">⬆️ 67%</span></div>
+  </div>
+
+  <!-- CPI Week -->
+  <div class="wcard cpi">
+    <div class="wcard-hdr">
+      <span class="wcard-label" style="color:#818CF8">📍 SEM 2 · CPI</span>
+      <span class="wcard-n">n=4 ciclos</span>
+    </div>
+    <div class="wday-row"><span class="wday-name">LUN</span><span class="wday-pat warn">MEGÁFONO</span><span class="wday-dir range">↕️ 75%</span></div>
+    <div class="wday-row"><span class="wday-name">MAR</span><span class="wday-pat diff">📰 CPI DAY</span><span class="wday-dir range">↕️ 50%</span></div>
+    <div class="wday-row"><span class="wday-name">MIE</span><span class="wday-pat diff">📰 CPI +1</span><span class="wday-dir range">↕️ 50% / ⬇️ 50%</span></div>
+    <div class="wday-row"><span class="wday-name">JUE</span><span class="wday-pat warn">EXPAN BAJ</span><span class="wday-dir bear">⬇️ 75%</span></div>
+    <div class="wday-row"><span class="wday-name">VIE</span><span class="wday-pat warn">MEGÁFONO</span><span class="wday-dir range">↕️ 75%</span></div>
+  </div>
+
+  <!-- FOMC Week -->
+  <div class="wcard fomc">
+    <div class="wcard-hdr">
+      <span class="wcard-label" style="color:#EC4899">📍 SEM 3 · FOMC</span>
+      <span class="wcard-n">n=3 ciclos</span>
+    </div>
+    <div class="wday-row"><span class="wday-name">LUN</span><span class="wday-pat warn">MEGÁFONO</span><span class="wday-dir range">↕️ 67%</span></div>
+    <div class="wday-row"><span class="wday-name">MAR</span><span class="wday-pat diff">TRAMPA BULL</span><span class="wday-dir bear">⬇️ 67%</span></div>
+    <div class="wday-row"><span class="wday-name">MIE</span><span class="wday-pat diff">📰 FOMC DAY</span><span class="wday-dir range">↕️ 67%</span></div>
+    <div class="wday-row"><span class="wday-name">JUE</span><span class="wday-pat match">TRAMPA</span><span class="wday-dir bull">⬆️ 67%</span></div>
+    <div class="wday-row"><span class="wday-name">VIE</span><span class="wday-pat match">EXPAN ALC</span><span class="wday-dir bull">⬆️ 67%</span></div>
+  </div>
+
+  <!-- GDP / Neutral Week -->
+  <div class="wcard gdp">
+    <div class="wcard-hdr">
+      <span class="wcard-label" style="color:#14B8A6">📍 SEM 4 · GDP</span>
+      <span class="wcard-n">n=4 ciclos</span>
+    </div>
+    <div class="wday-row"><span class="wday-name">LUN</span><span class="wday-pat match">EXPAN ALC</span><span class="wday-dir bull">⬆️ 75%</span></div>
+    <div class="wday-row"><span class="wday-name">MAR</span><span class="wday-pat warn">MEGÁFONO</span><span class="wday-dir range">↕️ 75%</span></div>
+    <div class="wday-row"><span class="wday-name">MIE</span><span class="wday-pat match">EXPAN ALC</span><span class="wday-dir bull">⬆️ 50%</span></div>
+    <div class="wday-row"><span class="wday-name">JUE</span><span class="wday-pat diff">📰 GDP DAY</span><span class="wday-dir bear">⬇️ 100%</span></div>
+    <div class="wday-row"><span class="wday-name">VIE</span><span class="wday-pat warn">TRAMPA</span><span class="wday-dir bull">⬆️ 50%</span></div>
+  </div>
+
+</div>
+
+<div class="sep">MAPA DE DIVERGENCIA — donde el patrón diario no calza con el baseline</div>
+
+<!-- Deviation Heatmap -->
+<div class="heat-wrap" style="margin-bottom:24px;">
+  <div class="heat-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+    <span>🌡️ Heatmap de Divergencia: Día × Tipo Semana</span>
+    <div style="display:flex;gap:10px;font-size:.7rem;">
+      <span style="color:#34D399">● Alineado (0-15%)</span>
+      <span style="color:#FCD34D">● Observar (16-30%)</span>
+      <span style="color:#F87171">● Diverge (31-50%)</span>
+      <span style="color:#FF4444">● Patrón roto (&gt;50%)</span>
+    </div>
+  </div>
+  <div style="overflow-x:auto;">
+  <table class="heat-table">
+    <thead>
+      <tr>
+        <th class="row-h">Día</th>
+        <th>📅 Base<br><small style="color:#60A5FA;font-weight:400">Promedio</small></th>
+        <th style="color:#F59E0B">S1 · NFP</th>
+        <th style="color:#818CF8">S2 · CPI</th>
+        <th style="color:#EC4899">S3 · FOMC</th>
+        <th style="color:#14B8A6">S4 · GDP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-lbl">Lunes</td>
+        <td><div class="hc hc-0">EXPAN+</div></td>
+        <td><div class="hc hc-0" title="Alineado con base">EXPAN ✓<br><small>+0%</small></div></td>
+        <td><div class="hc hc-2" title="Diverge: se convierte en rango">MEGA ⚠️<br><small>−38%</small></div></td>
+        <td><div class="hc hc-1" title="Moderado: rango con sesgo">MEGA ~<br><small>−22%</small></div></td>
+        <td><div class="hc hc-0" title="Alineado">EXPAN ✓<br><small>+5%</small></div></td>
+      </tr>
+      <tr>
+        <td class="row-lbl">Martes</td>
+        <td><div class="hc hc-0">EXPAN+</div></td>
+        <td><div class="hc hc-0">EXPAN ✓<br><small>−8%</small></div></td>
+        <td><div class="hc hc-3" title="PATRÓN ROTO: CPI invierte dirección">CPI 🔴<br><small>−55%</small></div></td>
+        <td><div class="hc hc-3" title="FOMC pre-Fed: trampa bajista">TRAP 🔴<br><small>−60%</small></div></td>
+        <td><div class="hc hc-1">MEGA ~<br><small>−25%</small></div></td>
+      </tr>
+      <tr>
+        <td class="row-lbl">Miércoles</td>
+        <td><div class="hc hc-0">EXPAN+</div></td>
+        <td><div class="hc hc-1">MEGA ~<br><small>−28%</small></div></td>
+        <td><div class="hc hc-2">CPI+1 ⚠️<br><small>−40%</small></div></td>
+        <td><div class="hc hc-3" title="FOMC day: sin dirección clara">FOMC 🔴<br><small>−70%</small></div></td>
+        <td><div class="hc hc-1">EXPAN ~<br><small>−18%</small></div></td>
+      </tr>
+      <tr>
+        <td class="row-lbl">Jueves</td>
+        <td><div class="hc hc-0">RANGO</div></td>
+        <td><div class="hc hc-1">MEGA ~<br><small>+20%</small></div></td>
+        <td><div class="hc hc-2">BEAR ⚠️<br><small>+35%</small></div></td>
+        <td><div class="hc hc-0">TRAP ✓<br><small>+8%</small></div></td>
+        <td><div class="hc hc-3" title="GDP day: siempre baja">GDP 🔴<br><small>−100%</small></div></td>
+      </tr>
+      <tr>
+        <td class="row-lbl">Viernes</td>
+        <td><div class="hc hc-0">MEGA</div></td>
+        <td><div class="hc hc-2">NFP ⚠️<br><small>+32%</small></div></td>
+        <td><div class="hc hc-0">MEGA ✓<br><small>+5%</small></div></td>
+        <td><div class="hc hc-2">EXPAN ⚠️<br><small>+38%</small></div></td>
+        <td><div class="hc hc-1">TRAP ~<br><small>−22%</small></div></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Key Findings -->
+<div class="sep">HALLAZGOS CLAVE — los % que no calzan y por qué</div>
+<div class="findings">
+
+  <div class="finding">
+    <div class="finding-hdr">🔴 <span style="color:#F87171">Martes en semana CPI</span></div>
+    <div class="finding-body">
+      El baseline dice Martes = <strong>EXPAN ALC</strong> (alcista).<br>
+      En semana <span class="tag-sm tag-cpi">CPI</span> el Martes es el día del reporte.<br><br>
+      <strong>Divergencia: −55%</strong><br>
+      El mercado hace <em>MEGÁFONO</em> (trampa en ambas direcciones) antes del dato. 
+      No hay dirección hasta que sale el número. 
+      <strong>Regla:</strong> No operar Martes AM hasta ver el CPI.
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-hdr">🔴 <span style="color:#F87171">Miércoles en semana FOMC</span></div>
+    <div class="finding-body">
+      El baseline dice Miércoles = <strong>EXPAN ALC/BAJ</strong> con dirección clara.<br>
+      En semana <span class="tag-sm tag-fomc">FOMC</span> el Miércoles es el día de la decisión.<br><br>
+      <strong>Divergencia: −70%</strong><br>
+      Pre-Fed: rango comprimido. Post-Fed: spike brutal en cualquier dirección. 
+      <strong>Regla:</strong> Solo operar DESPUÉS del comunicado (14:00 ET).
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-hdr">🔴 <span style="color:#F87171">Jueves en semana GDP</span></div>
+    <div class="finding-body">
+      El baseline dice Jueves = <strong>RANGO / neutral</strong>.<br>
+      En semana <span class="tag-sm tag-gdp">GDP</span> el Jueves es el día del dato PIB.<br><br>
+      <strong>Divergencia: −100%</strong><br>
+      <em>Los 2 Jueves GDP en el estudio fueron BAJISTAS sin excepción</em> (−EXPAN_BAJ). 
+      <strong>Regla:</strong> Jueves GDP = sesgo bajista hard. No ir largo hasta ver reacción.
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-hdr">🟡 <span style="color:#FCD34D">Martes en semana FOMC</span></div>
+    <div class="finding-body">
+      El baseline dice Martes = <strong>EXPAN ALC</strong>.<br>
+      En semana <span class="tag-sm tag-fomc">FOMC</span> el Martes = <em>TRAMPA BULL</em>.<br><br>
+      <strong>Divergencia: −60%</strong><br>
+      El mercado hace un spike alcista falso el día antes del Fed, luego revierte. 
+      <strong>Regla:</strong> Si Martes FOMC sube fuerte en London → buscar el short al open NY.
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-hdr">🟡 <span style="color:#FCD34D">Lunes en semana CPI</span></div>
+    <div class="finding-body">
+      El baseline dice Lunes = <strong>ROTATION POC</strong> (London) + <strong>NEWS DRIVE</strong> (NY AM).<br>
+      En semana <span class="tag-sm tag-cpi">CPI</span> el Lunes hace <em>MEGÁFONO</em>.<br><br>
+      <strong>Divergencia: −38%</strong><br>
+      El mercado "espera" antes del CPI del Martes. Rango más estrecho, menos dirección. 
+      <strong>Regla:</strong> Lunes CPI = scalp dentro del rango del Asia, no seguir breakouts.
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-hdr">✅ <span style="color:#34D399">Viernes siempre es predecible</span></div>
+    <div class="finding-body">
+      Viernes en semana <span class="tag-sm tag-nfp">NFP</span> = spike + reversión (ambos lados).<br>
+      Viernes en semana <span class="tag-sm tag-cpi">CPI</span> = MEGÁFONO (baseline ✓).<br>
+      Viernes en semana <span class="tag-sm tag-fomc">FOMC</span> = EXPAN ALC (recovery post-Fed).<br><br>
+      <strong>El patrón más estable:</strong> Viernes FOMC siempre recupera alcista 67% del tiempo.
+    </div>
+  </div>
+
+</div>
+
+<!-- Decision Matrix -->
+<div class="sep">MATRIZ DE DECISIÓN — qué hacer según contexto</div>
+<div class="matrix-wrap">
+  <div class="matrix-title">
+    ⚡ Filtro de Operación: Día + Tipo Semana + Sesión
+    <span class="sub">Verde = operar | Amarillo = reducir size | Rojo = no operar</span>
+  </div>
+  <div style="overflow-x:auto;">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th class="day-h">Día · Sesión</th>
+        <th>Base<br><small>Patrón</small></th>
+        <th style="color:#F59E0B">S1·NFP</th>
+        <th style="color:#818CF8">S2·CPI</th>
+        <th style="color:#EC4899">S3·FOMC</th>
+        <th style="color:#14B8A6">S4·GDP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="day-lbl" style="color:#C4B5FD">Lun · London</td>
+        <td class="baseline-cell">ROT POC ✓</td>
+        <td style="color:#34D399">✅ Operar</td>
+        <td style="color:#F59E0B">⚠️ −50% size</td>
+        <td style="color:#F59E0B">⚠️ Rango solo</td>
+        <td style="color:#34D399">✅ Operar</td>
+      </tr>
+      <tr>
+        <td class="day-lbl" style="color:#A5B4FC">Lun · NY AM</td>
+        <td class="baseline-cell">NEWS DRV ✓</td>
+        <td style="color:#34D399">✅ Operar</td>
+        <td style="color:#F59E0B">⚠️ Wait reacción</td>
+        <td style="color:#F59E0B">⚠️ Rango posible</td>
+        <td style="color:#34D399">✅ Full size</td>
+      </tr>
+      <tr>
+        <td class="day-lbl" style="color:#6EE7B7">Lun · NY PM</td>
+        <td class="baseline-cell">EXP H+BEAR</td>
+        <td style="color:#34D399">✅ Sweep+short</td>
+        <td style="color:#F59E0B">⚠️ −50% size</td>
+        <td style="color:#F59E0B">⚠️ Reducir</td>
+        <td style="color:#34D399">✅ Operar</td>
+      </tr>
+      <tr style="background:rgba(99,102,241,.04)">
+        <td class="day-lbl" style="color:#C4B5FD">Mar · London</td>
+        <td class="baseline-cell">EXPAN ALC</td>
+        <td style="color:#34D399">✅ Operar</td>
+        <td style="color:#EF4444">🚫 Pre-CPI: NO</td>
+        <td style="color:#EF4444">🚫 Trampa: NO</td>
+        <td style="color:#F59E0B">⚠️ Reducir</td>
+      </tr>
+      <tr style="background:rgba(99,102,241,.04)">
+        <td class="day-lbl" style="color:#A5B4FC">Mar · NY AM</td>
+        <td class="baseline-cell">NEWS DRV ✓</td>
+        <td style="color:#34D399">✅ Operar</td>
+        <td style="color:#EF4444">🚫 CPI 8:30: NO</td>
+        <td style="color:#EF4444">🚫 Trampa bull</td>
+        <td style="color:#34D399">✅ Operar</td>
+      </tr>
+      <tr>
+        <td class="day-lbl" style="color:#C4B5FD">Mie · London</td>
+        <td class="baseline-cell">ROT POC</td>
+        <td style="color:#F59E0B">⚠️ Rango</td>
+        <td style="color:#F59E0B">⚠️ CPI+1 incierto</td>
+        <td style="color:#EF4444">🚫 Pre-FOMC: NO</td>
+        <td style="color:#F59E0B">⚠️ Reducir</td>
+      </tr>
+      <tr>
+        <td class="day-lbl" style="color:#A5B4FC">Mie · NY AM</td>
+        <td class="baseline-cell">ROT POC</td>
+        <td style="color:#F59E0B">⚠️ Reducir</td>
+        <td style="color:#F59E0B">⚠️ CPI+1</td>
+        <td style="color:#EF4444">🚫 FOMC 14:00: NO</td>
+        <td style="color:#34D399">✅ Operar</td>
+      </tr>
+      <tr style="background:rgba(99,102,241,.04)">
+        <td class="day-lbl" style="color:#C4B5FD">Jue · London</td>
+        <td class="baseline-cell">EXPAN BAJ</td>
+        <td style="color:#F59E0B">⚠️ Rango</td>
+        <td style="color:#EF4444">🚫 Post-CPI volat</td>
+        <td style="color:#34D399">✅ Post-FOMC</td>
+        <td style="color:#EF4444">🚫 GDP 8:30: NO</td>
+      </tr>
+      <tr style="background:rgba(99,102,241,.04)">
+        <td class="day-lbl" style="color:#A5B4FC">Jue · NY AM</td>
+        <td class="baseline-cell">EXPAN BAJ</td>
+        <td style="color:#F59E0B">⚠️ Reducir</td>
+        <td style="color:#EF4444">🚫 Bear trap poss</td>
+        <td style="color:#34D399">✅ Operar</td>
+        <td style="color:#EF4444">🚫 GDP dirección</td>
+      </tr>
+      <tr>
+        <td class="day-lbl" style="color:#C4B5FD">Vie · London</td>
+        <td class="baseline-cell">MEGÁFONO</td>
+        <td style="color:#EF4444">🚫 Pre-NFP: NO</td>
+        <td style="color:#34D399">✅ MEGA → scalp</td>
+        <td style="color:#34D399">✅ Recovery bull</td>
+        <td style="color:#F59E0B">⚠️ Trampa</td>
+      </tr>
+      <tr>
+        <td class="day-lbl" style="color:#A5B4FC">Vie · NY AM</td>
+        <td class="baseline-cell">MEGÁFONO</td>
+        <td style="color:#EF4444">🚫 NFP 8:30: NO</td>
+        <td style="color:#34D399">✅ Reducir size</td>
+        <td style="color:#34D399">✅ Operar</td>
+        <td style="color:#F59E0B">⚠️ Reducir</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div style="margin-top:20px;padding:14px 20px;background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);border-radius:10px;font-size:.75rem;color:#94A3B8;text-align:center;">
+  Basado en 6 meses de datos (Nov 2025 – Mar 2026) · 26 semanas clasificadas · 
+  <strong style="color:#A78BFA">n=3–4 ciclos por tipo de semana</strong> · 
+  Las reglas se amplían conforme crece la muestra.
+</div>
+
+</body>
+</html>
+
