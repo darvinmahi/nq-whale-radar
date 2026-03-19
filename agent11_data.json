@@ -1,0 +1,29 @@
+{
+    "agent": 11,
+    "timestamp": "2026-03-18T14:21:22.510777+00:00Z",
+    "active_protocols": [
+        "SILVER_BULLET_SNIPER"
+    ],
+    "details": {
+        "swing": {
+            "active": false,
+            "confidence": 54,
+            "desc": "Confluencia de COT Alcista y Bias Ponderado positivo. Las instituciones están acumulando."
+        },
+        "ict": {
+            "active": false,
+            "probability": 31.6,
+            "desc": "Escenario de alta probabilidad detectado por barrido de Londres en dirección de la tendencia macro."
+        },
+        "contrarian": {
+            "active": false,
+            "desc": "Miedo extremo detectado. Buscando capitulación para entrada contrarian apoyada por DIX."
+        },
+        "intraday": {
+            "active": true,
+            "window": "NY AM SB",
+            "action": "BUSCAR FVG PARA ENTRADA"
+        }
+    },
+    "master_recommendation": "🔵 NEUTRAL-BULLISH (54/100) — Ligera inclinación alcista — esperar confirmación."
+}

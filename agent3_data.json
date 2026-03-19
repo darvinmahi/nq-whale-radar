@@ -1,0 +1,27 @@
+{
+  "agent": 3,
+  "name": "Volatility Analyst",
+  "timestamp": "2026-03-18T14:21:22.307314Z",
+  "input_source": "agent1_data.json",
+  "raw_inputs": {
+    "VXN": 19.49,
+    "GEX_B": 2.3,
+    "DIX": null
+  },
+  "vxn_analysis": {
+    "level": "NORMAL",
+    "signal": "BULLISH",
+    "score": 65,
+    "description": "VXN 19.49 — Volatilidad normal. Entorno operativo estándar.",
+    "risk": "Monitorear si sube sobre 25"
+  },
+  "gex_analysis": {
+    "level": "STRONG_POSITIVE",
+    "signal": "BULLISH",
+    "score": 70,
+    "description": "GEX +2.30B — Dealers comprando en caídas. Mercado amortiguado.",
+    "impact": "Los dealers frenan la volatilidad. Movimientos más suaves."
+  },
+  "signal": "BULLISH",
+  "score": 67
+}

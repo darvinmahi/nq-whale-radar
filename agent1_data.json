@@ -1,0 +1,28 @@
+{
+  "agent": 1,
+  "name": "Data Collector",
+  "timestamp": "2026-03-18T14:17:57.064707+00:00Z",
+  "yahoo": {
+    "NDX": null,
+    "VXN": null,
+    "NQ_futures": null
+  },
+  "squeezemetrics": {
+    "DIX": null,
+    "GEX_raw": null,
+    "GEX_B": null,
+    "date": null
+  },
+  "cftc_cot": {
+    "cot_nc_long": null,
+    "cot_nc_short": null,
+    "cot_net": null,
+    "cot_oi": null,
+    "cot_date": null
+  },
+  "sentiment": {
+    "NQ1_OI": null,
+    "NQ1_volume": null,
+    "pcr": null
+  }
+}

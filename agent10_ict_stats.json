@@ -1,0 +1,23 @@
+{
+    "agent": 10,
+    "name": "ICT Session Strategist",
+    "timestamp": "2026-03-13T09:18:07.501467+00:00Z",
+    "stats": {
+        "ny_sweep_low_winrate": 39.1,
+        "ny_sweep_high_winrate": 31.6,
+        "total_days_analyzed": 499,
+        "sample_size_sweeps": 712
+    },
+    "strategies": [
+        {
+            "name": "NY Continuation Bull",
+            "edge": 39.1,
+            "desc": "NY barre Low de Londres en Bias Alcista"
+        },
+        {
+            "name": "NY Continuation Bear",
+            "edge": 31.6,
+            "desc": "NY barre High de Londres en Bias Bajista"
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+name: NQ Intelligence Engine (Cloud)
+
+on:
+  schedule:
+    # Corre cada 30 min de lunes a viernes, 13:00-21:00 UTC (8AM-4PM EST)
+    - cron: '0,30 13-21 * * 1-5'
+  workflow_dispatch:  # Permite ejecutar manual desde GitHub
+
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Intelligence Engine (1 cycle)
+        run: python cloud_runner.py
+        timeout-minutes: 5
+
+      - name: Commit & Push updated data
+        run: |
+          git config user.name "NQ-Engine-Bot"
+          git config user.email "engine-bot@nq-whale-radar"
+          git add agent_live_data.js agent*_data.json agent10_ict_stats.json agent14_orderflow_data.json agent_sentinel_data.json engine_health.json || true
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          TIMESTAMP=$(date -u +"%d %b %Y %H:%M UTC")
+          git commit -m "data: cloud update ${TIMESTAMP}"
+          git push

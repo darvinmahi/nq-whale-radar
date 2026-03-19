@@ -1,0 +1,40 @@
+{
+    "timestamp": "2026-03-18T14:21:22.484647+00:00Z",
+    "symbol": "NQ1!",
+    "bias_orderflow": "BULLISH (CONFLUENCIA SEMANAL + LONDRES)",
+    "acceptance": "ACEPTACIÓN ALCISTA SOBRE POC LONDRES",
+    "sessions": {
+        "asia": {
+            "high": 24450.75,
+            "low": 24320.5,
+            "poc": 24385.0
+        },
+        "london": {
+            "high": 24510.25,
+            "low": 24395.0,
+            "poc": 24445.5
+        }
+    },
+    "weekly": {
+        "poc": 24285.5,
+        "vah": 24580.0,
+        "val": 24150.25
+    },
+    "daily": {
+        "high": 24550.0,
+        "low": 24310.0,
+        "poc": 24412.5
+    },
+    "delta": {
+        "cumulative": "+5840",
+        "status": "POSITIVE_ABSORPTION"
+    },
+    "volume_profile": {
+        "POC": 24412.5,
+        "VAH": 24490.0,
+        "VAL": 24350.0,
+        "status": "ACEPTACIÓN ALCISTA SOBRE POC LONDRES"
+    },
+    "institutional_activity": "HIGH (SESIÓN NY ABRIENDO SOBRE POC ASIA/LON)",
+    "tape_reading": "Grandes órdenes de compra bloqueando caídas en el nivel de POC de Londres (24,445)."
+}
