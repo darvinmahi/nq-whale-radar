@@ -1,32 +1,28 @@
 {
-  "cycle": 1,
-  "timestamp": "2026-03-19T05:49:48.407071+00:00Z",
-  "last_update_human": "2026-03-19 05:49:48 UTC",
+  "cycle": 2,
+  "timestamp": "2026-03-23T17:17:49.543581+00:00Z",
+  "last_update_human": "2026-03-23 17:17:49 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 12.2,
-  "agents_ok": 19,
+  "total_time_sec": 6.4,
+  "agents_ok": 20,
   "agents_failed": 0,
   "details": {
     "Agent 0 · QA Commander [PRE]": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.0
+    },
+    "Agent 2 · COT Analyst": {
+      "status": "✅ OK",
+      "time": 0.1
     },
     "Agent 3 · Volatility Analyst": {
       "status": "✅ OK",
       "time": 0.1
     },
-    "Agent 2 · COT Analyst": {
-      "status": "✅ OK",
-      "time": 5.6
-    },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 11.7
-    },
-    "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 5.6
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -36,11 +32,11 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 6 · SMC Detective": {
+    "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 14 · Order Flow Expert": {
+    "Agent 6 · SMC Detective": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -52,7 +48,15 @@
       "status": "✅ OK",
       "time": 0.0
     },
+    "Agent 14 · Order Flow Expert": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
     "Agent 15 · Journal Writer": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
+    "Agent 17 · Journal Page (HTML+Consejero)": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -62,11 +66,11 @@
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.5
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.6
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",

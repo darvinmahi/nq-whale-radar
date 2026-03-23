@@ -1,40 +1,65 @@
-name: NQ Intelligence Engine (Cloud)
+name: NQ Intelligence Engine (Cloud 24/7)
 
+# ─── Cuándo corre ────────────────────────────────────────────────────────────
 on:
   schedule:
-    # Corre cada 30 min de lunes a viernes, 13:00-21:00 UTC (8AM-4PM EST)
-    - cron: '0,30 13-21 * * 1-5'
-  workflow_dispatch:  # Permite ejecutar manual desde GitHub
+    # Cada 15 min, lunes-viernes, 13:00-22:00 UTC (8AM-5PM ET)
+    # GitHub puede tener delay de hasta 5 min en el cron, es normal.
+    - cron: '0,15,30,45 13-22 * * 1-5'
+  workflow_dispatch:  # Permite lanzar manualmente desde la UI de GitHub
+
+# ─── Permisos ─────────────────────────────────────────────────────────────────
+permissions:
+  contents: write
 
 jobs:
   update-dashboard:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
+      # 1. Descargar el repo
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
+      # 2. Python 3.12
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: 'pip'
 
+      # 3. Dependencias
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run Intelligence Engine (1 cycle)
+      # 4. Ejecutar el pipeline (1 ciclo completo)
+      - name: Run Intelligence Engine
         run: python cloud_runner.py
-        timeout-minutes: 5
+        timeout-minutes: 8
+        env:
+          PYTHONUNBUFFERED: "1"
+          PYTHONIOENCODING: "utf-8"
 
-      - name: Commit & Push updated data
+      # 5. Guardar resultados en el repo → GitHub Pages los sirve
+      - name: Commit & Push data files
         run: |
           git config user.name "NQ-Engine-Bot"
-          git config user.email "engine-bot@nq-whale-radar"
-          git add agent_live_data.js agent*_data.json agent10_ict_stats.json agent14_orderflow_data.json agent_sentinel_data.json engine_health.json || true
-          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git config user.email "bot@nq-whale-radar.io"
+          # Agrega todos los archivos de datos que el engine genera
+          git add \
+            agent_live_data.js \
+            agent_live_data_v2.js \
+            engine_health.json \
+            pulse_data.json \
+            agent10_ict_stats.json \
+            agent14_orderflow_data.json \
+            agent_sentinel_data.json \
+            analisis_*.json \
+            || true
+          # Solo hace commit si hay cambios reales
+          git diff --cached --quiet && echo "Sin cambios nuevos." && exit 0
           TIMESTAMP=$(date -u +"%d %b %Y %H:%M UTC")
-          git commit -m "data: cloud update ${TIMESTAMP}"
+          git commit -m "data(cloud): ${TIMESTAMP}"
           git push
