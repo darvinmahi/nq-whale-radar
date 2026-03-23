@@ -1305,61 +1305,86 @@ function buildDemoData(day) {
 // ─── ARRANCAR ────────────────────────────────────────────────────
 init();
 
-// ─── MACRO INDICATORS ────────────────────────────────────────────
+// ─── MACRO INDICATORS (datos reales de agent2/agent3) ────────────
 async function loadMacroIndicators() {
+  // ── COT (agent2_data.json) ─────────────────────────────────────
   try {
-    // COT (agent2_data.json)
-    const r2 = await fetch('agent2_data.json?' + Date.now());
-    if (r2.ok) {
-      const d = await r2.json();
-      const net = d.net_position ?? d.net ?? 0;
-      const idx = d.percentile_index ?? d.idx ?? 50;
-      const sig = d.signal ?? '—';
-      const fmt = n => (n >= 0 ? '+' : '') + n.toLocaleString('es-MX');
-      document.getElementById('cot-net').textContent = fmt(net);
-      document.getElementById('cot-idx').textContent = `idx ${idx.toFixed(1)}/100`;
-      // color dinámico según sesgo
-      const cotEl = document.getElementById('cot-signal');
-      cotEl.textContent = sig;
-      const sigL = sig.toLowerCase();
-      if (sigL.includes('bull')) { cotEl.style.background='rgba(34,217,138,.15)'; cotEl.style.color='var(--green)'; }
-      else if (sigL.includes('bear')) { cotEl.style.background='rgba(240,72,90,.15)'; cotEl.style.color='var(--red)'; }
-      else { cotEl.style.background='rgba(245,166,35,.15)'; cotEl.style.color='var(--orange)'; }
-      // barra de índice
-      document.getElementById('cot-bar').style.width = Math.min(idx, 100) + '%';
-      const barColor = idx > 65 ? 'var(--red)' : idx < 35 ? 'var(--green)' : 'var(--orange)';
-      document.getElementById('cot-bar').style.background = barColor;
-    }
-  } catch(e) {}
+    const r2  = await fetch('agent2_data.json?' + Date.now());
+    if (!r2.ok) throw new Error();
+    const d2  = await r2.json();
 
-  try {
-    // VXN / GEX / DIX (agent3_data.json)
-    const r3 = await fetch('agent3_data.json?' + Date.now());
-    if (r3.ok) {
-      const d = await r3.json();
-      const vxn = d.vxn ?? d.VXN ?? 0;
-      const gex = d.gex ?? d.GEX ?? 0;
-      const dix = d.dix ?? d.DIX ?? 0;
-      // VXN
-      const vxnEl = document.getElementById('vxn-val');
-      vxnEl.textContent = vxn.toFixed(2);
-      vxnEl.style.color = vxn > 25 ? 'var(--red)' : vxn < 18 ? 'var(--green)' : 'var(--orange)';
-      const vxnSig = vxn > 25 ? '⚠️ Alta Volatilidad' : vxn < 18 ? '✅ Baja Volatilidad' : '〽️ Moderada';
-      document.getElementById('vxn-signal').textContent = vxnSig;
-      // GEX
-      const gexFmt = typeof gex === 'string' ? gex : (gex >= 0 ? '+' : '') + (gex / 1e9).toFixed(2) + 'B';
-      const gexEl = document.getElementById('gex-val');
-      gexEl.textContent = 'GEX ' + gexFmt;
-      gexEl.style.color = (String(gex).includes('-') || (typeof gex === 'number' && gex < 0)) ? 'var(--red)' : 'var(--green)';
-      // DIX
-      const dixPct = typeof dix === 'string' ? dix : dix.toFixed(1) + '%';
-      const dixEl = document.getElementById('dix-val');
-      dixEl.textContent = 'DIX ' + dixPct;
-      dixEl.style.color = parseFloat(dixPct) > 45 ? 'var(--green)' : 'var(--text2)';
+    // Claves reales del JSON:  d2.cot.current_net  /  d2.cot.cot_index  /  d2.signal  /  d2.strength
+    const net     = d2.cot?.current_net   ?? 0;
+    const idx     = d2.cot?.cot_index     ?? 0;   // 0-100
+    const sig     = d2.signal             ?? '—';  // "BEARISH" / "BULLISH" / "NEUTRAL"
+    const str     = d2.strength           ?? 0;    // 0-100 fortaleza de la señal
+    const mom     = d2.momentum?.direction ?? '';  // "BAJANDO" / "SUBIENDO"
+    const wkly    = d2.momentum?.weekly_velocity ?? 0;
+    const date    = d2.cot?.date          ?? '';
+
+    const fmt = n => (n >= 0 ? '+' : '') + n.toLocaleString('es-MX');
+    document.getElementById('cot-net').textContent = fmt(net);
+    document.getElementById('cot-idx').textContent =
+      `idx ${idx}/100  ·  fuerza ${str}%  ·  ${date}`;
+
+    // Badge de señal
+    const cotEl = document.getElementById('cot-signal');
+    cotEl.textContent = sig;
+    const sigL = sig.toLowerCase();
+    if (sigL.includes('bull')) {
+      cotEl.style.background = 'rgba(34,217,138,.15)';
+      cotEl.style.color      = 'var(--green)';
+    } else if (sigL.includes('bear')) {
+      cotEl.style.background = 'rgba(240,72,90,.15)';
+      cotEl.style.color      = 'var(--red)';
+    } else {
+      cotEl.style.background = 'rgba(245,166,35,.15)';
+      cotEl.style.color      = 'var(--orange)';
     }
-  } catch(e) {}
+
+    // Barra de progreso: cot_index va de 0 (extremo bajista) a 100 (extremo alcista)
+    const bar = document.getElementById('cot-bar');
+    bar.style.width      = Math.min(Math.max(idx, 0), 100) + '%';
+    bar.style.background = idx > 65 ? 'var(--green)' : idx < 35 ? 'var(--red)' : 'var(--orange)';
+
+  } catch(e) { console.warn('[macro] agent2 error', e); }
+
+  // ── VXN / GEX / DIX (agent3_data.json) ────────────────────────
+  try {
+    const r3 = await fetch('agent3_data.json?' + Date.now());
+    if (!r3.ok) throw new Error();
+    const d3 = await r3.json();
+
+    // Claves reales: d3.raw_inputs.VXN / GEX_B (ya en B) / DIX (porcentaje)
+    const vxn = d3.raw_inputs?.VXN   ?? 0;
+    const gex = d3.raw_inputs?.GEX_B ?? 0;   // valor ya en miles de millones p.ej. 0.673
+    const dix = d3.raw_inputs?.DIX   ?? 0;   // porcentaje p.ej. 42.57
+    const vxnDesc = d3.vxn_analysis?.description ?? '';
+    const gexDesc = d3.gex_analysis?.description ?? '';
+
+    // VXN
+    const vxnEl  = document.getElementById('vxn-val');
+    vxnEl.textContent   = vxn.toFixed(2);
+    vxnEl.style.color   = vxn > 25 ? 'var(--red)' : vxn < 18 ? 'var(--green)' : 'var(--orange)';
+    const vxnSig = vxn > 25 ? '⚠️ Alta  · ' : vxn < 18 ? '✅ Baja  · ' : '〽️ Moderada · ';
+    document.getElementById('vxn-signal').textContent =
+      vxnSig + (vxnDesc || '');
+
+    // GEX (viene como X.YYY = value en B, p.ej. 0.673 → "+0.67B")
+    const gexFmt  = (gex >= 0 ? '+' : '') + gex.toFixed(2) + 'B';
+    const gexEl   = document.getElementById('gex-val');
+    gexEl.textContent = 'GEX ' + gexFmt;
+    gexEl.style.color = gex < 0 ? 'var(--red)' : 'var(--green)';
+
+    // DIX
+    const dixEl = document.getElementById('dix-val');
+    dixEl.textContent = 'DIX ' + dix.toFixed(2) + '%';
+    dixEl.style.color = dix > 45 ? 'var(--green)' : dix < 38 ? 'var(--red)' : 'var(--text2)';
+
+  } catch(e) { console.warn('[macro] agent3 error', e); }
 }
 loadMacroIndicators();
+
 </script>
 </body>
 </html>
