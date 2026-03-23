@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  🔒 DESIGN FREEZE — daily_dashboard.html                   ║
+     ║  NO modificar: colores, layout, clases CSS, estructura      ║
+     ║  Variables protegidas: --bg, --bg2, --bg3, --border,        ║
+     ║  --accent, --accent2, --green, --red, --orange, --yellow,   ║
+     ║  --text, --text2  (definidas en :root líneas 11-23)         ║
+     ║  Layout: header sticky + split-layout (60% chart / 40%      ║
+     ║  stats-panel) — NO cambiar grid-template-columns            ║
+     ║  Para agregar contenido SÓLO añadir <div class="mini-card"> ║
+     ║  dentro de #stats-panel. Nunca tocar .header ni .split-layout║
+     ╚══════════════════════════════════════════════════════════════╝ -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -407,6 +418,42 @@
         </div>
       </div>
     </div>
+
+    <!-- ── MACRO INDICATORS (COT / VXN / GEX / DIX) ─── -->
+    <div class="mini-card" id="macro-card">
+      <div class="mini-card-title"><span>📊</span> Indicadores Macro · COT / VXN / GEX / DIX</div>
+
+      <!-- fila 1: COT -->
+      <div style="margin-bottom:10px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px">🐳 COT Non-Commercial</span>
+          <span id="cot-signal" style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;background:rgba(99,130,255,.15);color:var(--accent)">—</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:5px">
+          <span id="cot-net" style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--text)">—</span>
+          <span style="font-size:10px;color:var(--text2)">contratos netos</span>
+          <span id="cot-idx" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2);margin-left:auto">idx —/100</span>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border-radius:3px;height:4px">
+          <div id="cot-bar" style="height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .6s"></div>
+        </div>
+      </div>
+
+      <!-- fila 2: VXN + GEX/DIX -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:10px">
+          <div style="font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">📉 VXN Volatilidad</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700" id="vxn-val">—</div>
+          <div id="vxn-signal" style="font-size:9px;margin-top:3px;color:var(--text2)">—</div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:10px">
+          <div style="font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">🏦 GEX / DIX</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;margin-bottom:2px" id="gex-val">—</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700" id="dix-val">—</div>
+        </div>
+      </div>
+    </div>
+    <!-- ── FIN MACRO INDICATORS ─── -->
 
     <!-- DIRECCIÓN histórica -->
     <div class="mini-card">
@@ -1257,6 +1304,62 @@ function buildDemoData(day) {
 
 // ─── ARRANCAR ────────────────────────────────────────────────────
 init();
+
+// ─── MACRO INDICATORS ────────────────────────────────────────────
+async function loadMacroIndicators() {
+  try {
+    // COT (agent2_data.json)
+    const r2 = await fetch('agent2_data.json?' + Date.now());
+    if (r2.ok) {
+      const d = await r2.json();
+      const net = d.net_position ?? d.net ?? 0;
+      const idx = d.percentile_index ?? d.idx ?? 50;
+      const sig = d.signal ?? '—';
+      const fmt = n => (n >= 0 ? '+' : '') + n.toLocaleString('es-MX');
+      document.getElementById('cot-net').textContent = fmt(net);
+      document.getElementById('cot-idx').textContent = `idx ${idx.toFixed(1)}/100`;
+      // color dinámico según sesgo
+      const cotEl = document.getElementById('cot-signal');
+      cotEl.textContent = sig;
+      const sigL = sig.toLowerCase();
+      if (sigL.includes('bull')) { cotEl.style.background='rgba(34,217,138,.15)'; cotEl.style.color='var(--green)'; }
+      else if (sigL.includes('bear')) { cotEl.style.background='rgba(240,72,90,.15)'; cotEl.style.color='var(--red)'; }
+      else { cotEl.style.background='rgba(245,166,35,.15)'; cotEl.style.color='var(--orange)'; }
+      // barra de índice
+      document.getElementById('cot-bar').style.width = Math.min(idx, 100) + '%';
+      const barColor = idx > 65 ? 'var(--red)' : idx < 35 ? 'var(--green)' : 'var(--orange)';
+      document.getElementById('cot-bar').style.background = barColor;
+    }
+  } catch(e) {}
+
+  try {
+    // VXN / GEX / DIX (agent3_data.json)
+    const r3 = await fetch('agent3_data.json?' + Date.now());
+    if (r3.ok) {
+      const d = await r3.json();
+      const vxn = d.vxn ?? d.VXN ?? 0;
+      const gex = d.gex ?? d.GEX ?? 0;
+      const dix = d.dix ?? d.DIX ?? 0;
+      // VXN
+      const vxnEl = document.getElementById('vxn-val');
+      vxnEl.textContent = vxn.toFixed(2);
+      vxnEl.style.color = vxn > 25 ? 'var(--red)' : vxn < 18 ? 'var(--green)' : 'var(--orange)';
+      const vxnSig = vxn > 25 ? '⚠️ Alta Volatilidad' : vxn < 18 ? '✅ Baja Volatilidad' : '〽️ Moderada';
+      document.getElementById('vxn-signal').textContent = vxnSig;
+      // GEX
+      const gexFmt = typeof gex === 'string' ? gex : (gex >= 0 ? '+' : '') + (gex / 1e9).toFixed(2) + 'B';
+      const gexEl = document.getElementById('gex-val');
+      gexEl.textContent = 'GEX ' + gexFmt;
+      gexEl.style.color = (String(gex).includes('-') || (typeof gex === 'number' && gex < 0)) ? 'var(--red)' : 'var(--green)';
+      // DIX
+      const dixPct = typeof dix === 'string' ? dix : dix.toFixed(1) + '%';
+      const dixEl = document.getElementById('dix-val');
+      dixEl.textContent = 'DIX ' + dixPct;
+      dixEl.style.color = parseFloat(dixPct) > 45 ? 'var(--green)' : 'var(--text2)';
+    }
+  } catch(e) {}
+}
+loadMacroIndicators();
 </script>
 </body>
 </html>
