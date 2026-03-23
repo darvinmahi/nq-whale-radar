@@ -101,9 +101,9 @@
     <div class="ct">
       <span class="ctitle">NQ FUTURES — 5 MIN — 2026-03-23 · 141 VELAS REALES · yfinance</span>
       <div class="lr">
-        <div class="li"><div class="ld" style="border-color:#06b6d4"></div>VAH 24,472.50</div>
-        <div class="li"><div class="ld" style="border-color:#7c3aed"></div>POC 23,885.00</div>
-        <div class="li"><div class="ld" style="border-color:#10b981"></div>VAL 23,772.50</div>
+        <div class="li"><div class="ld" style="border-color:#ffffff"></div>VAH 24,472.50</div>
+        <div class="li"><div class="ld" style="border-color:#ef4444"></div>POC 23,885.00</div>
+        <div class="li"><div class="ld" style="border-color:#ffffff"></div>VAL 23,772.50</div>
         <div class="li"><div class="ld" style="border-color:#f59e0b"></div>NY OPEN 24,493.25</div>
       </div>
       <button class="rl-btn" id="rlb" onclick="toggleRB()">⏪ REPLAY</button>
@@ -156,9 +156,9 @@ const ser=chart.addCandlestickSeries({
 });
 ser.setData(candles);
 
-ser.createPriceLine({price:VAH,color:'rgba(0,255,128,0.6)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'VAH '+VAH.toLocaleString()});
-ser.createPriceLine({price:POC,color:'#00ff80',lineWidth:2,lineStyle:0,axisLabelVisible:true,title:'POC '+POC.toLocaleString()});
-ser.createPriceLine({price:VAL,color:'rgba(0,255,128,0.6)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'VAL '+VAL.toLocaleString()});
+ser.createPriceLine({price:VAH,color:'rgba(255,255,255,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'VAH '+VAH.toLocaleString()});
+ser.createPriceLine({price:POC,color:'#ef4444',lineWidth:2,lineStyle:0,axisLabelVisible:true,title:'POC '+POC.toLocaleString()});
+ser.createPriceLine({price:VAL,color:'rgba(255,255,255,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'VAL '+VAL.toLocaleString()});
 ser.createPriceLine({price:NY_OPEN_P,color:'rgba(245,158,11,0.85)',lineWidth:1,lineStyle:3,axisLabelVisible:true,title:'NY OPEN '+NY_OPEN_P.toLocaleString()});
 
 // Session H/L
