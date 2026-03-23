@@ -1,0 +1,17 @@
+{
+    "generated": "2026-03-23 00:45",
+    "research_filters": {
+        "va_estrecho_threshold": 100,
+        "va_amplio_threshold": 150,
+        "q1_finding": "VA<100 → break VAL solo 38% (señal limpia); VA>150 → break ambos lados 67%",
+        "q2_finding": "ABOVE_VA open → 100% cierra abajo (fade setup)",
+        "q3_finding": "pm_direction: 50.8% BULL / 38.9% BEAR en dataset 126 días"
+    },
+    "total_trades": 633,
+    "by_setup": {
+        "BOUNCE_FROM_VAL": {},
+        "FADE_GAP_UP": {},
+        "BREAKOUT_BUY": {},
+        "BREAKOUT_SELL": {}
+    }
+}
