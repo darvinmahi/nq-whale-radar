@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-03-23T16:13:21.910091+00:00Z",
-  "last_update_human": "2026-03-23 16:13:21 UTC",
+  "timestamp": "2026-03-23T21:54:40.852341+00:00Z",
+  "last_update_human": "2026-03-23 21:54:40 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 3.8,
+  "total_time_sec": 2.3,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -18,17 +18,17 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.7
+      "time": 2.2
     },
-    "Agent 9 · Silver Bullet": {
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 7 · Probability Analyst": {
+    "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
