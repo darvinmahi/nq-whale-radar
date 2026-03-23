@@ -1,17 +1,31 @@
 {
   "agent": 2,
-  "timestamp": "2026-03-19T05:49:42.160609+00:00Z",
-  "razonamiento": "Posicionamiento deteriorando (-9,867 semanal).",
-  "signal": "NEUTRAL-BAJISTA",
-  "strength": 55,
-  "net_position": 36037,
+  "timestamp": "2026-03-23T16:13:18.662228+00:00Z",
+  "razonamiento": "Specs netos liquidando (+20,350). COT Index 37.",
+  "signal": "BAJISTA",
+  "strength": 60,
+  "net_position": 20350,
   "cot": {
-    "current_net": 36037,
-    "cot_index": 49.5,
-    "date": "03 Mar 2026",
-    "week_change": -9867
+    "current_net": 20350,
+    "cot_index": 37.2,
+    "date": "2026-03-17",
+    "week_change": -25554
   },
   "recent_weeks": [
+    {
+      "date": "2026-03-17",
+      "nc_long": 142881,
+      "nc_short": 122531,
+      "c_long": 49159,
+      "c_short": 75258,
+      "r_long": 42406,
+      "r_short": 38411,
+      "oi": 318004,
+      "net_position": 20350,
+      "comm_net": -26099,
+      "retail_net": 3995,
+      "change": -15687
+    },
     {
       "date": "03 Mar 2026",
       "nc_long": 155076,
@@ -67,20 +81,6 @@
       "comm_net": -72214,
       "retail_net": 0,
       "change": 2381
-    },
-    {
-      "date": "03 Feb 2026",
-      "nc_long": 164558,
-      "nc_short": 107451,
-      "c_long": 38879,
-      "c_short": 115328,
-      "r_long": 0,
-      "r_short": 0,
-      "oi": 273307,
-      "net_position": 57107,
-      "comm_net": -76449,
-      "retail_net": 0,
-      "change": -6748
     }
   ]
 }
