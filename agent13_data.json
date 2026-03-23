@@ -1,7 +1,7 @@
 {
     "agent": 13,
     "name": "Explorador de Inteligencia Alpha",
-    "last_crawl": "2026-03-23T16:13:21.873094+00:00Z",
+    "last_crawl": "2026-03-23T19:36:14.549718+00:00Z",
     "insights": {
         "source": "Web Research & User DNA",
         "external_bias": "ESTUDIO DE BACKTESTING 3 AÑOS EN CURSO",
@@ -23,16 +23,16 @@
         ]
     },
     "estrategia_maestra": {
-        "nombre": "Confluencia de POC Semanal y Diario",
-        "tipo": "Volume Profile / Value Inversion",
-        "descripcion": "Cuando el POC del día actual se alinea con el POC de la semana anterior, se crea un 'Súper Nivel' de soporte o resistencia donde las instituciones defienden sus posiciones.",
+        "nombre": "Fallo de Sesión Asia (Asia Low Sweep)",
+        "tipo": "Liquidity Sweep",
+        "descripcion": "El precio rompe el mínimo de la sesión de Asia durante Londres o NY para capturar liquidez, seguido de una recuperación inmediata del POC Diario.",
         "reglas": [
-            "1. Identificar POC Semanal anterior.",
-            "2. Esperar a que el POC Diario se desarrolle en el mismo nivel.",
-            "3. Operar el rebote (Bounce) con confirmación de Delta."
+            "1. Barrido (Sweep) del mínimo de Asia (Asia Low).",
+            "2. Rechazo violento con volumen en el Footprint.",
+            "3. Re-entrada al Value Area diaria."
         ],
-        "fuente": "Institutional Profile Journals",
-        "score_alpha": "8.9/10"
+        "fuente": "Order Flow Masterclass",
+        "score_alpha": "8.7/10"
     },
     "backtest_config": {
         "period": "3 AÑOS",
