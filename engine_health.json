@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-03-24T19:55:49.393556+00:00Z",
-  "last_update_human": "2026-03-24 19:55:49 UTC",
+  "timestamp": "2026-03-24T21:55:00.162728+00:00Z",
+  "last_update_human": "2026-03-24 21:55:00 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 2.8,
+  "total_time_sec": 2.5,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -22,7 +22,11 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.7
+      "time": 2.4
+    },
+    "Agent 8 · Morgan Psychologist": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -32,15 +36,7 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Agent 6 · SMC Detective": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -48,11 +44,15 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 15 · Journal Writer": {
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 4 · Bias Engine": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
+    "Agent 15 · Journal Writer": {
       "status": "✅ OK",
       "time": 0.0
     },
