@@ -1,11 +1,11 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-03-23T21:54:38.585800Z",
-  "vix_value": 27.37,
+  "timestamp": "2026-03-24T16:41:00.204101Z",
+  "vix_value": 27.98,
   "vix_status": "ELEVATED",
   "raw_inputs": {
-    "VXN": 27.37,
+    "VXN": 27.98,
     "GEX_B": 2.3,
     "DIX": null
   },
@@ -13,7 +13,7 @@
     "level": "ELEVATED",
     "signal": "NEUTRAL",
     "score": 35,
-    "description": "VXN 27.37 — Volatilidad elevada. Reducir tamaño.",
+    "description": "VXN 27.98 — Volatilidad elevada. Reducir tamaño.",
     "risk": "Movimientos erráticos probables"
   },
   "gex_analysis": {
