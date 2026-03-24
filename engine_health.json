@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-03-24T16:41:03.459019+00:00Z",
-  "last_update_human": "2026-03-24 16:41:03 UTC",
+  "timestamp": "2026-03-24T19:55:49.393556+00:00Z",
+  "last_update_human": "2026-03-24 19:55:49 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 3.3,
+  "total_time_sec": 2.8,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -18,21 +18,21 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.2
+      "time": 2.7
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 8 · Morgan Psychologist": {
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 7 · Probability Analyst": {
+    "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -48,11 +48,11 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 4 · Bias Engine": {
+    "Agent 15 · Journal Writer": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 15 · Journal Writer": {
+    "Agent 4 · Bias Engine": {
       "status": "✅ OK",
       "time": 0.0
     },
