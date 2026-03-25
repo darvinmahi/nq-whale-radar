@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-03-25T16:46:04.088181+00:00Z",
-  "last_update_human": "2026-03-25 16:46:04 UTC",
+  "timestamp": "2026-03-25T19:36:15.305760+00:00Z",
+  "last_update_human": "2026-03-25 19:36:15 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 2.9,
+  "total_time_sec": 2.8,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -18,11 +18,15 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.9
+      "time": 2.7
+    },
+    "Agent 7 · Probability Analyst": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -32,19 +36,15 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 7 · Probability Analyst": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Agent 6 · SMC Detective": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 13 · Research Scout": {
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 14 · Order Flow Expert": {
+    "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },

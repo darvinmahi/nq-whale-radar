@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-03-25T16:46:04.083220",
+    "timestamp": "2026-03-25T19:36:15.300602",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,15 +13,15 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11047
+            "size": 11009
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 1147
+            "size": 1150
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 394
+            "size": 395
         }
     },
     "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL-BULLISH en 53 puntos. Monitorea flujos finales.",
