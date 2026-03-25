@@ -1,12 +1,12 @@
 {
-    "layer1": 0.0483,
-    "layer2": 0.3953,
-    "layer3": 0.0506,
-    "layer4": 0.3598,
-    "layer5": 0.0977,
-    "layer6": 0.0483,
+    "layer1": 0.049,
+    "layer2": 0.5662,
+    "layer3": 0.049,
+    "layer4": 0.2377,
+    "layer5": 0.049,
+    "layer6": 0.049,
     "status": "Adaptando — WR 50.8% [BACKTEST (estimado)] (bajo target 55.0%)",
-    "last_learning": "2026-03-19T05:49:48.302923+00:00",
+    "last_learning": "2026-03-25T16:18:58.039976+00:00",
     "version": "4.0",
     "wr_source": "BACKTEST (estimado)"
 }

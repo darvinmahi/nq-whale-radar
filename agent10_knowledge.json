@@ -1,60 +1,66 @@
 {
-    "last_updated": "2026-03-19T05:49:48.302923+00:00",
-    "total_cycles_analyzed": 45,
+    "last_updated": "2026-03-25T16:18:58.039976+00:00",
+    "total_cycles_analyzed": 200,
     "current_win_rate": 50.84,
-    "current_bias": "ALCISTA",
+    "current_bias": "NEUTRAL",
     "status": "Adaptando — WR 50.8% [BACKTEST (estimado)] (bajo target 55.0%)",
     "insights": [
         {
+            "type": "pattern",
+            "text": "'triple_confluence_bull' detectado 10 veces en 200 ciclos",
+            "confidence": 95,
+            "count": 10
+        },
+        {
             "type": "weight_evolution",
-            "text": "Posicionamiento (COT) (layer1) bajó 19.0% desde el primer ciclo",
+            "text": "Posicionamiento (COT) (layer1) subió 0.1% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Macro & Sentiment (layer2) subió 17.7% desde el primer ciclo",
+            "text": "Macro & Sentiment (layer2) subió 15.7% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Liquidez (layer3) bajó 8.6% desde el primer ciclo",
+            "text": "Liquidez (layer3) subió 0.1% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Timing & Session (layer4) subió 20.8% desde el primer ciclo",
+            "text": "Timing & Session (layer4) bajó 16.0% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Algorítmico (SMC/Prob) (layer5) bajó 15.6% desde el primer ciclo",
+            "text": "Algorítmico (SMC/Prob) (layer5) subió 0.1% desde el primer ciclo",
             "confidence": 100
         },
         {
-            "type": "warning",
-            "text": "Datos faltantes: dix, gex",
+            "type": "weight_evolution",
+            "text": "Order Flow & Value Profile (layer6) subió 0.1% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "current_state",
-            "text": "Ahora: 2 señales alcistas, 1 bajistas, 4 neutrales de 7 totales",
+            "text": "Ahora: 2 señales alcistas, 2 bajistas, 3 neutrales de 7 totales",
             "confidence": 100
         }
     ],
     "agent_performance": {
         "COT": {
             "alignment_pct": 0.0,
-            "samples": 42,
+            "samples": 177,
             "source": "COT"
         },
         "VOLATILITY": {
-            "alignment_pct": null,
-            "samples": 0,
+            "alignment_pct": 0.0,
+            "samples": 92,
             "source": "VOLATILITY"
         },
         "SMC": {
             "alignment_pct": 0.0,
-            "samples": 45,
+            "samples": 200,
             "source": "SMC"
         },
         "PROBABILITY": {
@@ -69,12 +75,12 @@
         },
         "SILVER_BULLET": {
             "alignment_pct": 0.0,
-            "samples": 10,
+            "samples": 17,
             "source": "SILVER_BULLET"
         },
         "ORDERFLOW": {
             "alignment_pct": 0.0,
-            "samples": 45,
+            "samples": 199,
             "source": "ORDERFLOW"
         }
     },
@@ -83,24 +89,25 @@
         "worst_predictor": "ORDERFLOW (0.0% alineación)"
     },
     "pattern_history": {
-        "triple_confluence_bull": 1
+        "triple_confluence_bull": 10
     },
     "weight_evolution": {
-        "layer1": -0.1903,
-        "layer2": 0.177,
-        "layer3": -0.0865,
-        "layer4": 0.2075,
-        "layer5": -0.1561
+        "layer1": 0.0008,
+        "layer2": 0.157,
+        "layer3": 0.0008,
+        "layer4": -0.1603,
+        "layer5": 0.0008,
+        "layer6": 0.0008
     },
     "system_health": {
-        "data_quality": "60% — 2 campos sin datos",
+        "data_quality": "100% — Todos los datos disponibles",
         "weight_stability": "EN AJUSTE",
-        "memory_size": 45
+        "memory_size": 200
     },
     "faq": [
         {
             "q": "¿Cuál es el sesgo actual?",
-            "a": "ALCISTA — 2 de 7 señales alineadas. Agentes activos: COT, SMC, ORDERFLOW"
+            "a": "NEUTRAL — 2 de 7 señales alineadas. Agentes activos: COT, VOLATILITY, SMC, ORDERFLOW"
         },
         {
             "q": "¿Qué agente acierta más?",
@@ -112,23 +119,23 @@
         },
         {
             "q": "¿Cuántos ciclos ha analizado?",
-            "a": "45 ciclos en memoria. Win rate del backtest: 50.8%"
+            "a": "200 ciclos en memoria. Win rate del backtest: 50.8%"
         },
         {
             "q": "¿Hay algún patrón recurrente?",
-            "a": "triple_confluence_bull (1x)"
+            "a": "triple_confluence_bull (10x)"
         },
         {
             "q": "¿Los pesos han cambiado?",
-            "a": "Sí: layer1 ↓19.0%, layer2 ↑17.7%, layer3 ↓8.6%, layer4 ↑20.8%, layer5 ↓15.6%"
+            "a": "Sí: layer1 ↑0.1%, layer2 ↑15.7%, layer3 ↑0.1%, layer4 ↓16.0%, layer5 ↑0.1%, layer6 ↑0.1%"
         }
     ],
     "weights": {
-        "layer1": 0.0483,
-        "layer2": 0.3953,
-        "layer3": 0.0506,
-        "layer4": 0.3598,
-        "layer5": 0.0977,
-        "layer6": 0.0483
+        "layer1": 0.049,
+        "layer2": 0.5662,
+        "layer3": 0.049,
+        "layer4": 0.2377,
+        "layer5": 0.049,
+        "layer6": 0.049
     }
 }

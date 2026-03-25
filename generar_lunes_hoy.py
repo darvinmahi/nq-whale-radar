@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Genera lunes_chart_20260323.html — Lunes 23 Mar 2026 (HOY) — DATOS REALES NQ=F"""
-import yfinance as yf, json
+import yfinance as yf, json, os
 from datetime import datetime, timezone
 
 DATE_LABEL = "2026-03-23"
@@ -64,6 +64,56 @@ else:
 
 print(f"  POC={POC} VAH={VAH} VAL={VAL}")
 print(f"  NY: Open={NY_OPEN_P} High={NY_HIGH} Low={NY_LOW} Close={NY_CLOSE_P} Range={NY_RANGE}")
+
+# ─── Leer datos COT (Agent 2) ─────────────────────────────────────────────────
+def _load_json(path):
+    try:
+        with open(path, "r", encoding="utf-8") as f: return json.load(f)
+    except Exception: return {}
+
+a2 = _load_json("agent2_data.json")
+a3 = _load_json("agent3_data.json")
+
+# COT
+cot       = a2.get("cot", {})
+cot_net   = cot.get("current_net", 0)
+cot_idx   = cot.get("cot_index", 0)
+cot_date  = cot.get("date", "N/A")
+cot_sig   = a2.get("signal", "NEUTRAL")
+cot_str   = a2.get("strength", 50)
+cot_mom   = a2.get("momentum", {})
+cot_dir   = cot_mom.get("direction", "PLANO")
+cot_weeks = cot_mom.get("consecutive_weeks", 0)
+cot_vel   = cot_mom.get("weekly_velocity", 0)
+cot_alert = a2.get("insight", {}).get("alert", "")
+
+# VXN / GEX / DIX
+raw3      = a3.get("raw_inputs", {})
+vxn_val   = raw3.get("VXN", 0)
+gex_b     = raw3.get("GEX_B", 0)
+dix_val   = raw3.get("DIX", 0)
+vxn_ana   = a3.get("vxn_analysis", {})
+vxn_lv    = vxn_ana.get("level", "NORMAL")
+vol_sig   = a3.get("signal", "NEUTRAL")
+vol_score = a3.get("score", 50)
+
+# Helpers de color
+def sig_color(s):
+    return {"BULLISH":"#10b981","BEARISH":"#ef4444"}.get(s,"#94a3b8")
+def sig_bg(s):
+    return {"BULLISH":"rgba(16,185,129,.15)","BEARISH":"rgba(239,68,68,.15)"}.get(s,"rgba(148,163,184,.10)")
+def sig_border(s):
+    return {"BULLISH":"rgba(16,185,129,.4)","BEARISH":"rgba(239,68,68,.4)"}.get(s,"rgba(148,163,184,.3)")
+def sig_emoji(s):
+    return {"BULLISH":"▲","BEARISH":"▼"}.get(s,"●")
+
+cot_net_str = f"+{cot_net:,}" if cot_net >= 0 else f"{cot_net:,}"
+cot_vel_str = f"+{cot_vel:,}/sem" if cot_vel >= 0 else f"{cot_vel:,}/sem"
+gex_str     = f"+{gex_b:.2f}B" if gex_b >= 0 else f"{gex_b:.2f}B"
+vxn_lv_label = {"COMPLACENCY":"COMPLACENCIA","NORMAL":"NORMAL","ELEVATED":"ELEVADA","PANIC":"PÁNICO","EXTREME_PANIC":"PÁNICO EXTREMO"}.get(vxn_lv, vxn_lv)
+
+print(f"  COT: net={cot_net_str} idx={cot_idx}/100 señal={cot_sig}")
+print(f"  VXN: {vxn_val} | GEX: {gex_str} | DIX: {dix_val}%")
 
 direction = "BULLISH ↑" if NY_MOVE>=0 else "BEARISH ↓"
 dc = "#10b981" if NY_MOVE>=0 else "#ef4444"
@@ -139,6 +189,38 @@ html = f"""<!DOCTYPE html>
     .rl-btn{{background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.35);color:#67e8f9;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;transition:all .2s}}
     .rl-btn.a{{background:rgba(6,182,212,.25);border-color:#06b6d4;color:#e0f2fe}}
     .foot{{text-align:center;padding:20px;color:var(--muted);font-size:11px}}
+    /* ── MACRO INDICATORS ─────────────────────────────────────── */
+    .macro-section{{margin-bottom:18px}}
+    .macro-header{{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;
+                   color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;
+                   margin-bottom:10px;padding-left:4px}}
+    .macro-header::before{{content:'';display:block;width:3px;height:14px;border-radius:2px;
+                           background:linear-gradient(180deg,var(--purple),var(--cyan))}}
+    .macro-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}}
+    .macro-card{{background:linear-gradient(135deg,#0c0a1e,#110d2a);border:1px solid var(--border);
+                 border-radius:14px;padding:16px 18px;position:relative;overflow:hidden;
+                 transition:border-color .25s,transform .2s}}
+    .macro-card:hover{{border-color:rgba(124,58,237,.45);transform:translateY(-1px)}}
+    .macro-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+                          border-radius:2px 2px 0 0}}
+    .mc-cot::before{{background:linear-gradient(90deg,#7c3aed,#06b6d4)}}
+    .mc-vol::before{{background:linear-gradient(90deg,#f59e0b,#ef4444)}}
+    .mc-gex::before{{background:linear-gradient(90deg,#10b981,#06b6d4)}}
+    .macro-card-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}}
+    .mc-label{{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px}}
+    .mc-signal{{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px}}
+    .mc-main{{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}}
+    .mc-value{{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700}}
+    .mc-unit{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}}
+    .mc-bar-wrap{{background:rgba(255,255,255,.06);border-radius:4px;height:5px;margin-bottom:10px}}
+    .mc-bar{{height:100%;border-radius:4px;transition:width .6s}}
+    .mc-meta{{display:flex;gap:16px;flex-wrap:wrap}}
+    .mc-meta-item{{display:flex;flex-direction:column;gap:2px}}
+    .mc-meta-label{{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}}
+    .mc-meta-val{{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600}}
+    .mc-alert{{margin-top:10px;padding:7px 10px;border-radius:8px;font-size:10px;
+               background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#fcd34d;
+               line-height:1.5}}
   </style>
 </head>
 <body>
@@ -174,6 +256,71 @@ html = f"""<!DOCTYPE html>
     <div class="sc"><div class="sl">Velas</div><div class="sv cm">{n}</div></div>
     <div class="sc"><div class="sl">Dirección</div><div class="sv {'cg' if NY_MOVE>=0 else 'cr'}">{direction}</div></div>
   </div>
+
+  <!-- ══ MACRO INDICATORS ══════════════════════════════════════════════════ -->
+  <div class="macro-section">
+    <div class="macro-header">📊 Indicadores Macro · COT / VXN / GEX / DIX — {cot_date}</div>
+    <div class="macro-grid">
+
+      <!-- COT Card -->
+      <div class="macro-card mc-cot">
+        <div class="macro-card-header">
+          <span class="mc-label">🐳 COT Non-Commercial</span>
+          <span class="mc-signal" style="background:{sig_bg(cot_sig)};border:1px solid {sig_border(cot_sig)};color:{sig_color(cot_sig)}">{sig_emoji(cot_sig)} {cot_sig}</span>
+        </div>
+        <div class="mc-main">
+          <span class="mc-value" style="color:{sig_color(cot_sig)}">{cot_net_str}</span>
+          <span class="mc-unit">contratos netos</span>
+        </div>
+        <div class="mc-bar-wrap"><div class="mc-bar" style="width:{cot_idx}%;background:linear-gradient(90deg,{'#ef4444' if cot_idx<35 else '#f59e0b' if cot_idx<60 else '#10b981'},{sig_color(cot_sig)})"></div></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:10px;font-family:'JetBrains Mono',monospace">COT Index: {cot_idx}/100 &nbsp;·&nbsp; Fuerza: {cot_str}/100</div>
+        <div class="mc-meta">
+          <div class="mc-meta-item"><span class="mc-meta-label">Momentum</span><span class="mc-meta-val" style="color:{'#ef4444' if cot_dir=='BAJANDO' else '#10b981' if cot_dir=='SUBIENDO' else '#94a3b8'}">{cot_dir}</span></div>
+          <div class="mc-meta-item"><span class="mc-meta-label">Semanas</span><span class="mc-meta-val cp">{cot_weeks} consec.</span></div>
+          <div class="mc-meta-item"><span class="mc-meta-label">Velocidad</span><span class="mc-meta-val" style="color:{'#ef4444' if cot_vel<0 else '#10b981'}">{cot_vel_str}</span></div>
+        </div>
+        {f'<div class="mc-alert">⚡ {cot_alert}</div>' if cot_alert else ''}
+      </div>
+
+      <!-- VXN Card -->
+      <div class="macro-card mc-vol">
+        <div class="macro-card-header">
+          <span class="mc-label">🌡️ VXN — Volatilidad NQ</span>
+          <span class="mc-signal" style="background:{sig_bg(vol_sig)};border:1px solid {sig_border(vol_sig)};color:{sig_color(vol_sig)}">{sig_emoji(vol_sig)} {vol_sig}</span>
+        </div>
+        <div class="mc-main">
+          <span class="mc-value" style="color:{'#ef4444' if vxn_val>25 else '#f59e0b' if vxn_val>18 else '#10b981'}">{vxn_val:.2f}</span>
+          <span class="mc-unit">puntos · {vxn_lv_label}</span>
+        </div>
+        <div class="mc-bar-wrap"><div class="mc-bar" style="width:{min(vxn_val/50*100,100):.1f}%;background:linear-gradient(90deg,#10b981,{'#ef4444' if vxn_val>25 else '#f59e0b'})"></div></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:10px;font-family:'JetBrains Mono',monospace">Score Volatilidad: {vol_score}/100 &nbsp;·&nbsp; Umbrales: &lt;18 Complacencia · 18–25 Normal · &gt;25 Elevada</div>
+        <div class="mc-meta">
+          <div class="mc-meta-item"><span class="mc-meta-label">Nivel</span><span class="mc-meta-val" style="color:{'#ef4444' if vxn_val>25 else '#f59e0b' if vxn_val>18 else '#10b981'}">{vxn_lv_label}</span></div>
+          <div class="mc-meta-item"><span class="mc-meta-label">Score</span><span class="mc-meta-val cc">{vol_score}/100</span></div>
+        </div>
+      </div>
+
+      <!-- GEX + DIX Card -->
+      <div class="macro-card mc-gex">
+        <div class="macro-card-header">
+          <span class="mc-label">⚙️ GEX &amp; DIX — Dealers</span>
+          <span class="mc-signal" style="background:rgba({'16,185,129' if gex_b>0 else '239,68,68'},.15);border:1px solid rgba({'16,185,129' if gex_b>0 else '239,68,68'},.4);color:{'#10b981' if gex_b>0 else '#ef4444'}">{'▲ POSITIVO' if gex_b>0 else '▼ NEGATIVO'}</span>
+        </div>
+        <div class="mc-main">
+          <span class="mc-value" style="color:{'#10b981' if gex_b>0 else '#ef4444'}">{gex_str}</span>
+          <span class="mc-unit">Gamma Exposure</span>
+        </div>
+        <div class="mc-bar-wrap"><div class="mc-bar" style="width:{min(abs(gex_b)/5*100,100):.1f}%;background:linear-gradient(90deg,{'#10b981,#06b6d4' if gex_b>0 else '#ef4444,#f59e0b'})"></div></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:10px;font-family:'JetBrains Mono',monospace">GEX {'positivo → dealers frenan vol · mercado amortiguado' if gex_b>0 else 'negativo → dealers amplifican movimiento'}</div>
+        <div class="mc-meta">
+          <div class="mc-meta-item"><span class="mc-meta-label">DIX (Dark Pool)</span><span class="mc-meta-val" style="color:{'#10b981' if dix_val>42 else '#94a3b8'}">{dix_val:.1f}%</span></div>
+          <div class="mc-meta-item"><span class="mc-meta-label">Interpretación DIX</span><span class="mc-meta-val cc">{'Compra institucional ↑' if dix_val>45 else 'Neutral' if dix_val>38 else 'Presión bajista ↓'}</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
 
   <div class="cf"><div class="cw">
     <div class="ct">
