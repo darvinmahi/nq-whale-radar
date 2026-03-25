@@ -1,56 +1,86 @@
 {
   "agent": 2,
-  "timestamp": "2026-03-25T19:36:12.864677+00:00Z",
-  "razonamiento": "Specs netos liquidando (+20,350). COT Index 37.",
-  "signal": "BAJISTA",
-  "strength": 60,
-  "net_position": 20350,
+  "timestamp": "2026-03-25T21:56:06.604702+00:00Z",
+  "razonamiento": "Posicionamiento deteriorando (-9,867 semanal).",
+  "signal": "NEUTRAL-BAJISTA",
+  "strength": 55,
+  "net_position": 36037,
   "cot": {
-    "current_net": -72688,
-    "current_oi": 318004,
-    "date": "2026-03-17",
-    "cot_index": 0,
-    "history_min": -50000,
-    "history_max": 142000,
-    "history_mean": 95000
-  },
-  "momentum": {
-    "direction": "BAJANDO",
-    "consecutive_weeks": 3,
-    "weekly_velocity": -3658
-  },
-  "signal": "BEARISH",
-  "strength": 76,
-  "insight": {
-    "level_description": "🔴 ZONA BAJISTA — Capitalización o capitulación",
-    "weekly_velocity": -3658,
-    "alert": "COT en extremo bajo (0/100). Históricamente precede recuperación."
+    "current_net": 36037,
+    "cot_index": 49.5,
+    "date": "03 Mar 2026",
+    "week_change": -9867
   },
   "recent_weeks": [
     {
-      "date": "2026-03-17",
-      "nc_long": 25197,
-      "nc_short": 97885
-    },
-    {
       "date": "03 Mar 2026",
-      "nc_long": 76598,
-      "nc_short": 74212
+      "nc_long": 155076,
+      "nc_short": 119039,
+      "c_long": 51588,
+      "c_short": 88222,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 36037,
+      "comm_net": -36634,
+      "retail_net": 0,
+      "change": -9867
     },
     {
       "date": "24 Feb 2026",
-      "nc_long": 80310,
-      "nc_short": 69523
+      "nc_long": 159920,
+      "nc_short": 114016,
+      "c_long": 48621,
+      "c_short": 102169,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 45904,
+      "comm_net": -53548,
+      "retail_net": 0,
+      "change": -11806
     },
     {
       "date": "17 Feb 2026",
-      "nc_long": 89273,
-      "nc_short": 64863
+      "nc_long": 170033,
+      "nc_short": 112323,
+      "c_long": 39724,
+      "c_short": 107575,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 57710,
+      "comm_net": -67851,
+      "retail_net": 0,
+      "change": -1778
     },
     {
       "date": "10 Feb 2026",
-      "nc_long": 82196,
-      "nc_short": 68836
+      "nc_long": 159647,
+      "nc_short": 100159,
+      "c_long": 41959,
+      "c_short": 114173,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 59488,
+      "comm_net": -72214,
+      "retail_net": 0,
+      "change": 2381
+    },
+    {
+      "date": "03 Feb 2026",
+      "nc_long": 164558,
+      "nc_short": 107451,
+      "c_long": 38879,
+      "c_short": 115328,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 57107,
+      "comm_net": -76449,
+      "retail_net": 0,
+      "change": -6748
     }
   ]
 }

@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-03-25T19:36:15.305760+00:00Z",
-  "last_update_human": "2026-03-25 19:36:15 UTC",
+  "timestamp": "2026-03-25T21:56:09.170484+00:00Z",
+  "last_update_human": "2026-03-25 21:56:09 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 2.8,
+  "total_time_sec": 3.1,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -12,23 +12,23 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 2 · COT Analyst": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Agent 3 · Volatility Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
+    "Agent 2 · COT Analyst": {
+      "status": "✅ OK",
+      "time": 0.5
+    },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.7
+      "time": 3.0
     },
     "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 8 · Morgan Psychologist": {
+    "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -40,10 +40,6 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 14 · Order Flow Expert": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
@@ -52,19 +48,23 @@
       "status": "✅ OK",
       "time": 0.0
     },
+    "Agent 4 · Bias Engine": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 12 · Backtest Engine": {
+    "Agent 10 · Learning Engine": {
       "status": "✅ OK",
       "time": 0.1
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
-    "Agent 10 · Learning Engine": {
+    "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
       "time": 0.1
     },
