@@ -1,7 +1,7 @@
 {
     "agent": 13,
     "name": "Explorador de Inteligencia Alpha",
-    "last_crawl": "2026-03-24T21:55:00.128212+00:00Z",
+    "last_crawl": "2026-03-25T16:46:04.057564+00:00Z",
     "insights": {
         "source": "Web Research & User DNA",
         "external_bias": "ESTUDIO DE BACKTESTING 3 AÑOS EN CURSO",
@@ -23,16 +23,16 @@
         ]
     },
     "estrategia_maestra": {
-        "nombre": "Aceptación de Apertura NY sobre POC Londres",
-        "tipo": "Session Profile / Trend",
-        "descripcion": "Si la apertura de las 9:30 AM ocurre por encima del POC de la sesión de Londres y se mantiene así por 15 minutos, la probabilidad de visitar el VAH semanal aumenta al 78%.",
+        "nombre": "Confluencia de POC Semanal y Diario",
+        "tipo": "Volume Profile / Value Inversion",
+        "descripcion": "Cuando el POC del día actual se alinea con el POC de la semana anterior, se crea un 'Súper Nivel' de soporte o resistencia donde las instituciones defienden sus posiciones.",
         "reglas": [
-            "1. Definir POC de Londres antes de las 9:30 AM.",
-            "2. Apertura de NY (9:30) por encima del POC de Londres.",
-            "3. Primera vela de 15m cierra por encima con Delta positivo."
+            "1. Identificar POC Semanal anterior.",
+            "2. Esperar a que el POC Diario se desarrolle en el mismo nivel.",
+            "3. Operar el rebote (Bounce) con confirmación de Delta."
         ],
-        "fuente": "Metodología de Usuario / Alpha Flow",
-        "score_alpha": "9.2/10"
+        "fuente": "Institutional Profile Journals",
+        "score_alpha": "8.9/10"
     },
     "backtest_config": {
         "period": "3 AÑOS",
