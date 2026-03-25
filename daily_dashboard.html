@@ -557,6 +557,8 @@
             <th>VAH</th>
             <th>POC</th>
             <th>VAL</th>
+            <th title="VXN — Índice de Volatilidad NASDAQ del día">VXN</th>
+            <th title="COT Net Leveraged — posición neta de fondos especulativos esa semana">COT</th>
           </tr>
         </thead>
         <tbody id="sessions-body"></tbody>
@@ -597,6 +599,21 @@ let currentDate = null;
 let chartDir = null, chartPat = null;
 let allSessions = [];
 let backTestData = null;
+let cotVxnLookup = {}; // { '2024-01-08': { vxn: 21.3 } }
+let cotIndexWeekly = []; // [{ week: '2024-01-02', cot_index: 62.4 }, ...]  sorted asc
+
+// Devuelve el cot_index de la semana COT vigente para una fecha dada (busca el lunes más cercano anterior)
+function getCotIndex(dateStr) {
+  if (!cotIndexWeekly.length || !dateStr) return null;
+  // Buscar el último entry cuyo week <= dateStr
+  let lo = 0, hi = cotIndexWeekly.length - 1, result = null;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (cotIndexWeekly[mid].week <= dateStr) { result = cotIndexWeekly[mid].cot_index; lo = mid + 1; }
+    else hi = mid - 1;
+  }
+  return result;
+}
 
 // Chart.js defaults
 Chart.defaults.color = '#8898bb';
@@ -783,6 +800,25 @@ function generateChart() {
 async function loadDayData(day) {
   setLoadingMsg('Cargando datos…');
   const cfg = DAY_CONFIG[day];
+
+  // Cargar VXN lookup una sola vez
+  if (Object.keys(cotVxnLookup).length === 0) {
+    try {
+      const rv = await fetch('data/backtest_cot_vxn_results.json');
+      if (rv.ok) {
+        const arr = await rv.json();
+        arr.forEach(r => { if (r.date) cotVxnLookup[r.date] = { vxn: r.vxn ?? null }; });
+      }
+    } catch {}
+  }
+  // Cargar COT Index semanal una sola vez
+  if (!cotIndexWeekly.length) {
+    try {
+      const rc = await fetch('data/cot_index_weekly.json');
+      if (rc.ok) cotIndexWeekly = await rc.json(); // ya viene ordenado asc
+    } catch {}
+  }
+
   let data;
   try {
     const res = await fetch(cfg.json);
@@ -1082,6 +1118,17 @@ function renderStats(d, day) {
     const vah_d   = (s.profile_vah || s.vah || 0);
     const poc_d   = (s.profile_poc || s.poc || 0);
     const val_d   = (s.profile_val || s.val || 0);
+    // COT + VXN lookup
+    const cvRow = cotVxnLookup[s.date] || {};
+    const vxnVal = s.vxn ?? cvRow.vxn ?? null;
+    // COT Index normalizado 0-100 (búsqueda binaria por semana más cercana)
+    const cotIdx = getCotIndex(s.date);
+    const vxnColor = vxnVal == null ? C.gray : vxnVal >= 30 ? C.red : vxnVal >= 22 ? C.orange : C.green;
+    // COT Index: >70 = extremo alcista (smart money compra) → verde; <30 = extremo bajista → rojo; resto → naranja
+    const cotColor = cotIdx == null ? C.gray : cotIdx >= 70 ? C.green : cotIdx <= 30 ? C.red : C.orange;
+    const vxnTxt = vxnVal != null ? vxnVal.toFixed(1) : '—';
+    const cotTxt = cotIdx != null ? cotIdx.toFixed(1) : '—';
+
     tr.innerHTML = `
       <td><b>${s.date}</b></td>
       <td><span class="pill pill-gray" style="font-size:0.65rem;">${(s.pattern||'—').replace('_',' ')}</span></td>
@@ -1089,7 +1136,9 @@ function renderStats(d, day) {
       <td style="color:${range>300?C.orange:C.cyan};font-weight:700;">${range} pts</td>
       <td title="${vah_d.toLocaleString('en-US',{maximumFractionDigits:0})}">${vah_hit?'<span class="pill pill-green">✓</span>':'<span class="pill pill-gray">—</span>'}</td>
       <td title="${poc_d.toLocaleString('en-US',{maximumFractionDigits:0})}">${poc_hit?'<span class="pill pill-green">✓</span>':'<span class="pill pill-gray">—</span>'}</td>
-      <td title="${val_d.toLocaleString('en-US',{maximumFractionDigits:0})}">${val_hit?'<span class="pill pill-green">✓</span>':'<span class="pill pill-gray">—</span>'}</td>`;
+      <td title="${val_d.toLocaleString('en-US',{maximumFractionDigits:0})}">${val_hit?'<span class="pill pill-green">✓</span>':'<span class="pill pill-gray">—</span>'}</td>
+      <td style="color:${vxnColor};font-weight:600;font-size:0.78rem;" title="VXN del día ${s.date}">${vxnTxt}</td>
+      <td style="color:${cotColor};font-weight:600;font-size:0.78rem;" title="COT Net Leveraged (miles de contratos)">${cotTxt}</td>`;
     tr.onclick = () => {
       const d8 = s.date.replace(/-/g,'');
       currentDate = new Date(s.date);
