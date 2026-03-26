@@ -29,12 +29,18 @@ jobs:
         run: python cloud_runner.py
         timeout-minutes: 5
 
+      - name: Update Today's Live Chart
+        run: python update_today_session.py
+        timeout-minutes: 5
+        continue-on-error: true
+
       - name: Commit & Push updated data
         run: |
           git config user.name "NQ-Engine-Bot"
           git config user.email "engine-bot@nq-whale-radar"
           git add agent_live_data.js agent*_data.json agent10_ict_stats.json agent14_orderflow_data.json agent_sentinel_data.json engine_health.json || true
+          git add *_chart_*.html data/research/today_live.json data/research/backtest_*_results.json || true
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           TIMESTAMP=$(date -u +"%d %b %Y %H:%M UTC")
-          git commit -m "data: cloud update ${TIMESTAMP}"
+          git commit -m "data: cloud update + today chart ${TIMESTAMP}"
           git push

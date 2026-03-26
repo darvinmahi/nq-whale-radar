@@ -1,0 +1,27 @@
+{
+  "total_sessions": 1,
+  "sessions": [
+    {
+      "date": "2026-03-25",
+      "day": "Miércoles",
+      "direction": "BEARISH",
+      "ny_open": 24430.75,
+      "ny_close": 24381.0,
+      "ny_high": 24526.0,
+      "ny_low": 24286.5,
+      "ny_range": 239.5,
+      "ny_move": -49.75,
+      "poc": 24433.0,
+      "vah": 24470.5,
+      "val": 24345.5,
+      "chart_url": "miercoles_chart_20260325.html"
+    }
+  ],
+  "directions": {
+    "BULLISH": 0,
+    "BEARISH": 1,
+    "NEUTRAL": 0
+  },
+  "total_wednesdays": 1,
+  "updated_at": "2026-03-25T23:21:14 ET"
+}
