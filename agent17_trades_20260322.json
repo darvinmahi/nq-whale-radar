@@ -1,0 +1,18 @@
+{
+  "_instructions": "direction: LONG|SHORT  |  outcome: WIN|LOSS|BE  |  entry_type: Silver Bullet|FVG|BOS|OB|CISD etc.",
+  "trades": [
+    {
+      "time": "09:45",
+      "session": "NY AM",
+      "direction": "LONG",
+      "entry_type": "Silver Bullet",
+      "entry_price": 0,
+      "sl": 0,
+      "tp": 0,
+      "rr_planned": 2.0,
+      "rr_achieved": 0,
+      "outcome": "WIN",
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Backtest CB Consumer Confidence — NQ</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box }
+  body { background:#0b0f1a; color:#e2e8f0; font-family:'Segoe UI',sans-serif; padding:28px 20px }
+  h1 { font-size:1.4rem; color:#60a5fa; margin-bottom:4px }
+  .sub { font-size:.82rem; color:#475569; margin-bottom:26px }
+
+  /* KPI CARDS */
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:12px; margin-bottom:28px }
+  .kpi { background:#111827; border-radius:10px; padding:14px 18px; border-left:3px solid #3b82f6 }
+  .kpi.green { border-color:#22c55e }
+  .kpi.red   { border-color:#ef4444 }
+  .kpi.orange{ border-color:#f97316 }
+  .kpi label { font-size:.7rem; color:#64748b; text-transform:uppercase; letter-spacing:.05em }
+  .kpi value { display:block; font-size:1.5rem; font-weight:700; margin-top:4px; color:#f1f5f9 }
+  .kpi small  { font-size:.72rem; color:#94a3b8 }
+
+  /* COMPARATIVA */
+  .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:28px }
+  .compare-box { background:#111827; border-radius:10px; padding:16px }
+  .compare-box h3 { font-size:.85rem; margin-bottom:12px }
+  .compare-box .cstat { display:flex; justify-content:space-between; padding:4px 0; font-size:.82rem; border-bottom:1px solid #1e293b }
+  .compare-box .cstat:last-child { border-bottom:none }
+
+  /* TABLE */
+  .tw { overflow-x:auto; border-radius:10px }
+  table { width:100%; border-collapse:collapse; font-size:.81rem }
+  thead tr { background:#0f172a }
+  th { padding:9px 12px; text-align:left; color:#64748b; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; border-bottom:1px solid #1e293b }
+  tbody tr { border-bottom:1px solid #1e293b; transition:background .15s }
+  tbody tr:hover { background:#111827 }
+  td { padding:8px 12px; vertical-align:middle }
+  .dt { color:#94a3b8; font-size:.75rem; white-space:nowrap }
+  .num { text-align:right; font-variant-numeric:tabular-nums }
+  .bull { color:#22c55e }
+  .bear { color:#ef4444 }
+  .pos  { color:#22c55e }
+  .neg  { color:#ef4444 }
+  .dir  { text-align:center }
+  .badge { display:inline-block; padding:3px 9px; border-radius:20px; font-size:.71rem; font-weight:700; white-space:nowrap }
+  .pat  { font-size:.68rem }
+
+  /* NOTA */
+  .note { margin-top:18px; font-size:.73rem; color:#475569; border-left:2px solid #334155; padding-left:10px }
+</style>
+</head>
+<body>
+<h1>📊 Backtest: CB Consumer Confidence × NQ Futures</h1>
+<p class="sub">Noticia: Martes, 10:00 AM ET · Último martes hábil del mes · 13 sesiones analizadas (2024–2026)</p>
+
+<div class="kpi-grid">
+  <div class="kpi"><label>Sesiones</label><value>13</value><small>Total analizadas</small></div>
+  <div class="kpi green"><label>Días BULL</label><value>62%</value><small>8/13</small></div>
+  <div class="kpi green"><label>BEAT</label><value>6</value><small>46% · FUERTE: 1</small></div>
+  <div class="kpi red"><label>MISS</label><value>7</value><small>54% · FUERTE: 3</small></div>
+  <div class="kpi orange"><label>Avg Range</label><value>315</value><small>puntos NQ</small></div>
+  <div class="kpi"><label>Avg Move</label><value>+2</value><small>Open→Close</small></div>
+</div>
+
+<div class="compare-grid">
+  <div class="compare-box">
+    <h3 style="color:#22c55e">BEAT (6 sesiones)</h3>
+    <div class="cstat"><span>% Días BULL</span><span style="color:#22c55e"><b>83%</b></span></div>
+    <div class="cstat"><span>Avg Range</span><span><b>299 pts</b></span></div>
+    <div class="cstat"><span>Avg Move</span><span><b>+48 pts</b></span></div>
+    <div class="cstat"><span>BEAT FUERTE</span><span><b>1 sesiones</b></span></div>
+  </div>
+  <div class="compare-box">
+    <h3 style="color:#ef4444">MISS (7 sesiones)</h3>
+    <div class="cstat"><span>% Días BULL</span><span style="color:#22c55e"><b>43%</b></span></div>
+    <div class="cstat"><span>Avg Range</span><span><b>328 pts</b></span></div>
+    <div class="cstat"><span>Avg Move</span><span><b>-38 pts</b></span></div>
+    <div class="cstat"><span>MISS FUERTE</span><span><b>3 sesiones</b></span></div>
+  </div>
+</div>
+
+<div class="tw">
+<table>
+  <thead><tr>
+    <th>Fecha</th><th>Exp</th><th>Actual</th>
+    <th>Beat/Miss</th><th>Δ</th>
+    <th>Patrón del Día</th>
+    <th>Range</th><th>Move</th><th>Dir</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td class="dt">2025-03-25</td>
+      <td class="num">94.0</td>
+      <td class="num">92.9</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-1.1</td>
+      <td><span class="badge pat" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">EXPANSIÓN ↑</span></td>
+      <td class="num">232</td>
+      <td class="num bull">+136</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2025-02-25</td>
+      <td class="num">103.0</td>
+      <td class="num">98.3</td>
+      <td><span class="badge" style="background:#991b1b22;color:#991b1b;border:1px solid #991b1b44">MISS FUERTE 🔴🔴</span></td>
+      <td class="num neg">-4.7</td>
+      <td><span class="badge pat" style="background:#f9731622;color:#f97316;border:1px solid #f9731644">NEWS_DRIVE ↓</span></td>
+      <td class="num">464</td>
+      <td class="num bear">-294</td>
+      <td class="dir bear">▼</td>
+    </tr>
+    <tr>
+      <td class="dt">2025-01-28</td>
+      <td class="num">105.7</td>
+      <td class="num">105.3</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-0.4</td>
+      <td><span class="badge pat" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">EXPANSIÓN ↑</span></td>
+      <td class="num">466</td>
+      <td class="num bull">+238</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-12-17</td>
+      <td class="num">113.8</td>
+      <td class="num">104.7</td>
+      <td><span class="badge" style="background:#991b1b22;color:#991b1b;border:1px solid #991b1b44">MISS FUERTE 🔴🔴</span></td>
+      <td class="num neg">-9.1</td>
+      <td><span class="badge pat" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">EXPANSIÓN ↓</span></td>
+      <td class="num">182</td>
+      <td class="num bear">-100</td>
+      <td class="dir bear">▼</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-11-26</td>
+      <td class="num">111.5</td>
+      <td class="num">111.7</td>
+      <td><span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">BEAT ✅</span></td>
+      <td class="num pos">+0.2</td>
+      <td><span class="badge pat" style="background:#a855f722;color:#a855f7;border:1px solid #a855f744">MEGÁFONO</span></td>
+      <td class="num">270</td>
+      <td class="num bull">+87</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-10-29</td>
+      <td class="num">99.5</td>
+      <td class="num">99.2</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-0.3</td>
+      <td><span class="badge pat" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">EXPANSIÓN ↑</span></td>
+      <td class="num">328</td>
+      <td class="num bull">+184</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-09-24</td>
+      <td class="num">98.7</td>
+      <td class="num">98.7</td>
+      <td><span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">BEAT ✅</span></td>
+      <td class="num pos">+0.0</td>
+      <td><span class="badge pat" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">EXPANSIÓN ↑</span></td>
+      <td class="num">262</td>
+      <td class="num bull">+104</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-08-27</td>
+      <td class="num">100.5</td>
+      <td class="num">103.3</td>
+      <td><span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">BEAT ✅</span></td>
+      <td class="num pos">+2.8</td>
+      <td><span class="badge pat" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">EXPANSIÓN ↑</span></td>
+      <td class="num">253</td>
+      <td class="num bull">+95</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-07-30</td>
+      <td class="num">99.0</td>
+      <td class="num">100.3</td>
+      <td><span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">BEAT ✅</span></td>
+      <td class="num pos">+1.3</td>
+      <td><span class="badge pat" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">EXPANSIÓN ↓</span></td>
+      <td class="num">595</td>
+      <td class="num bear">-281</td>
+      <td class="dir bear">▼</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-06-25</td>
+      <td class="num">100.0</td>
+      <td class="num">100.4</td>
+      <td><span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">BEAT ✅</span></td>
+      <td class="num pos">+0.4</td>
+      <td><span class="badge pat" style="background:#f9731622;color:#f97316;border:1px solid #f9731644">NEWS_DRIVE ↑</span></td>
+      <td class="num">255</td>
+      <td class="num bull">+216</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-05-28</td>
+      <td class="num">96.0</td>
+      <td class="num">101.3</td>
+      <td><span class="badge" style="background:#16a34a22;color:#16a34a;border:1px solid #16a34a44">BEAT FUERTE 🟢🟢</span></td>
+      <td class="num pos">+5.3</td>
+      <td><span class="badge pat" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">EXPANSIÓN ↑</span></td>
+      <td class="num">161</td>
+      <td class="num bull">+66</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-04-30</td>
+      <td class="num">104.0</td>
+      <td class="num">97.0</td>
+      <td><span class="badge" style="background:#991b1b22;color:#991b1b;border:1px solid #991b1b44">MISS FUERTE 🔴🔴</span></td>
+      <td class="num neg">-7.0</td>
+      <td><span class="badge pat" style="background:#f9731622;color:#f97316;border:1px solid #f9731644">NEWS_DRIVE ↓</span></td>
+      <td class="num">447</td>
+      <td class="num bear">-347</td>
+      <td class="dir bear">▼</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-03-26</td>
+      <td class="num">107.0</td>
+      <td class="num">104.7</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-2.3</td>
+      <td><span class="badge pat" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">EXPANSIÓN ↓</span></td>
+      <td class="num">180</td>
+      <td class="num bear">-82</td>
+      <td class="dir bear">▼</td>
+    </tr></tbody>
+</table>
+</div>
+
+<div class="note">
+  ★ Patrón del día basado en OHLC diario de NQ=F (yfinance).<br>
+  ★ Beat/Miss: Actual ≥ Exp = BEAT · Diferencia ≥ 3 puntos = FUERTE.<br>
+  ★ Move = Close − Open (sesión completa).
+</div>
+</body>
+</html>

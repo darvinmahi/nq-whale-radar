@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NQ vs SP500 — Correlación & Lead/Lag | NQ Whale Radar</title>
+  <meta name="description" content="Análisis de correlación, lead/lag y divergencias entre NQ (NASDAQ-100) y SP500 para traders de futuros">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #060b14;
+      --bg-card: #0d1520;
+      --bg-card2: #111e2e;
+      --border: rgba(0,200,255,0.12);
+      --accent-blue: #00c8ff;
+      --accent-green: #00ff88;
+      --accent-red: #ff3b5c;
+      --accent-yellow: #ffd700;
+      --accent-purple: #a855f7;
+      --text-primary: #e8f4ff;
+      --text-secondary: #7ea6c4;
+      --text-muted: #4a6680;
+      --nq-color: #00c8ff;
+      --sp-color: #f97316;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* BACKGROUND GRID */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 28px 40px 20px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(0,200,255,0.05) 0%, transparent 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-icon {
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, #00c8ff, #0044ff);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 20px rgba(0,200,255,0.4);
+    }
+
+    .logo-text h1 {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #00c8ff, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text p {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-pill {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: 1px solid;
+    }
+
+    .pill-live {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+      background: rgba(0,255,136,0.08);
+      animation: pulse-pill 2s infinite;
+    }
+
+    .pill-period {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+      background: rgba(0,200,255,0.08);
+    }
+
+    @keyframes pulse-pill {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,136,0.3); }
+      50% { box-shadow: 0 0 0 6px rgba(0,255,136,0); }
+    }
+
+    /* ─── MAIN LAYOUT ─── */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* ─── PAGE TITLE ─── */
+    .page-title {
+      text-align: center;
+    }
+
+    .page-title h2 {
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #00c8ff, #fff 50%, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    .page-title p {
+      color: var(--text-secondary);
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    /* ─── KPI GRID (TOP STATS) ─── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,200,255,0.3);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .kpi-card.blue::before   { background: linear-gradient(90deg, #00c8ff, #0044ff); }
+    .kpi-card.green::before  { background: linear-gradient(90deg, #00ff88, #00c850); }
+    .kpi-card.orange::before { background: linear-gradient(90deg, #f97316, #ef4444); }
+    .kpi-card.purple::before { background: linear-gradient(90deg, #a855f7, #6366f1); }
+    .kpi-card.yellow::before { background: linear-gradient(90deg, #ffd700, #f97316); }
+
+    .kpi-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+    }
+
+    .kpi-value.blue   { color: var(--accent-blue); }
+    .kpi-value.green  { color: var(--accent-green); }
+    .kpi-value.orange { color: #f97316; }
+    .kpi-value.purple { color: var(--accent-purple); }
+    .kpi-value.yellow { color: var(--accent-yellow); }
+
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .section-header h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .section-header .badge {
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .badge-blue   { background: rgba(0,200,255,0.15); color: var(--accent-blue); border: 1px solid rgba(0,200,255,0.3); }
+    .badge-green  { background: rgba(0,255,136,0.12); color: var(--accent-green); border: 1px solid rgba(0,255,136,0.3); }
+    .badge-orange { background: rgba(249,115,22,0.15); color: #f97316; border: 1px solid rgba(249,115,22,0.3); }
+
+    /* ─── CHART CARDS ─── */
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 300px;
+    }
+
+    .chart-wrapper.tall { height: 380px; }
+    .chart-wrapper.short { height: 220px; }
+
+    /* ─── DUAL CHART ROW ─── */
+    .dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .dual-grid { grid-template-columns: 1fr; }
+      .header-meta { display: none; }
+    }
+
+    /* ─── LAG ANALYSIS BAR ─── */
+    .lag-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+    }
+
+    .lag-item {
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 10px;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .lag-item:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-blue);
+    }
+
+    .lag-item.highlight {
+      border-color: var(--accent-green);
+      background: rgba(0,255,136,0.06);
+    }
+
+    .lag-days {
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .lag-corr {
+      font-size: 20px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .lag-desc {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* ─── STRATEGIES GRID ─── */
+    .strategies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 16px;
+    }
+
+    .strategy-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .strategy-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,200,255,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .strategy-num {
+      position: absolute;
+      top: 16px; right: 16px;
+      font-size: 36px;
+      font-weight: 900;
+      color: rgba(0,200,255,0.06);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .strategy-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .strategy-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 8px;
+    }
+
+    .strategy-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .strategy-rule {
+      background: rgba(0,200,255,0.06);
+      border: 1px solid rgba(0,200,255,0.15);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--accent-blue);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .strategy-rule strong { color: var(--accent-green); }
+
+    .strategy-ctx {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ─── INSIGHT BANNER ─── */
+    .insight-banner {
+      background: linear-gradient(135deg, rgba(0,200,255,0.08), rgba(168,85,247,0.08));
+      border: 1px solid rgba(0,200,255,0.2);
+      border-radius: 20px;
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .insight-item h4 {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+
+    .insight-item p {
+      font-size: 14px;
+      color: var(--text-primary);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .insight-item span {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+    }
+
+    /* ─── PROBABILITY BARS ─── */
+    .prob-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .prob-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .prob-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .prob-bar-track {
+      height: 12px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .prob-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 1s ease;
+    }
+
+    .prob-bar-fill.up   { background: linear-gradient(90deg, #00ff88, #00c850); }
+    .prob-bar-fill.down { background: linear-gradient(90deg, #ff3b5c, #cc0033); }
+
+    .prob-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .prob-value.up   { color: var(--accent-green); }
+    .prob-value.down { color: var(--accent-red); }
+
+    @media (max-width: 700px) {
+      .prob-section { grid-template-columns: 1fr; }
+      .dual-grid { grid-template-columns: 1fr; }
+      .page-title h2 { font-size: 24px; }
+      main { padding: 20px 14px 40px; }
+    }
+
+    /* ─── TOOLTIP OVERRIDE ─── */
+    canvas { display: block; }
+
+    /* ─── LOADING OVERLAY ─── */
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-primary);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      transition: opacity 0.5s;
+    }
+
+    #loading.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader-ring {
+      width: 60px; height: 60px;
+      border: 3px solid rgba(0,200,255,0.2);
+      border-top-color: var(--accent-blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loader-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  </style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <div style="font-size:32px;">📊</div>
+  <div class="loader-ring"></div>
+  <div class="loader-text">Cargando análisis NQ vs SP500...</div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-group">
+    <div class="logo-icon">🐋</div>
+    <div class="logo-text">
+      <h1>NQ Whale Radar</h1>
+      <p>Correlación & Lead/Lag</p>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="header-pill pill-live">● DATOS REALES</div>
+    <div class="header-pill pill-period">📅 2 AÑOS HISTÓRICO</div>
+    <div class="header-pill pill-period" id="update-date">...</div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main>
+  <!-- PAGE TITLE -->
+  <div class="page-title">
+    <h2>NQ (NASDAQ-100) vs SP500 — Análisis para Traders</h2>
+    <p>Backtesting de correlación, lead/lag, velocidad y divergencias • Datos: QQQ / SPY (Yahoo Finance)</p>
+  </div>
+
+  <!-- KPI GRID -->
+  <div class="kpi-grid" id="kpi-grid">
+    <div class="kpi-card blue">
+      <div class="kpi-icon">🔗</div>
+      <div class="kpi-label">Correlación Total</div>
+      <div class="kpi-value blue" id="kpi-corr">—</div>
+      <div class="kpi-sub">NQ ↔ SP500 histórico</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-icon">⚡</div>
+      <div class="kpi-label">Beta NQ/SP500</div>
+      <div class="kpi-value orange" id="kpi-beta">—</div>
+      <div class="kpi-sub">SP mueve 1% → NQ mueve X%</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-icon">🌪</div>
+      <div class="kpi-label">Ratio Volatilidad</div>
+      <div class="kpi-value green" id="kpi-vol">—</div>
+      <div class="kpi-sub">Veces más volátil NQ vs SP</div>
+    </div>
+    <div class="kpi-card purple">
+      <div class="kpi-icon">💎</div>
+      <div class="kpi-label">Amplificación</div>
+      <div class="kpi-value purple" id="kpi-amp">—</div>
+      <div class="kpi-sub">Movimientos grandes NQ/SP</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-icon">🎯</div>
+      <div class="kpi-label">Días Divergencia</div>
+      <div class="kpi-value yellow" id="kpi-div">—</div>
+      <div class="kpi-sub">NQ y SP en sentido opuesto</div>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE INSIGHT BANNER -->
+  <div class="insight-banner" id="insight-banner"></div>
+
+  <!-- CORRELACIÓN ROLLING (CHART) -->
+  <div class="chart-card">
+    <div class="section-header">
+      <h3>📈 Correlación Rolling — NQ vs SP500</h3>
+      <span class="badge badge-blue">20 días</span>
+      <span class="badge badge-orange">5 días</span>
+    </div>
+    <div class="chart-wrapper">
+      <canvas id="corrChart"></canvas>
+    </div>
+  </div>
+
+  <!-- RETURNS + DIVERGENCIAS -->
+  <div class="dual-grid">
+    <div class="chart-card">
+      <div class="section-header">
+        <h3>📊 Retornos Diarios</h3>
+        <span class="badge badge-blue">NQ</span>
+        <span class="badge badge-orange">SP500</span>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="retsChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="section-header">
+        <h3>⚡ Beta Rolling (60d)</h3>
+        <span class="badge badge-green">NQ/SP500</span>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="betaChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- VOLATILIDAD COMPARATIVA -->
+  <div class="chart-card">
+    <div class="section-header">
+      <h3>🌪 Volatilidad Anualizada — NQ vs SP500</h3>
+      <span class="badge badge-blue">Rolling 20d</span>
+    </div>
+    <div class="chart-wrapper">
+      <canvas id="volChart"></canvas>
+    </div>
+  </div>
+
+  <!-- LAG ANALYSIS -->
+  <div class="chart-card">
+    <div class="section-header">
+      <h3>🔍 Análisis Lead/Lag — Cross-Correlación</h3>
+      <span class="badge badge-green">Días de ventaja</span>
+    </div>
+    <p style="color:var(--text-muted); font-size:13px; margin-bottom:16px;">
+      Lag negativo = NQ lidera SP500. Lag positivo = SP500 lidera NQ. El lag 0 es la correlación simultánea.
+    </p>
+    <div class="lag-grid" id="lagGrid"></div>
+  </div>
+
+  <!-- PROBABILIDADES DE PREDICCIÓN -->
+  <div class="chart-card">
+    <div class="section-header">
+      <h3>🎲 Probabilidades de Predicción</h3>
+      <span class="badge badge-green">NQ HOY → SP MAÑANA</span>
+    </div>
+    <div class="prob-section">
+      <div class="prob-card">
+        <div class="prob-label">📈 Si NQ sube hoy → ¿SP sube mañana?</div>
+        <div class="prob-value up" id="prob-up">—</div>
+        <div class="prob-bar-track" style="margin-top:12px;">
+          <div class="prob-bar-fill up" id="probBarUp" style="width:0%"></div>
+        </div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
+          Señal alcista: NQ como termómetro adelantado
+        </div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-label">📉 Si NQ baja hoy → ¿SP baja mañana?</div>
+        <div class="prob-value down" id="prob-down">—</div>
+        <div class="prob-bar-track" style="margin-top:12px;">
+          <div class="prob-bar-fill down" id="probBarDown" style="width:0%"></div>
+        </div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
+          Señal bajista: NQ lleva primero la caída
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESTRATEGIAS PARA TRADERS -->
+  <div>
+    <div class="section-header">
+      <h3>🧠 Estrategias de Trading — Basadas en el Backtest</h3>
+      <span class="badge badge-green">ACCIONABLES</span>
+    </div>
+    <div class="strategies-grid" id="strategiesGrid"></div>
+  </div>
+
+</main>
+
+<script>
+/* ══════════════════════════════════════════════
+   GLOBAL CHART DEFAULTS
+══════════════════════════════════════════════ */
+Chart.defaults.color = '#7ea6c4';
+Chart.defaults.borderColor = 'rgba(0,200,255,0.08)';
+Chart.defaults.font.family = "'Inter', sans-serif";
+
+const ICONS = ['📡','💡','📐','⚡','🌊','🎯'];
+
+/* ══════════════════════════════════════════════
+   LOAD DATA & RENDER
+══════════════════════════════════════════════ */
+async function init() {
+  let D;
+  try {
+    const res = await fetch('nq_sp500_correlation_data.json');
+    D = await res.json();
+  } catch(e) {
+    // Fallback: datos de ejemplo si el JSON no existe
+    D = getFallbackData();
+  }
+
+  // Fade loading
+  setTimeout(() => {
+    document.getElementById('loading').classList.add('fade-out');
+    setTimeout(() => document.getElementById('loading').remove(), 500);
+  }, 400);
+
+  const ins = D.insights;
+  const series = D.series;
+
+  // Header date
+  document.getElementById('update-date').textContent =
+    '📅 ' + (D.metadata?.generado?.split('T')[0] || new Date().toISOString().split('T')[0]);
+
+  // ── KPIs ──
+  document.getElementById('kpi-corr').textContent =
+    ins.correlacion.total.toFixed(2);
+  document.getElementById('kpi-beta').textContent =
+    ins.velocidad.beta_nq_vs_sp.toFixed(2) + 'x';
+  document.getElementById('kpi-vol').textContent =
+    ins.velocidad.ratio_volatilidad.toFixed(2) + 'x';
+  document.getElementById('kpi-amp').textContent =
+    ins.velocidad.amplificacion_movimientos.toFixed(2) + 'x';
+
+  // divergencia %
+  const divFreq = (series.divergencias.filter(x => x === 1).length / series.divergencias.length * 100).toFixed(1);
+  document.getElementById('kpi-div').textContent = divFreq + '%';
+
+  // ── INSIGHT BANNER ──
+  const res = ins.resumen_ejecutivo;
+  const bannerItems = [
+    { label: 'Correlación', val: res.correlacion },
+    { label: 'Velocidad', val: res.velocidad },
+    { label: 'Beta', val: res.beta },
+    { label: 'Lead/Lag', val: res.lead_lag },
+    { label: 'Divergencia', val: res.divergencia },
+  ];
+  document.getElementById('insight-banner').innerHTML = bannerItems.map(it => `
+    <div class="insight-item">
+      <h4>${it.label}</h4>
+      <p>${it.val}</p>
+    </div>
+  `).join('');
+
+  // ── CHART: CORRELACIÓN ROLLING ──
+  new Chart(document.getElementById('corrChart'), {
+    type: 'line',
+    data: {
+      labels: series.fechas,
+      datasets: [
+        {
+          label: 'Correlación 20d',
+          data: series.corr_20d,
+          borderColor: '#00c8ff',
+          backgroundColor: 'rgba(0,200,255,0.08)',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.4,
+          fill: true,
+        },
+        {
+          label: 'Correlación 5d',
+          data: series.corr_5d,
+          borderColor: 'rgba(249,115,22,0.8)',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          borderDash: [4,4],
+          pointRadius: 0,
+          tension: 0.4,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { boxWidth: 12, color: '#7ea6c4' } },
+        tooltip: {
+          backgroundColor: 'rgba(13,21,32,0.95)',
+          borderColor: 'rgba(0,200,255,0.3)',
+          borderWidth: 1,
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(4)}`
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 8, color: '#4a6680' } },
+        y: {
+          grid: { color: 'rgba(0,200,255,0.05)' },
+          ticks: { color: '#4a6680', callback: v => v.toFixed(2) },
+          min: 0.6, max: 1,
+        }
+      }
+    }
+  });
+
+  // ── CHART: RETORNOS ──
+  const n = Math.min(series.fechas.length, 120);
+  new Chart(document.getElementById('retsChart'), {
+    type: 'bar',
+    data: {
+      labels: series.fechas.slice(-n),
+      datasets: [
+        {
+          label: 'NQ %',
+          data: series.nq_ret.slice(-n),
+          backgroundColor: series.nq_ret.slice(-n).map(v => v >= 0 ? 'rgba(0,200,255,0.7)' : 'rgba(0,200,255,0.3)'),
+          borderRadius: 2,
+          borderSkipped: false,
+        },
+        {
+          label: 'SP500 %',
+          data: series.sp_ret.slice(-n),
+          backgroundColor: series.sp_ret.slice(-n).map(v => v >= 0 ? 'rgba(249,115,22,0.7)' : 'rgba(249,115,22,0.3)'),
+          borderRadius: 2,
+          borderSkipped: false,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { boxWidth: 10, color: '#7ea6c4' } },
+        tooltip: {
+          backgroundColor: 'rgba(13,21,32,0.95)',
+          borderColor: 'rgba(0,200,255,0.3)',
+          borderWidth: 1,
+          callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(2)}%` }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 6, color: '#4a6680' } },
+        y: { grid: { color: 'rgba(0,200,255,0.05)' }, ticks: { color: '#4a6680', callback: v => v.toFixed(1) + '%' } }
+      }
+    }
+  });
+
+  // ── CHART: BETA ──
+  new Chart(document.getElementById('betaChart'), {
+    type: 'line',
+    data: {
+      labels: series.fechas,
+      datasets: [{
+        label: 'Beta NQ/SP',
+        data: series.beta_nq,
+        borderColor: '#00ff88',
+        backgroundColor: 'rgba(0,255,136,0.08)',
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0.4,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { boxWidth: 10, color: '#7ea6c4' } },
+        tooltip: {
+          backgroundColor: 'rgba(13,21,32,0.95)',
+          borderColor: 'rgba(0,200,255,0.3)',
+          borderWidth: 1,
+          callbacks: {
+            label: ctx => ` Beta: ${ctx.parsed.y?.toFixed(3)}`,
+            afterLabel: ctx => ctx.parsed.y > 1.3 ? ' ⚡ NQ muy agresivo' : ctx.parsed.y < 1 ? ' 🛡️ NQ conservador' : ''
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 8, color: '#4a6680' } },
+        y: {
+          grid: { color: 'rgba(0,200,255,0.05)' },
+          ticks: { color: '#4a6680', callback: v => v.toFixed(2) + 'x' },
+          min: 0.8,
+        }
+      }
+    }
+  });
+
+  // ── CHART: VOLATILIDAD ──
+  new Chart(document.getElementById('volChart'), {
+    type: 'line',
+    data: {
+      labels: series.fechas,
+      datasets: [
+        {
+          label: 'NQ Vol %',
+          data: series.vol_nq,
+          borderColor: '#00c8ff',
+          backgroundColor: 'rgba(0,200,255,0.1)',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.4,
+          fill: true,
+        },
+        {
+          label: 'SP500 Vol %',
+          data: series.vol_sp,
+          borderColor: '#f97316',
+          backgroundColor: 'rgba(249,115,22,0.08)',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.4,
+          fill: true,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { boxWidth: 10, color: '#7ea6c4' } },
+        tooltip: {
+          backgroundColor: 'rgba(13,21,32,0.95)',
+          borderColor: 'rgba(0,200,255,0.3)',
+          borderWidth: 1,
+          callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(1)}%` }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 8, color: '#4a6680' } },
+        y: { grid: { color: 'rgba(0,200,255,0.05)' }, ticks: { color: '#4a6680', callback: v => v.toFixed(0) + '%' } }
+      }
+    }
+  });
+
+  // ── LAG ANALYSIS ──
+  const lagContainer = document.getElementById('lagGrid');
+  const maxCorr = Math.max(...D.lag_analysis.map(l => Math.abs(l.correlation)));
+  D.lag_analysis.forEach(l => {
+    const pct = Math.abs(l.correlation) / maxCorr;
+    const hue = l.correlation > 0 ? 200 : 30;
+    const isHighlight = l.lag === 0;
+    const div = document.createElement('div');
+    div.className = 'lag-item' + (isHighlight ? ' highlight' : '');
+    div.innerHTML = `
+      <div class="lag-days">${l.lag > 0 ? 'SP+'+l.lag : l.lag < 0 ? 'NQ'+l.lag : 'lag 0'}</div>
+      <div class="lag-corr" style="color:hsl(${hue},100%,${50+pct*20}%)">${l.correlation.toFixed(3)}</div>
+      <div class="lag-desc">${l.lag < 0 ? '🔵 NQ ahead' : l.lag > 0 ? '🟠 SP ahead' : '⚡ Sync'}</div>
+    `;
+    lagContainer.appendChild(div);
+  });
+
+  // ── PROBABILIDADES ──
+  const pUp   = ins.lead_lag.prediccion_nq_up_sp_up;
+  const pDown = ins.lead_lag.prediccion_nq_down_sp_down;
+  document.getElementById('prob-up').textContent   = (pUp * 100).toFixed(1) + '%';
+  document.getElementById('prob-down').textContent = (pDown * 100).toFixed(1) + '%';
+  setTimeout(() => {
+    document.getElementById('probBarUp').style.width   = (pUp * 100) + '%';
+    document.getElementById('probBarDown').style.width = (pDown * 100) + '%';
+  }, 600);
+
+  // ── ESTRATEGIAS ──
+  const container = document.getElementById('strategiesGrid');
+  ins.estrategias_trading.forEach((s, i) => {
+    const icons = ['📡','💡','📐','⚡','🌊','🛡️'];
+    const card = document.createElement('div');
+    card.className = 'strategy-card';
+    card.innerHTML = `
+      <div class="strategy-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="strategy-icon">${icons[i] || '💡'}</div>
+      <div class="strategy-name">${s.nombre}</div>
+      <div class="strategy-desc">${s.descripcion}</div>
+      <div class="strategy-rule"><strong>REGLA:</strong> ${s.regla}</div>
+      <div class="strategy-ctx">💬 ${s.contexto}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function getFallbackData() {
+  // Datos de ejemplo si no hay JSON disponible
+  return {
+    metadata: { generado: new Date().toISOString() },
+    insights: {
+      correlacion: { total: 0.96, promedio_20d: 0.94, minimo_10pct: 0.70 },
+      velocidad: { beta_nq_vs_sp: 1.28, ratio_volatilidad: 1.37, amplificacion_movimientos: 1.38 },
+      lead_lag: { prediccion_nq_up_sp_up: 0.552, prediccion_nq_down_sp_down: 0.401 },
+      estrategias_trading: [
+        { nombre: '1. NQ como señal de SP500', descripcion: 'Usa apertura NQ para anticipar SP.', regla: 'NQ>+0.5% → long SP', contexto: 'Funciona sin noticias macro.' },
+        { nombre: '2. Divergencia = Oportunidad', descripcion: 'Cuando NQ y SP van en opuesto, uno reversa.', regla: 'El de más volumen tiene razón.', contexto: '~11% de los días.' },
+      ],
+      resumen_ejecutivo: {
+        correlacion: '0.96 (muy alta)',
+        velocidad: 'NQ 1.4x más volátil',
+        beta: 'SP 1% → NQ 1.28%',
+        lead_lag: 'NQ lidera en catalizadores tech',
+        divergencia: '11% días divergen',
+      }
+    },
+    series: { fechas: [], nq_ret: [], sp_ret: [], corr_20d: [], corr_5d: [], beta_nq: [], vol_nq: [], vol_sp: [], divergencias: [] },
+    lag_analysis: Array.from({length:21}, (_,i) => ({lag: i-10, correlation: 0.96 - Math.abs(i-10)*0.01, interpretation: ''})),
+  };
+}
+
+init();
+</script>
+</body>
+</html>

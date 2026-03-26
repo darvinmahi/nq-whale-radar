@@ -1,0 +1,35 @@
+{
+  "_doc": "DeepChart → NQ Journal Bridge. DeepChart escribe aquí su proyección y el Journal la lee.",
+  "date": "2026-03-20",
+  "symbol": "NQ",
+  "timeframe": "5m",
+  "projection": {
+    "anchor_time": "09:30",
+    "anchor_price": 21480.0,
+    "direction": "LONG",
+    "confidence_pct": 72,
+    "label": "Rally 09:30 → consolidación → breakout PM",
+    "path": [
+      {"time": "09:30", "low": 21460.0, "mid": 21480.0, "high": 21500.0},
+      {"time": "09:45", "low": 21475.0, "mid": 21498.0, "high": 21518.0},
+      {"time": "10:00", "low": 21488.0, "mid": 21510.0, "high": 21532.0},
+      {"time": "10:15", "low": 21492.0, "mid": 21515.0, "high": 21540.0},
+      {"time": "10:30", "low": 21478.0, "mid": 21502.0, "high": 21524.0},
+      {"time": "10:45", "low": 21470.0, "mid": 21495.0, "high": 21518.0},
+      {"time": "11:00", "low": 21465.0, "mid": 21490.0, "high": 21512.0},
+      {"time": "11:15", "low": 21472.0, "mid": 21497.0, "high": 21520.0},
+      {"time": "11:30", "low": 21480.0, "mid": 21508.0, "high": 21535.0},
+      {"time": "14:00", "low": 21490.0, "mid": 21522.0, "high": 21555.0},
+      {"time": "14:15", "low": 21500.0, "mid": 21535.0, "high": 21568.0},
+      {"time": "14:30", "low": 21512.0, "mid": 21548.0, "high": 21582.0},
+      {"time": "15:00", "low": 21520.0, "mid": 21558.0, "high": 21595.0},
+      {"time": "15:30", "low": 21510.0, "mid": 21545.0, "high": 21578.0},
+      {"time": "16:00", "low": 21498.0, "mid": 21530.0, "high": 21562.0}
+    ]
+  },
+  "key_levels": [
+    {"price": 21460.0, "label": "Support fuerte", "color": "#00ff80"},
+    {"price": 21550.0, "label": "Resistencia clave", "color": "#ff0055"},
+    {"price": 21495.0, "label": "POC VPOC", "color": "#f59e0b"}
+  ]
+}

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐋 Backtest Lunes NQ · Whale Radar</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:         #0b0e1a;
+    --bg2:        #111420;
+    --bg3:        #181d2e;
+    --border:     rgba(99,130,255,0.18);
+    --accent:     #6382ff;
+    --accent2:    #38c9e8;
+    --green:      #22d98a;
+    --red:        #f0485a;
+    --orange:     #f5a623;
+    --yellow:     #f5d623;
+    --text:       #e4e8ff;
+    --text2:      #8898bb;
+    --card-glow:  0 0 24px rgba(99,130,255,0.10);
+    --shadow:     0 4px 24px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 0 0 60px 0;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0e1228 0%, #131830 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .header-logo { font-size: 2rem; }
+  .header-title h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
+  .header-title p  { font-size: 0.8rem; color: var(--text2); margin-top: 2px; }
+  .header-badge {
+    margin-left: auto;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── LAYOUT ──────────────────────────────────────────────────────── */
+  .main { max-width: 1440px; margin: 0 auto; padding: 32px 32px 0; }
+
+  /* ── HERO STATS ──────────────────────────────────────────────────── */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .hero-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: var(--card-glow);
+    transition: transform .2s, box-shadow .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(99,130,255,0.2);
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(99,130,255,0.06), transparent);
+    border-radius: inherit;
+  }
+  .hero-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text2);
+    margin-bottom: 8px;
+  }
+  .hero-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .hero-sub { font-size: 0.75rem; color: var(--text2); margin-top: 5px; }
+
+  /* ── GRID PRINCIPAL ──────────────────────────────────────────────── */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .charts-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  @media(max-width:1000px) {
+    .charts-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media(max-width:640px) {
+    .charts-grid, .charts-grid-2 { grid-template-columns: 1fr; }
+    .main { padding: 16px; }
+  }
+
+  /* ── CHART CARD ──────────────────────────────────────────────────── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow);
+  }
+  .card.col2 { grid-column: span 2; }
+  .card.col3 { grid-column: span 3; }
+  .card-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title span { font-size: 1.1rem; }
+  .chart-wrap { position: relative; height: 200px; }
+  .chart-wrap.tall { height: 260px; }
+
+  /* ── NEWS TAG ────────────────────────────────────────────────────── */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .news-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+  .news-type {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .news-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .news-name { font-weight: 700; font-size: 0.95rem; }
+  .news-impact { font-size: 0.7rem; color: var(--text2); }
+  .news-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .ns { text-align: center; }
+  .ns-v { font-size: 1.1rem; font-weight: 700; }
+  .ns-l { font-size: 0.65rem; color: var(--text2); }
+
+  /* ── TABLA DE SESIONES ───────────────────────────────────────────── */
+  .sessions-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .sessions-table th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--bg3);
+    color: var(--text2);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    position: sticky;
+    top: 72px;
+    z-index: 5;
+  }
+  .sessions-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(99,130,255,0.07);
+  }
+  .sessions-table tr:hover td { background: rgba(99,130,255,0.05); }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+  .pill-green  { background: rgba(34,217,138,0.15); color: var(--green); }
+  .pill-red    { background: rgba(240, 72, 90,0.15); color: var(--red); }
+  .pill-yellow { background: rgba(245,214,35,0.15); color: var(--yellow); }
+  .pill-blue   { background: rgba(56,201,232,0.15);  color: var(--accent2); }
+  .pill-orange { background: rgba(245,166,35,0.15);  color: var(--orange); }
+  .pill-gray   { background: rgba(136,152,187,0.15); color: var(--text2); }
+
+  /* ── CONCLUSIONES ────────────────────────────────────────────────── */
+  .conclusions {
+    background: linear-gradient(135deg, rgba(99,130,255,0.08), rgba(56,201,232,0.05));
+    border: 1px solid rgba(99,130,255,0.25);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+  .conclusions h2 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+  }
+  .con-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .con-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .con-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .con-text h3 { font-size: 0.88rem; font-weight: 700; margin-bottom: 3px; }
+  .con-text p  { font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
+
+  /* ── LEVEL BARS ──────────────────────────────────────────────────── */
+  .level-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(99,130,255,0.07);
+  }
+  .level-name { width: 90px; font-size: 0.8rem; font-weight: 600; color: var(--text2); }
+  .level-bar-wrap { flex: 1; background: rgba(99,130,255,0.1); border-radius: 6px; height: 10px; overflow: hidden; }
+  .level-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
+  .level-pct { width: 45px; text-align: right; font-size: 0.82rem; font-weight: 700; }
+  .level-react { width: 90px; text-align: right; font-size: 0.75rem; color: var(--text2); }
+
+  /* ── DIRECTION ARC ───────────────────────────────────────────────── */
+  .dir-arc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 20px 0 10px;
+  }
+  .dir-item { text-align: center; }
+  .dir-val { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; }
+  .dir-label { font-size: 0.72rem; color: var(--text2); margin-top: 4px; }
+  .dir-sep { font-size: 1.5rem; color: var(--border); }
+
+  /* ── PATTERN TAG ─────────────────────────────────────────────────── */
+  .p-SWEEP_H_RETURN  { color: #38c9e8; }
+  .p-SWEEP_L_RETURN  { color: #6382ff; }
+  .p-EXPANSION_H     { color: #22d98a; }
+  .p-EXPANSION_L     { color: #f0485a; }
+  .p-ROTATION_POC    { color: #f5a623; }
+  .p-NEWS_DRIVE      { color: #f5d623; }
+  .p-NONE            { color: #8898bb; }
+
+  /* ── RANGE HISTOGRAM ─────────────────────────────────────────────── */
+  .range-hist { display: flex; flex-direction: column; gap: 10px; padding: 8px 0; }
+  .rh-row { display: flex; align-items: center; gap: 12px; }
+  .rh-label { width: 85px; font-size: 0.78rem; color: var(--text2); }
+  .rh-bar-wrap { flex: 1; background: rgba(99,130,255,0.1); border-radius: 6px; height: 22px; overflow: hidden; position: relative; }
+  .rh-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 1s ease; display: flex; align-items: center; padding-left: 8px; }
+  .rh-fill-text { font-size: 0.72rem; font-weight: 700; color: #fff; white-space: nowrap; }
+  .rh-count { width: 55px; text-align: right; font-size: 0.78rem; color: var(--text2); }
+
+  /* ── LOADING ─────────────────────────────────────────────────────── */
+  #loading {
+    position: fixed; inset: 0; background: var(--bg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 9999; gap: 16px;
+  }
+  .spinner {
+    width: 48px; height: 48px;
+    border: 4px solid rgba(99,130,255,0.2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #loading p { color: var(--text2); font-size: 0.9rem; }
+
+  /* ── FOOTER ──────────────────────────────────────────────────────── */
+  .footer {
+    text-align: center;
+    color: var(--text2);
+    font-size: 0.72rem;
+    padding: 32px 0 0;
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="spinner"></div>
+  <p>Cargando datos del backtest…</p>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo">🐋</div>
+  <div class="header-title">
+    <h1>BACKTEST LUNES · NQ NASDAQ</h1>
+    <p>Patrones ICT · Noticias · Volume Profile · EMA200</p>
+  </div>
+  <div class="header-badge" id="period-badge">CARGANDO…</div>
+</div>
+
+<div class="main" id="main-content" style="display:none;">
+
+  <!-- ── HERO STATS ────────────────────────────────────────────────── -->
+  <div class="hero-grid" id="hero-grid"></div>
+
+  <!-- ── FILA 1: Patrones + Dirección + Rangos ──────────────────────── -->
+  <div class="charts-grid">
+    <!-- Patrones -->
+    <div class="card">
+      <div class="card-title"><span>📊</span> Patrones ICT — Lunes</div>
+      <div class="chart-wrap"><canvas id="chartPatterns"></canvas></div>
+    </div>
+    <!-- Dirección -->
+    <div class="card">
+      <div class="card-title"><span>📈</span> Direcc. Día Completo</div>
+      <div class="chart-wrap"><canvas id="chartDirection"></canvas></div>
+      <div class="dir-arc" id="dir-arc"></div>
+    </div>
+    <!-- Rango Distribución -->
+    <div class="card">
+      <div class="card-title"><span>📏</span> Distribución Rango NY</div>
+      <div class="range-hist" id="range-hist"></div>
+    </div>
+  </div>
+
+  <!-- ── FILA 2: Niveles + Sweeps ──────────────────────────────────── -->
+  <div class="charts-grid-2">
+    <!-- Volume Profile Niveles -->
+    <div class="card">
+      <div class="card-title"><span>📐</span> Volume Profile — Tasa de Toque</div>
+      <div id="level-bars" style="padding:4px 0;"></div>
+    </div>
+    <!-- Sweeps hora -->
+    <div class="card">
+      <div class="card-title"><span>⏰</span> Patrones por Noticia / Tipo de Lunes</div>
+      <div class="chart-wrap"><canvas id="chartNews"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ── CONCLUSIONES ──────────────────────────────────────────────── -->
+  <div class="conclusions">
+    <h2>💡 Conclusiones Operativas</h2>
+    <div class="con-list" id="conclusions"></div>
+  </div>
+
+  <!-- ── TABLA SESIONES ────────────────────────────────────────────── -->
+  <div class="card" style="overflow-x:auto;">
+    <div class="card-title"><span>📋</span> Detalle Cada Lunes Analizado</div>
+    <table class="sessions-table" id="sessions-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Noticia</th>
+          <th>Patrón</th>
+          <th>Dirección</th>
+          <th>Rango NY</th>
+          <th>EMA200</th>
+          <th>VAH</th>
+          <th>POC</th>
+          <th>VAL</th>
+        </tr>
+      </thead>
+      <tbody id="sessions-body"></tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    Generado por Whale Radar &nbsp;·&nbsp; Datos: NQ Futures 15min &nbsp;·&nbsp;
+    Análisis ICT + Volume Profile + Noticias
+  </div>
+</div>
+
+<script>
+// ─── Colores base ────────────────────────────────────────────────────────────
+const C = {
+  blue:   '#6382ff', cyan:   '#38c9e8', green:  '#22d98a',
+  red:    '#f0485a', orange: '#f5a623', yellow: '#f5d623',
+  gray:   '#8898bb', purple: '#a855f7',
+};
+const PATTERN_COLORS = {
+  SWEEP_H_RETURN: C.cyan,   SWEEP_L_RETURN: C.blue,
+  EXPANSION_H:    C.green,  EXPANSION_L:    C.red,
+  ROTATION_POC:   C.orange, NEWS_DRIVE:     C.yellow,
+};
+const IMPACT_COLORS = {
+  EXTREMO: C.red, ALTO: C.orange, MEDIO: C.yellow,
+  BAJO:    C.blue, LIGERO: C.gray, NORMAL: C.cyan,
+};
+
+// ─── Formatear número con comas ──────────────────────────────────────────────
+const fmt    = n => (n || 0).toLocaleString('en-US', {maximumFractionDigits:1});
+const fmtPts = n => `${fmt(n)} pts`;
+
+// ─── Chart defaults ──────────────────────────────────────────────────────────
+Chart.defaults.color = '#8898bb';
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.size   = 12;
+
+// ─── Crear donut ─────────────────────────────────────────────────────────────
+function makeDonut(id, labels, data, colors) {
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  return new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: colors,
+        borderColor: '#111420', borderWidth: 3, hoverOffset: 6 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: {
+        legend:  { position: 'right', labels: { boxWidth: 11, padding: 10, font: {size:11} } },
+        tooltip: { callbacks: {
+          label: ctx => ` ${ctx.label}: ${ctx.parsed.toFixed(1)}%`
+        }}
+      }
+    }
+  });
+}
+
+// ─── Crear barra horizontal ──────────────────────────────────────────────────
+function makeHBar(id, labels, data, colors) {
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  return new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: colors,
+        borderRadius: 6, borderSkipped: false }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.x.toFixed(1)}` }} },
+      scales: {
+        x: { grid: { color: 'rgba(99,130,255,0.08)' },
+             ticks: { font: {size:11} } },
+        y: { grid: { display: false }, ticks: { font: {size:11} } }
+      }
+    }
+  });
+}
+
+// ─── Pill helper ─────────────────────────────────────────────────────────────
+function pillDir(d) {
+  if (d === 'BULLISH') return `<span class="pill pill-green">🟢 ${d}</span>`;
+  if (d === 'BEARISH') return `<span class="pill pill-red">🔴 ${d}</span>`;
+  return `<span class="pill pill-yellow">🟡 ${d}</span>`;
+}
+function pillPat(p) {
+  const cls = { SWEEP_H_RETURN:'pill-blue',SWEEP_L_RETURN:'pill-blue',
+    EXPANSION_H:'pill-green',EXPANSION_L:'pill-red',
+    ROTATION_POC:'pill-orange',NEWS_DRIVE:'pill-yellow' };
+  return `<span class="pill ${cls[p]||'pill-gray'}">${p}</span>`;
+}
+function pillHit(h) {
+  return h ? `<span class="pill pill-green">✓</span>` : `<span class="pill pill-gray">—</span>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  LOAD JSON y renderizar
+// ─────────────────────────────────────────────────────────────────────────────
+async function loadData() {
+  let data;
+  try {
+    const res = await fetch('data/research/backtest_monday_1year.json');
+    data = await res.json();
+  } catch(e) {
+    // Demo con datos sintéticos si no hay JSON
+    data = getDemoData();
+  }
+  render(data);
+}
+
+function render(d) {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('main-content').style.display = 'block';
+
+  // Badge
+  document.getElementById('period-badge').textContent = `🗓 ${d.period||'1 año'}`;
+
+  // ── HERO ──────────────────────────────────────────────────────────────────
+  const totalMon = d.total_mondays || 0;
+  const bullPct = d.directions ? (d.directions.BULLISH||0)/totalMon*100 : 0;
+  const bearPct = d.directions ? (d.directions.BEARISH||0)/totalMon*100 : 0;
+
+  const heroes = [
+    { label: 'Lunes Analizados',    value: totalMon,                sub: `${d.total_days||0} días totales`,           color: C.blue },
+    { label: 'Patrón Dominante',    value: d.dominant_pattern||'N/A', sub: `${d.dominant_pct||0}% de los lunes`,    color: C.yellow },
+    { label: 'Rango NY Prom',       value: fmtPts(d.avg_ny_range), sub: `Max ${fmtPts(d.max_ny_range)}`,            color: C.cyan },
+    { label: 'Sesgo Alcista',       value: `${bullPct.toFixed(1)}%`, sub: `Bajista ${bearPct.toFixed(1)}%`,         color: bullPct>=bearPct ? C.green : C.red },
+    { label: 'Rango Asia/LON Prom', value: fmtPts(d.avg_asia_range), sub: 'Pre-mercado NY',                        color: C.orange },
+    { label: 'EMA200 respetada',    value: d.ema200 ? d.ema200.hit_rate : 'N/A', sub: `Reac. ${d.ema200 ? d.ema200.avg_reaction : 0} pts`, color: C.purple },
+  ];
+  const hg = document.getElementById('hero-grid');
+  heroes.forEach(h => {
+    hg.innerHTML += `
+      <div class="hero-card">
+        <div class="hero-label">${h.label}</div>
+        <div class="hero-value" style="color:${h.color}">${h.value}</div>
+        <div class="hero-sub">${h.sub}</div>
+      </div>`;
+  });
+
+  // ── PATRONES DONUT ────────────────────────────────────────────────────────
+  const pats = d.patterns || {};
+  const patLabels = Object.keys(pats);
+  const patValues = patLabels.map(k => parseFloat(pats[k]));
+  const patColors = patLabels.map(k => PATTERN_COLORS[k]||C.gray);
+  makeDonut('chartPatterns', patLabels, patValues, patColors);
+
+  // ── DIRECCIÓN DONUT ───────────────────────────────────────────────────────
+  const dirs = d.directions || {BULLISH:0,BEARISH:0,NEUTRAL:0};
+  makeDonut('chartDirection',
+    ['BULLISH','BEARISH','NEUTRAL'],
+    [dirs.BULLISH||0, dirs.BEARISH||0, dirs.NEUTRAL||0].map(n=>n/totalMon*100),
+    [C.green, C.red, C.yellow]
+  );
+  document.getElementById('dir-arc').innerHTML = `
+    <div class="dir-item">
+      <div class="dir-val" style="color:${C.green}">${(bullPct).toFixed(0)}%</div>
+      <div class="dir-label">BULLISH</div>
+    </div>
+    <div class="dir-sep">|</div>
+    <div class="dir-item">
+      <div class="dir-val" style="color:${C.red}">${(bearPct).toFixed(0)}%</div>
+      <div class="dir-label">BEARISH</div>
+    </div>`;
+
+  // ── RANGO DISTRIBUCIÓN ────────────────────────────────────────────────────
+  const rd = d.range_distribution || {};
+  const rdTotal = Object.values(rd).reduce((a,b)=>a+b, 0)||1;
+  const rh = document.getElementById('range-hist');
+  const rdColors = {'0-100':C.blue,'100-200':C.cyan,'200-300':C.orange,'300+':C.red};
+  Object.entries(rd).forEach(([k, v]) => {
+    const pct = v/rdTotal*100;
+    rh.innerHTML += `
+      <div class="rh-row">
+        <div class="rh-label">${k} pts</div>
+        <div class="rh-bar-wrap">
+          <div class="rh-fill" style="width:${pct}%; background: linear-gradient(90deg,${rdColors[k]||C.blue},${rdColors[k]||C.blue}99);">
+            <span class="rh-fill-text">${v} Lunes</span>
+          </div>
+        </div>
+        <div class="rh-count">${pct.toFixed(1)}%</div>
+      </div>`;
+  });
+
+  // ── LEVELS ───────────────────────────────────────────────────────────────
+  const va = d.value_area || {};
+  const ema = d.ema200 || {};
+  const levels = [
+    { name: 'VAH',    rate: parseFloat(va.vah?.hit_rate||0), react: va.vah?.avg_reaction||0,  color: C.green },
+    { name: 'POC',    rate: parseFloat(va.poc?.hit_rate||0), react: va.poc?.avg_reaction||0,  color: C.cyan  },
+    { name: 'VAL',    rate: parseFloat(va.val?.hit_rate||0), react: va.val?.avg_reaction||0,  color: C.orange},
+    { name: 'EMA 200',rate: parseFloat(ema.hit_rate||0),     react: ema.avg_reaction||0,       color: C.purple},
+  ];
+  const lb = document.getElementById('level-bars');
+  levels.forEach(lv => {
+    lb.innerHTML += `
+      <div class="level-row">
+        <div class="level-name">${lv.name}</div>
+        <div class="level-bar-wrap">
+          <div class="level-bar-fill" style="width:${lv.rate}%; background:linear-gradient(90deg,${lv.color},${lv.color}88);"></div>
+        </div>
+        <div class="level-pct" style="color:${lv.color}">${lv.rate.toFixed(1)}%</div>
+        <div class="level-react">⚡ ${lv.react} pts</div>
+      </div>`;
+  });
+
+  // ── NEWS CHART ────────────────────────────────────────────────────────────
+  const byNews = d.by_news_type || {};
+  if (Object.keys(byNews).length > 0) {
+    const newsLabels = Object.keys(byNews);
+    const newsRanges = newsLabels.map(k => byNews[k].avg_range || 0);
+    const newsCols   = newsLabels.map(k => IMPACT_COLORS[byNews[k].impact]||C.gray);
+    makeHBar('chartNews', newsLabels, newsRanges, newsCols);
+  } else {
+    // Fallback: sweep hours
+    const sh = d.sweep_hours || {};
+    if (Object.keys(sh).length > 0) {
+      const shL = Object.keys(sh).sort();
+      const shV = shL.map(k => sh[k]);
+      makeHBar('chartNews', shL, shV, shL.map(() => C.blue));
+    }
+  }
+
+  // ── CONCLUSIONES ──────────────────────────────────────────────────────────
+  const dp = d.dominant_pattern || 'N/A';
+  const dpPct = d.dominant_pct || 0;
+  const bestLevel = levels.reduce((a,b) => b.rate > a.rate ? b : a, levels[0]);
+  const bias = bullPct >= bearPct ? 'ALCISTA 🟢' : 'BAJISTA 🔴';
+  const biasText = bullPct >= bearPct
+    ? 'Priorizar setups de compra los Lunes — el mercado tiende a recuperarse al inicio de semana'
+    : 'Priorizar setups de venta — presión vendedora domina la apertura semanal del NQ';
+
+  let patText = '';
+  if (dp === 'NEWS_DRIVE')       patText = `Alta volatilidad en apertura. Esperar el impulso inicial 09:30–09:45 antes de posicionarse.`;
+  else if (dp.includes('SWEEP')) patText = `Buscar el barrido del High/Low del rango Asia y entrar en dirección contraria tras la trampa.`;
+  else if (dp.includes('EXPAN')) patText = `Seguir la ruptura del rango — no ir en contra de la primera tendencia del Lunes.`;
+  else                           patText = `Scalp entre VAH y VAL. Respetar el POC como magnet central.`;
+
+  document.getElementById('conclusions').innerHTML = `
+    <div class="con-item">
+      <div class="con-icon">🏆</div>
+      <div class="con-text">
+        <h3>Patrón Dominante: ${dp} (${dpPct}%)</h3>
+        <p>${patText}</p>
+      </div>
+    </div>
+    <div class="con-item">
+      <div class="con-icon">📈</div>
+      <div class="con-text">
+        <h3>Sesgo Direccional: ${bias}</h3>
+        <p>${biasText}</p>
+      </div>
+    </div>
+    <div class="con-item">
+      <div class="con-icon">🔑</div>
+      <div class="con-text">
+        <h3>Nivel Más Respetado: ${bestLevel.name} (${bestLevel.rate.toFixed(1)}%)</h3>
+        <p>Reacción promedio de ${bestLevel.react} pts al tocar este nivel. Usar como zona de entrada o gestión.</p>
+      </div>
+    </div>
+    <div class="con-item">
+      <div class="con-icon">📏</div>
+      <div class="con-text">
+        <h3>Rango Esperado: ${fmtPts(d.avg_ny_range)} promedio</h3>
+        <p>${Math.round((rd['300+']||0)/rdTotal*100)}% de los Lunes superan 300 pts. TP mínimo sugerido: ${Math.round((d.avg_ny_range||200)*0.35)} pts.</p>
+      </div>
+    </div>`;
+
+  // ── TABLA SESIONES ────────────────────────────────────────────────────────
+  const sessions = (d.all_mondays || []).sort((a,b)=>a.date.localeCompare(b.date));
+  const tb = document.getElementById('sessions-body');
+  sessions.forEach(s => {
+    const ema_arrow = s.open_above_ema ? '↑' : '↓';
+    const ema_col   = s.open_above_ema ? C.green : C.red;
+    tb.innerHTML += `
+      <tr>
+        <td><b>${s.date}</b></td>
+        <td><span class="pill pill-gray">${s.news_type||'—'}</span></td>
+        <td>${pillPat(s.pattern)}</td>
+        <td>${pillDir(s.direction)}</td>
+        <td><b style="color:${s.ny_range>300?C.orange:C.cyan}">${fmtPts(s.ny_range)}</b></td>
+        <td style="font-family:'JetBrains Mono';font-size:0.8rem;color:${ema_col}">${fmt(s.ema200)} ${ema_arrow}</td>
+        <td>${pillHit(s.vah_hit)}</td>
+        <td>${pillHit(s.poc_hit)}</td>
+        <td>${pillHit(s.val_hit)}</td>
+      </tr>`;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  DATOS DE DEMO (si no hay JSON)
+// ─────────────────────────────────────────────────────────────────────────────
+function getDemoData() {
+  return {
+    title: "Backtest Lunes NQ · Demo",
+    period: "2025-03-13 → 2026-03-13",
+    total_days: 50, total_mondays: 8,
+    dominant_pattern: "NEWS_DRIVE", dominant_pct: 62.5,
+    avg_ny_range: 313.2, max_ny_range: 414.2, min_ny_range: 158.0,
+    avg_asia_range: 425.7,
+    directions: { BULLISH: 6, BEARISH: 2, NEUTRAL: 0 },
+    patterns: {
+      SWEEP_H_RETURN: "0.0%", SWEEP_L_RETURN: "0.0%",
+      EXPANSION_H: "37.5%", EXPANSION_L: "0.0%",
+      ROTATION_POC: "0.0%", NEWS_DRIVE: "62.5%"
+    },
+    range_distribution: { "0-100": 0, "100-200": 1, "200-300": 2, "300+": 5 },
+    sweep_hours: { "09:00": 2, "09:30": 3, "10:00": 1 },
+    value_area: {
+      vah: { hit_rate: "75.0%", avg_reaction: 286.8 },
+      poc: { hit_rate: "37.5%", avg_reaction: 374.1 },
+      val: { hit_rate: "37.5%", avg_reaction: 369.8 },
+    },
+    ema200: { hit_rate: "87.5%", avg_reaction: 292.1, open_above_pct: 50.0, open_below_pct: 50.0 },
+    by_news_type: {
+      NONE:     { count: 8, avg_range: 313.2, impact: "NORMAL",  directions:{BULLISH:6,BEARISH:2,NEUTRAL:0}, dominant_pattern:"NEWS_DRIVE", patterns:{NEWS_DRIVE:5,EXPANSION_H:3} }
+    },
+    all_mondays: [
+      { date:"2026-01-05", news_type:"NONE", pattern:"EXPANSION_H", direction:"BEARISH", ny_range:158, ema200:25544, open_above_ema:true, vah_hit:true, poc_hit:false, val_hit:false },
+      { date:"2026-01-12", news_type:"NONE", pattern:"EXPANSION_H", direction:"BULLISH", ny_range:216, ema200:25755, open_above_ema:false, vah_hit:true, poc_hit:true, val_hit:false },
+      { date:"2026-01-26", news_type:"NONE", pattern:"EXPANSION_H", direction:"BULLISH", ny_range:224, ema200:25641, open_above_ema:true, vah_hit:true, poc_hit:false, val_hit:false },
+      { date:"2026-02-02", news_type:"POST_FOMC", pattern:"NEWS_DRIVE", direction:"BULLISH", ny_range:372, ema200:25673, open_above_ema:false, vah_hit:true, poc_hit:true, val_hit:false },
+      { date:"2026-02-09", news_type:"POST_NFP", pattern:"NEWS_DRIVE", direction:"BULLISH", ny_range:411, ema200:25031, open_above_ema:true, vah_hit:false, poc_hit:false, val_hit:true },
+      { date:"2026-02-23", news_type:"NONE", pattern:"NEWS_DRIVE", direction:"BEARISH", ny_range:372, ema200:24916, open_above_ema:true, vah_hit:true, poc_hit:false, val_hit:false },
+      { date:"2026-03-02", news_type:"ISM_MFG", pattern:"NEWS_DRIVE", direction:"BULLISH", ny_range:414, ema200:24880, open_above_ema:false, vah_hit:false, poc_hit:true, val_hit:false },
+      { date:"2026-03-09", news_type:"POST_NFP", pattern:"NEWS_DRIVE", direction:"BULLISH", ny_range:337, ema200:24616, open_above_ema:false, vah_hit:true, poc_hit:false, val_hit:true },
+    ]
+  };
+}
+
+// ─── Arrancar ────────────────────────────────────────────────────────────────
+loadData();
+</script>
+</body>
+</html>

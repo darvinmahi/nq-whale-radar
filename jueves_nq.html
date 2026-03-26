@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jueves NQ — Intelligence Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #04020c;
+      --card:     #0c0a1e;
+      --border:   #1e1a3a;
+      --purple:   #7c3aed;
+      --cyan:     #06b6d4;
+      --green:    #10b981;
+      --red:      #ef4444;
+      --amber:    #f59e0b;
+      --gray:     #64748b;
+      --text:     #e2e8f0;
+      --muted:    #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* ── HEADER ── */
+    .top-bar {
+      background: linear-gradient(135deg, #0c0a1e 0%, #110d2a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, var(--purple), #4f46e5);
+      color: #fff; font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 6px; letter-spacing: 1px;
+    }
+
+    /* ── LIVE PANEL ── */
+    .live-card {
+      background: linear-gradient(135deg, #0c0a1e, #130f2a);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px;
+      position: relative; overflow: hidden;
+    }
+    .live-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+    }
+    .pattern-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 30px;
+      font-size: 15px; font-weight: 700; letter-spacing: .5px;
+    }
+    .pattern-NEWS_DRIVE  { background: rgba(239,68,68,.18); border: 1px solid rgba(239,68,68,.5); color: #fca5a5; }
+    .pattern-ROTATION    { background: rgba(6,182,212,.15); border: 1px solid rgba(6,182,212,.4); color: #67e8f9; }
+    .pattern-SWEEP       { background: rgba(16,185,129,.15); border: 1px solid rgba(16,185,129,.4); color: #6ee7b7; }
+    .pattern-EXPANSION_L { background: rgba(239,68,68,.18); border: 1px solid rgba(239,68,68,.4); color: #fca5a5; }
+    .pattern-EXPANSION_H { background: rgba(16,185,129,.15); border: 1px solid rgba(16,185,129,.4); color: #6ee7b7; }
+    .pattern-UNKNOWN     { background: rgba(100,116,139,.18); border: 1px solid rgba(100,116,139,.4); color: #cbd5e1; }
+
+    /* ── LEVEL BARS ── */
+    .level-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 16px; border-radius: 10px;
+      background: rgba(255,255,255,.03); margin-bottom: 6px;
+      transition: background .2s;
+    }
+    .level-row:hover { background: rgba(255,255,255,.06); }
+    .hit-bar { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .hit-fill { height: 100%; border-radius: 3px; transition: width .8s ease; }
+
+    /* ── STRATEGY CARD ── */
+    .strat-card {
+      border-radius: 14px; padding: 20px;
+      border: 1px solid;
+    }
+    .strat-bull { background: rgba(16,185,129,.08); border-color: rgba(16,185,129,.3); }
+    .strat-bear { background: rgba(239,68,68,.08); border-color: rgba(239,68,68,.3); }
+    .strat-wait { background: rgba(6,182,212,.08); border-color: rgba(6,182,212,.3); }
+
+    /* ── HISTORY CAROUSEL ── */
+    .carousel-wrap {
+      overflow-x: auto; display: flex; gap: 14px;
+      padding: 4px 0 12px;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .hist-card {
+      flex: 0 0 220px; background: var(--card);
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 14px; transition: border-color .2s, transform .2s;
+      cursor: pointer;
+    }
+    .hist-card:hover { border-color: var(--purple); transform: translateY(-2px); }
+    .hist-card.bearish-card { border-top: 3px solid var(--red); }
+    .hist-card.bullish-card { border-top: 3px solid var(--green); }
+    .hist-card.neutral-card  { border-top: 3px solid var(--amber); }
+
+    /* ── SVG SPARKLINE ── */
+    .spark-wrap { width: 100%; height: 56px; margin: 10px 0; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.75); z-index: 999;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #0e0b22; border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px; max-width: 560px; width: 94%;
+      max-height: 90vh; overflow-y: auto;
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* ── MISC ── */
+    .section-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 14px;
+    }
+    .stat-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.05); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 12px; font-size: 12px;
+    }
+    .pulse { animation: pulse 2s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.5} }
+    .grid-main { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+    @media(max-width: 1100px){ .grid-main { grid-template-columns: 1fr; } }
+
+    /* ── TAB SYSTEM ── */
+    .tab-nav {
+      display: flex; align-items: center; gap: 4px;
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: 10px; padding: 3px;
+    }
+    .tab-btn {
+      display: flex; align-items: center; gap: 7px;
+      padding: 6px 16px; border-radius: 7px; font-size: 12px; font-weight: 700;
+      cursor: pointer; border: none; transition: all .2s;
+      font-family: 'Inter', sans-serif; letter-spacing: .3px;
+      background: transparent; color: var(--muted);
+    }
+    .tab-btn:hover { background: rgba(255,255,255,.06); color: var(--text); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.2));
+      color: #e0f2fe; border: 1px solid rgba(124,58,237,.4);
+      box-shadow: 0 0 14px rgba(124,58,237,.15);
+    }
+    .tab-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor; opacity: .7;
+    }
+    /* Tab panels */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    /* Chart iframe panel */
+    #tab-chart-panel {
+      height: calc(100vh - 62px);
+      padding: 0;
+    }
+    #chart-iframe {
+      width: 100%; height: 100%;
+      border: none; display: block;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── TOPBAR ── -->
+<div class="top-bar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="index.html" style="color:var(--muted);font-size:12px;text-decoration:none">← Dashboard</a>
+    <span style="color:var(--border)">|</span>
+    <span style="font-size:18px;font-weight:800">📅 Jueves NQ</span>
+    <span class="logo-badge">INTEL PANEL</span>
+  </div>
+  <!-- TAB NAVIGATION -->
+  <div class="tab-nav">
+    <button class="tab-btn active" id="tab-intel-btn" onclick="switchTab('intel')">
+      <div class="tab-dot"></div> 🧠 Intel Panel
+    </button>
+    <button class="tab-btn" id="tab-chart-btn" onclick="switchTab('chart')">
+      <div class="tab-dot"></div> 📊 Chart 19-Mar
+    </button>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span id="todayDay" class="stat-pill" style="font-size:12px"></span>
+    <span id="liveClock" class="mono" style="font-size:13px;color:var(--cyan)"></span>
+    <button onclick="refreshData()" id="refresh-btn" style="background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);color:#c4b5fd;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer">↺ Refresh</button>
+  </div>
+</div>
+
+<!-- ── CHART TAB PANEL ── -->
+<div id="tab-chart-panel" class="tab-panel" style="height:calc(100vh - 62px)">
+  <iframe id="chart-iframe" src="jueves_chart_20260319.html" style="width:100%;height:100%;border:none;display:block"></iframe>
+</div>
+
+<!-- ── INTEL TAB PANEL ── -->
+<div id="tab-intel-panel" class="tab-panel active">
+<!-- ── MAIN ── -->
+<div style="max-width:1400px;margin:0 auto;padding:20px 20px 100px">
+
+  <!-- WARNING if not thursday -->
+  <div id="notThursday" style="display:none;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:14px 20px;margin-bottom:18px;color:#fcd34d;font-size:14px">
+    ⚠️ Hoy no es jueves — mostrando datos históricos del último jueves.
+  </div>
+
+  <!-- ── ROW 1: LIVE DETECTION ── -->
+  <div style="margin-bottom:20px">
+
+    <!-- Live Panel -->
+    <div class="live-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+        <div>
+          <div class="section-title">DETECCIÓN EN VIVO</div>
+          <div id="patternBadge" class="pattern-badge pattern-UNKNOWN">🔍 Calculando...</div>
+          <div id="patternDesc" style="margin-top:10px;font-size:13px;color:var(--muted);max-width:400px"></div>
+        </div>
+        <div style="text-align:right">
+          <div class="section-title">SESGO HOY</div>
+          <div id="biasDisplay" style="font-size:28px;font-weight:900"></div>
+          <div id="biasLabel" style="font-size:12px;color:var(--muted)"></div>
+        </div>
+      </div>
+
+      <!-- Space Move Meter -->
+      <div style="margin-top:20px;background:rgba(255,255,255,.03);border-radius:12px;padding:16px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <span style="font-size:12px;color:var(--muted)">SPACE MOVE (9:30–10:00)</span>
+          <span id="spaceVal" class="mono" style="font-size:13px;color:var(--amber)">— pts</span>
+        </div>
+        <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden">
+          <div id="spaceBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--amber),var(--red));border-radius:4px;transition:width 1s ease"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-size:10px;color:var(--gray)">0</span>
+          <span style="font-size:10px;color:var(--amber)">⚡ 150 pts = NEWS_DRIVE</span>
+          <span style="font-size:10px;color:var(--gray)">300+</span>
+        </div>
+      </div>
+
+      <!-- Open position -->
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+        <div class="stat-pill"><span style="color:var(--muted)">Open vs VA:</span><span id="openPos" style="font-weight:600">—</span></div>
+        <div class="stat-pill"><span style="color:var(--muted)">Dist POC:</span><span id="distPoc" class="mono" style="font-weight:600">—</span></div>
+        <div class="stat-pill"><span style="color:var(--muted)">Space Dir:</span><span id="spaceDir" style="font-weight:600">—</span></div>
+        <div class="stat-pill"><span style="color:var(--muted)">Ret POC:</span><span id="retPoc" style="font-weight:600">—</span></div>
+      </div>
+
+      <!-- chart 5 min -->
+      <iframe src="jueves_chart_20260319.html" loading="lazy" scrolling="no" style="width:100%;height:460px;border:none;display:block;border-radius:10px;margin-top:16px"></iframe>
+    </div>
+  </div>
+
+  <!-- ── STRATEGY CARD ── -->
+  <div id="strategySection" style="margin-bottom:24px">
+    <div class="section-title">🎯 ESTRATEGIA ACTIVA</div>
+    <div id="stratCard" class="strat-card strat-wait">
+      <div style="font-size:15px;font-weight:700;margin-bottom:12px">⏳ Cargando patrón...</div>
+      <div id="stratContent"></div>
+    </div>
+  </div>
+
+  <!-- ── RULES QUICK REF ── -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:28px">
+    <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:14px;padding:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:10px">🚀 NEWS_DRIVE (60%)</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        • Space <strong style="color:var(--text)">&gt;150 pts</strong><br>
+        • NO esperar retorno al POC<br>
+        • Entry: pull-back 30-50% del space<br>
+        • Target 1: <strong style="color:var(--text)">150 pts</strong> | Target 2: <strong style="color:var(--text)">300 pts</strong><br>
+        • Stop: 60-80 pts más allá del extreme
+      </div>
+    </div>
+    <div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.2);border-radius:14px;padding:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:10px">🔄 ROTATION / SWEEP (30%)</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        • Space <strong style="color:var(--text)">&lt;100 pts</strong> + INSIDE_VA<br>
+        • Esperar retorno al POC (80% prob)<br>
+        • Entry: en VAL o VAH<br>
+        • Target: <strong style="color:var(--text)">POC</strong><br>
+        • Tiempo retorno: <strong style="color:var(--text)">10:00–11:25</strong>
+      </div>
+    </div>
+    <div style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:14px;padding:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px">📊 NIVELES PRIORITY</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        1. <strong style="color:var(--green)">VAL → 90%</strong> hit rate 🔥<br>
+        2. <strong style="color:var(--purple)">POC → 80%</strong> hit rate<br>
+        3. <strong style="color:var(--cyan)">VAH → 70%</strong> hit rate<br>
+        4. <strong style="color:var(--amber)">EMA200 → 60%</strong> hit rate<br>
+        • BELOW_VA = sesgo bajista fuerte
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HISTORY CAROUSEL ── -->
+  <div style="margin-bottom:28px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div class="section-title" style="margin-bottom:0">📅 HISTÓRICO JUEVES (últimos 11)</div>
+      <div style="display:flex;gap:8px">
+        <span style="font-size:11px;color:var(--muted)">Click en cualquier card para detalles</span>
+        <button id="btn3m" onclick="filterMonths(3)" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);cursor:pointer">3M</button>
+        <button id="btn6m" onclick="filterMonths(6)" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--purple);background:rgba(124,58,237,.15);color:#c4b5fd;cursor:pointer">6M</button>
+      </div>
+    </div>
+    <div id="histCarousel" class="carousel-wrap"></div>
+  </div>
+
+  <!-- ── PATTERN DISTRIBUTION ── -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px">
+    <div class="section-title">DISTRIBUCIÓN DE PATRONES (1 año)</div>
+    <div id="patternDist" style="display:flex;gap:12px;flex-wrap:wrap"></div>
+  </div>
+
+</div><!-- end main -->
+
+<!-- ── MODAL DETAIL ── -->
+<div id="detailModal" class="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <span id="modalTitle" style="font-size:18px;font-weight:700"></span>
+      <button onclick="document.getElementById('detailModal').classList.remove('open')"
+        style="background:rgba(255,255,255,.08);border:none;color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<script src="nav.js"></script>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════════════
+const BACKTEST = {
+  "2026-01-08":  { pat:"EXPANSION_L",  dir:"BEARISH",  ny_range:233.5, move:-137.8, space_pts:188.8, space_dir:"▼ DOWN",  open_pos:"INSIDE_VA",  returned_poc:false, ret_time:"—",   dist_poc:177.1, poc:25774.3, vah:25801.0, val:25750.7, ema:25763 },
+  "2026-01-15":  { pat:"EXPANSION_H",  dir:"BEARISH",  ny_range:149.5, move:-9.8,   space_pts:81.8,  space_dir:"▼ DOWN",  open_pos:"INSIDE_VA",  returned_poc:true,  ret_time:"10:45", dist_poc:20.6,  poc:25822.4, vah:25949.2, val:25727.3, ema:25753 },
+  "2026-01-22":  { pat:"ROTATION_POC", dir:"BEARISH",  ny_range:195.0, move:-47.8,  space_pts:174.8, space_dir:"▼ DOWN",  open_pos:"INSIDE_VA",  returned_poc:true,  ret_time:"11:25", dist_poc:140.7, poc:25694.9, vah:25738.5, val:25648.9, ema:25483 },
+  "2026-01-29":  { pat:"NEWS_DRIVE",   dir:"BEARISH",  ny_range:639.0, move:-423.8, space_pts:275.2, space_dir:"▼ DOWN",  open_pos:"BELOW_VA",   returned_poc:false, ret_time:"—",   dist_poc:337.1, poc:26195.1, vah:26239.7, val:26141.7, ema:26142 },
+  "2026-02-05":  { pat:"NEWS_DRIVE",   dir:"BEARISH",  ny_range:417.5, move:13.2,   space_pts:190.5, space_dir:"▲ UP",    open_pos:"INSIDE_VA",  returned_poc:true,  ret_time:"10:00", dist_poc:167.9, poc:24792.8, vah:25021.8, val:24709.6, ema:25236 },
+  "2026-02-12":  { pat:"NEWS_DRIVE",   dir:"BEARISH",  ny_range:586.8, move:-471.0, space_pts:160.0, space_dir:"▼ DOWN",  open_pos:"INSIDE_VA",  returned_poc:false, ret_time:"—",   dist_poc:162.6, poc:25348.8, vah:25377.0, val:25331.0, ema:25293 },
+  "2026-02-19":  { pat:"SWEEP_L_RETURN",dir:"NEUTRAL", ny_range:196.5, move:9.0,    space_pts:86.2,  space_dir:"▲ UP",    open_pos:"INSIDE_VA",  returned_poc:true,  ret_time:"10:00", dist_poc:56.7,  poc:24863.3, vah:24927.3, val:24799.3, ema:24899 },
+  "2026-02-26":  { pat:"NEWS_DRIVE",   dir:"BEARISH",  ny_range:480.2, move:-339.8, space_pts:160.0, space_dir:"▼ DOWN",  open_pos:"INSIDE_VA",  returned_poc:false, ret_time:"—",   dist_poc:187.2, poc:25368.5, vah:25394.8, val:25348.7, ema:25202 },
+  "2026-03-05":  { pat:"NEWS_DRIVE",   dir:"BULLISH",  ny_range:279.2, move:18.0,   space_pts:200.0, space_dir:"▲ UP",    open_pos:"INSIDE_VA",  returned_poc:true,  ret_time:"10:25", dist_poc:187.3, poc:25000.4, vah:25107.3, val:24981.0, ema:24956 },
+  "2026-03-12":  { pat:"NEWS_DRIVE",   dir:"BEARISH",  ny_range:273.5, move:-87.8,  space_pts:145.2, space_dir:"▼ DOWN",  open_pos:"BELOW_VA",   returned_poc:false, ret_time:"—",   dist_poc:202.5, poc:24833.0, vah:24920.4, val:24802.4, ema:24886 },
+  "2026-03-19":  { pat:"SWEEP_L_RETURN",dir:"NEUTRAL", ny_range:313.8, move:0.0,    space_pts:102.0, space_dir:"▼ DOWN",  open_pos:"BELOW_VA",   returned_poc:true,  ret_time:"11:05", dist_poc:252.5, poc:24579.3, vah:24639.0, val:24504.6, ema:null  },
+};
+
+const DATES = Object.keys(BACKTEST).sort();
+let currentFilter = 6;
+let currentRecord = null;
+
+// ══════════════════════════════════════════════════════════════
+// CLOCK & DAY CHECK
+// ══════════════════════════════════════════════════════════════
+function updateClock() {
+  const now = new Date();
+  const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const dayNum = now.getDay();
+  const h = String(now.getUTCHours()).padStart(2,'0');
+  const m = String(now.getUTCMinutes()).padStart(2,'0');
+  const s = String(now.getUTCSeconds()).padStart(2,'0');
+  document.getElementById('liveClock').textContent = `${h}:${m}:${s} UTC`;
+  document.getElementById('todayDay').innerHTML =
+    `<span style="color:${dayNum===4?'#6ee7b7':'var(--muted)'}">${days[dayNum]}</span>`;
+  if (dayNum !== 4) document.getElementById('notThursday').style.display = 'block';
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ══════════════════════════════════════════════════════════════
+// LIVE PANEL — load latest thursday record
+// ══════════════════════════════════════════════════════════════
+function loadLivePanel() {
+  const latest = DATES[DATES.length - 1];
+  const r = BACKTEST[latest];
+  currentRecord = r;
+
+  // Pattern badge
+  const badge = document.getElementById('patternBadge');
+  const icons = { NEWS_DRIVE:'🚀', ROTATION_POC:'🔄', SWEEP_L_RETURN:'↩️', EXPANSION_L:'📉', EXPANSION_H:'📈' };
+  const cls   = { NEWS_DRIVE:'pattern-NEWS_DRIVE', ROTATION_POC:'pattern-ROTATION', SWEEP_L_RETURN:'pattern-SWEEP', EXPANSION_L:'pattern-EXPANSION_L', EXPANSION_H:'pattern-EXPANSION_H' };
+  badge.textContent = `${icons[r.pat]||'📊'} ${r.pat.replace(/_/g,' ')}`;
+  badge.className   = `pattern-badge ${cls[r.pat]||'pattern-UNKNOWN'}`;
+
+  const descs = {
+    NEWS_DRIVE:    '⚡ Space fuerte — el precio sale con convicción y NO regresa al perfil previo. Seguir dirección, NO esperar POC.',
+    ROTATION_POC:  '🔄 Precio rotó lejos del POC — alta probabilidad de retorno. Esperar fill del perfil.',
+    SWEEP_L_RETURN:'↩️ Barrio lows debajo del VAL y regresó. Sesgo de compra hacia interior del perfil.',
+    EXPANSION_L:   '📉 Expansión bajista — precio buscó lows. Seguir tendencia bajista.',
+    EXPANSION_H:   '📈 Expansión alcista — precio buscó highs. Seguir tendencia alcista.',
+  };
+  document.getElementById('patternDesc').textContent = descs[r.pat] || '';
+
+  // Bias
+  const biasColors = { BEARISH: 'var(--red)', BULLISH: 'var(--green)', NEUTRAL: 'var(--amber)' };
+  const biasIcons  = { BEARISH: '▼ BAJISTA', BULLISH: '▲ ALCISTA', NEUTRAL: '◆ NEUTRAL' };
+  document.getElementById('biasDisplay').style.color = biasColors[r.dir];
+  document.getElementById('biasDisplay').textContent  = biasIcons[r.dir];
+  document.getElementById('biasLabel').textContent    = `Jueves ${latest}`;
+
+  // Space bar
+  const pct = Math.min(r.space_pts / 300 * 100, 100);
+  document.getElementById('spaceVal').textContent = `${r.space_pts.toFixed(1)} pts`;
+  document.getElementById('spaceBar').style.width = pct + '%';
+
+  // Pills
+  const opColor = r.open_pos === 'INSIDE_VA' ? 'var(--cyan)' : r.open_pos === 'BELOW_VA' ? 'var(--red)' : 'var(--green)';
+  document.getElementById('openPos').innerHTML  = `<span style="color:${opColor}">${r.open_pos}</span>`;
+  document.getElementById('distPoc').textContent = `${r.dist_poc.toFixed(0)} pts`;
+  document.getElementById('spaceDir').textContent = r.space_dir;
+  document.getElementById('retPoc').innerHTML  = r.returned_poc
+    ? `<span style="color:var(--green)">✅ ${r.ret_time}</span>`
+    : `<span style="color:var(--red)">❌ No</span>`;
+
+  // Key levels
+  document.getElementById('poc-price').textContent = r.poc ? r.poc.toFixed(1) : '—';
+  document.getElementById('vah-price').textContent = r.vah ? r.vah.toFixed(1) : '—';
+  document.getElementById('val-price').textContent  = r.val ? r.val.toFixed(1) : '—';
+  document.getElementById('ema-price').textContent  = r.ema ? r.ema.toFixed(0) : '—';
+
+  // Strategy card
+  buildStrategyCard(r);
+}
+
+// ══════════════════════════════════════════════════════════════
+// STRATEGY CARD
+// ══════════════════════════════════════════════════════════════
+function buildStrategyCard(r) {
+  const card = document.getElementById('stratCard');
+  const content = document.getElementById('stratContent');
+  card.className = 'strat-card';
+
+  if (r.pat === 'NEWS_DRIVE') {
+    card.classList.add('strat-bear');
+    const isDown = r.space_dir.includes('DOWN');
+    content.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;font-size:13px">
+        <div>
+          <div style="color:var(--muted);font-size:10px;margin-bottom:4px">ENTRADA</div>
+          <div style="font-weight:600">Pull-back 30-50% del space<br><span class="mono" style="color:var(--amber)">${isDown?'▼ Venta':'▲ Compra'} en rebote</span></div>
+        </div>
+        <div>
+          <div style="color:var(--muted);font-size:10px;margin-bottom:4px">TARGET 1</div>
+          <div style="font-weight:600;color:var(--green)">≈ 150 pts</div>
+        </div>
+        <div>
+          <div style="color:var(--muted);font-size:10px;margin-bottom:4px">TARGET 2</div>
+          <div style="font-weight:600;color:var(--cyan)">≈ 300 pts</div>
+        </div>
+        <div>
+          <div style="color:var(--muted);font-size:10px;margin-bottom:4px">STOP</div>
+          <div style="font-weight:600;color:var(--red)">60-80 pts más allá del extreme</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;background:rgba(239,68,68,.1);border-radius:8px;padding:10px;font-size:12px;color:#fca5a5">
+        ⚡ <strong>Space > 150 pts:</strong> NO esperar retorno al POC. Seguir la dirección del news drive.
+      </div>`;
+  } else if (r.pat === 'ROTATION_POC' || r.pat === 'SWEEP_L_RETURN') {
+    card.classList.add('strat-wait');
+    content.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;font-size:13px">
+        <div>
+          <div style="color:var(--muted);font-size:10px;margin-bottom:4px">ENTRADA</div>
+          <div style="font-weight:600">En VAL (bajó) o VAH (subió)<br><span class="mono" style="color:var(--cyan)">Esperar retorno al perfil</span></div>
+        </div>
+        <div>
+          <div style="color:var(--muted);font-size:10px;margin-bottom:4px">TARGET</div>
+          <div style="font-weight:600;color:var(--purple)">POC: ${r.poc?r.poc.toFixed(1):'—'}</div>
+        </div>
+        <div>
+          <div style="color:var(--muted);font-size:10px;margin-bottom:4px">PROB RETORNO</div>
+          <div style="font-weight:600;color:var(--green)">80–100%</div>
+        </div>
+        <div>
+          <div style="color:var(--muted);font-size:10px;margin-bottom:4px">TIEMPO ESTIMADO</div>
+          <div style="font-weight:600;color:var(--amber)">10:00 – 11:30 AM</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;background:rgba(6,182,212,.1);border-radius:8px;padding:10px;font-size:12px;color:#67e8f9">
+        🔄 <strong>Space &lt; 100 pts + INSIDE_VA:</strong> Alta probabilidad de fill. Monitorear retorno al POC.
+      </div>`;
+  } else {
+    card.classList.add('strat-wait');
+    content.innerHTML = `<div style="color:var(--muted);font-size:13px">Confirmar patrón al cierre de la primera vela de 30 min...</div>`;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// SPARKLINE SVG
+// ══════════════════════════════════════════════════════════════
+function makeSpark(r, w=192, h=52) {
+  // Simulate intraday path using known data points
+  const isDown = r.space_dir && r.space_dir.includes('DOWN');
+  const pts     = [];
+  const open    = 100; // normalized
+  // 5 points: open, space extreme, mid, close, end
+  const spaceNorm = Math.min(r.space_pts / 400 * 60, 55);
+  const moveNorm  = Math.min(Math.abs(r.move) / 600 * 50, 45);
+  
+  if (isDown) {
+    pts.push([0, 20]);
+    pts.push([w*.25, 20 + spaceNorm]);  // space move down
+    if (r.returned_poc) {
+      pts.push([w*.5,  20 + spaceNorm*.3]); // partial recovery
+      pts.push([w*.75, 20 + spaceNorm*.1]);
+      pts.push([w, 20 + (r.move < -50 ? moveNorm : spaceNorm*.2)]);
+    } else {
+      pts.push([w*.5, 20 + spaceNorm*.8]);
+      pts.push([w*.75, 20 + moveNorm]);
+      pts.push([w, 20 + moveNorm * .9]);
+    }
+  } else {
+    pts.push([0, h - 20]);
+    pts.push([w*.25, h - 20 - spaceNorm]);
+    if (r.returned_poc) {
+      pts.push([w*.5, h - 20 - spaceNorm*.3]);
+      pts.push([w*.75, h - 20 - spaceNorm*.1]);
+      pts.push([w, h - 20 - (r.move > 50 ? moveNorm : spaceNorm*.2)]);
+    } else {
+      pts.push([w*.5, h - 20 - spaceNorm*.8]);
+      pts.push([w*.75, h - 20 - moveNorm]);
+      pts.push([w, h - 20 - moveNorm*.9]);
+    }
+  }
+
+  const clamp = pts.map(([x,y]) => [x, Math.max(4, Math.min(h-4, y))]);
+  const d = clamp.map(([x,y], i) => `${i===0?'M':'L'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+  const areaD = d + ` L${w},${h} L0,${h} Z`;
+
+  const color = r.dir === 'BEARISH' ? '#ef4444' : r.dir === 'BULLISH' ? '#10b981' : '#f59e0b';
+  const aColor = r.dir === 'BEARISH' ? 'rgba(239,68,68,.15)' : r.dir === 'BULLISH' ? 'rgba(16,185,129,.15)' : 'rgba(245,158,11,.15)';
+
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    <defs>
+      <linearGradient id="sg_${r.poc}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${color}" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <path d="${areaD}" fill="url(#sg_${r.poc})" />
+    <path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    ${clamp.map(([x,y],i) => i===0||i===clamp.length-1 ? `<circle cx="${x}" cy="${y}" r="3" fill="${color}"/>` : '').join('')}
+  </svg>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// HISTORY CAROUSEL
+// ══════════════════════════════════════════════════════════════
+function filterMonths(m) {
+  currentFilter = m;
+  document.getElementById('btn3m').style.borderColor = m===3?'var(--purple)':'var(--border)';
+  document.getElementById('btn3m').style.background  = m===3?'rgba(124,58,237,.15)':'rgba(255,255,255,.04)';
+  document.getElementById('btn3m').style.color       = m===3?'#c4b5fd':'var(--muted)';
+  document.getElementById('btn6m').style.borderColor = m===6?'var(--purple)':'var(--border)';
+  document.getElementById('btn6m').style.background  = m===6?'rgba(124,58,237,.15)':'rgba(255,255,255,.04)';
+  document.getElementById('btn6m').style.color       = m===6?'#c4b5fd':'var(--muted)';
+  buildCarousel();
+}
+
+function buildCarousel() {
+  const cutoff = new Date();
+  cutoff.setMonth(cutoff.getMonth() - currentFilter);
+
+  const filtered = DATES.filter(d => new Date(d) >= cutoff).reverse(); // recent first
+  const wrap = document.getElementById('histCarousel');
+  wrap.innerHTML = filtered.map(d => {
+    const r = BACKTEST[d];
+    const dirClass = r.dir === 'BEARISH' ? 'bearish-card' : r.dir === 'BULLISH' ? 'bullish-card' : 'neutral-card';
+    const moveColor = r.move < -20 ? 'var(--red)' : r.move > 20 ? 'var(--green)' : 'var(--amber)';
+    const patIcons = { NEWS_DRIVE:'🚀', ROTATION_POC:'🔄', SWEEP_L_RETURN:'↩️', EXPANSION_L:'📉', EXPANSION_H:'📈' };
+    return `
+      <div class="hist-card ${dirClass}" onclick="openDetail('${d}')">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:13px;font-weight:700">${d.slice(5)}</span>
+          <span style="font-size:18px">${patIcons[r.pat]||'📊'}</span>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">${r.pat.replace(/_/g,' ')}</div>
+        <div class="spark-wrap">${makeSpark(r)}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:11px;color:var(--muted)">Rango NY</div>
+            <div class="mono" style="font-size:14px;font-weight:700">${r.ny_range.toFixed(0)} pts</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:11px;color:var(--muted)">Move</div>
+            <div class="mono" style="font-size:14px;font-weight:700;color:${moveColor}">${r.move>0?'+':''}${r.move.toFixed(0)}</div>
+          </div>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px">
+          <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,.06)">
+            ${r.space_pts.toFixed(0)}pts ${r.space_dir.includes('DOWN')?'▼':'▲'}
+          </span>
+          <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:${r.returned_poc?'rgba(16,185,129,.15)':'rgba(239,68,68,.12)'};color:${r.returned_poc?'#6ee7b7':'#fca5a5'}">
+            POC ${r.returned_poc?'✅ '+r.ret_time:'❌'}
+          </span>
+        </div>
+        <div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)">
+          <a href="weekly_backtest.html#jue" onclick="event.stopPropagation()" target="_blank"
+             style="display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--purple);text-decoration:none;opacity:.75;transition:opacity .15s"
+             onmouseover="this.style.opacity=1" onmouseout="this.style.opacity='.75'">
+            📋 Ver análisis semanal →
+          </a>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// DETAIL MODAL
+// ══════════════════════════════════════════════════════════════
+function openDetail(date) {
+  const r = BACKTEST[date];
+  const patIcons = { NEWS_DRIVE:'🚀', ROTATION_POC:'🔄', SWEEP_L_RETURN:'↩️', EXPANSION_L:'📉', EXPANSION_H:'📈' };
+  document.getElementById('modalTitle').textContent = `${patIcons[r.pat]||'📊'} ${date} — ${r.pat.replace(/_/g,' ')}`;
+
+  const moveColor = r.move < -20 ? 'var(--red)' : r.move > 20 ? 'var(--green)' : 'var(--amber)';
+  document.getElementById('modalBody').innerHTML = `
+    <div style="margin-bottom:16px">${makeSpark(r, 500, 100)}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      ${[
+        ['Dirección',   `<span style="color:${r.dir==='BEARISH'?'var(--red)':r.dir==='BULLISH'?'var(--green)':'var(--amber)'}">${r.dir}</span>`],
+        ['Space Move',  `<span class="mono">${r.space_pts.toFixed(1)} pts ${r.space_dir.includes('DOWN')?'▼':'▲'}</span>`],
+        ['Open pos',    r.open_pos],
+        ['Dist al POC', `<span class="mono">${r.dist_poc.toFixed(0)} pts</span>`],
+        ['Rango NY',    `<span class="mono">${r.ny_range.toFixed(0)} pts</span>`],
+        ['Move open→close', `<span class="mono" style="color:${moveColor}">${r.move>0?'+':''}${r.move.toFixed(1)} pts</span>`],
+        ['POC', `<span class="mono">${r.poc.toFixed(1)}</span>`],
+        ['VAH', `<span class="mono">${r.vah.toFixed(1)}</span>`],
+        ['VAL', `<span class="mono">${r.val.toFixed(1)}</span>`],
+        ['Retorno POC', r.returned_poc ? `<span style="color:var(--green)">✅ ${r.ret_time}</span>` : '<span style="color:var(--red)">❌ No regresó</span>'],
+      ].map(([k,v]) => `
+        <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:10px">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px">${k}</div>
+          <div style="font-size:14px;font-weight:600">${v}</div>
+        </div>`).join('')}
+    </div>
+    <div style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.25);border-radius:10px;padding:14px;font-size:13px;color:var(--muted)">
+      ${r.pat === 'NEWS_DRIVE' && !r.returned_poc
+        ? '🚀 <strong style="color:#c4b5fd">NEWS_DRIVE confirmado:</strong> el precio NO regresó al POC. Se fue en dirección del space con fuerza.'
+        : r.returned_poc
+        ? `🔄 <strong style="color:#c4b5fd">Retorno al POC a las ${r.ret_time}.</strong> El mercado rellenó el perfil previo.`
+        : '📊 Comportamiento mixto — monitorear niveles de VA para confirmación.'}
+    </div>`;
+
+  document.getElementById('detailModal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('detailModal'))
+    document.getElementById('detailModal').classList.remove('open');
+}
+
+// ══════════════════════════════════════════════════════════════
+// PATTERN DISTRIBUTION
+// ══════════════════════════════════════════════════════════════
+function buildPatternDist() {
+  const counts = {};
+  DATES.forEach(d => {
+    const p = BACKTEST[d].pat;
+    counts[p] = (counts[p]||0) + 1;
+  });
+  const total = DATES.length;
+  const colors = { NEWS_DRIVE:'var(--red)', ROTATION_POC:'var(--cyan)', SWEEP_L_RETURN:'var(--green)', EXPANSION_L:'var(--amber)', EXPANSION_H:'var(--purple)' };
+  const icons  = { NEWS_DRIVE:'🚀', ROTATION_POC:'🔄', SWEEP_L_RETURN:'↩️', EXPANSION_L:'📉', EXPANSION_H:'📈' };
+  document.getElementById('patternDist').innerHTML = Object.entries(counts)
+    .sort((a,b) => b[1]-a[1])
+    .map(([p,c]) => {
+      const pct = Math.round(c/total*100);
+      return `<div style="flex:1;min-width:160px;background:rgba(255,255,255,.04);border-radius:12px;padding:14px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <span style="font-size:12px;font-weight:700">${icons[p]||'📊'} ${p.replace(/_/g,' ')}</span>
+          <span style="font-size:16px;font-weight:900;color:${colors[p]||'var(--text)'}">${pct}%</span>
+        </div>
+        <div style="height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden">
+          <div style="width:${pct}%;height:100%;background:${colors[p]||'var(--gray)'};border-radius:3px;transition:width .8s ease"></div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px">${c} de ${total} jueves</div>
+      </div>`;
+    }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// REFRESH
+// ══════════════════════════════════════════════════════════════
+function refreshData() {
+  loadLivePanel();
+  buildCarousel();
+  buildPatternDist();
+}
+
+// ══════════════════════════════════════════════════════════════
+// TAB SYSTEM
+// ══════════════════════════════════════════════════════════════
+function switchTab(tab) {
+  const panels = { intel: 'tab-intel-panel', chart: 'tab-chart-panel' };
+  const buttons = { intel: 'tab-intel-btn', chart: 'tab-chart-btn' };
+  // Toggle panels
+  Object.keys(panels).forEach(k => {
+    const panel = document.getElementById(panels[k]);
+    const btn   = document.getElementById(buttons[k]);
+    if (k === tab) {
+      panel.classList.add('active');
+      btn.classList.add('active');
+    } else {
+      panel.classList.remove('active');
+      btn.classList.remove('active');
+    }
+  });
+  // Hide refresh button on chart tab (chart has its own top bar)
+  const rBtn = document.getElementById('refresh-btn');
+  if (rBtn) rBtn.style.display = tab === 'chart' ? 'none' : '';
+}
+
+// ── INIT ──
+function initPage() {
+  try { loadLivePanel(); } catch(e) { console.warn('[jueves] loadLivePanel error:', e); }
+  try { buildCarousel(); } catch(e) { console.warn('[jueves] buildCarousel error:', e); }
+  try { buildPatternDist(); } catch(e) { console.warn('[jueves] buildPatternDist error:', e); }
+}
+// Triple-redundancy init: immediate, DOMContentLoaded, and setTimeout fallback
+(function() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPage);
+  } else {
+    initPage();
+  }
+  // Fallback: call again after 200ms in case of tab-panel rendering issues
+  setTimeout(function() {
+    const wrap = document.getElementById('histCarousel');
+    if (wrap && wrap.children.length === 0) {
+      buildCarousel();
+      buildPatternDist();
+      loadLivePanel();
+    }
+  }, 200);
+})();
+</script>
+</div><!-- /max-width inner div -->
+</div><!-- /tab-intel-panel -->
+<script>
+// Outer window.onload fallback - runs after ALL resources loaded
+window.addEventListener('load', function() {
+  if (typeof initPage === 'function') {
+    const wrap = document.getElementById('histCarousel');
+    if (wrap && wrap.children.length === 0) {
+      initPage();
+    }
+  }
+});
+</script>
+</body>
+</html>

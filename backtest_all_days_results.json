@@ -1,0 +1,382 @@
+{
+  "LUNES": {
+    "sesiones": 24,
+    "avg_rango": 189,
+    "rango_median": 149,
+    "rango_300_pct": 16.7,
+    "rango_250_pct": 16.7,
+    "rango_200_pct": 29.2,
+    "sesgo": "ALCISTA",
+    "sesgo_fuerza": "FUERTE",
+    "up_pct": 66.7,
+    "dn_pct": 33.3,
+    "top_pattern": "CONSOLIDATION",
+    "top_pattern_pct": 83.3,
+    "trend_dominante": "BULL",
+    "ema200_above_pct": 100.0,
+    "close_inside_va_pct": 16.7,
+    "vxn_avg": 22.5,
+    "historico": [
+      {
+        "fecha": "2026-03-16",
+        "dir": "UP",
+        "rango": 387,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-03-09",
+        "dir": "UP",
+        "rango": 508,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-03-02",
+        "dir": "UP",
+        "rango": 249,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-23",
+        "dir": "DOWN",
+        "rango": 152,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-09",
+        "dir": "UP",
+        "rango": 123,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-02",
+        "dir": "UP",
+        "rango": 146,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-01-26",
+        "dir": "UP",
+        "rango": 96,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-01-12",
+        "dir": "UP",
+        "rango": 119,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      }
+    ]
+  },
+  "MARTES": {
+    "sesiones": 26,
+    "avg_rango": 237,
+    "rango_median": 220,
+    "rango_300_pct": 23.1,
+    "rango_250_pct": 38.5,
+    "rango_200_pct": 61.5,
+    "sesgo": "ALCISTA",
+    "sesgo_fuerza": "MODERADO",
+    "up_pct": 57.7,
+    "dn_pct": 42.3,
+    "top_pattern": "CONSOLIDATION",
+    "top_pattern_pct": 69.2,
+    "trend_dominante": "BULL",
+    "ema200_above_pct": 100.0,
+    "close_inside_va_pct": 15.4,
+    "vxn_avg": 22.2,
+    "historico": [
+      {
+        "fecha": "2026-03-17",
+        "dir": "UP",
+        "rango": 143,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-03-10",
+        "dir": "UP",
+        "rango": 277,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-03-03",
+        "dir": "UP",
+        "rango": 413,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-24",
+        "dir": "UP",
+        "rango": 109,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-17",
+        "dir": "UP",
+        "rango": 296,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-10",
+        "dir": "DOWN",
+        "rango": 202,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-03",
+        "dir": "DOWN",
+        "rango": 400,
+        "patron": "NEWS_DRIVE",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-01-27",
+        "dir": "UP",
+        "rango": 76,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      }
+    ]
+  },
+  "MIÉRCOLES": {
+    "sesiones": 24,
+    "avg_rango": 244,
+    "rango_median": 218,
+    "rango_300_pct": 29.2,
+    "rango_250_pct": 33.3,
+    "rango_200_pct": 54.2,
+    "sesgo": "ALCISTA",
+    "sesgo_fuerza": "MODERADO",
+    "up_pct": 58.3,
+    "dn_pct": 41.7,
+    "top_pattern": "CONSOLIDATION",
+    "top_pattern_pct": 66.7,
+    "trend_dominante": "BULL",
+    "ema200_above_pct": 100.0,
+    "close_inside_va_pct": 29.2,
+    "vxn_avg": 23.2,
+    "historico": [
+      {
+        "fecha": "2026-03-11",
+        "dir": "UP",
+        "rango": 216,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-03-04",
+        "dir": "UP",
+        "rango": 166,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-25",
+        "dir": "UP",
+        "rango": 113,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-18",
+        "dir": "UP",
+        "rango": 272,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-11",
+        "dir": "DOWN",
+        "rango": 218,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-04",
+        "dir": "DOWN",
+        "rango": 388,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-01-28",
+        "dir": "DOWN",
+        "rango": 111,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-01-21",
+        "dir": "UP",
+        "rango": 511,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      }
+    ]
+  },
+  "JUEVES": {
+    "sesiones": 23,
+    "avg_rango": 277,
+    "rango_median": 228,
+    "rango_300_pct": 26.1,
+    "rango_250_pct": 39.1,
+    "rango_200_pct": 65.2,
+    "sesgo": "BAJISTA",
+    "sesgo_fuerza": "FUERTE",
+    "up_pct": 30.4,
+    "dn_pct": 69.6,
+    "top_pattern": "CONSOLIDATION",
+    "top_pattern_pct": 60.9,
+    "trend_dominante": "BULL",
+    "ema200_above_pct": 100.0,
+    "close_inside_va_pct": 43.5,
+    "vxn_avg": 23.1,
+    "historico": [
+      {
+        "fecha": "2026-03-12",
+        "dir": "DOWN",
+        "rango": 192,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-03-05",
+        "dir": "UP",
+        "rango": 350,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-26",
+        "dir": "DOWN",
+        "rango": 210,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-19",
+        "dir": "UP",
+        "rango": 210,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-12",
+        "dir": "DOWN",
+        "rango": 310,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-05",
+        "dir": "DOWN",
+        "rango": 344,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-01-29",
+        "dir": "DOWN",
+        "rango": 482,
+        "patron": "NEWS_DRIVE",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-01-22",
+        "dir": "DOWN",
+        "rango": 138,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      }
+    ]
+  },
+  "VIERNES": {
+    "sesiones": 25,
+    "avg_rango": 265,
+    "rango_median": 224,
+    "rango_300_pct": 28.0,
+    "rango_250_pct": 44.0,
+    "rango_200_pct": 56.0,
+    "sesgo": "ALCISTA",
+    "sesgo_fuerza": "FUERTE",
+    "up_pct": 64.0,
+    "dn_pct": 36.0,
+    "top_pattern": "CONSOLIDATION",
+    "top_pattern_pct": 68.0,
+    "trend_dominante": "MIXED",
+    "ema200_above_pct": 60.0,
+    "close_inside_va_pct": 8.0,
+    "vxn_avg": 20.0,
+    "historico": [
+      {
+        "fecha": "2026-03-13",
+        "dir": "DOWN",
+        "rango": 218,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-03-06",
+        "dir": "UP",
+        "rango": 325,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-27",
+        "dir": "UP",
+        "rango": 163,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-20",
+        "dir": "UP",
+        "rango": 260,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-13",
+        "dir": "UP",
+        "rango": 263,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-02-06",
+        "dir": "UP",
+        "rango": 341,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-01-30",
+        "dir": "DOWN",
+        "rango": 300,
+        "patron": "EXPANSION_H",
+        "ny_open_pos": "INSIDE_VA"
+      },
+      {
+        "fecha": "2026-01-23",
+        "dir": "UP",
+        "rango": 162,
+        "patron": "CONSOLIDATION",
+        "ny_open_pos": "INSIDE_VA"
+      }
+    ]
+  }
+}

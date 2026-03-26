@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NQ Journal — Sunday March 22, 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#000;color:#c8d0e0;font-family:'Inter',sans-serif;min-height:100vh}
+    .top-bar{background:#000;border-bottom:1px solid rgba(0,255,128,.08);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .logo{background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;letter-spacing:1px;}
+    .real-badge{background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.5);color:#6ee7b7;font-size:11px;font-weight:700;padding:4px 12px;border-radius:6px;letter-spacing:1px;}
+    .back-btn{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.35);color:#a78bfa;font-size:13px;font-weight:600;padding:7px 16px;border-radius:8px;cursor:pointer;text-decoration:none;transition:all .2s;}
+    .back-btn:hover{background:rgba(124,58,237,.28)}
+    .page{max-width:1400px;margin:0 auto;padding:20px 18px}
+    .panel{background:#060608;border:1px solid #111118;border-radius:14px;padding:20px;margin-bottom:16px;}
+    .panel-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;}
+    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:16px;}
+    .stat-card{background:#060608;border:1px solid #111118;border-radius:12px;padding:12px 14px;text-align:center;}
+    .stat-label{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;}
+    .stat-value{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;}
+    #chart-wrap{background:#060608;border:1px solid rgba(0,255,128,.15);border-radius:16px;overflow:hidden;margin-bottom:20px;position:relative;}
+    .chart-top{padding:12px 20px;border-bottom:1px solid rgba(0,255,128,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+    #chart{width:100%;height:520px;}
+    .date-header{background:linear-gradient(135deg,#0c0a1e,#130f2a);border:1px solid #111118;border-radius:16px;padding:18px 24px;margin-bottom:16px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .date-header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#f59e0b,#00ff80,#06b6d4,#7c3aed);}
+    .foot{text-align:center;padding:20px;color:#64748b;font-size:11px;}
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="logo">NQ RADAR</div>
+    <span style="color:#64748b;font-size:13px;font-family:'JetBrains Mono',monospace;">2026-03-22 · JOURNAL</span>
+    <div class="real-badge">📓 DATOS REALES</div>
+    
+  </div>
+  <a href="index.html" class="back-btn">← Panel Principal</a>
+</div>
+
+<div class="page">
+
+  <!-- DATE HEADER -->
+  <div class="date-header">
+    <div>
+      <div style="font-size:20px;font-weight:900;margin-bottom:4px;">📅 Sunday March 22, 2026 — Journal NQ</div>
+      <div style="color:#64748b;font-size:12px;">Análisis post-sesión · Motor de 7 agentes · Consejero con detector de peligro</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <span style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:#fcd34d;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;">Asia / Off-Hours</span>
+      <span style="background:rgba(255,0,85,.15);border:1px solid rgba(255,0,85,.4);color:#f59e0b;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;">↔ NEUTRAL</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">NQ Price</div><div class="stat-value" style="color:#ff0055;">24,017.0</div></div>
+    <div class="stat-card"><div class="stat-label">Change</div><div class="stat-value" style="color:#ff0055;">▼ 1.13%</div></div>
+    <div class="stat-card"><div class="stat-label">Bias Score</div><div class="stat-value" style="color:#f59e0b;">49/100</div></div>
+    <div class="stat-card"><div class="stat-label">COT</div><div class="stat-value" style="color:#fca5a5">BEARISH</div></div>
+    <div class="stat-card"><div class="stat-label">COT Net</div><div class="stat-value" style="font-size:12px;font-family:'JetBrains Mono',monospace;color:#fca5a5">-72,688</div></div>
+    <div class="stat-card"><div class="stat-label">VXN</div><div class="stat-value" style="color:#fca5a5">30.04</div></div>
+  </div>
+
+  <!-- CHART + SHADOW -->
+  <div id="chart-wrap">
+    <div class="chart-top">
+      <div>
+        <span style="font-size:13px;font-weight:700;color:#fff;">NQ1! — 5m · March 22, 2026</span>
+        <span style="font-size:11px;color:#64748b;margin-left:10px;">Asia / Off-Hours</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        
+        <span style="font-size:11px;color:#64748b;">Banda de incertidumbre · Proyección mid</span>
+      </div>
+    </div>
+    <div id="chart"></div>
+  </div>
+  
+        <div style="background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.08);border-radius:10px;padding:10px 16px;margin-top:10px;font-size:12px;color:#64748b;">
+          📡 Shadow DeepChart no disponible para esta sesión —
+          crea <code style="color:#a78bfa;">deepchart_projection_20260322.json</code>
+        </div>
+
+  <!-- AGENT SIGNALS -->
+  <div class="panel">
+    <div class="panel-title">📡 Señales del Motor — 2026-03-22</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;">
+      
+        <div style="background:rgba(255,0,85,.14);border:1px solid rgba(255,0,85,.4);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">📊 COT</div>
+          <div style="font-size:12px;font-weight:700;color:#fca5a5;font-family:'JetBrains Mono',monospace;line-height:1.3;">BEARISH</div>
+        </div>
+        <div style="background:rgba(255,0,85,.14);border:1px solid rgba(255,0,85,.4);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">🌊 Volatilidad</div>
+          <div style="font-size:12px;font-weight:700;color:#fca5a5;font-family:'JetBrains Mono',monospace;line-height:1.3;">BEARISH</div>
+        </div>
+        <div style="background:rgba(0,255,128,.15);border:1px solid rgba(0,255,128,.4);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">🏗️ SMC</div>
+          <div style="font-size:12px;font-weight:700;color:#6ee7b7;font-family:'JetBrains Mono',monospace;line-height:1.3;">BULLISH</div>
+        </div>
+        <div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">🎲 Probabilidad</div>
+          <div style="font-size:12px;font-weight:700;color:#fcd34d;font-family:'JetBrains Mono',monospace;line-height:1.3;">DISTRIBUCIÓN / NEUTRAL — ESPERAR CLARIDAD ⏳</div>
+        </div>
+        <div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">🧠 Sentimiento</div>
+          <div style="font-size:12px;font-weight:700;color:#fcd34d;font-family:'JetBrains Mono',monospace;line-height:1.3;">ESTABLE</div>
+        </div>
+        <div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">🎯 Silver Bullet</div>
+          <div style="font-size:12px;font-weight:700;color:#fcd34d;font-family:'JetBrains Mono',monospace;line-height:1.3;">INACTIVO</div>
+        </div>
+        <div style="background:rgba(0,255,128,.15);border:1px solid rgba(0,255,128,.4);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">💧 Order Flow</div>
+          <div style="font-size:12px;font-weight:700;color:#6ee7b7;font-family:'JetBrains Mono',monospace;line-height:1.3;">BULLISH (CONFLUENCIA SEMANAL + LONDRES)</div>
+        </div>
+    </div>
+  </div>
+
+  <!-- OBSERVATIONS -->
+  <div class="panel">
+    <div class="panel-title">🔍 Observaciones Clave</div>
+    <ul style="list-style:none;padding:0;"><li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;line-height:1.6;color:#a0aec0;">NQ futures cotizando en 24,017 (▼ 1.13% en el día).</li><li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;line-height:1.6;color:#a0aec0;">COT: posición neta de large non-commercials = -72,688. Señal: BEARISH.</li><li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;line-height:1.6;color:#a0aec0;">Motor de Bias: NEUTRAL (49/100).</li><li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;line-height:1.6;color:#a0aec0;">Volatilidad VXN: 30.04 (▲ 1.50).</li></ul>
+    <div style="margin-top:12px;padding:12px 16px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:10px;font-size:13px;line-height:1.7;color:#c4b5fd;">El día cerró con NQ en 24,017. El bias del motor es neutral, alineado con una señal COT bajista. NQ futures cotizando en 24,017 (▼ 1.13% en el día).</div>
+  </div>
+
+  <!-- SESSION VERDICT -->
+  
+        <div style="background:rgba(255,0,85,.14);border:1px solid rgba(255,0,85,.4);border-radius:14px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+          <div>
+            <div style="font-size:11px;color:#fca5a5;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">⭐ Evaluación Global de la Sesión</div>
+            <div style="font-size:20px;font-weight:900;color:#fff;">1 trade · Score Promedio: <span style="color:#fca5a5;font-family:'JetBrains Mono',monospace;">34/100</span></div>
+          </div>
+          <div style="font-size:12px;color:#a0aec0;max-width:360px;line-height:1.6;">
+            El consejero analizó calidad Y peligrosidad de cada entrada, independientemente del resultado.
+          </div>
+        </div>
+
+  <!-- TRADES + ADVISOR -->
+  <div class="panel">
+    <div class="panel-title">📓 Journal de Trading</div>
+    <div style="font-size:11px;color:#64748b;margin-bottom:12px;">
+      🟢 LOW RISK &nbsp; 🟡 MEDIUM RISK &nbsp; 🟠 HIGH RISK &nbsp; 🔴 EXTREME RISK —
+      El nivel de riesgo es <strong style="color:#fff;">independiente del resultado</strong> (una entrada EXTREME puede ser WIN y seguir siendo peligrosa)
+    </div>
+    
+        <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.08);">
+              <th style="padding:8px 10px;text-align:left;color:#64748b;font-size:10px;">#</th>
+              <th style="padding:8px 10px;text-align:left;color:#64748b;font-size:10px;">HORA</th>
+              <th style="padding:8px 10px;text-align:left;color:#64748b;font-size:10px;">DIR</th>
+              <th style="padding:8px 10px;text-align:left;color:#64748b;font-size:10px;">TIPO</th>
+              <th style="padding:8px 10px;text-align:right;color:#64748b;font-size:10px;">ENTRY</th>
+              <th style="padding:8px 10px;text-align:right;color:#64748b;font-size:10px;">SL</th>
+              <th style="padding:8px 10px;text-align:right;color:#64748b;font-size:10px;">TP</th>
+              <th style="padding:8px 10px;text-align:right;color:#64748b;font-size:10px;">R:R</th>
+              <th style="padding:8px 10px;text-align:center;color:#64748b;font-size:10px;">RESULT</th>
+              <th style="padding:8px 10px;text-align:center;color:#64748b;font-size:10px;">SCORE</th>
+              <th style="padding:8px 10px;text-align:center;color:#64748b;font-size:10px;">RIESGO</th>
+            </tr>
+          </thead><tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.04);"
+                  onmouseover="this.style.background='rgba(255,255,255,.03)'"
+                  onmouseout="this.style.background='transparent'">
+                <td style="padding:10px 10px;color:#64748b;font-family:'JetBrains Mono',monospace;">1</td>
+                <td style="padding:10px 10px;font-family:'JetBrains Mono',monospace;color:#67e8f9;">09:45</td>
+                <td style="padding:10px 10px;">
+                  <span style="background:rgba(0,255,128,.12);border:1px solid rgba(0,255,128,.35);color:#6ee7b7;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;">LONG</span>
+                </td>
+                <td style="padding:10px 10px;color:#c8d0e0;font-size:11px;">Silver Bullet</td>
+                <td style="padding:10px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;">0</td>
+                <td style="padding:10px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:#fca5a5;">0</td>
+                <td style="padding:10px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:#6ee7b7;">0</td>
+                <td style="padding:10px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:#67e8f9;">0R</td>
+                <td style="padding:10px 10px;text-align:center;">
+                  <span style="background:rgba(0,255,128,.15);border:1px solid rgba(0,255,128,.4);color:#6ee7b7;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;">WIN</span>
+                </td>
+                <td style="padding:10px 10px;text-align:center;">
+                  <span style="background:rgba(255,0,85,.14);border:1px solid rgba(255,0,85,.4);color:#fca5a5;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:2px 10px;border-radius:8px;">34/100</span>
+                </td>
+                <td style="padding:10px 10px;text-align:center;">
+                  <span style="background:rgba(255,0,85,.14);border:1px solid rgba(255,0,85,.4);color:#ff0055;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;white-space:nowrap;">🔴 EXTREME</span>
+                </td>
+              </tr></tbody></table></div>
+    <div style="margin-top:24px;">
+          <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">
+            🤖 Consejero Inteligente — Análisis de tus Entradas
+          </div>
+          <div style="background:#06060a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px 20px;margin-bottom:12px;position:relative;overflow:hidden;">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#ff0055;"></div>
+
+            <!-- Header -->
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+              <div>
+                <span style="font-size:11px;color:#64748b;font-family:'JetBrains Mono',monospace;">TRADE #1 · 09:45 · NY AM</span>
+                <div style="font-size:15px;font-weight:800;color:#fff;margin-top:3px;">LONG Silver Bullet</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                <!-- Score -->
+                <div style="text-align:center;">
+                  <div style="font-size:26px;font-weight:900;color:#ff0055;font-family:'JetBrains Mono',monospace;line-height:1;">D</div>
+                  <div style="font-size:9px;color:#64748b;letter-spacing:1px;">GRADE</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:20px;font-weight:900;color:#fff;font-family:'JetBrains Mono',monospace;line-height:1;">34<span style="font-size:12px;color:#64748b;">/100</span></div>
+                  <div style="font-size:9px;color:#64748b;letter-spacing:1px;">SCORE</div>
+                </div>
+                <!-- Danger badge grande -->
+                <div style="background:rgba(255,0,85,.14);border:1px solid rgba(255,0,85,.4);border-radius:10px;padding:8px 14px;text-align:center;">
+                  <div style="font-size:18px;line-height:1;">🔴</div>
+                  <div style="font-size:10px;font-weight:800;color:#ff0055;letter-spacing:.5px;margin-top:2px;">EXTREME</div>
+                  <div style="font-size:9px;color:#64748b;">RIESGO</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Verdict -->
+            <div style="font-size:13px;font-weight:600;color:#ff0055;margin-bottom:10px;">👉 Entrada contra las señales del motor.</div>
+
+            <!-- Dangerous but won alert -->
+            
+                <div style="background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);border-radius:10px;padding:12px 16px;margin-bottom:10px;">
+                  <div style="font-size:11px;font-weight:700;color:#fb923c;letter-spacing:.5px;margin-bottom:5px;">
+                    🔴 GANASTE — PERO FUE UNA ENTRADA PELIGROSA
+                  </div>
+                  <div style="font-size:12px;color:#fed7aa;line-height:1.6;">
+                    El resultado positivo no valida la entrada. Este tipo de trades erosiona el edge a largo plazo.
+                    Una buena ejecución requiere confluencia, no solo suerte.
+                  </div>
+                </div>
+
+            <!-- Quality reasons -->
+            <div style="margin-bottom:12px;">
+              <div style="font-size:10px;color:#64748b;font-weight:700;letter-spacing:.5px;margin-bottom:4px;">📊 ANÁLISIS DE CALIDAD</div>
+              <ul style="list-style:none;padding:0;margin:0;"><li style="font-size:12px;line-height:1.7;color:#a0aec0;">⚠️ Bias neutral — mayor incertidumbre en la entrada.</li><li style="font-size:12px;line-height:1.7;color:#a0aec0;">⚠️ COT indica BEARISH — contrario a tu dirección.</li><li style="font-size:12px;line-height:1.7;color:#a0aec0;">⚠️ Order Flow no confirma (BULLISH (CONFLUENCIA SEMANAL + LONDRES)).</li><li style="font-size:12px;line-height:1.7;color:#a0aec0;">⚠️ VXN elevado (30.0) — stops más amplios necesarios.</li><li style="font-size:12px;line-height:1.7;color:#a0aec0;">⚠️ Ganaste pero saliste antes del target (0.0R < 2.0R).</li><li style="font-size:12px;line-height:1.7;color:#a0aec0;">✅ SMC confirma estructura en tu dirección.</li></ul>
+            </div>
+
+            <!-- Danger reasons -->
+            <div style="background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:10px 14px;margin-bottom:12px;">
+              <div style="font-size:10px;color:#ff0055;font-weight:700;letter-spacing:.5px;margin-bottom:6px;">🔴 FACTORES DE RIESGO DE LA ENTRADA</div>
+              <ul style="list-style:none;padding:0;margin:0;"><li style="font-size:12px;line-height:1.7;color:#ff0055;">⚠️ VXN extremo (30.0) — mercado muy volátil.</li><li style="font-size:12px;line-height:1.7;color:#ff0055;">⚠️ Order Flow (BULLISH (CONFLUENCIA SEMANAL + LONDRES)) no confirma la entrada.</li><li style="font-size:12px;line-height:1.7;color:#ff0055;">⚠️ COT institucional (BEARISH) apunta diferente.</li></ul>
+            </div>
+
+            <!-- Best alt -->
+            <div style="background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);border-radius:10px;padding:12px 16px;">
+              <div style="font-size:10px;font-weight:700;color:#a78bfa;letter-spacing:.5px;margin-bottom:5px;">🎯 MEJOR ALTERNATIVA</div>
+              <div style="font-size:13px;color:#c4b5fd;line-height:1.6;">Mantener hasta el target planificado habría dado mejor resultado.</div>
+            </div>
+
+            
+          </div></div>
+  </div>
+
+  <div class="foot">
+    Agent 17 v2 · NQ Intelligence Engine · 2026-03-22 ·
+    Trades: <code>agent17_trades_20260322.json</code> ·
+    DeepChart projection: <code>deepchart_projection_20260322.json</code>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+    width: document.getElementById('chart').offsetWidth,
+    height: 520,
+    layout: {
+      background: { type: 'solid', color: '#06060a' },
+      textColor: '#64748b',
+    },
+    grid: {
+      vertLines: { color: 'rgba(255,255,255,.04)' },
+      horzLines: { color: 'rgba(255,255,255,.04)' },
+    },
+    crosshair: {
+      mode: LightweightCharts.CrosshairMode.Normal,
+      vertLine: { color: 'rgba(0,255,128,.4)', width: 1, style: 1 },
+      horzLine: { color: 'rgba(0,255,128,.4)', width: 1, style: 1 },
+    },
+    rightPriceScale: {
+      borderColor: 'rgba(255,255,255,.08)',
+      scaleMargins: { top: 0.08, bottom: 0.08 },
+    },
+    timeScale: {
+      borderColor: 'rgba(255,255,255,.08)',
+      timeVisible: true,
+      secondsVisible: false,
+    },
+  });
+
+  const candleSeries = chart.addCandlestickSeries({
+    upColor:          '#00ff80',
+    downColor:        '#ff0055',
+    borderUpColor:    '#00ff80',
+    borderDownColor:  '#ff0055',
+    wickUpColor:      '#00ff80',
+    wickDownColor:    '#ff0055',
+  });
+
+  
+    // Placeholder candles — reemplaza con datos reales de NQ
+    const dummyCandles = [];
+    const base = 24017.0;
+    const t0 = new Date('2026-03-22T09:30:00Z');  // UTC noon-ish; ajusta TZ si necesario
+    for(let i=0;i<78;i++){
+        const t = new Date(t0.getTime() + i*5*60000);
+        const unixSec = Math.floor(t.getTime() / 1000);  // UNIX epoch en segundos
+        const o = base + (Math.random()-0.495)*8*(i+1)*0.12;
+        const c = o + (Math.random()-0.47)*12;
+        const h = Math.max(o,c) + Math.random()*6;
+        const l = Math.min(o,c) - Math.random()*6;
+        dummyCandles.push({time:unixSec,open:+o.toFixed(2),high:+h.toFixed(2),low:+l.toFixed(2),close:+c.toFixed(2)});
+    }
+    candleSeries.setData(dummyCandles);
+    chart.timeScale().fitContent();
+    
+
+  
+
+  window.addEventListener('resize', () => {
+    chart.resize(document.getElementById('chart').offsetWidth, 520);
+  });
+})();
+</script>
+</body>
+</html>

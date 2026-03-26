@@ -1,0 +1,4236 @@
+{
+  "extreme_low_bullish": [
+    {
+      "cot_date": "2023-05-02",
+      "monday": "2023-05-08",
+      "cot_index": 0.0,
+      "lev_net": -34336,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 13352.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 115.75,
+          "delta_pct": 0.867,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 550.25,
+          "delta_pct": 4.121,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 1044.5,
+          "delta_pct": 7.823,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1236.5,
+          "delta_pct": 9.261,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1448.25,
+          "delta_pct": 10.846,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1904.25,
+          "delta_pct": 14.262,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-05-09",
+      "monday": "2023-05-15",
+      "cot_index": 12.9,
+      "lev_net": -29848,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 13468.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 434.5,
+          "delta_pct": 3.226,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 928.75,
+          "delta_pct": 6.896,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 1120.75,
+          "delta_pct": 8.322,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1332.5,
+          "delta_pct": 9.894,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1788.5,
+          "delta_pct": 13.28,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1388.5,
+          "delta_pct": 10.31,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-05-23",
+      "monday": "2023-05-29",
+      "cot_index": 1.2,
+      "lev_net": -33932,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 14396.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 192.0,
+          "delta_pct": 1.334,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 403.75,
+          "delta_pct": 2.804,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 859.75,
+          "delta_pct": 5.972,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 459.75,
+          "delta_pct": 3.193,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 968.0,
+          "delta_pct": 6.724,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 790.25,
+          "delta_pct": 5.489,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-05-30",
+      "monday": "2023-06-05",
+      "cot_index": 0.0,
+      "lev_net": -39957,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 14588.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 211.75,
+          "delta_pct": 1.451,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 667.75,
+          "delta_pct": 4.577,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 267.75,
+          "delta_pct": 1.835,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 776.0,
+          "delta_pct": 5.319,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 598.25,
+          "delta_pct": 4.101,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1252.0,
+          "delta_pct": 8.582,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-06-06",
+      "monday": "2023-06-12",
+      "cot_index": 4.6,
+      "lev_net": -38150,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 14800.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 456.0,
+          "delta_pct": 3.081,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 56.0,
+          "delta_pct": 0.378,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 564.25,
+          "delta_pct": 3.812,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 386.5,
+          "delta_pct": 2.611,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1040.25,
+          "delta_pct": 7.028,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 760.75,
+          "delta_pct": 5.14,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-06-13",
+      "monday": "2023-06-19",
+      "cot_index": 0.0,
+      "lev_net": -40129,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 15256.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -400.0,
+          "delta_pct": -2.622,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 108.25,
+          "delta_pct": 0.71,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -69.5,
+          "delta_pct": -0.456,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 584.25,
+          "delta_pct": 3.83,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 304.75,
+          "delta_pct": 1.998,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 601.0,
+          "delta_pct": 3.939,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-07-11",
+      "monday": "2023-07-17",
+      "cot_index": 8.7,
+      "lev_net": -36677,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 15840.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -279.5,
+          "delta_pct": -1.764,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 16.75,
+          "delta_pct": 0.106,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -355.25,
+          "delta_pct": -2.243,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -570.5,
+          "delta_pct": -3.601,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -855.0,
+          "delta_pct": -5.397,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -748.25,
+          "delta_pct": -4.724,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-07-25",
+      "monday": "2023-07-31",
+      "cot_index": 1.3,
+      "lev_net": -39604,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 15857.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -372.0,
+          "delta_pct": -2.346,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -587.25,
+          "delta_pct": -3.703,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -871.75,
+          "delta_pct": -5.497,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -765.0,
+          "delta_pct": -4.824,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -323.0,
+          "delta_pct": -2.037,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -381.75,
+          "delta_pct": -2.407,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-08-01",
+      "monday": "2023-08-07",
+      "cot_index": 0.0,
+      "lev_net": -53669,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 15485.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -215.25,
+          "delta_pct": -1.39,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -499.75,
+          "delta_pct": -3.227,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -393.0,
+          "delta_pct": -2.538,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 49.0,
+          "delta_pct": 0.316,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -9.75,
+          "delta_pct": -0.063,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -71.0,
+          "delta_pct": -0.458,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-08-08",
+      "monday": "2023-08-14",
+      "cot_index": 0.0,
+      "lev_net": -59068,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 15270.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -284.5,
+          "delta_pct": -1.863,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -177.75,
+          "delta_pct": -1.164,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 264.25,
+          "delta_pct": 1.73,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 205.5,
+          "delta_pct": 1.346,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 144.25,
+          "delta_pct": 0.945,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -335.0,
+          "delta_pct": -2.194,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-03-05",
+      "monday": "2024-03-11",
+      "cot_index": 4.3,
+      "lev_net": -55852,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 17971.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 260.5,
+          "delta_pct": 1.45,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 542.5,
+          "delta_pct": 3.019,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 526.25,
+          "delta_pct": 2.928,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 324.0,
+          "delta_pct": 1.803,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -94.75,
+          "delta_pct": -0.527,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -621.0,
+          "delta_pct": -3.456,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-03-12",
+      "monday": "2024-03-18",
+      "cot_index": 0.0,
+      "lev_net": -63468,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 18231.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 282.0,
+          "delta_pct": 1.547,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 265.75,
+          "delta_pct": 1.458,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 63.5,
+          "delta_pct": 0.348,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -355.25,
+          "delta_pct": -1.949,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -881.5,
+          "delta_pct": -4.835,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -327.25,
+          "delta_pct": -1.795,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-04-30",
+      "monday": "2024-05-06",
+      "cot_index": 12.1,
+      "lev_net": -53883,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 18195.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 100.0,
+          "delta_pct": 0.55,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 567.5,
+          "delta_pct": 3.119,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 745.0,
+          "delta_pct": 4.094,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 450.75,
+          "delta_pct": 2.477,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 914.25,
+          "delta_pct": 5.025,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1725.75,
+          "delta_pct": 9.484,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-05-14",
+      "monday": "2024-05-20",
+      "cot_index": 12.9,
+      "lev_net": -53292,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 18763.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 177.5,
+          "delta_pct": 0.946,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -116.75,
+          "delta_pct": -0.622,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 346.75,
+          "delta_pct": 1.848,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1158.25,
+          "delta_pct": 6.173,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 987.75,
+          "delta_pct": 5.264,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1289.0,
+          "delta_pct": 6.87,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-06-18",
+      "monday": "2024-06-24",
+      "cot_index": 11.1,
+      "lev_net": -54671,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 19750.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 301.25,
+          "delta_pct": 1.525,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 909.0,
+          "delta_pct": 4.602,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 833.0,
+          "delta_pct": 4.218,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 250.25,
+          "delta_pct": 1.267,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -541.5,
+          "delta_pct": -2.742,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -1737.5,
+          "delta_pct": -8.797,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-08-20",
+      "monday": "2024-08-26",
+      "cot_index": 9.5,
+      "lev_net": -55924,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 19591.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -584.75,
+          "delta_pct": -2.985,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -899.0,
+          "delta_pct": -4.589,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -158.25,
+          "delta_pct": -0.808,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 488.75,
+          "delta_pct": 2.495,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 670.0,
+          "delta_pct": 3.42,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 401.5,
+          "delta_pct": 2.049,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-09-17",
+      "monday": "2024-09-23",
+      "cot_index": 12.1,
+      "lev_net": -53903,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 20080.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 181.25,
+          "delta_pct": 0.903,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -87.25,
+          "delta_pct": -0.435,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 539.25,
+          "delta_pct": 2.686,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 439.5,
+          "delta_pct": 2.189,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 417.0,
+          "delta_pct": 2.077,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 6.0,
+          "delta_pct": 0.03,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-10-01",
+      "monday": "2024-10-07",
+      "cot_index": 13.8,
+      "lev_net": -52513,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 19992.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 626.5,
+          "delta_pct": 3.134,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 526.75,
+          "delta_pct": 2.635,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 504.25,
+          "delta_pct": 2.522,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 93.25,
+          "delta_pct": 0.466,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1225.0,
+          "delta_pct": 6.127,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 640.75,
+          "delta_pct": 3.205,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-10-08",
+      "monday": "2024-10-14",
+      "cot_index": 9.6,
+      "lev_net": -55850,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 20619.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -99.75,
+          "delta_pct": -0.484,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -122.25,
+          "delta_pct": -0.593,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -533.25,
+          "delta_pct": -2.586,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 598.5,
+          "delta_pct": 2.903,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 14.25,
+          "delta_pct": 0.069,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 261.0,
+          "delta_pct": 1.266,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-10-15",
+      "monday": "2024-10-21",
+      "cot_index": 6.8,
+      "lev_net": -58059,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 20519.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -22.5,
+          "delta_pct": -0.11,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -433.5,
+          "delta_pct": -2.113,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 698.25,
+          "delta_pct": 3.403,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 114.0,
+          "delta_pct": 0.556,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 360.75,
+          "delta_pct": 1.758,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 698.5,
+          "delta_pct": 3.404,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-02-18",
+      "monday": "2025-02-24",
+      "cot_index": 0.0,
+      "lev_net": -68342,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 21420.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -952.0,
+          "delta_pct": -4.444,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -1967.5,
+          "delta_pct": -9.185,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -1588.5,
+          "delta_pct": -7.416,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -1046.0,
+          "delta_pct": -4.883,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -1980.75,
+          "delta_pct": -9.247,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -3857.0,
+          "delta_pct": -18.006,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-05-13",
+      "monday": "2025-05-19",
+      "cot_index": 0.0,
+      "lev_net": -70624,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 21527.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -66.5,
+          "delta_pct": -0.309,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 7.5,
+          "delta_pct": 0.035,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 294.5,
+          "delta_pct": 1.368,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 414.5,
+          "delta_pct": 1.925,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 546.5,
+          "delta_pct": 2.539,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1366.25,
+          "delta_pct": 6.347,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-05-20",
+      "monday": "2025-05-26",
+      "cot_index": 5.0,
+      "lev_net": -67016,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 21460.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 74.0,
+          "delta_pct": 0.345,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 361.0,
+          "delta_pct": 1.682,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 481.0,
+          "delta_pct": 2.241,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 613.0,
+          "delta_pct": 2.856,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1432.75,
+          "delta_pct": 6.676,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1424.25,
+          "delta_pct": 6.637,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-05-27",
+      "monday": "2025-06-02",
+      "cot_index": 14.1,
+      "lev_net": -60390,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 21534.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 287.0,
+          "delta_pct": 1.333,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 407.0,
+          "delta_pct": 1.89,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 539.0,
+          "delta_pct": 2.503,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1358.75,
+          "delta_pct": 6.31,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1350.25,
+          "delta_pct": 6.27,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1501.0,
+          "delta_pct": 6.97,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-06-03",
+      "monday": "2025-06-09",
+      "cot_index": 13.7,
+      "lev_net": -60693,
+      "signal": "BULLISH (extremo bajo)",
+      "base_price": 21821.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 120.0,
+          "delta_pct": 0.55,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 252.0,
+          "delta_pct": 1.155,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 1071.75,
+          "delta_pct": 4.911,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1063.25,
+          "delta_pct": 4.872,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1214.0,
+          "delta_pct": 5.563,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1520.5,
+          "delta_pct": 6.968,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    }
+  ],
+  "extreme_high_bearish": [
+    {
+      "cot_date": "2023-10-31",
+      "monday": "2023-11-06",
+      "cot_index": 86.2,
+      "lev_net": -8462,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 15232.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 314.5,
+          "delta_pct": 2.065,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 854.0,
+          "delta_pct": 5.606,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 776.25,
+          "delta_pct": 5.096,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 636.5,
+          "delta_pct": 4.179,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 1004.5,
+          "delta_pct": 6.594,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 1707.25,
+          "delta_pct": 11.208,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-11-07",
+      "monday": "2023-11-13",
+      "cot_index": 100.0,
+      "lev_net": 15648,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 15547.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 539.5,
+          "delta_pct": 3.47,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 461.75,
+          "delta_pct": 2.97,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 322.0,
+          "delta_pct": 2.071,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 690.0,
+          "delta_pct": 4.438,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 1392.75,
+          "delta_pct": 8.958,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 1536.5,
+          "delta_pct": 9.883,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-11-28",
+      "monday": "2023-12-04",
+      "cot_index": 85.8,
+      "lev_net": 5019,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 15869.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 368.0,
+          "delta_pct": 2.319,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 1070.75,
+          "delta_pct": 6.747,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 1214.5,
+          "delta_pct": 7.653,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 851.0,
+          "delta_pct": 5.363,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 934.75,
+          "delta_pct": 5.89,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 1097.5,
+          "delta_pct": 6.916,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-02-25",
+      "monday": "2025-03-03",
+      "cot_index": 93.3,
+      "lev_net": -34834,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 20468.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -1015.5,
+          "delta_pct": -4.961,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -636.5,
+          "delta_pct": -3.11,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -94.0,
+          "delta_pct": -0.459,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -1028.75,
+          "delta_pct": -5.026,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -2905.0,
+          "delta_pct": -14.193,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -1533.5,
+          "delta_pct": -7.492,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-03-04",
+      "monday": "2025-03-10",
+      "cot_index": 100.0,
+      "lev_net": -20594,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 19452.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 379.0,
+          "delta_pct": 1.948,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 921.5,
+          "delta_pct": 4.737,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -13.25,
+          "delta_pct": -0.068,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -1889.5,
+          "delta_pct": -9.713,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -518.0,
+          "delta_pct": -2.663,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -1530.5,
+          "delta_pct": -7.868,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-03-11",
+      "monday": "2025-03-17",
+      "cot_index": 100.0,
+      "lev_net": -3943,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 19831.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 542.5,
+          "delta_pct": 2.736,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -392.25,
+          "delta_pct": -1.978,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -2268.5,
+          "delta_pct": -11.439,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -897.0,
+          "delta_pct": -4.523,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -1909.5,
+          "delta_pct": -9.628,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -303.75,
+          "delta_pct": -1.532,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-03-18",
+      "monday": "2025-03-24",
+      "cot_index": 91.8,
+      "lev_net": -9218,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 20374.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -934.75,
+          "delta_pct": -4.588,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -2811.0,
+          "delta_pct": -13.797,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -1439.5,
+          "delta_pct": -7.065,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -2452.0,
+          "delta_pct": -12.035,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -846.25,
+          "delta_pct": -4.154,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -318.75,
+          "delta_pct": -1.564,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-04-08",
+      "monday": "2025-04-14",
+      "cot_index": 100.0,
+      "lev_net": 1759,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 18934.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -1012.5,
+          "delta_pct": -5.347,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 593.25,
+          "delta_pct": 3.133,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 1120.75,
+          "delta_pct": 5.919,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 2014.0,
+          "delta_pct": 10.637,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 2592.25,
+          "delta_pct": 13.69,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 2525.75,
+          "delta_pct": 13.339,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-07-08",
+      "monday": "2025-07-14",
+      "cot_index": 87.3,
+      "lev_net": -7461,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 23035.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 306.5,
+          "delta_pct": 1.331,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 455.75,
+          "delta_pct": 1.978,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 261.0,
+          "delta_pct": 1.133,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 602.0,
+          "delta_pct": 2.613,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 762.25,
+          "delta_pct": 3.309,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 462.75,
+          "delta_pct": 2.009,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-09-30",
+      "monday": "2025-10-06",
+      "cot_index": 93.8,
+      "lev_net": -2721,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 25184.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -262.5,
+          "delta_pct": -1.042,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 120.5,
+          "delta_pct": 0.478,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 779.0,
+          "delta_pct": 3.093,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 918.5,
+          "delta_pct": 3.647,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 529.75,
+          "delta_pct": 2.103,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -305.75,
+          "delta_pct": -1.214,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-10-21",
+      "monday": "2025-10-27",
+      "cot_index": 96.7,
+      "lev_net": -657,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 25963.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 139.5,
+          "delta_pct": 0.537,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -249.25,
+          "delta_pct": -0.96,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -1084.75,
+          "delta_pct": -4.178,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -1015.5,
+          "delta_pct": -3.911,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -572.5,
+          "delta_pct": -2.205,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -299.75,
+          "delta_pct": -1.154,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-10-28",
+      "monday": "2025-11-03",
+      "cot_index": 100.0,
+      "lev_net": 10243,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 26103.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -388.75,
+          "delta_pct": -1.489,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -1224.25,
+          "delta_pct": -4.69,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -1155.0,
+          "delta_pct": -4.425,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -712.0,
+          "delta_pct": -2.728,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -439.25,
+          "delta_pct": -1.683,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -1010.0,
+          "delta_pct": -3.869,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-11-04",
+      "monday": "2025-11-10",
+      "cot_index": 92.9,
+      "lev_net": 4505,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 25714.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -835.5,
+          "delta_pct": -3.249,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -766.25,
+          "delta_pct": -2.98,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -323.25,
+          "delta_pct": -1.257,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -50.5,
+          "delta_pct": -0.196,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -621.25,
+          "delta_pct": -2.416,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -22.25,
+          "delta_pct": -0.087,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-11-10",
+      "monday": "2025-11-17",
+      "cot_index": 100.0,
+      "lev_net": 11725,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 24879.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 69.25,
+          "delta_pct": 0.278,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 512.25,
+          "delta_pct": 2.059,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 785.0,
+          "delta_pct": 3.155,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 214.25,
+          "delta_pct": 0.861,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 813.25,
+          "delta_pct": 3.269,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 860.75,
+          "delta_pct": 3.46,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-11-18",
+      "monday": "2025-11-24",
+      "cot_index": 86.9,
+      "lev_net": 933,
+      "signal": "BEARISH (extremo alto)",
+      "base_price": 24948.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 443.0,
+          "delta_pct": 1.776,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 715.75,
+          "delta_pct": 2.869,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 145.0,
+          "delta_pct": 0.581,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 744.0,
+          "delta_pct": 2.982,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 791.5,
+          "delta_pct": 3.173,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 629.5,
+          "delta_pct": 2.523,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    }
+  ],
+  "streak_bullish": [
+    {
+      "cot_date": "2022-01-25",
+      "monday": "2022-01-31",
+      "cot_index": 100.0,
+      "lev_net": 2757,
+      "delta_ll": 2020,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 14905.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -345.25,
+          "delta_pct": -2.316,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -652.0,
+          "delta_pct": -4.374,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -1042.25,
+          "delta_pct": -6.993,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -677.0,
+          "delta_pct": -4.542,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -1584.25,
+          "delta_pct": -10.629,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -1859.5,
+          "delta_pct": -12.476,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-04-12",
+      "monday": "2022-04-18",
+      "cot_index": 38.4,
+      "lev_net": -5608,
+      "delta_ll": 1901,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 13907.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -372.0,
+          "delta_pct": -2.675,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -834.75,
+          "delta_pct": -6.002,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -1714.0,
+          "delta_pct": -12.324,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -1663.0,
+          "delta_pct": -11.957,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -1872.5,
+          "delta_pct": -13.464,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -1261.25,
+          "delta_pct": -9.069,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-09-06",
+      "monday": "2022-09-12",
+      "cot_index": 33.8,
+      "lev_net": -6971,
+      "delta_ll": 2233,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 12740.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -716.75,
+          "delta_pct": -5.626,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -1424.5,
+          "delta_pct": -11.181,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -1455.0,
+          "delta_pct": -11.42,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -1756.25,
+          "delta_pct": -13.785,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -1630.5,
+          "delta_pct": -12.798,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -1262.0,
+          "delta_pct": -9.905,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-10-25",
+      "monday": "2022-10-31",
+      "cot_index": 35.9,
+      "lev_net": -6653,
+      "delta_ll": 282,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 11447.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -433.0,
+          "delta_pct": -3.783,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 287.5,
+          "delta_pct": 2.512,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 140.75,
+          "delta_pct": 1.23,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 169.0,
+          "delta_pct": 1.476,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 358.5,
+          "delta_pct": 3.132,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 264.5,
+          "delta_pct": 2.311,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-01-03",
+      "monday": "2023-01-09",
+      "cot_index": 77.1,
+      "lev_net": -363,
+      "delta_ll": 623,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 11185.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 439.0,
+          "delta_pct": 3.925,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 748.5,
+          "delta_pct": 6.692,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 782.5,
+          "delta_pct": 6.996,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1330.0,
+          "delta_pct": 11.89,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1355.0,
+          "delta_pct": 12.114,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 911.25,
+          "delta_pct": 8.147,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-03-14",
+      "monday": "2023-03-20",
+      "cot_index": 77.7,
+      "lev_net": -1206,
+      "delta_ll": 1073,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 12688.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 100.0,
+          "delta_pct": 0.788,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 581.5,
+          "delta_pct": 4.583,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 469.5,
+          "delta_pct": 3.7,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 498.0,
+          "delta_pct": 3.925,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 368.0,
+          "delta_pct": 2.9,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 618.25,
+          "delta_pct": 4.873,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-04-18",
+      "monday": "2023-04-24",
+      "cot_index": 41.3,
+      "lev_net": -6325,
+      "delta_ll": 1170,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 13056.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 250.25,
+          "delta_pct": 1.917,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 295.75,
+          "delta_pct": 2.265,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 411.5,
+          "delta_pct": 3.152,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 846.0,
+          "delta_pct": 6.48,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1340.25,
+          "delta_pct": 10.265,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1532.25,
+          "delta_pct": 11.736,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-05-16",
+      "monday": "2023-05-22",
+      "cot_index": 19.5,
+      "lev_net": -27709,
+      "delta_ll": 8574,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 13902.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 494.25,
+          "delta_pct": 3.555,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 686.25,
+          "delta_pct": 4.936,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 898.0,
+          "delta_pct": 6.459,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1354.0,
+          "delta_pct": 9.739,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 954.0,
+          "delta_pct": 6.862,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1462.25,
+          "delta_pct": 10.518,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-08-29",
+      "monday": "2023-09-04",
+      "cot_index": 52.3,
+      "lev_net": -28393,
+      "delta_ll": 3062,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 15534.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -58.75,
+          "delta_pct": -0.378,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -120.0,
+          "delta_pct": -0.772,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -599.25,
+          "delta_pct": -3.858,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -549.75,
+          "delta_pct": -3.539,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -347.5,
+          "delta_pct": -2.237,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -245.0,
+          "delta_pct": -1.577,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-10-17",
+      "monday": "2023-10-23",
+      "cot_index": 80.5,
+      "lev_net": -11802,
+      "delta_ll": 2434,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 14712.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -295.5,
+          "delta_pct": -2.009,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 520.5,
+          "delta_pct": 3.538,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 835.0,
+          "delta_pct": 5.676,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1374.5,
+          "delta_pct": 9.343,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1296.75,
+          "delta_pct": 8.814,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1157.0,
+          "delta_pct": 7.864,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-01-23",
+      "monday": "2024-01-29",
+      "cot_index": 33.1,
+      "lev_net": -34338,
+      "delta_ll": 2986,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 17706.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -6.0,
+          "delta_pct": -0.034,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 259.0,
+          "delta_pct": 1.463,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -98.75,
+          "delta_pct": -0.558,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 271.0,
+          "delta_pct": 1.531,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 556.0,
+          "delta_pct": 3.14,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 265.0,
+          "delta_pct": 1.497,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-06-25",
+      "monday": "2024-07-01",
+      "cot_index": 30.3,
+      "lev_net": -39501,
+      "delta_ll": 306,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 20052.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 607.75,
+          "delta_pct": 3.031,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 531.75,
+          "delta_pct": 2.652,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -51.0,
+          "delta_pct": -0.254,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -842.75,
+          "delta_pct": -4.203,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -2038.75,
+          "delta_pct": -10.167,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -1412.5,
+          "delta_pct": -7.044,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-09-10",
+      "monday": "2024-09-16",
+      "cot_index": 36.4,
+      "lev_net": -34643,
+      "delta_ll": 6051,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 19433.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 647.0,
+          "delta_pct": 3.329,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 828.25,
+          "delta_pct": 4.262,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 559.75,
+          "delta_pct": 2.88,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1186.25,
+          "delta_pct": 6.104,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1086.5,
+          "delta_pct": 5.591,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1064.0,
+          "delta_pct": 5.475,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-12-17",
+      "monday": "2024-12-23",
+      "cot_index": 19.5,
+      "lev_net": -56028,
+      "delta_ll": 234,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 21753.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -337.0,
+          "delta_pct": -1.549,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -8.75,
+          "delta_pct": -0.04,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -806.0,
+          "delta_pct": -3.705,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -43.75,
+          "delta_pct": -0.201,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -494.75,
+          "delta_pct": -2.274,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -348.25,
+          "delta_pct": -1.601,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-03-04",
+      "monday": "2025-03-10",
+      "cot_index": 100.0,
+      "lev_net": -20594,
+      "delta_ll": 7703,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 19452.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 379.0,
+          "delta_pct": 1.948,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 921.5,
+          "delta_pct": 4.737,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -13.25,
+          "delta_pct": -0.068,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -1889.5,
+          "delta_pct": -9.713,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -518.0,
+          "delta_pct": -2.663,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -1530.5,
+          "delta_pct": -7.868,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-07-08",
+      "monday": "2025-07-14",
+      "cot_index": 87.3,
+      "lev_net": -7461,
+      "delta_ll": 248,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 23035.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 306.5,
+          "delta_pct": 1.331,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 455.75,
+          "delta_pct": 1.978,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 261.0,
+          "delta_pct": 1.133,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 602.0,
+          "delta_pct": 2.613,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 762.25,
+          "delta_pct": 3.309,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 462.75,
+          "delta_pct": 2.009,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-09-09",
+      "monday": "2025-09-15",
+      "cot_index": 62.7,
+      "lev_net": -25239,
+      "delta_ll": 6344,
+      "streak_len": 3,
+      "signal": "BULLISH",
+      "base_price": 24309.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 693.75,
+          "delta_pct": 2.854,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 528.5,
+          "delta_pct": 2.174,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 875.5,
+          "delta_pct": 3.602,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 613.0,
+          "delta_pct": 2.522,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 996.0,
+          "delta_pct": 4.097,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1654.5,
+          "delta_pct": 6.806,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    }
+  ],
+  "streak_bearish": [
+    {
+      "cot_date": "2022-05-31",
+      "monday": "2022-06-06",
+      "cot_index": 33.0,
+      "lev_net": -6373,
+      "delta_ll": -729,
+      "streak_len": 3,
+      "signal": "BEARISH",
+      "base_price": 12605.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -1308.5,
+          "delta_pct": -10.381,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -1027.75,
+          "delta_pct": -8.154,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -564.5,
+          "delta_pct": -4.478,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -796.5,
+          "delta_pct": -6.319,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -720.75,
+          "delta_pct": -5.718,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -698.0,
+          "delta_pct": -5.537,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-11-15",
+      "monday": "2022-11-21",
+      "cot_index": 29.7,
+      "lev_net": -7588,
+      "delta_ll": -891,
+      "streak_len": 3,
+      "signal": "BEARISH",
+      "base_price": 11588.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 28.25,
+          "delta_pct": 0.244,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 217.75,
+          "delta_pct": 1.879,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 123.75,
+          "delta_pct": 1.068,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -394.75,
+          "delta_pct": -3.407,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -672.5,
+          "delta_pct": -5.803,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -642.5,
+          "delta_pct": -5.545,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-06-27",
+      "monday": "2023-07-03",
+      "cot_index": 37.6,
+      "lev_net": -25196,
+      "delta_ll": -3838,
+      "streak_len": 3,
+      "signal": "BEARISH",
+      "base_price": 15364.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -177.75,
+          "delta_pct": -1.157,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 476.0,
+          "delta_pct": 3.098,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 196.5,
+          "delta_pct": 1.279,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 492.75,
+          "delta_pct": 3.207,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 120.75,
+          "delta_pct": 0.786,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -94.5,
+          "delta_pct": -0.615,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-03-05",
+      "monday": "2024-03-11",
+      "cot_index": 4.3,
+      "lev_net": -55852,
+      "delta_ll": -7929,
+      "streak_len": 3,
+      "signal": "BEARISH",
+      "base_price": 17971.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 260.5,
+          "delta_pct": 1.45,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 542.5,
+          "delta_pct": 3.019,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 526.25,
+          "delta_pct": 2.928,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 324.0,
+          "delta_pct": 1.803,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -94.75,
+          "delta_pct": -0.527,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -621.0,
+          "delta_pct": -3.456,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-04-09",
+      "monday": "2024-04-15",
+      "cot_index": 26.9,
+      "lev_net": -42181,
+      "delta_ll": -1195,
+      "streak_len": 3,
+      "signal": "BEARISH",
+      "base_price": 17876.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -526.25,
+          "delta_pct": -2.944,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 28.0,
+          "delta_pct": 0.157,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 319.25,
+          "delta_pct": 1.786,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 419.25,
+          "delta_pct": 2.345,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 886.75,
+          "delta_pct": 4.96,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 1064.25,
+          "delta_pct": 5.953,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-06-04",
+      "monday": "2024-06-10",
+      "cot_index": 34.2,
+      "lev_net": -36385,
+      "delta_ll": -4731,
+      "streak_len": 3,
+      "signal": "BEARISH",
+      "base_price": 19109.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 811.5,
+          "delta_pct": 4.247,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 641.0,
+          "delta_pct": 3.354,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 942.25,
+          "delta_pct": 4.931,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 1550.0,
+          "delta_pct": 8.111,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 1474.0,
+          "delta_pct": 7.713,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 891.25,
+          "delta_pct": 4.664,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2024-07-23",
+      "monday": "2024-07-29",
+      "cot_index": 38.3,
+      "lev_net": -33141,
+      "delta_ll": -605,
+      "streak_len": 3,
+      "signal": "BEARISH",
+      "base_price": 19209.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -1196.0,
+          "delta_pct": -6.226,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -569.75,
+          "delta_pct": -2.966,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 648.5,
+          "delta_pct": 3.376,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 382.0,
+          "delta_pct": 1.989,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -202.75,
+          "delta_pct": -1.055,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -517.0,
+          "delta_pct": -2.691,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    }
+  ],
+  "zero_cross": [
+    {
+      "cot_date": "2022-01-25",
+      "monday": "2022-01-31",
+      "cot_index": 100.0,
+      "net_prev": -418,
+      "net_curr": 2757,
+      "signal": "BULLISH (cruce 0 de - a +)",
+      "base_price": 14905.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -345.25,
+          "delta_pct": -2.316,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -652.0,
+          "delta_pct": -4.374,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -1042.25,
+          "delta_pct": -6.993,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -677.0,
+          "delta_pct": -4.542,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -1584.25,
+          "delta_pct": -10.629,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -1859.5,
+          "delta_pct": -12.476,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-02-01",
+      "monday": "2022-02-07",
+      "cot_index": 6.8,
+      "net_prev": 2757,
+      "net_curr": -1675,
+      "signal": "BEARISH (cruce 0 de + a -)",
+      "base_price": 14559.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -306.75,
+          "delta_pct": -2.107,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -697.0,
+          "delta_pct": -4.787,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -331.75,
+          "delta_pct": -2.279,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -1239.0,
+          "delta_pct": -8.51,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -1514.25,
+          "delta_pct": -10.4,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -189.25,
+          "delta_pct": -1.3,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-02-08",
+      "monday": "2022-02-14",
+      "cot_index": 56.1,
+      "net_prev": -1675,
+      "net_curr": 668,
+      "signal": "BULLISH (cruce 0 de - a +)",
+      "base_price": 14253.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -390.25,
+          "delta_pct": -2.738,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -25.0,
+          "delta_pct": -0.175,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -932.25,
+          "delta_pct": -6.541,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -1207.5,
+          "delta_pct": -8.472,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 117.5,
+          "delta_pct": 0.824,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 732.25,
+          "delta_pct": 5.138,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-02-22",
+      "monday": "2022-02-28",
+      "cot_index": 37.0,
+      "net_prev": 1003,
+      "net_curr": -238,
+      "signal": "BEARISH (cruce 0 de + a -)",
+      "base_price": 14228.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -907.25,
+          "delta_pct": -6.377,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -1182.5,
+          "delta_pct": -8.311,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 142.5,
+          "delta_pct": 1.002,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 757.25,
+          "delta_pct": 5.322,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 936.25,
+          "delta_pct": 6.58,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -228.0,
+          "delta_pct": -1.602,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-03-01",
+      "monday": "2022-03-07",
+      "cot_index": 79.5,
+      "net_prev": -238,
+      "net_curr": 1781,
+      "signal": "BULLISH (cruce 0 de - a +)",
+      "base_price": 13320.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -275.25,
+          "delta_pct": -2.066,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 1049.75,
+          "delta_pct": 7.881,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 1664.5,
+          "delta_pct": 12.496,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 1843.5,
+          "delta_pct": 13.839,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 679.25,
+          "delta_pct": 5.099,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 587.0,
+          "delta_pct": 4.407,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-03-22",
+      "monday": "2022-03-28",
+      "cot_index": 0.0,
+      "net_prev": 581,
+      "net_curr": -7889,
+      "signal": "BEARISH (cruce 0 de + a -)",
+      "base_price": 14985.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 179.0,
+          "delta_pct": 1.195,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -985.25,
+          "delta_pct": -6.575,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -1077.5,
+          "delta_pct": -7.19,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -1449.5,
+          "delta_pct": -9.673,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -1912.25,
+          "delta_pct": -12.761,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -2791.5,
+          "delta_pct": -18.628,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-05-10",
+      "monday": "2022-05-16",
+      "cot_index": 91.4,
+      "net_prev": -1015,
+      "net_curr": 1922,
+      "signal": "BULLISH (cruce 0 de - a +)",
+      "base_price": 12244.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -209.5,
+          "delta_pct": -1.711,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 401.75,
+          "delta_pct": 3.281,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 360.25,
+          "delta_pct": 2.942,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -948.25,
+          "delta_pct": -7.744,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -667.5,
+          "delta_pct": -5.451,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -204.25,
+          "delta_pct": -1.668,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2022-05-24",
+      "monday": "2022-05-30",
+      "cot_index": 57.5,
+      "net_prev": 405,
+      "net_curr": -2893,
+      "signal": "BEARISH (cruce 0 de + a -)",
+      "base_price": 12646.5,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -41.5,
+          "delta_pct": -0.328,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": -1350.0,
+          "delta_pct": -10.675,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": -1069.25,
+          "delta_pct": -8.455,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": -606.0,
+          "delta_pct": -4.792,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": -838.0,
+          "delta_pct": -6.626,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": -762.25,
+          "delta_pct": -6.027,
+          "mkt_dir": "BEARISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-11-07",
+      "monday": "2023-11-13",
+      "cot_index": 100.0,
+      "net_prev": -8462,
+      "net_curr": 15648,
+      "signal": "BULLISH (cruce 0 de - a +)",
+      "base_price": 15547.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 539.5,
+          "delta_pct": 3.47,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 461.75,
+          "delta_pct": 2.97,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 322.0,
+          "delta_pct": 2.071,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 690.0,
+          "delta_pct": 4.438,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 1392.75,
+          "delta_pct": 8.958,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1536.5,
+          "delta_pct": 9.883,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-11-21",
+      "monday": "2023-11-27",
+      "cot_index": 75.2,
+      "net_prev": 1591,
+      "net_curr": -2862,
+      "signal": "BEARISH (cruce 0 de + a -)",
+      "base_price": 16008.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -139.75,
+          "delta_pct": -0.873,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 228.25,
+          "delta_pct": 1.426,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 931.0,
+          "delta_pct": 5.816,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 1074.75,
+          "delta_pct": 6.714,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 711.25,
+          "delta_pct": 4.443,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 795.0,
+          "delta_pct": 4.966,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-11-28",
+      "monday": "2023-12-04",
+      "cot_index": 85.8,
+      "net_prev": -2862,
+      "net_curr": 5019,
+      "signal": "BULLISH (cruce 0 de - a +)",
+      "base_price": 15869.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 368.0,
+          "delta_pct": 2.319,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 2,
+          "delta_pts": 1070.75,
+          "delta_pct": 6.747,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 1214.5,
+          "delta_pct": 7.653,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 851.0,
+          "delta_pct": 5.363,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 934.75,
+          "delta_pct": 5.89,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 1097.5,
+          "delta_pct": 6.916,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2023-12-05",
+      "monday": "2023-12-11",
+      "cot_index": 52.7,
+      "net_prev": 5019,
+      "net_curr": -19691,
+      "signal": "BEARISH (cruce 0 de + a -)",
+      "base_price": 16237.0,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 702.75,
+          "delta_pct": 4.328,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 846.5,
+          "delta_pct": 5.213,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 483.0,
+          "delta_pct": 2.975,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 566.75,
+          "delta_pct": 3.49,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 729.5,
+          "delta_pct": 4.493,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 1221.5,
+          "delta_pct": 7.523,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-04-08",
+      "monday": "2025-04-14",
+      "cot_index": 100.0,
+      "net_prev": -32364,
+      "net_curr": 1759,
+      "signal": "BULLISH (cruce 0 de - a +)",
+      "base_price": 18934.75,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -1012.5,
+          "delta_pct": -5.347,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 593.25,
+          "delta_pct": 3.133,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 1120.75,
+          "delta_pct": 5.919,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 4,
+          "delta_pts": 2014.0,
+          "delta_pct": 10.637,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 5,
+          "delta_pts": 2592.25,
+          "delta_pct": 13.69,
+          "mkt_dir": "BULLISH",
+          "match": true
+        },
+        {
+          "week": 6,
+          "delta_pts": 2525.75,
+          "delta_pct": 13.339,
+          "mkt_dir": "BULLISH",
+          "match": true
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-04-15",
+      "monday": "2025-04-21",
+      "cot_index": 66.2,
+      "net_prev": 1759,
+      "net_curr": -21938,
+      "signal": "BEARISH (cruce 0 de + a -)",
+      "base_price": 17922.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 1605.75,
+          "delta_pct": 8.96,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": 2133.25,
+          "delta_pct": 11.903,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": 3026.5,
+          "delta_pct": 16.887,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 3604.75,
+          "delta_pct": 20.113,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 3538.25,
+          "delta_pct": 19.742,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 3612.25,
+          "delta_pct": 20.155,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-10-28",
+      "monday": "2025-11-03",
+      "cot_index": 100.0,
+      "net_prev": -657,
+      "net_curr": 10243,
+      "signal": "BULLISH (cruce 0 de - a +)",
+      "base_price": 26103.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": -388.75,
+          "delta_pct": -1.489,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -1224.25,
+          "delta_pct": -4.69,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 3,
+          "delta_pts": -1155.0,
+          "delta_pct": -4.425,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": -712.0,
+          "delta_pct": -2.728,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": -439.25,
+          "delta_pct": -1.683,
+          "mkt_dir": "BEARISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": -1010.0,
+          "delta_pct": -3.869,
+          "mkt_dir": "BEARISH",
+          "match": false
+        }
+      ]
+    },
+    {
+      "cot_date": "2025-11-25",
+      "monday": "2025-12-01",
+      "cot_index": 83.0,
+      "net_prev": 933,
+      "net_curr": -2293,
+      "signal": "BEARISH (cruce 0 de + a -)",
+      "base_price": 25391.25,
+      "weeks": [
+        {
+          "week": 1,
+          "delta_pts": 272.75,
+          "delta_pct": 1.074,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 2,
+          "delta_pts": -298.0,
+          "delta_pct": -1.174,
+          "mkt_dir": "BEARISH",
+          "match": true
+        },
+        {
+          "week": 3,
+          "delta_pts": 301.0,
+          "delta_pct": 1.185,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 4,
+          "delta_pts": 348.5,
+          "delta_pct": 1.373,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 5,
+          "delta_pts": 186.5,
+          "delta_pct": 0.735,
+          "mkt_dir": "BULLISH",
+          "match": false
+        },
+        {
+          "week": 6,
+          "delta_pts": 565.5,
+          "delta_pct": 2.227,
+          "mkt_dir": "BULLISH",
+          "match": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+============================================================
+Traceback (most recent call last):
+  File "C:\Users\FxDarvin\Desktop\PAgina\update_sessions.py", line 368, in <module>
+    main()
+  File "C:\Users\FxDarvin\Desktop\PAgina\update_sessions.py", line 304, in main
+    print("\U0001f680 NQ Whale Radar ù Actualizaci≤n Semanal")
+  File "C:\Users\FxDarvin\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f680' in position 0: character maps to <undefined>

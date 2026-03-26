@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mapa de Noticias NQ — Impacto Real</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box }
+  body { background:#0b0f1a; color:#e2e8f0; font-family:'Segoe UI',sans-serif; padding:24px 20px; max-width:980px; margin:0 auto }
+  h1 { font-size:1.3rem; color:#7dd3fc; margin-bottom:4px }
+  .meta { font-size:.78rem; color:#475569; margin-bottom:20px }
+  .nav { display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap }
+  .nav a { background:#1e293b; color:#94a3b8; padding:5px 13px; border-radius:8px; text-decoration:none; font-size:.76rem }
+  .nav a:hover { background:#334155; color:#e2e8f0 }
+
+  /* Filtros */
+  .filters { display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap }
+  .filter-btn {
+    padding:5px 14px; border-radius:20px; font-size:.74rem; font-weight:600;
+    cursor:pointer; border:1px solid; transition:all .15s;
+    background:transparent;
+  }
+
+  /* Tabla principal */
+  .tw { overflow-x:auto; border-radius:12px }
+  table { width:100%; border-collapse:collapse; font-size:.79rem }
+  thead tr { background:#0f172a }
+  th { padding:9px 12px; text-align:left; color:#475569; font-size:.67rem; text-transform:uppercase; letter-spacing:.05em; border-bottom:1px solid #1e293b; white-space:nowrap }
+  tbody tr { border-bottom:1px solid #1e293b44; transition:background .1s }
+  tbody tr:hover { background:#111827 }
+  td { padding:8px 12px; vertical-align:middle }
+
+  /* Impacto */
+  .imp { display:flex; gap:3px; align-items:center }
+  .imp-dot { width:8px; height:8px; border-radius:50% }
+  .imp-label { font-size:.71rem; font-weight:700 }
+
+  /* Día */
+  .day-badge {
+    display:inline-block; padding:2px 9px; border-radius:20px;
+    font-size:.69rem; font-weight:700;
+  }
+  .lun  { background:#1e293b; color:#94a3b8 }
+  .mar  { background:#1e3a5f; color:#60a5fa }
+  .mie  { background:#2d1a0b; color:#fb923c }
+  .jue  { background:#0f2d22; color:#34d399 }
+  .vie  { background:#2d1f2d; color:#c084fc }
+
+  /* Estudio badge */
+  .study {
+    display:inline-block; padding:2px 10px; border-radius:20px;
+    font-size:.68rem; font-weight:700;
+  }
+  .s-yes    { background:#14532d; color:#4ade80 }
+  .s-partial{ background:#422006; color:#fb923c }
+  .s-no     { background:#1e293b; color:#475569 }
+
+  /* Nombre noticia */
+  .news-name { font-weight:600; color:#f1f5f9; font-size:.81rem }
+  .news-sub  { font-size:.69rem; color:#475569; margin-top:1px }
+
+  /* Range promedio */
+  .rng-bar-wrap { display:flex; align-items:center; gap:6px }
+  .rng-bar { height:6px; border-radius:3px; background:#22c55e; min-width:4px }
+  .rng-num { font-size:.73rem; color:#94a3b8; white-space:nowrap }
+
+  /* Hora */
+  .hora { font-size:.73rem; color:#64748b; white-space:nowrap }
+
+  /* Hidden rows */
+  tr.hidden { display:none }
+
+  /* Totales */
+  .summary-bar {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px; margin-bottom:20px;
+  }
+  .scard { background:#111827; border-radius:10px; padding:12px 16px }
+  .scard label { font-size:.65rem; color:#64748b; text-transform:uppercase; letter-spacing:.05em }
+  .scard value { display:block; font-size:1.3rem; font-weight:700; margin-top:2px }
+</style>
+</head>
+<body>
+
+<h1>📰 Mapa de Noticias Económicas × NQ Futures</h1>
+<p class="meta">Todas las noticias que mueven NQ — ordenadas por impacto real · Estado de estudio actual</p>
+
+<div class="nav">
+  <a href="daily_dashboard.html">🐋 Dashboard</a>
+  <a href="tuesday_calendar.html">🗓️ Martes</a>
+  <a href="tuesday_patterns.html">📐 Patrones Martes</a>
+  <a href="backtest_CB_confidence.html">CB Backtest</a>
+  <a href="backtest_JOLTS.html">JOLTS Backtest</a>
+</div>
+
+<div class="summary-bar">
+  <div class="scard"><label>Noticias críticas</label><value style="color:#ef4444">6</value></div>
+  <div class="scard"><label>Impacto alto</label><value style="color:#f97316">8</value></div>
+  <div class="scard"><label>Estudiadas ✅</label><value style="color:#22c55e">3</value></div>
+  <div class="scard"><label>Parcialmente 🟡</label><value style="color:#eab308">2</value></div>
+  <div class="scard"><label>Sin estudio ❌</label><value style="color:#475569">12</value></div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn" style="color:#ef4444;border-color:#ef4444" onclick="filterImpact('critico')">🔴 Crítico</button>
+  <button class="filter-btn" style="color:#f97316;border-color:#f97316" onclick="filterImpact('alto')">🟠 Alto</button>
+  <button class="filter-btn" style="color:#eab308;border-color:#eab308" onclick="filterImpact('medio')">🟡 Medio</button>
+  <button class="filter-btn" style="color:#60a5fa;border-color:#60a5fa" onclick="filterDay('mar')">🗓️ Martes</button>
+  <button class="filter-btn" style="color:#4ade80;border-color:#4ade80" onclick="filterStudy('yes')">✅ Estudiado</button>
+  <button class="filter-btn" style="color:#94a3b8;border-color:#334155" onclick="showAll()">Mostrar todo</button>
+</div>
+
+<div class="tw">
+<table id="news-table">
+  <thead><tr>
+    <th>#</th>
+    <th>Noticia</th>
+    <th>Día</th>
+    <th>Hora ET</th>
+    <th>Frecuencia</th>
+    <th>Impacto NQ</th>
+    <th>Avg Range</th>
+    <th>Estudio</th>
+    <th>Backtest</th>
+  </tr></thead>
+  <tbody>
+
+    <!-- CRÍTICOS -->
+    <tr data-impact="critico" data-day="mie" data-study="no">
+      <td style="color:#475569">1</td>
+      <td><div class="news-name">📊 CPI — Consumer Price Index</div><div class="news-sub">Inflación al consumidor MoM y YoY</div></td>
+      <td><span class="day-badge mie">Miér</span></td>
+      <td class="hora">8:30 AM</td>
+      <td style="font-size:.73rem">Mensual</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#ef4444"></div><span class="imp-label" style="color:#ef4444">CRÍTICO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:100%"></div><span class="rng-num">500–900 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="critico" data-day="mie" data-study="no">
+      <td style="color:#475569">2</td>
+      <td><div class="news-name">🏦 FOMC — Fed Decision</div><div class="news-sub">Decisión de tasas + conferencia Powell</div></td>
+      <td><span class="day-badge mie">Miér</span></td>
+      <td class="hora">2:00 PM</td>
+      <td style="font-size:.73rem">8× / año</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#ef4444"></div><span class="imp-label" style="color:#ef4444">CRÍTICO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:95%"></div><span class="rng-num">400–1200 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="critico" data-day="vie" data-study="no">
+      <td style="color:#475569">3</td>
+      <td><div class="news-name">💼 NFP — Non-Farm Payrolls</div><div class="news-sub">Empleos creados fuera del sector agrícola</div></td>
+      <td><span class="day-badge vie">Vier</span></td>
+      <td class="hora">8:30 AM</td>
+      <td style="font-size:.73rem">1.º Viernes</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#ef4444"></div><span class="imp-label" style="color:#ef4444">CRÍTICO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:90%"></div><span class="rng-num">350–800 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="critico" data-day="vie" data-study="no">
+      <td style="color:#475569">4</td>
+      <td><div class="news-name">💳 PCE — Core PCE Price Index</div><div class="news-sub">Inflación preferida de la Fed MoM/YoY</div></td>
+      <td><span class="day-badge vie">Vier</span></td>
+      <td class="hora">8:30 AM</td>
+      <td style="font-size:.73rem">Mensual</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#ef4444"></div><span class="imp-label" style="color:#ef4444">CRÍTICO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:80%"></div><span class="rng-num">280–600 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="critico" data-day="jue" data-study="no">
+      <td style="color:#475569">5</td>
+      <td><div class="news-name">📈 GDP — Gross Domestic Product</div><div class="news-sub">Crecimiento económico trimestral (1.ª, 2.ª, 3.ª lectura)</div></td>
+      <td><span class="day-badge jue">Juev</span></td>
+      <td class="hora">8:30 AM</td>
+      <td style="font-size:.73rem">Trimestral</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#ef4444"></div><span class="imp-label" style="color:#ef4444">CRÍTICO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:75%"></div><span class="rng-num">250–700 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="critico" data-day="mie" data-study="no">
+      <td style="color:#475569">6</td>
+      <td><div class="news-name">💼 ADP Employment</div><div class="news-sub">Empleo privado — preview del NFP del viernes</div></td>
+      <td><span class="day-badge mie">Miér</span></td>
+      <td class="hora">8:15 AM</td>
+      <td style="font-size:.73rem">Mensual</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#ef4444"></div><span class="imp-label" style="color:#ef4444">CRÍTICO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:70%"></div><span class="rng-num">200–500 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <!-- ALTO -->
+    <tr data-impact="alto" data-day="mar" data-study="yes">
+      <td style="color:#475569">7</td>
+      <td><div class="news-name">🌡️ PPI — Producer Price Index</div><div class="news-sub">Inflación al productor MoM. A veces cae martes.</div></td>
+      <td><span class="day-badge mar">Mar</span></td>
+      <td class="hora">8:30 AM</td>
+      <td style="font-size:.73rem">Mensual</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#f97316"></div><span class="imp-label" style="color:#f97316">ALTO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:65%;background:#f97316"></div><span class="rng-num">~344 pts</span></div></td>
+      <td><span class="study s-yes">✅ Estudiado</span></td>
+      <td><a href="backtest_PPI_martes.html" style="color:#60a5fa;font-size:.72rem">ver →</a></td>
+    </tr>
+
+    <tr data-impact="alto" data-day="mar" data-study="yes">
+      <td style="color:#475569">8</td>
+      <td><div class="news-name">📊 CB Consumer Confidence</div><div class="news-sub">Confianza del consumidor Conference Board</div></td>
+      <td><span class="day-badge mar">Mar</span></td>
+      <td class="hora">10:00 AM</td>
+      <td style="font-size:.73rem">Último martes</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#f97316"></div><span class="imp-label" style="color:#f97316">ALTO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:60%;background:#f97316"></div><span class="rng-num">~315 pts</span></div></td>
+      <td><span class="study s-yes">✅ Estudiado</span></td>
+      <td><a href="backtest_CB_confidence.html" style="color:#60a5fa;font-size:.72rem">ver →</a></td>
+    </tr>
+
+    <tr data-impact="alto" data-day="mar" data-study="yes">
+      <td style="color:#475569">9</td>
+      <td><div class="news-name">💼 JOLTS — Job Openings</div><div class="news-sub">Ofertas de trabajo abiertas en EEUU</div></td>
+      <td><span class="day-badge mar">Mar</span></td>
+      <td class="hora">10:00 AM</td>
+      <td style="font-size:.73rem">1.er martes</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#f97316"></div><span class="imp-label" style="color:#f97316">ALTO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:70%;background:#f97316"></div><span class="rng-num">~387 pts</span></div></td>
+      <td><span class="study s-yes">✅ Estudiado</span></td>
+      <td><a href="backtest_JOLTS.html" style="color:#60a5fa;font-size:.72rem">ver →</a></td>
+    </tr>
+
+    <tr data-impact="alto" data-day="vie" data-study="partial">
+      <td style="color:#475569">10</td>
+      <td><div class="news-name">🏠 Michigan Consumer Sentiment</div><div class="news-sub">U of Michigan — confianza consumidor</div></td>
+      <td><span class="day-badge vie">Vier</span></td>
+      <td class="hora">10:00 AM</td>
+      <td style="font-size:.73rem">2.º y 4.º viernes</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#f97316"></div><span class="imp-label" style="color:#f97316">ALTO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:55%;background:#f97316"></div><span class="rng-num">200–400 pts</span></div></td>
+      <td><span class="study s-partial">🟡 Parcial</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="alto" data-day="mie" data-study="no">
+      <td style="color:#475569">11</td>
+      <td><div class="news-name">🏭 ISM Manufacturing PMI</div><div class="news-sub">Actividad manufacturera &gt;50=expansión</div></td>
+      <td><span class="day-badge mie">Miér</span></td>
+      <td class="hora">10:00 AM</td>
+      <td style="font-size:.73rem">1.er día del mes</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#f97316"></div><span class="imp-label" style="color:#f97316">ALTO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:50%;background:#f97316"></div><span class="rng-num">200–400 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="alto" data-day="mie" data-study="no">
+      <td style="color:#475569">12</td>
+      <td><div class="news-name">🛍️ ISM Services PMI</div><div class="news-sub">Actividad sector servicios &gt;50=expansión</div></td>
+      <td><span class="day-badge mie">Miér</span></td>
+      <td class="hora">10:00 AM</td>
+      <td style="font-size:.73rem">~5.º día del mes</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#f97316"></div><span class="imp-label" style="color:#f97316">ALTO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:50%;background:#f97316"></div><span class="rng-num">200–400 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="alto" data-day="vie" data-study="no">
+      <td style="color:#475569">13</td>
+      <td><div class="news-name">🛒 Retail Sales</div><div class="news-sub">Ventas al por menor MoM</div></td>
+      <td><span class="day-badge vie">Vier</span></td>
+      <td class="hora">8:30 AM</td>
+      <td style="font-size:.73rem">Mensual (~día 15)</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#f97316"></div><span class="imp-label" style="color:#f97316">ALTO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:50%;background:#f97316"></div><span class="rng-num">180–380 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="alto" data-day="mar" data-study="partial">
+      <td style="color:#475569">14</td>
+      <td><div class="news-name">🗣️ Fed Chair Powell (speech)</div><div class="news-sub">Testimonios en el Congreso o conferencias</div></td>
+      <td><span class="day-badge mar">Mar</span></td>
+      <td class="hora">Variable</td>
+      <td style="font-size:.73rem">~4-6× / año</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#f97316"></div><span class="imp-label" style="color:#f97316">ALTO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:65%;background:#f97316"></div><span class="rng-num">300–700 pts</span></div></td>
+      <td><span class="study s-partial">🟡 Parcial</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <!-- MEDIO -->
+    <tr data-impact="medio" data-day="jue" data-study="no">
+      <td style="color:#475569">15</td>
+      <td><div class="news-name">📋 Initial Jobless Claims</div><div class="news-sub">Solicitudes nuevas de desempleo semanal</div></td>
+      <td><span class="day-badge jue">Juev</span></td>
+      <td class="hora">8:30 AM</td>
+      <td style="font-size:.73rem">Cada jueves</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#eab308"></div><span class="imp-label" style="color:#eab308">MEDIO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:35%;background:#eab308"></div><span class="rng-num">100–250 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="medio" data-day="jue" data-study="no">
+      <td style="color:#475569">16</td>
+      <td><div class="news-name">🏠 Housing Starts / Building Permits</div><div class="news-sub">Construcción de viviendas nuevas</div></td>
+      <td><span class="day-badge jue">Juev</span></td>
+      <td class="hora">8:30 AM</td>
+      <td style="font-size:.73rem">Mensual</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#eab308"></div><span class="imp-label" style="color:#eab308">MEDIO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:25%;background:#eab308"></div><span class="rng-num">80–200 pts</span></div></td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+    <tr data-impact="medio" data-day="mie" data-study="no">
+      <td style="color:#475569">17</td>
+      <td><div class="news-name">📦 Durable Goods Orders</div><div class="news-sub">Pedidos de bienes duraderos MoM</div></td>
+      <td><span class="day-badge mie">Miér</span></td>
+      <td class="hora">8:30 AM</td>
+      <td style="font-size:.73rem">Mensual</td>
+      <td><div class="imp"><div class="imp-dot" style="background:#eab308"></div><span class="imp-label" style="color:#eab308">MEDIO</span></div></td>
+      <td><div class="rng-bar-wrap"><div class="rng-bar" style="width:25%;background:#eab308"></div><span class="rng-num">80–200 pts</span></div></td>
+      </td>
+      <td><span class="study s-no">Sin estudio</span></td>
+      <td style="color:#334155;font-size:.72rem">—</td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<div style="margin-top:16px;background:#111827;border-radius:10px;padding:14px 18px">
+  <h3 style="font-size:.8rem;color:#94a3b8;margin-bottom:10px">🎯 Prioridad de Estudio Recomendada</h3>
+  <div style="font-size:.76rem;color:#64748b;line-height:2">
+    <span style="color:#ef4444;font-weight:700">►Siguiente:</span> CPI (miércoles), NFP (primer viernes) — mayor rango diario documentado<br>
+    <span style="color:#f97316;font-weight:700">►Luego:</span> ISM Manufacturing, ISM Services — fáciles de agrupar por mes<br>
+    <span style="color:#eab308;font-weight:700">►Después:</span> Michigan Sentiment (2 veces/mes), Retail Sales, GDP
+  </div>
+</div>
+
+<div style="margin-top:10px;font-size:.7rem;color:#334155;border-left:2px solid #1e293b;padding-left:10px">
+  Ranges estimados basados en histórico NQ 2023–2026 · Día de semana = más frecuente, puede variar ·
+  "Estudiado" = backtest formal en este proyecto
+</div>
+
+<script>
+function filterImpact(level) {
+  document.querySelectorAll('#news-table tbody tr').forEach(tr => {
+    tr.classList.toggle('hidden', tr.dataset.impact !== level);
+  });
+}
+function filterDay(day) {
+  document.querySelectorAll('#news-table tbody tr').forEach(tr => {
+    tr.classList.toggle('hidden', tr.dataset.day !== day);
+  });
+}
+function filterStudy(st) {
+  document.querySelectorAll('#news-table tbody tr').forEach(tr => {
+    tr.classList.toggle('hidden', tr.dataset.study !== st);
+  });
+}
+function showAll() {
+  document.querySelectorAll('#news-table tbody tr').forEach(tr => {
+    tr.classList.remove('hidden');
+  });
+}
+</script>
+</body>
+</html>

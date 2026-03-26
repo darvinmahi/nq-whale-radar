@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NQ Whale Radar — Estrategia pm_open_pos | Semana 10-17 Mar 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0d1117;
+    --surface:   #161b22;
+    --border:    #21262d;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --green:     #23d18b;
+    --green-dim: #1a3d2e;
+    --red:       #f85149;
+    --red-dim:   #3d1a1a;
+    --blue:      #58a6ff;
+    --blue-dim:  #1a2d4a;
+    --orange:    #f0883e;
+    --purple:    #bc8cff;
+    --yellow:    #e3b341;
+    --win:       #23d18b;
+    --loss:      #f85149;
+    --partial:   #f0883e;
+    --notrade:   #8b949e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, #58a6ff 0%, #23d18b 100%);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .header-info h1 { font-size: 20px; font-weight: 700; }
+  .header-info p { color: var(--muted); font-size: 13px; margin-top: 3px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  }
+  .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid #1f3758; }
+  .badge-green { background: var(--green-dim); color: var(--green); border: 1px solid #1a3d2e; }
+  .badge-red   { background: var(--red-dim);   color: var(--red);   border: 1px solid #3d1a1a; }
+  .badge-gray  { background: #1c2128; color: var(--muted); border: 1px solid var(--border); }
+  .badge-orange{ background: #2d1e0a; color: var(--orange); border: 1px solid #3d2a1a; }
+
+  /* ─── Explicación de la estrategia ──────────────────────────────────── */
+  .strategy-explain {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .strategy-explain h2 { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--blue); }
+  .steps-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .step {
+    flex: 1; min-width: 180px;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .step-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--blue-dim);
+    color: var(--blue);
+    font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .step h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .step p  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .step .tag { margin-top: 8px; }
+
+  /* ─── Panels de cada día ─────────────────────────────────────────────── */
+  .days-grid { display: flex; flex-direction: column; gap: 20px; }
+  .day-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .day-card.win-card  { border-left: 4px solid var(--green); }
+  .day-card.loss-card { border-left: 4px solid var(--red); }
+  .day-card.no-trade-card { border-left: 4px solid var(--muted); opacity: 0.7; }
+  .day-card.partial-card { border-left: 4px solid var(--orange); }
+
+  .day-header {
+    display: flex; align-items: center;
+    padding: 14px 20px; gap: 14px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .day-date { font-size: 18px; font-weight: 700; }
+  .day-weekday { color: var(--muted); font-size: 13px; }
+  .day-header .spacer { flex: 1; }
+  .resultado-badge {
+    font-size: 13px; font-weight: 700;
+    padding: 5px 14px; border-radius: 20px;
+  }
+  .res-win  { background: var(--green-dim); color: var(--green); }
+  .res-loss { background: var(--red-dim); color: var(--red); }
+  .res-none { background: #1c2128; color: var(--muted); }
+  .res-partial { background: #2d1e0a; color: var(--orange); }
+
+  .day-body {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0;
+  }
+  @media (max-width: 768px) { .day-body { grid-template-columns: 1fr; } }
+
+  /* LEFT: datos */
+  .day-data {
+    padding: 18px 20px;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .data-section-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+    color: var(--muted); text-transform: uppercase;
+    margin-bottom: 4px; margin-top: 6px;
+  }
+  .data-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 5px 0; border-bottom: 1px solid #1c2128;
+  }
+  .data-label { color: var(--muted); font-size: 12px; }
+  .data-value { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; }
+  .data-value.green { color: var(--green); }
+  .data-value.red   { color: var(--red); }
+  .data-value.blue  { color: var(--blue); }
+  .data-value.orange{ color: var(--orange); }
+  .data-value.purple{ color: var(--purple); }
+
+  /* RIGHT: gráfica de velas de precio simplificada */
+  .day-chart { padding: 16px 20px; min-height: 280px; }
+  .chart-title { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
+
+  /* Canvas chart container */
+  .chart-wrap { position: relative; width: 100%; height: 250px; }
+  canvas.price-chart { width: 100%; height: 100%; display: block; }
+
+  /* ─── Summary bar ──────────────────────────────────────────────────── */
+  .summary-bar {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-top: 24px;
+  }
+  .summary-stat { text-align: center; flex: 1; min-width: 100px; }
+  .summary-stat .val { font-size: 24px; font-weight: 700; }
+  .summary-stat .lbl { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+  /* ─── Leyenda ──────────────────────────────────────────────────────── */
+  .legend {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    margin-top: 16px; padding: 14px 20px;
+    background: #0d1117; border: 1px solid var(--border);
+    border-radius: 10px; align-items: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+  .no-trade-msg {
+    padding: 32px; text-align: center; color: var(--muted);
+    font-size: 13px;
+  }
+
+  .pip-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px; font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">🐋</div>
+  <div class="header-info">
+    <h1>NQ Whale Radar — Estrategia <code style="font-family:JetBrains Mono;font-size:16px;color:var(--blue)">pm_open_pos</code></h1>
+    <p>Semana del 11 al 17 de Marzo 2026 — Últimos 5 días de trading</p>
+  </div>
+  <div style="margin-left:auto; display:flex; gap:10px; flex-wrap:wrap;">
+    <span class="badge badge-green">✅ 3 WIN</span>
+    <span class="badge badge-gray">⛔ 2 NO TRADE</span>
+    <span class="badge badge-blue">+217 pts NQ</span>
+  </div>
+</div>
+
+<!-- EXPLICACIÓN DE LA ESTRATEGIA -->
+<div class="strategy-explain">
+  <h2>📖 ¿Cómo funciona la estrategia?</h2>
+  <div class="steps-row">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>⏰ ~3:00am — Ver el Premarket</h3>
+      <p>Se observa el precio de apertura del premarket (<strong>pm_open</strong>) y se compara con el <strong>Value Area del día anterior</strong> (VAL y VAH).</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>📍 Clasificar la apertura</h3>
+      <p>
+        <span style="color:var(--green)">▲ ABOVE_VA</span>: pm_open &gt; VAH anterior → Bias ALCISTA → LONG<br><br>
+        <span style="color:var(--red)">▼ BELOW_VA</span>: pm_open &lt; VAL anterior → Bias BAJISTA → SHORT<br><br>
+        <span style="color:var(--muted)">◆ INSIDE_VA</span>: dentro del rango → <strong>NO TRADE</strong>
+      </p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>🔔 9:30am — Entrada en NY Open</h3>
+      <p>La entrada es al precio <strong>ny_open</strong>. El target es la VAH (LONG) o VAL (SHORT) del día anterior. Stop por debajo/arriba del VA con 10% de extensión.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>🎯 Resultado del día</h3>
+      <p>✅ <strong>WIN</strong>: precio alcanza el target<br>
+         ❌ <strong>LOSS</strong>: precio toca el stop primero<br>
+         ⚡ <strong>PARCIAL</strong>: cierre indica dirección pero no toca ni target ni stop</p>
+    </div>
+  </div>
+</div>
+
+<!-- LEYENDA -->
+<div class="legend">
+  <span style="font-size:12px;font-weight:600;color:var(--text)">Leyenda: </span>
+  <div class="legend-item"><div class="legend-dot" style="background:#234a33;border:2px solid var(--green)"></div> Value Area anterior (VAL→VAH)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> Precio de entrada (NY Open)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Target (objetivo)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Stop Loss</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#555"></div> Rango del día (prof_lo → prof_hi)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> POC anterior</div>
+</div>
+
+<!-- DÍAS -->
+<div class="days-grid" id="daysGrid" style="margin-top:24px"></div>
+
+<!-- SUMMARY -->
+<div class="summary-bar">
+  <div class="summary-stat">
+    <div class="val" style="color:var(--text)">5</div>
+    <div class="lbl">Días analizados</div>
+  </div>
+  <div class="summary-stat">
+    <div class="val" style="color:var(--blue)">3</div>
+    <div class="lbl">Trades tomados</div>
+  </div>
+  <div class="summary-stat">
+    <div class="val" style="color:var(--green)">3</div>
+    <div class="lbl">WIN</div>
+  </div>
+  <div class="summary-stat">
+    <div class="val" style="color:var(--muted)">2</div>
+    <div class="lbl">No Trade (INSIDE_VA)</div>
+  </div>
+  <div class="summary-stat">
+    <div class="val pip-counter" style="color:var(--green)">+217 pts</div>
+    <div class="lbl">Puntos NQ acumulados</div>
+  </div>
+  <div class="summary-stat">
+    <div class="val" style="color:var(--green)">+$434</div>
+    <div class="lbl">MNQ ($2/pt)</div>
+  </div>
+  <div class="summary-stat">
+    <div class="val" style="color:var(--green)">+$4,340</div>
+    <div class="lbl">NQ ($20/pt)</div>
+  </div>
+  <div class="summary-stat">
+    <div class="val" style="color:var(--yellow)">100%</div>
+    <div class="lbl">Win Rate</div>
+  </div>
+</div>
+
+<script>
+// ─── Datos completos de los 5 días ───────────────────────────────────────────
+const days = [
+  {
+    date: "2026-03-11", weekday: "MIÉRCOLES",
+    direc: "NONE", pos: "INSIDE_VA",
+    pm_open: 25065.75, ny_open: 24946.25,
+    prof_hi: 25118.75, prof_lo: 24895.75,
+    prev_val: 24948.49, prev_vah: 25076.26, prev_poc: 24962.3,
+    curr_val: 24944.53, curr_vah: 25056.03, curr_poc: 24947.32,
+    stop: 0, target: 0, riesgo: 0, potenc: 0, pts: 0,
+    resultado: "NO_TRADE",
+    prev_range: 127.8,
+    prev_date: "2026-03-10"
+  },
+  {
+    date: "2026-03-12", weekday: "JUEVES",
+    direc: "SHORT", pos: "BELOW_VA",
+    pm_open: 24620.5, ny_open: 24834.5,
+    prof_hi: 24928.0, prof_lo: 24630.5,
+    prev_val: 24944.53, prev_vah: 25056.03, prev_poc: 24947.32,
+    curr_val: 24710.45, curr_vah: 24885.23, curr_poc: 24848.05,
+    stop: 25067.18, target: 24778.75, riesgo: 232.68, potenc: 55.75,
+    pts: 55.8, resultado: "WIN",
+    prev_range: 111.5,
+    prev_date: "2026-03-11"
+  },
+  {
+    date: "2026-03-13", weekday: "VIERNES",
+    direc: "SHORT", pos: "BELOW_VA",
+    pm_open: 24490.5, ny_open: 24680.5,
+    prof_hi: 24805.25, prof_lo: 24397.0,
+    prev_val: 24710.45, prev_vah: 24885.23, prev_poc: 24848.05,
+    curr_val: 24583.26, curr_vah: 24802.7, curr_poc: 24639.4,
+    stop: 24902.71, target: 24593.1, riesgo: 222.21, potenc: 87.4,
+    pts: 87.4, resultado: "WIN",
+    prev_range: 174.8,
+    prev_date: "2026-03-12"
+  },
+  {
+    date: "2026-03-16", weekday: "LUNES",
+    direc: "NONE", pos: "INSIDE_VA",
+    pm_open: 24694.25, ny_open: 24658.0,
+    prof_hi: 24741.0, prof_lo: 24478.0,
+    prev_val: 24583.26, prev_vah: 24802.7, prev_poc: 24639.4,
+    curr_val: 24591.42, curr_vah: 24739.36, curr_poc: 24630.87,
+    stop: 0, target: 0, riesgo: 0, potenc: 0, pts: 0,
+    resultado: "NO_TRADE",
+    prev_range: 219.4,
+    prev_date: "2026-03-13"
+  },
+  {
+    date: "2026-03-17", weekday: "MARTES",
+    direc: "LONG", pos: "ABOVE_VA",
+    pm_open: 25076.0, ny_open: 24932.75,
+    prof_hi: 25117.0, prof_lo: 24728.25,
+    prev_val: 24591.42, prev_vah: 24739.36, prev_poc: 24630.87,
+    curr_val: 24740.4, curr_vah: 25012.52, curr_poc: 24818.15,
+    stop: 24576.63, target: 25006.7, riesgo: 356.12, potenc: 73.95,
+    pts: 74.0, resultado: "WIN",
+    prev_range: 147.9,
+    prev_date: "2026-03-16"
+  }
+];
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function fmt(n) { return n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function resClass(r) {
+  if (r === 'WIN') return 'win-card';
+  if (r === 'LOSS') return 'loss-card';
+  if (r === 'NO_TRADE') return 'no-trade-card';
+  return 'partial-card';
+}
+function resBadge(r, pts) {
+  if (r === 'WIN')       return `<span class="resultado-badge res-win">✅ WIN  +${fmt(pts)} pts</span>`;
+  if (r === 'LOSS')      return `<span class="resultado-badge res-loss">❌ LOSS ${fmt(pts)} pts</span>`;
+  if (r === 'NO_TRADE')  return `<span class="resultado-badge res-none">⛔ NO TRADE</span>`;
+  return `<span class="resultado-badge res-partial">⚡ PARCIAL ${pts>0?'+':''}${fmt(pts)} pts</span>`;
+}
+function posBadge(pos, direc) {
+  if (pos === 'ABOVE_VA') return `<span class="badge badge-green">▲ ABOVE_VA → 🟢 LONG</span>`;
+  if (pos === 'BELOW_VA') return `<span class="badge badge-red">▼ BELOW_VA → 🔴 SHORT</span>`;
+  return `<span class="badge badge-gray">◆ INSIDE_VA → ⛔ SIN TRADE</span>`;
+}
+
+// ─── Renderizar tarjetas ──────────────────────────────────────────────────────
+const grid = document.getElementById('daysGrid');
+
+days.forEach((d, idx) => {
+  const isNoTrade = d.resultado === 'NO_TRADE';
+
+  // HTML de datos
+  let dataHTML = '';
+  if (!isNoTrade) {
+    dataHTML = `
+      <div class="data-section-title">📅 Referencia: VA del ${d.prev_date}</div>
+      <div class="data-row">
+        <span class="data-label">VAL anterior</span>
+        <span class="data-value red">${fmt(d.prev_val)}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">VAH anterior</span>
+        <span class="data-value green">${fmt(d.prev_vah)}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">POC anterior</span>
+        <span class="data-value purple">${fmt(d.prev_poc)}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">VA Range ayer</span>
+        <span class="data-value blue">${d.prev_range} pts</span>
+      </div>
+
+      <div class="data-section-title">🔔 Signal de Hoy</div>
+      <div class="data-row">
+        <span class="data-label">pm_open (3am)</span>
+        <span class="data-value ${d.pos==='ABOVE_VA'?'green':'red'}">${fmt(d.pm_open)}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">NY Open (9:30am)</span>
+        <span class="data-value blue">${fmt(d.ny_open)}</span>
+      </div>
+
+      <div class="data-section-title">🎯 Trade (${d.direc})</div>
+      <div class="data-row">
+        <span class="data-label">Entrada</span>
+        <span class="data-value blue">${fmt(d.ny_open)}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Target ✅</span>
+        <span class="data-value green">${fmt(d.target)}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Stop Loss ❌</span>
+        <span class="data-value red">${fmt(d.stop)}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Riesgo</span>
+        <span class="data-value red">${fmt(d.riesgo)} pts</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Potencial</span>
+        <span class="data-value green">+${fmt(d.potenc)} pts</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Rango del día</span>
+        <span class="data-value">${fmt(d.prof_lo)} — ${fmt(d.prof_hi)}</span>
+      </div>
+    `;
+  } else {
+    dataHTML = `
+      <div class="data-section-title">📅 Referencia: VA del ${d.prev_date}</div>
+      <div class="data-row">
+        <span class="data-label">VAL anterior</span>
+        <span class="data-value red">${fmt(d.prev_val)}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">VAH anterior</span>
+        <span class="data-value green">${fmt(d.prev_vah)}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">pm_open (3am)</span>
+        <span class="data-value orange">${fmt(d.pm_open)}</span>
+      </div>
+
+      <div class="data-section-title" style="color:var(--muted)">🚫 No hay trade</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6;padding:8px 0;">
+        El pm_open (${fmt(d.pm_open)}) está <strong style="color:var(--text)">dentro</strong> del Value Area del día anterior
+        (VAL ${fmt(d.prev_val)} – VAH ${fmt(d.prev_vah)}).<br><br>
+        No hay bias claro → Se espera el próximo día.
+      </div>
+      <div class="data-row">
+        <span class="data-label">Rango del día</span>
+        <span class="data-value">${fmt(d.prof_lo)} — ${fmt(d.prof_hi)}</span>
+      </div>
+    `;
+  }
+
+  const card = document.createElement('div');
+  card.className = `day-card ${resClass(d.resultado)}`;
+  card.innerHTML = `
+    <div class="day-header">
+      <div>
+        <div class="day-date">${d.date}</div>
+        <div class="day-weekday">${d.weekday}</div>
+      </div>
+      ${posBadge(d.pos, d.direc)}
+      <div class="spacer"></div>
+      ${resBadge(d.resultado, d.pts)}
+    </div>
+    <div class="day-body">
+      <div class="day-data">${dataHTML}</div>
+      <div class="day-chart">
+        <div class="chart-title">📊 Gráfica de precio del día — NQ Futures</div>
+        <div class="chart-wrap">
+          <canvas id="chart-${idx}" class="price-chart"></canvas>
+        </div>
+        ${!isNoTrade ? `<div style="margin-top:10px;font-size:12px;color:var(--muted)">
+          Dirección del trade: <strong style="color:${d.direc==='LONG'?'var(--green)':'var(--red)'}">${d.direc}</strong> &nbsp;|&nbsp;
+          Resultado:
+          <strong style="color:${d.resultado==='WIN'?'var(--green)':d.resultado==='LOSS'?'var(--red)':'var(--orange)'}">
+            ${d.resultado} ${d.pts > 0 ? '+' : ''}${d.pts} pts NQ
+          </strong>
+        </div>` : '<div style="margin-top:10px;font-size:12px;color:var(--muted)">No hay trade este día</div>'}
+      </div>
+    </div>
+  `;
+  grid.appendChild(card);
+
+  // Dibujar gráfica
+  drawChart(idx, d);
+});
+
+// ─── Canvas Chart ─────────────────────────────────────────────────────────────
+function drawChart(idx, d) {
+  const canvas = document.getElementById(`chart-${idx}`);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // DPR para pantallas retina
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const W = rect.width > 0 ? rect.width : 520;
+  const H = 240;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+
+  const isNoTrade = d.resultado === 'NO_TRADE';
+
+  // Todos los precios relevantes para escala
+  let prices = [d.prof_lo, d.prof_hi, d.prev_val, d.prev_vah, d.ny_open];
+  if (!isNoTrade) { prices.push(d.stop, d.target); }
+  const minP = Math.min(...prices) - 30;
+  const maxP = Math.max(...prices) + 30;
+  const range = maxP - minP;
+
+  // Funciones de escala
+  const PAD_L = 80; // left para labels
+  const PAD_R = 20;
+  const PAD_T = 20;
+  const PAD_B = 30;
+  const chartW = W - PAD_L - PAD_R;
+  const chartH = H - PAD_T - PAD_B;
+
+  function y(price) { return PAD_T + chartH * (1 - (price - minP) / range); }
+
+  // Fondo
+  ctx.fillStyle = '#0a0e13';
+  ctx.roundRect(0, 0, W, H, 10);
+  ctx.fill();
+
+  // Grid horizontal
+  ctx.strokeStyle = '#1c2128';
+  ctx.lineWidth = 1;
+  const nGrid = 5;
+  for (let i = 0; i <= nGrid; i++) {
+    const p = minP + (range * i / nGrid);
+    const py = y(p);
+    ctx.beginPath(); ctx.moveTo(PAD_L, py); ctx.lineTo(W - PAD_R, py); ctx.stroke();
+    ctx.fillStyle = '#5a6272'; ctx.font = '10px JetBrains Mono, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText(p.toFixed(0), PAD_L - 6, py + 4);
+  }
+
+  // ─── Value Area del día anterior (recuadro verde semi-transparente) ───────
+  ctx.fillStyle = 'rgba(35, 209, 139, 0.07)';
+  const vaTop = y(d.prev_vah);
+  const vaBot = y(d.prev_val);
+  ctx.fillRect(PAD_L, vaTop, chartW, vaBot - vaTop);
+  ctx.strokeStyle = 'rgba(35, 209, 139, 0.25)';
+  ctx.setLineDash([4, 4]);
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(PAD_L, vaTop); ctx.lineTo(W-PAD_R, vaTop); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(PAD_L, vaBot); ctx.lineTo(W-PAD_R, vaBot); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Etiquetas VA
+  ctx.fillStyle = 'rgba(35,209,139,0.8)'; ctx.font = 'bold 10px Inter, sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText(`VAH ${d.prev_vah.toFixed(1)}`, PAD_L + 4, vaTop - 4);
+  ctx.fillText(`VAL ${d.prev_val.toFixed(1)}`, PAD_L + 4, vaBot + 12);
+
+  // POC anterior (línea morada punteada)
+  ctx.strokeStyle = 'rgba(188, 140, 255, 0.6)';
+  ctx.setLineDash([3, 5]);
+  ctx.lineWidth = 1.5;
+  const pocY = y(d.prev_poc);
+  ctx.beginPath(); ctx.moveTo(PAD_L, pocY); ctx.lineTo(W-PAD_R, pocY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = 'rgba(188,140,255,0.9)'; ctx.font = '10px JetBrains Mono'; ctx.textAlign = 'right';
+  ctx.fillText(`POC ${d.prev_poc.toFixed(1)}`, W - PAD_R - 4, pocY - 4);
+
+  // ─── Rango del día (barra vertical gruesa, tipo vela) ────────────────
+  const barX = PAD_L + chartW * 0.40;
+  const barW = 50;
+
+  // Sombra total: prof_lo a prof_hi
+  const dayColor = d.resultado === 'WIN'
+    ? 'rgba(35,209,139,0.9)'
+    : d.resultado === 'LOSS'
+    ? 'rgba(248,81,73,0.9)'
+    : d.resultado === 'NO_TRADE'
+    ? 'rgba(139,148,158,0.7)'
+    : 'rgba(240,136,62,0.9)';
+
+  // Rango completo del día
+  ctx.fillStyle = dayColor.replace('0.9','0.15');
+  ctx.fillRect(barX - barW/2, y(d.prof_hi), barW, y(d.prof_lo) - y(d.prof_hi));
+  ctx.strokeStyle = dayColor.replace('0.9','0.4');
+  ctx.lineWidth = 1;
+  ctx.strokeRect(barX - barW/2, y(d.prof_hi), barW, y(d.prof_lo) - y(d.prof_hi));
+
+  // Línea de High del día
+  ctx.strokeStyle = dayColor;
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(barX - barW/2 - 8, y(d.prof_hi)); ctx.lineTo(barX + barW/2 + 8, y(d.prof_hi)); ctx.stroke();
+  // Línea de Low del día
+  ctx.beginPath(); ctx.moveTo(barX - barW/2 - 8, y(d.prof_lo)); ctx.lineTo(barX + barW/2 + 8, y(d.prof_lo)); ctx.stroke();
+
+  // Etiquetas High/Low del día
+  ctx.fillStyle = dayColor; ctx.font = '10px JetBrains Mono'; ctx.textAlign = 'left';
+  ctx.fillText(`Hi ${d.prof_hi.toFixed(1)}`, barX + barW/2 + 12, y(d.prof_hi) + 4);
+  ctx.fillText(`Lo ${d.prof_lo.toFixed(1)}`, barX + barW/2 + 12, y(d.prof_lo) + 4);
+
+  if (!isNoTrade) {
+    // ─── Target (línea verde horizontal) ────────────────────────────
+    ctx.strokeStyle = '#23d18b';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 3]);
+    const tY = y(d.target);
+    ctx.beginPath(); ctx.moveTo(PAD_L, tY); ctx.lineTo(W-PAD_R, tY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#23d18b'; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'right';
+    ctx.fillText(`🎯 TARGET ${d.target.toFixed(1)}`, W - PAD_R - 4, tY - 5);
+
+    // ─── Stop loss (línea roja horizontal) ──────────────────────────
+    ctx.strokeStyle = '#f85149';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 3]);
+    const sY = y(d.stop);
+    ctx.beginPath(); ctx.moveTo(PAD_L, sY); ctx.lineTo(W-PAD_R, sY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#f85149'; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'right';
+    ctx.fillText(`🛑 STOP ${d.stop.toFixed(1)}`, W - PAD_R - 4, sY + 14);
+
+    // ─── Entrada (circulo y línea azul) ──────────────────────────────
+    const eY = y(d.ny_open);
+    ctx.strokeStyle = '#58a6ff';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(PAD_L, eY); ctx.lineTo(W-PAD_R, eY); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Círculo de entrada en la barra
+    ctx.fillStyle = '#58a6ff';
+    ctx.beginPath(); ctx.arc(barX, eY, 7, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#0d1117';
+    ctx.font = 'bold 10px Inter'; ctx.textAlign = 'center';
+    ctx.fillText(d.direc === 'LONG' ? '↑' : '↓', barX, eY + 4);
+
+    // Etiqueta entrada
+    ctx.fillStyle = '#58a6ff'; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'left';
+    ctx.fillText(`⚡ ENTRADA ${d.ny_open.toFixed(1)}`, PAD_L + 4, eY - 5);
+
+    // ─── Zona de ganancia/pérdida (sombreado entre entrada y target) ──
+    const zoneFill = d.direc === 'LONG'
+      ? (d.resultado === 'WIN' ? 'rgba(35,209,139,0.12)' : 'rgba(248,81,73,0.12)')
+      : (d.resultado === 'WIN' ? 'rgba(35,209,139,0.12)' : 'rgba(248,81,73,0.12)');
+    ctx.fillStyle = zoneFill;
+    const zoneTop = Math.min(eY, tY);
+    const zoneBot = Math.max(eY, tY);
+    ctx.fillRect(PAD_L, zoneTop, chartW, zoneBot - zoneTop);
+
+    // ─── Flecha de dirección ──────────────────────────────────────────
+    const arrowX = barX + 70;
+    const arrowColor = d.direc === 'LONG' ? '#23d18b' : '#f85149';
+    ctx.strokeStyle = arrowColor;
+    ctx.fillStyle = arrowColor;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    if (d.direc === 'LONG') {
+      ctx.moveTo(arrowX, eY + 20);
+      ctx.lineTo(arrowX, tY - 4);
+    } else {
+      ctx.moveTo(arrowX, eY - 20);
+      ctx.lineTo(arrowX, tY + 4);
+    }
+    ctx.stroke();
+    // Punta de flecha
+    ctx.beginPath();
+    if (d.direc === 'LONG') {
+      ctx.moveTo(arrowX - 7, tY + 10);
+      ctx.lineTo(arrowX, tY - 2);
+      ctx.lineTo(arrowX + 7, tY + 10);
+    } else {
+      ctx.moveTo(arrowX - 7, tY - 10);
+      ctx.lineTo(arrowX, tY + 2);
+      ctx.lineTo(arrowX + 7, tY - 10);
+    }
+    ctx.closePath(); ctx.fill();
+
+    // ─── Badge resultado en la gráfica ──────────────────────────────
+    const bText = d.resultado === 'WIN' ? `WIN +${d.pts.toFixed(1)} pts` : `LOSS ${d.pts.toFixed(1)} pts`;
+    const bColor = d.resultado === 'WIN' ? '#23d18b' : '#f85149';
+    const bBg    = d.resultado === 'WIN' ? 'rgba(35,209,139,0.15)' : 'rgba(248,81,73,0.15)';
+    const bX = PAD_L + 10;
+    const bY2 = PAD_T + 4;
+    ctx.fillStyle = bBg;
+    ctx.roundRect(bX, bY2, 130, 24, 6); ctx.fill();
+    ctx.strokeStyle = bColor; ctx.lineWidth = 1;
+    ctx.roundRect(bX, bY2, 130, 24, 6); ctx.stroke();
+    ctx.fillStyle = bColor; ctx.font = 'bold 12px Inter'; ctx.textAlign = 'left';
+    ctx.fillText(bText, bX + 8, bY2 + 16);
+
+  } else {
+    // NO TRADE: solo mostrar pm_open vs VA
+    const pmY = y(d.pm_open);
+    ctx.strokeStyle = 'rgba(255,165,0,0.7)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(PAD_L, pmY); ctx.lineTo(W-PAD_R, pmY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(240,136,62,0.9)'; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'left';
+    ctx.fillText(`pm_open ${d.pm_open.toFixed(1)} → INSIDE VA → NO TRADE`, PAD_L + 4, pmY - 5);
+
+    // Badge no trade
+    ctx.fillStyle = 'rgba(139,148,158,0.1)';
+    ctx.roundRect(PAD_L + 10, PAD_T + 4, 150, 24, 6); ctx.fill();
+    ctx.strokeStyle = '#5a6272'; ctx.lineWidth = 1;
+    ctx.roundRect(PAD_L + 10, PAD_T + 4, 150, 24, 6); ctx.stroke();
+    ctx.fillStyle = '#8b949e'; ctx.font = 'bold 12px Inter'; ctx.textAlign = 'left';
+    ctx.fillText('⛔ NO TRADE — INSIDE VA', PAD_L + 18, PAD_T + 20);
+  }
+
+  // Eje X — etiquetas de horario
+  ctx.fillStyle = '#5a6272'; ctx.font = '10px Inter'; ctx.textAlign = 'center';
+  const timeLabels = isNoTrade
+    ? ['Premarket\n(3am)', 'NY Open\n(9:30am)', 'Cierre NY\n(4pm)']
+    : ['Premarket\n(3am)', 'NY Open\n(9:30am)', 'Sesión NY', 'Cierre\n(4pm)'];
+  const xPositions = [PAD_L + chartW*0.05, barX, PAD_L + chartW*0.65, W - PAD_R - 20];
+  timeLabels.forEach((lbl, i) => {
+    const xp = xPositions[i];
+    ctx.fillStyle = '#5a6272';
+    lbl.split('\n').forEach((line, li) => {
+      ctx.fillText(line, xp, H - PAD_B + 12 + li*12);
+    });
+  });
+}
+
+// Re-dibujar on resize
+window.addEventListener('resize', () => {
+  days.forEach((d, idx) => drawChart(idx, d));
+});
+</script>
+</body>
+</html>

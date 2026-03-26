@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-03-24T01:01:28.604440Z",
+  "period": "2022-01-03 → 2026-03-23",
+  "total_mondays": 196,
+  "non_neutral_signals": 159,
+  "accuracy_same_monday": {
+    "overall": "43%",
+    "when_bear_signal": "42%",
+    "when_bull_signal": "50%",
+    "sample_size": 159
+  },
+  "accuracy_next_monday": {
+    "overall": "41%",
+    "sample_size": 158
+  },
+  "cot_delta_analysis": {
+    "when_lev_long_dropped": {
+      "occasions": 40,
+      "monday_was_bearish": "45%",
+      "thresh": "delta Long <= -3,000"
+    },
+    "when_lev_long_rose": {
+      "occasions": 23,
+      "monday_was_bullish": "48%",
+      "thresh": "delta Long >= 3,000"
+    }
+  },
+  "double_confirmation": {
+    "cot_bear_AND_vxn_high": {
+      "occasions": 11,
+      "accuracy": "36%"
+    },
+    "cot_bull_AND_vxn_low": {
+      "occasions": 8,
+      "accuracy": "50%"
+    }
+  }
+}

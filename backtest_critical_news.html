@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Backtest Noticias Criticas NQ</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0b0f1a;color:#e2e8f0;font-family:'Segoe UI',sans-serif;padding:24px 20px;max-width:1040px;margin:0 auto}
+h1{font-size:1.25rem;color:#7dd3fc;margin-bottom:4px}
+.meta{font-size:.77rem;color:#475569;margin-bottom:18px}
+.nav{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.nav a{background:#1e293b;color:#94a3b8;padding:4px 12px;border-radius:8px;text-decoration:none;font-size:.74rem}
+.nav a:hover{background:#334155;color:#f1f5f9}
+.card{background:var(--bg,#111827);border:1px solid var(--bd,#1e293b);border-top:3px solid var(--c);border-radius:14px;padding:20px;margin-bottom:20px}
+.card-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.card-title{font-size:.95rem;font-weight:700;color:#f1f5f9;margin-bottom:2px}
+.card-sub{font-size:.7rem;color:#475569}
+.badge{padding:3px 12px;border-radius:20px;font-size:.67rem;font-weight:700;border:1px solid}
+.stats-g{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px}
+.st{background:#0f172a;border-radius:8px;padding:9px 6px;text-align:center}
+.st label{display:block;font-size:.6rem;color:#475569;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+.st v{display:block;font-size:1.05rem;font-weight:700;color:#e2e8f0}
+.st u{font-size:.62rem;color:#475569;font-style:normal}
+.bb{display:flex;height:22px;border-radius:8px;overflow:hidden;font-size:.71rem;font-weight:700;margin-bottom:12px}
+.bb-bull{background:#14532d;color:#4ade80;display:flex;align-items:center;justify-content:center}
+.bb-bear{background:#450a0a;color:#f87171;display:flex;align-items:center;justify-content:center}
+.tbl{width:100%;border-collapse:collapse;font-size:.75rem}
+.tbl th{padding:6px 10px;text-align:left;color:#475569;font-size:.63rem;text-transform:uppercase;border-bottom:1px solid #1e293b;background:#0f172a}
+.tbl td{padding:6px 10px;border-bottom:1px solid #1e293b33}
+.tbl tr:hover td{background:#111827}
+.cmp{width:100%;border-collapse:collapse;font-size:.79rem;margin-bottom:26px;border-radius:10px;overflow:hidden}
+.cmp th{padding:8px 12px;text-align:left;color:#475569;font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;background:#0f172a;border-bottom:1px solid #1e293b}
+.cmp td{padding:8px 12px;border-bottom:1px solid #1e293b44}
+</style>
+</head>
+<body>
+<h1>🔴 Backtest Noticias Criticas — NQ Futures</h1>
+<p class="meta">CPI · NFP · FOMC — comportamiento real 2024–2026 · Generado 2026-03-25 19:15</p>
+<div class="nav">
+  <a href="daily_dashboard.html">🐋 Dashboard</a>
+  <a href="news_impact_map.html">📰 Mapa</a>
+  <a href="tuesday_calendar.html">🗓️ Martes</a>
+  <a href="backtest_CB_confidence.html">CB</a>
+  <a href="backtest_JOLTS.html">JOLTS</a>
+</div>
+
+<h3 style="font-size:.75rem;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Comparativa General</h3>
+<div style="overflow-x:auto;border-radius:10px;margin-bottom:24px">
+<table class="cmp">
+  <thead><tr><th>Noticia</th><th>Avg Range</th><th>Max Range</th><th>Avg Move</th><th>% Bull</th><th>N</th></tr></thead>
+  <tbody><tr><td><span style='color:#ef4444;font-weight:700'>📊 CPI</span></td><td style='font-weight:700;color:#ef4444'>431.8</td><td>1464.5</td><td>-5.7</td><td style='color:#34d399'>56%</td><td>27</td></tr><tr><td><span style='color:#a855f7;font-weight:700'>💼 NFP</span></td><td style='font-weight:700;color:#a855f7'>450.6</td><td>1325.5</td><td>-2.1</td><td style='color:#34d399'>58%</td><td>26</td></tr><tr><td><span style='color:#fb923c;font-weight:700'>🏦 FOMC</span></td><td style='font-weight:700;color:#fb923c'>467.0</td><td>1049.5</td><td>5.9</td><td style='color:#34d399'>50%</td><td>18</td></tr>
+<tr style="opacity:.55;border-top:2px solid #1e293b">
+  <td><span style="color:#f97316">🟠 CB Consumer Confidence</span></td>
+  <td style="color:#f97316">315</td><td>~580</td><td>~+40</td>
+  <td style="color:#34d399">46%</td><td>13</td>
+</tr>
+<tr style="opacity:.55">
+  <td><span style="color:#f97316">🟠 JOLTS Job Openings</span></td>
+  <td style="color:#f97316">387</td><td>~620</td><td>~-66</td>
+  <td style="color:#f87171">42%</td><td>12</td>
+</tr></tbody>
+</table>
+</div>
+
+
+    <div class="card" style="--c:#ef4444;--bg:#1a0808;--bd:#5a1a1a">
+      <div class="card-hdr">
+        <div>
+          <div class="card-title">📊 CPI — Consumer Price Index</div>
+          <div class="card-sub">8:30 AM ET · Mensual (miércoles) · 27 sesiones</div>
+        </div>
+        <div class="badge" style="color:#ef4444;border-color:#5a1a1a;background:#1a0808">CRÍTICO</div>
+      </div>
+      <div class="stats-g">
+        <div class="st"><label>Avg Range</label><v style="color:#ef4444">431.8</v><u>pts</u></div>
+        <div class="st"><label>Max Range</label><v style="color:#fca5a5">1464.5</v><u>pts</u></div>
+        <div class="st"><label>Min Range</label><v>182.5</v><u>pts</u></div>
+        <div class="st"><label>Avg Move</label><v>-5.7</v><u>pts</u></div>
+        <div class="st"><label>Avg|Move|</label><v>216.1</v><u>pts</u></div>
+        <div class="st"><label>Bull/Bear</label><v style="color:#34d399">15</v><u>/ 12</u></div>
+      </div>
+      <div class="bb">
+        <div class="bb-bull" style="width:56%">BULL 56%</div>
+        <div class="bb-bear" style="flex:1">BEAR 44%</div>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>Fecha</th><th>Día</th><th>Move</th><th>%</th><th>Range</th><th>Bias</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>2026-03-12</td>
+          <td>Juev</td>
+          <td style="color:#f87171;font-weight:700">-374.5</td>
+          <td style="color:#f87171">-1.50%</td>
+          <td>431.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2026-02-12</td>
+          <td>Juev</td>
+          <td style="color:#f87171;font-weight:700">-521.0</td>
+          <td style="color:#f87171">-2.06%</td>
+          <td>698.2</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2026-01-14</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-269.8</td>
+          <td style="color:#f87171">-1.04%</td>
+          <td>505.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-12-10</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+118.0</td>
+          <td style="color:#34d399">+0.46%</td>
+          <td>342.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-11-12</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-44.2</td>
+          <td style="color:#f87171">-0.17%</td>
+          <td>341.2</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-10-15</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+170.5</td>
+          <td style="color:#34d399">+0.69%</td>
+          <td>451.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-09-10</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-20.8</td>
+          <td style="color:#f87171">-0.09%</td>
+          <td>259.2</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-08-13</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+1.5</td>
+          <td style="color:#34d399">+0.01%</td>
+          <td>182.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-07-15</td>
+          <td>Mar</td>
+          <td style="color:#34d399;font-weight:700">+22.5</td>
+          <td style="color:#34d399">+0.10%</td>
+          <td>226.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-06-11</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-58.2</td>
+          <td style="color:#f87171">-0.27%</td>
+          <td>315.2</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-05-13</td>
+          <td>Mar</td>
+          <td style="color:#34d399;font-weight:700">+323.2</td>
+          <td style="color:#34d399">+1.54%</td>
+          <td>528.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-04-10</td>
+          <td>Juev</td>
+          <td style="color:#f87171;font-weight:700">-782.2</td>
+          <td style="color:#f87171">-4.06%</td>
+          <td>1464.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-03-12</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+205.8</td>
+          <td style="color:#34d399">+1.06%</td>
+          <td>401.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-02-12</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+10.5</td>
+          <td style="color:#34d399">+0.05%</td>
+          <td>351.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-01-15</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+423.2</td>
+          <td style="color:#34d399">+2.02%</td>
+          <td>543.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-12-11</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+357.5</td>
+          <td style="color:#34d399">+1.67%</td>
+          <td>414.2</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-11-13</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-18.5</td>
+          <td style="color:#f87171">-0.09%</td>
+          <td>212.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-10-10</td>
+          <td>Juev</td>
+          <td style="color:#f87171;font-weight:700">-15.5</td>
+          <td style="color:#f87171">-0.08%</td>
+          <td>206.8</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-09-11</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+433.2</td>
+          <td style="color:#34d399">+2.30%</td>
+          <td>746.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-08-14</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+15.8</td>
+          <td style="color:#34d399">+0.08%</td>
+          <td>278.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-07-11</td>
+          <td>Juev</td>
+          <td style="color:#f87171;font-weight:700">-453.8</td>
+          <td style="color:#f87171">-2.17%</td>
+          <td>606.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-06-12</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+248.5</td>
+          <td style="color:#34d399">+1.29%</td>
+          <td>378.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-05-15</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+282.0</td>
+          <td style="color:#34d399">+1.53%</td>
+          <td>314.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-04-10</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-184.2</td>
+          <td style="color:#f87171">-1.00%</td>
+          <td>420.8</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-03-12</td>
+          <td>Mar</td>
+          <td style="color:#34d399;font-weight:700">+217.2</td>
+          <td style="color:#34d399">+1.21%</td>
+          <td>311.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-02-13</td>
+          <td>Mar</td>
+          <td style="color:#f87171;font-weight:700">-251.8</td>
+          <td style="color:#f87171">-1.40%</td>
+          <td>421.2</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-01-11</td>
+          <td>Juev</td>
+          <td style="color:#34d399;font-weight:700">+11.2</td>
+          <td style="color:#34d399">+0.07%</td>
+          <td>304.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div class="card" style="--c:#a855f7;--bg:#130d1f;--bd:#4a1f80">
+      <div class="card-hdr">
+        <div>
+          <div class="card-title">💼 NFP — Non-Farm Payrolls</div>
+          <div class="card-sub">8:30 AM ET · 1.er viernes del mes · 26 sesiones</div>
+        </div>
+        <div class="badge" style="color:#a855f7;border-color:#4a1f80;background:#130d1f">CRÍTICO</div>
+      </div>
+      <div class="stats-g">
+        <div class="st"><label>Avg Range</label><v style="color:#a855f7">450.6</v><u>pts</u></div>
+        <div class="st"><label>Max Range</label><v style="color:#d8b4fe">1325.5</v><u>pts</u></div>
+        <div class="st"><label>Min Range</label><v>215.0</v><u>pts</u></div>
+        <div class="st"><label>Avg Move</label><v>-2.1</v><u>pts</u></div>
+        <div class="st"><label>Avg|Move|</label><v>263.7</v><u>pts</u></div>
+        <div class="st"><label>Bull/Bear</label><v style="color:#34d399">15</v><u>/ 11</u></div>
+      </div>
+      <div class="bb">
+        <div class="bb-bull" style="width:58%">BULL 58%</div>
+        <div class="bb-bear" style="flex:1">BEAR 42%</div>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>Fecha</th><th>Día</th><th>Move</th><th>%</th><th>Range</th><th>Bias</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>2026-02-06</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+747.2</td>
+          <td style="color:#34d399">+3.06%</td>
+          <td>982.2</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2026-01-09</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+213.2</td>
+          <td style="color:#34d399">+0.83%</td>
+          <td>370.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-12-05</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+102.2</td>
+          <td style="color:#34d399">+0.40%</td>
+          <td>288.2</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-11-07</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-148.5</td>
+          <td style="color:#f87171">-0.59%</td>
+          <td>645.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-10-03</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-109.5</td>
+          <td style="color:#f87171">-0.44%</td>
+          <td>273.2</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-09-05</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-16.0</td>
+          <td style="color:#f87171">-0.07%</td>
+          <td>397.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-08-01</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-424.8</td>
+          <td style="color:#f87171">-1.82%</td>
+          <td>572.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-07-03</td>
+          <td>Juev</td>
+          <td style="color:#34d399;font-weight:700">+217.5</td>
+          <td style="color:#34d399">+0.95%</td>
+          <td>275.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-06-06</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+318.5</td>
+          <td style="color:#34d399">+1.48%</td>
+          <td>402.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-05-02</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+412.8</td>
+          <td style="color:#34d399">+2.09%</td>
+          <td>527.2</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-04-04</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-1121.0</td>
+          <td style="color:#f87171">-6.01%</td>
+          <td>1325.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-03-07</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+15.2</td>
+          <td style="color:#34d399">+0.08%</td>
+          <td>520.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-02-07</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-227.0</td>
+          <td style="color:#f87171">-1.04%</td>
+          <td>415.2</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-01-10</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-286.8</td>
+          <td style="color:#f87171">-1.35%</td>
+          <td>497.8</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-12-06</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+206.8</td>
+          <td style="color:#34d399">+0.96%</td>
+          <td>244.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-11-01</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+82.2</td>
+          <td style="color:#34d399">+0.41%</td>
+          <td>271.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-10-04</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+261.8</td>
+          <td style="color:#34d399">+1.31%</td>
+          <td>322.2</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-09-06</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-462.8</td>
+          <td style="color:#f87171">-2.45%</td>
+          <td>632.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-08-02</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-400.2</td>
+          <td style="color:#f87171">-2.11%</td>
+          <td>594.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-07-05</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+201.5</td>
+          <td style="color:#34d399">+0.99%</td>
+          <td>278.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-06-07</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-26.2</td>
+          <td style="color:#f87171">-0.14%</td>
+          <td>215.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-05-03</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+256.5</td>
+          <td style="color:#34d399">+1.45%</td>
+          <td>330.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-04-05</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+214.5</td>
+          <td style="color:#34d399">+1.19%</td>
+          <td>356.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-03-08</td>
+          <td>Vier</td>
+          <td style="color:#f87171;font-weight:700">-232.2</td>
+          <td style="color:#f87171">-1.27%</td>
+          <td>424.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-02-02</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+144.8</td>
+          <td style="color:#34d399">+0.82%</td>
+          <td>310.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-01-05</td>
+          <td>Vier</td>
+          <td style="color:#34d399;font-weight:700">+5.2</td>
+          <td style="color:#34d399">+0.03%</td>
+          <td>243.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div class="card" style="--c:#fb923c;--bg:#1a0e04;--bd:#5a3010">
+      <div class="card-hdr">
+        <div>
+          <div class="card-title">🏦 FOMC — Fed Decision</div>
+          <div class="card-sub">2:00 PM ET · 8× al año (miércoles) · 18 sesiones</div>
+        </div>
+        <div class="badge" style="color:#fb923c;border-color:#5a3010;background:#1a0e04">CRÍTICO</div>
+      </div>
+      <div class="stats-g">
+        <div class="st"><label>Avg Range</label><v style="color:#fb923c">467.0</v><u>pts</u></div>
+        <div class="st"><label>Max Range</label><v style="color:#fcd34d">1049.5</v><u>pts</u></div>
+        <div class="st"><label>Min Range</label><v>232.0</v><u>pts</u></div>
+        <div class="st"><label>Avg Move</label><v>5.9</v><u>pts</u></div>
+        <div class="st"><label>Avg|Move|</label><v>221.0</v><u>pts</u></div>
+        <div class="st"><label>Bull/Bear</label><v style="color:#34d399">9</v><u>/ 9</u></div>
+      </div>
+      <div class="bb">
+        <div class="bb-bull" style="width:50%">BULL 50%</div>
+        <div class="bb-bear" style="flex:1">BEAR 50%</div>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>Fecha</th><th>Día</th><th>Move</th><th>%</th><th>Range</th><th>Bias</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>2026-03-19</td>
+          <td>Juev</td>
+          <td style="color:#f87171;font-weight:700">-35.8</td>
+          <td style="color:#f87171">-0.15%</td>
+          <td>390.2</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2026-01-29</td>
+          <td>Juev</td>
+          <td style="color:#f87171;font-weight:700">-283.2</td>
+          <td style="color:#f87171">-1.08%</td>
+          <td>760.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-12-17</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-423.0</td>
+          <td style="color:#f87171">-1.69%</td>
+          <td>611.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-11-05</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+201.2</td>
+          <td style="color:#34d399">+0.79%</td>
+          <td>598.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-09-17</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-67.5</td>
+          <td style="color:#f87171">-0.28%</td>
+          <td>308.8</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2025-07-30</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+28.5</td>
+          <td style="color:#34d399">+0.12%</td>
+          <td>332.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-06-18</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+15.2</td>
+          <td style="color:#34d399">+0.07%</td>
+          <td>232.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-05-07</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+152.0</td>
+          <td style="color:#34d399">+0.77%</td>
+          <td>455.0</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-03-19</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+250.0</td>
+          <td style="color:#34d399">+1.28%</td>
+          <td>479.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2025-01-29</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-35.8</td>
+          <td style="color:#f87171">-0.17%</td>
+          <td>330.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-12-18</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-791.2</td>
+          <td style="color:#f87171">-3.59%</td>
+          <td>1049.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-11-07</td>
+          <td>Juev</td>
+          <td style="color:#34d399;font-weight:700">+301.2</td>
+          <td style="color:#34d399">+1.44%</td>
+          <td>391.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-09-18</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-101.8</td>
+          <td style="color:#f87171">-0.52%</td>
+          <td>329.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-07-31</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+639.5</td>
+          <td style="color:#34d399">+3.39%</td>
+          <td>786.2</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-06-12</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+248.5</td>
+          <td style="color:#34d399">+1.29%</td>
+          <td>378.8</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-05-01</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-24.2</td>
+          <td style="color:#f87171">-0.14%</td>
+          <td>394.0</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr>
+        <tr>
+          <td>2024-03-20</td>
+          <td>Miér</td>
+          <td style="color:#34d399;font-weight:700">+205.8</td>
+          <td style="color:#34d399">+1.13%</td>
+          <td>317.5</td>
+          <td style="color:#34d399">BULL</td>
+        </tr>
+        <tr>
+          <td>2024-01-31</td>
+          <td>Miér</td>
+          <td style="color:#f87171;font-weight:700">-173.2</td>
+          <td style="color:#f87171">-0.99%</td>
+          <td>262.5</td>
+          <td style="color:#f87171">BEAR</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+<div style="font-size:.68rem;color:#334155;border-left:2px solid #1e293b;padding-left:10px;margin-top:4px">
+  Datos NQ=F via yfinance · Daily OHLC · Rango = High-Low del dia completo · Move = Close-Open
+</div>
+</body>
+</html>

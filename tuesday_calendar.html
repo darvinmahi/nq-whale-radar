@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calendario de Martes NQ — Whale Radar</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box }
+  body { background:#0b0f1a; color:#e2e8f0; font-family:'Segoe UI',sans-serif; padding:24px 20px; max-width:900px; margin:0 auto }
+  h1 { font-size:1.3rem; color:#7dd3fc; margin-bottom:4px }
+  .meta { font-size:.78rem; color:#475569; margin-bottom:20px }
+  .nav { display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap }
+  .nav a { background:#1e293b; color:#94a3b8; padding:5px 13px; border-radius:8px; text-decoration:none; font-size:.76rem }
+  .nav a:hover { background:#334155; color:#e2e8f0 }
+
+  /* Semanas de un mes típico */
+  .month-grid {
+    display:grid;
+    grid-template-columns: repeat(5,1fr);
+    gap:14px;
+    margin-bottom:28px;
+  }
+  .tue-card {
+    background:#111827;
+    border-radius:12px;
+    padding:16px 14px;
+    border-top:3px solid var(--c);
+    position:relative;
+  }
+  .tue-num {
+    font-size:.65rem;
+    color:#475569;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin-bottom:6px;
+  }
+  .tue-label {
+    font-size:.82rem;
+    font-weight:700;
+    color:var(--c);
+    margin-bottom:8px;
+    line-height:1.3;
+  }
+  .tue-time {
+    display:inline-block;
+    background:var(--c-bg);
+    color:var(--c);
+    border:1px solid var(--c-border);
+    border-radius:20px;
+    padding:2px 8px;
+    font-size:.66rem;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .tue-desc {
+    font-size:.72rem;
+    color:#64748b;
+    line-height:1.5;
+  }
+  .tue-warn {
+    font-size:.67rem;
+    color:#eab308;
+    margin-top:6px;
+  }
+  .possible {
+    opacity:.6;
+    border-style:dashed;
+    background:#0d1117;
+  }
+
+  /* Legend */
+  .legend {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:10px;
+    margin-bottom:24px;
+  }
+  .leg {
+    background:#111827;
+    border-radius:10px;
+    padding:12px 14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .leg-dot {
+    width:12px; height:12px;
+    border-radius:50%;
+    flex-shrink:0;
+  }
+  .leg-text { font-size:.76rem }
+  .leg-text b { display:block; color:#e2e8f0; margin-bottom:2px }
+  .leg-text span { color:#64748b }
+
+  /* Reglas importantes */
+  .rules {
+    background:#111827;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:20px;
+  }
+  .rules h3 { font-size:.85rem; color:#94a3b8; margin-bottom:12px }
+  .rule {
+    display:flex;
+    gap:10px;
+    padding:8px 0;
+    border-bottom:1px solid #1e293b;
+    font-size:.79rem;
+  }
+  .rule:last-child { border-bottom:none }
+  .rule-icon { font-size:1rem; flex-shrink:0; margin-top:1px }
+  .rule-body { color:#94a3b8; line-height:1.5 }
+  .rule-body b { color:#e2e8f0 }
+
+  /* Tabla resumen mes */
+  .summary-table {
+    width:100%;
+    border-collapse:collapse;
+    font-size:.79rem;
+    margin-bottom:20px;
+  }
+  .summary-table th {
+    background:#0f172a;
+    padding:8px 12px;
+    text-align:left;
+    color:#475569;
+    font-size:.67rem;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    border-bottom:1px solid #1e293b;
+  }
+  .summary-table td {
+    padding:9px 12px;
+    border-bottom:1px solid #1e293b44;
+  }
+  .summary-table tr:hover td { background:#111827 }
+  .dot {
+    display:inline-block;
+    width:8px; height:8px;
+    border-radius:50%;
+    margin-right:6px;
+    vertical-align:middle;
+  }
+  .badge {
+    display:inline-block;
+    padding:2px 8px;
+    border-radius:12px;
+    font-size:.67rem;
+    font-weight:700;
+  }
+</style>
+</head>
+<body>
+
+<h1>🗓️ Calendario de Martes — NQ Futures</h1>
+<p class="meta">En un mes normal hay 4 o 5 martes. Cada uno puede tener una noticia diferente.</p>
+
+<div class="nav">
+  <a href="daily_dashboard.html">🐋 Dashboard</a>
+  <a href="tuesday_patterns.html">📐 Patrones por Noticia</a>
+  <a href="backtest_CB_confidence.html">CB Backtest</a>
+  <a href="backtest_JOLTS.html">JOLTS Backtest</a>
+</div>
+
+<!-- LEYENDA -->
+<div class="legend">
+  <div class="leg">
+    <div class="leg-dot" style="background:#34d399"></div>
+    <div class="leg-text"><b>JOLTS Job Openings</b><span>1er Martes del mes · 10:00 AM ET</span></div>
+  </div>
+  <div class="leg">
+    <div class="leg-dot" style="background:#fb923c"></div>
+    <div class="leg-text"><b>PPI (a veces)</b><span>Variable · 8:30 AM ET</span></div>
+  </div>
+  <div class="leg">
+    <div class="leg-dot" style="background:#60a5fa"></div>
+    <div class="leg-text"><b>CB Consumer Confidence</b><span>Último Martes del mes · 10:00 AM ET</span></div>
+  </div>
+  <div class="leg">
+    <div class="leg-dot" style="background:#475569"></div>
+    <div class="leg-text"><b>Martes sin noticia fija</b><span>Posible Fed speaker / ISM / nada</span></div>
+  </div>
+</div>
+
+<!-- LOS 5 MARTES -->
+<h3 style="font-size:.8rem;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Martes de un Mes Típico (4–5 semanas)</h3>
+<div class="month-grid">
+
+  <!-- MARTES 1 -->
+  <div class="tue-card" style="--c:#34d399;--c-bg:#0f2d22;--c-border:#16503a">
+    <div class="tue-num">1.er Martes</div>
+    <div class="tue-label">JOLTS<br>Job Openings</div>
+    <div class="tue-time">10:00 AM ET</div>
+    <div class="tue-desc">Número de ofertas de trabajo abiertas. Impacto moderado–alto en NQ.</div>
+    <div class="tue-warn">⚠ A veces se publica el miércoles en lugar del martes</div>
+  </div>
+
+  <!-- MARTES 2 -->
+  <div class="tue-card possible" style="--c:#fb923c;--c-bg:#2d1a0b;--c-border:#4a2b10">
+    <div class="tue-num">2.º Martes</div>
+    <div class="tue-label">PPI ó Sin noticia fija</div>
+    <div class="tue-time">8:30 AM ET (si hay PPI)</div>
+    <div class="tue-desc">El PPI cae ~6 veces al año en martes. Los otros martes pueden tener Fed Speakers o nada importante.</div>
+  </div>
+
+  <!-- MARTES 3 -->
+  <div class="tue-card possible" style="--c:#475569;--c-bg:#1e293b;--c-border:#334155">
+    <div class="tue-num">3.er Martes</div>
+    <div class="tue-label">Sin noticia fija</div>
+    <div class="tue-time">—</div>
+    <div class="tue-desc">Puede haber Fed Speaker, ISM manufacturero (1.er día del mes), o sesión sin catalizador.</div>
+  </div>
+
+  <!-- MARTES 4 -->
+  <div class="tue-card" style="--c:#60a5fa;--c-bg:#1e3a5f;--c-border:#2a4a6e">
+    <div class="tue-num">4.º Martes</div>
+    <div class="tue-label">CB Consumer<br>Confidence</div>
+    <div class="tue-time">10:00 AM ET</div>
+    <div class="tue-desc">Confianza del consumidor Conference Board. El más estudiado de los martes. Publicado el <b>último martes</b> del mes.</div>
+  </div>
+
+  <!-- MARTES 5 (no siempre) -->
+  <div class="tue-card possible" style="--c:#a855f7;--c-bg:#1e1a2d;--c-border:#4b3a6e">
+    <div class="tue-num">5.º Martes</div>
+    <div class="tue-label">Solo ~4 meses al año tienen 5 martes</div>
+    <div class="tue-time">—</div>
+    <div class="tue-desc">Cuando hay 5 martes, el último suele ser el CB Confidence. El 4.º puede quedar libre o con datos menores.</div>
+  </div>
+
+</div>
+
+<!-- TABLA RESUMEN -->
+<h3 style="font-size:.8rem;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Resumen Semana a Semana</h3>
+<table class="summary-table">
+  <thead><tr>
+    <th>Semana del Mes</th>
+    <th>Noticia Esperada</th>
+    <th>Hora</th>
+    <th>Frecuencia</th>
+    <th>Impacto Histórico NQ</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><b>1.ª semana</b></td>
+      <td><span class="dot" style="background:#34d399"></span>JOLTS Job Openings</td>
+      <td>10:00 AM ET</td>
+      <td><span class="badge" style="background:#0f2d22;color:#34d399">Siempre</span></td>
+      <td>Avg Range <b>387 pts</b> · Avg Move <b>−66 pts</b></td>
+    </tr>
+    <tr>
+      <td><b>2.ª semana</b></td>
+      <td><span class="dot" style="background:#fb923c"></span>PPI <i>(si cae martes)</i></td>
+      <td>8:30 AM ET</td>
+      <td><span class="badge" style="background:#2d1a0b;color:#fb923c">~50% de los meses</span></td>
+      <td>Afecta el gap de apertura principalmente</td>
+    </tr>
+    <tr>
+      <td><b>3.ª semana</b></td>
+      <td><span class="dot" style="background:#475569"></span>Sin noticia fija</td>
+      <td>—</td>
+      <td><span class="badge" style="background:#1e293b;color:#64748b">Variable</span></td>
+      <td>Puede haber Fed Speakers (alto impacto si FOMC cercano)</td>
+    </tr>
+    <tr>
+      <td><b>4.ª semana</b> (último martes)</td>
+      <td><span class="dot" style="background:#60a5fa"></span>CB Consumer Confidence</td>
+      <td>10:00 AM ET</td>
+      <td><span class="badge" style="background:#1e3a5f;color:#60a5fa">Siempre</span></td>
+      <td>Avg Range <b>315 pts</b> · BEAT → 83% Bull · MISS → 43% Bull</td>
+    </tr>
+    <tr style="opacity:.55">
+      <td><b>5.ª semana</b> (si existe)</td>
+      <td><span class="dot" style="background:#a855f7"></span>Dato menor / nada</td>
+      <td>—</td>
+      <td><span class="badge" style="background:#1e1a2d;color:#a855f7">~4 meses/año</span></td>
+      <td>Sin patrón claro identificado</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- REGLAS CLAVE -->
+<div class="rules">
+  <h3>📌 Reglas Clave para Orientarse</h3>
+  <div class="rule">
+    <div class="rule-icon">1️⃣</div>
+    <div class="rule-body"><b>1er martes del mes = JOLTS</b> casi siempre. Verificar en el calendario económico porque a veces se mueve a miércoles.</div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">⬛</div>
+    <div class="rule-body"><b>Último martes del mes = CB Consumer Confidence</b> a las 10:00 AM ET. Es el más predecible en horario.</div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">🌡️</div>
+    <div class="rule-body"><b>PPI puede caer cualquier martes</b> de la 2ª semana principalmente, pero a las <b>8:30 AM ET</b> — antes de la apertura del cash. El patrón se forma en el gap de apertura.</div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">📅</div>
+    <div class="rule-body"><b>Los martes del medio</b> (2.º y 3.º) son los más variables. Revisar el calendario semanal en Forex Factory o Investing.com cada domingo.</div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">⚡</div>
+    <div class="rule-body"><b>Si hay Fed Chair (Powell) hablando cualquier martes</b>, eso anula el efecto de cualquier otra noticia del mismo día.</div>
+  </div>
+</div>
+
+<div style="font-size:.7rem;color:#334155;border-left:2px solid #1e293b;padding-left:10px">
+  Fechas históricas verificadas 2024–2026 · NQ=F · Horarios en ET (Eastern Time) ·
+  Siempre verificar el calendario económico antes de la sesión
+</div>
+</body>
+</html>

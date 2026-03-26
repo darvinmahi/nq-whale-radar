@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NQ — Jueves 2026-03-19 | DATOS REALES</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+  <style>
+    :root {
+      --bg:#04020c; --card:#0c0a1e; --border:#1e1a3a;
+      --purple:#7c3aed; --cyan:#06b6d4; --green:#10b981;
+      --red:#ef4444; --amber:#f59e0b; --gray:#64748b;
+      --text:#e2e8f0; --muted:#94a3b8;
+      --bull:#10b981; --bear:#ef4444;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+    .mono{font-family:'JetBrains Mono',monospace}
+
+    .top-bar{
+      background:linear-gradient(135deg,#0c0a1e 0%,#110d2a 100%);
+      border-bottom:1px solid var(--border);
+      padding:14px 24px; display:flex; align-items:center; justify-content:space-between;
+      position:sticky; top:0; z-index:100;
+    }
+    .logo-badge{
+      background:linear-gradient(135deg,var(--purple),#4f46e5);
+      color:#fff; font-size:11px; font-weight:700;
+      padding:4px 10px; border-radius:6px; letter-spacing:1px;
+    }
+    .real-badge{
+      background:rgba(16,185,129,.18); border:1px solid rgba(16,185,129,.45);
+      color:#6ee7b7; font-size:11px; font-weight:700;
+      padding:4px 12px; border-radius:6px; letter-spacing:1px;
+    }
+    .back-btn{
+      background:rgba(124,58,237,.15); border:1px solid rgba(124,58,237,.35);
+      color:#a78bfa; font-size:13px; font-weight:600;
+      padding:7px 16px; border-radius:8px; cursor:pointer;
+      text-decoration:none; transition:all .2s;
+    }
+    .back-btn:hover{background:rgba(124,58,237,.28)}
+
+    .page{max-width:1500px;margin:0 auto;padding:20px 18px}
+
+    .date-header{
+      background:linear-gradient(135deg,#0c0a1e,#130f2a);
+      border:1px solid var(--border); border-radius:16px; padding:18px 24px;
+      position:relative; overflow:hidden; margin-bottom:16px;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    }
+    .date-header::before{
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,#f59e0b,var(--green),var(--cyan),var(--purple));
+    }
+    .pattern-badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 18px; border-radius:30px; font-size:14px; font-weight:700; letter-spacing:.5px;
+      background:rgba(16,185,129,.15); border:1px solid rgba(16,185,129,.4); color:#6ee7b7;
+    }
+
+    .sess-legend{
+      display:flex; gap:20px; flex-wrap:wrap;
+      padding:12px 20px;
+      background:linear-gradient(135deg,#0c0a1e,#130f2a);
+      border:1px solid var(--border); border-radius:12px; margin-bottom:16px;
+    }
+    .sess-item{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600}
+    .sess-dot{width:12px;height:12px;border-radius:3px}
+
+    .stats-row{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px;
+      margin-bottom:16px;
+    }
+    .stat-card{
+      background:linear-gradient(135deg,#0c0a1e,#130f2a); border:1px solid var(--border);
+      border-radius:12px; padding:12px 14px; text-align:center;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .stat-card:hover { border-color:rgba(124,58,237,.4); box-shadow:0 0 16px rgba(124,58,237,.08); }
+    .stat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+    .stat-value{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700}
+    .c-green{color:var(--green)} .c-red{color:var(--red)} .c-cyan{color:var(--cyan)}
+    .c-amber{color:var(--amber)} .c-purple{color:#a78bfa} .c-gray{color:var(--muted)}
+    .c-bull{color:var(--bull)} .c-bear{color:var(--bear)}
+
+    /* ── CHART FRAME (diferenciado del scroll de página) ── */
+    .chart-section-label {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 10px; padding-left: 4px;
+    }
+    .chart-section-label::before {
+      content: ''; display: block;
+      width: 3px; height: 14px; border-radius: 2px;
+      background: linear-gradient(180deg, var(--purple), var(--cyan));
+    }
+
+    .chart-frame {
+      /* Marco exterior prominente — separa el chart del scroll */
+      background: linear-gradient(135deg, #09071a 0%, #0e0b24 100%);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      border-radius: 20px;
+      padding: 3px;
+      position: relative;
+      margin-bottom: 20px;
+      box-shadow:
+        0 0 0 1px rgba(124,58,237,0.35),
+        0 0 0 3px rgba(6,182,212,0.12),
+        0 20px 60px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    /* Borde luminoso top */
+    .chart-frame::before {
+      content: '';
+      position: absolute; top: -2px; left: 10%; right: 10%;
+      height: 2px; border-radius: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple), var(--cyan), transparent);
+      filter: blur(1px);
+    }
+
+    .chart-wrap-3d {
+      perspective: 1400px;
+      perspective-origin: 50% 30%;
+    }
+    .chart-wrap{
+      background: linear-gradient(180deg, #0c0a1e 0%, #08061a 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow:hidden; position:relative;
+      transition: box-shadow .5s ease;
+      box-shadow:
+        0 0 0 1px rgba(124,58,237,0.1) inset,
+        0 30px 80px rgba(0,0,0,0.8);
+    }
+    .chart-wrap:hover{
+      box-shadow:
+        0 0 0 1px rgba(124,58,237,0.18) inset,
+        0 0 40px rgba(124,58,237,0.06),
+        0 40px 100px rgba(0,0,0,0.85);
+    }
+    .chart-top{
+      padding:14px 20px; border-bottom:1px solid var(--border);
+      background:linear-gradient(135deg,#0c0a1e,#110d2a);
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
+    }
+    /* Línea degradada baja el chart-top */
+    .chart-top::after {
+      content:'';
+      position:absolute; left:0; right:0;
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(124,58,237,.3),rgba(6,182,212,.3),transparent);
+    }
+    .chart-title{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px}
+    .leg-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .leg-i{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+    .leg-dash{width:18px;height:0;border-top:2px dashed}
+    #chart{width:100%;height:680px}
+
+    /* Story Mode Button */
+    .story-btn {
+      display:flex; align-items:center; gap:7px;
+      background: linear-gradient(135deg, rgba(0,255,128,0.15), rgba(179,102,255,0.15));
+      border: 1px solid rgba(0,255,128,0.35);
+      color: #00ff80; font-size:12px; font-weight:700; letter-spacing:.5px;
+      padding: 7px 16px; border-radius:20px; cursor:pointer;
+      transition: all .25s; font-family:'Inter',sans-serif;
+      position: relative; overflow: hidden;
+    }
+    .story-btn::before {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(90deg, transparent, rgba(0,255,128,0.08), transparent);
+      transform: translateX(-100%);
+      transition: transform .5s;
+    }
+    .story-btn:hover::before { transform: translateX(100%); }
+    .story-btn:hover { border-color:rgba(0,255,128,0.6); box-shadow:0 0 16px rgba(0,255,128,0.15); }
+    .story-btn.active { background:linear-gradient(135deg,rgba(0,255,128,0.25),rgba(179,102,255,0.25)); color:#fff; }
+
+    /* ── REPLAY BAR ───────────────────────────────────────── */
+    #replay-bar {
+      background: rgba(6,6,8,0.97);
+      border: 1px solid rgba(0,255,128,0.18);
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      padding: 12px 20px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #replay-bar.visible { display: flex; }
+    .rp-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .rp-btn {
+      background: rgba(0,255,128,0.12); border:1px solid rgba(0,255,128,0.35);
+      color:#00ff80; font-size:13px; font-weight:700; padding:7px 18px;
+      border-radius:10px; cursor:pointer; transition:all .2s;
+      font-family:'Inter',sans-serif; display:flex; align-items:center; gap:6px;
+    }
+    .rp-btn:hover { background:rgba(0,255,128,0.22); box-shadow:0 0 14px rgba(0,255,128,0.2); }
+    .rp-btn.pause { background:rgba(245,158,11,0.15); border-color:rgba(245,158,11,0.4); color:#f59e0b; }
+    .rp-btn.pause:hover { background:rgba(245,158,11,0.25); }
+    .rp-speed-group { display:flex; gap:4px; }
+    .rp-speed {
+      padding:5px 10px; border-radius:8px; font-size:11px; font-weight:700;
+      cursor:pointer; border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.04); color:var(--muted);
+      transition:all .2s; font-family:'JetBrains Mono',monospace;
+    }
+    .rp-speed.active { background:rgba(124,58,237,0.25); border-color:rgba(124,58,237,0.5); color:#a78bfa; }
+    .rp-time {
+      font-family:'JetBrains Mono',monospace; font-size:12px;
+      color:var(--cyan); background:rgba(6,182,212,0.08);
+      border:1px solid rgba(6,182,212,0.2); padding:4px 12px; border-radius:8px;
+      min-width:110px; text-align:center;
+    }
+    .rp-progress-wrap {
+      flex:1; min-width:160px; display:flex; flex-direction:column; gap:4px;
+    }
+    .rp-track {
+      width:100%; height:6px; background:rgba(255,255,255,0.08);
+      border-radius:4px; cursor:pointer; position:relative; overflow:hidden;
+    }
+    .rp-fill {
+      height:100%; background:linear-gradient(90deg,#00ff80,#06b6d4);
+      border-radius:4px; transition:width .05s linear;
+      box-shadow:0 0 8px rgba(6,182,212,0.4);
+    }
+    .rp-scrubber {
+      -webkit-appearance:none; appearance:none; width:100%; height:6px;
+      background:transparent; outline:none; cursor:pointer;
+      position:absolute; top:0; left:0; margin:0;
+    }
+    .rp-scrubber::-webkit-slider-thumb {
+      -webkit-appearance:none; width:14px; height:14px;
+      border-radius:50%; background:#06b6d4;
+      box-shadow:0 0 8px rgba(6,182,212,0.5);
+      margin-top:-4px; cursor:pointer;
+    }
+    /* Replay narrative panel */
+    #rp-narrative {
+      background:rgba(6,182,212,0.04); border:1px solid rgba(6,182,212,0.12);
+      border-radius:10px; padding:10px 16px;
+      display:flex; align-items:center; gap:12px;
+    }
+    .rp-step-badge {
+      font-size:10px; font-weight:700; padding:3px 10px; border-radius:10px;
+      white-space:nowrap; flex-shrink:0;
+    }
+    #rp-narrative-text {
+      font-size:12px; color:#a0aec0; line-height:1.5; flex:1;
+    }
+    .rp-candle-count {
+      font-family:'JetBrains Mono',monospace; font-size:11px;
+      color:var(--muted); white-space:nowrap; flex-shrink:0;
+    }
+    /* Replay btn en chart-top */
+    .replay-launch-btn {
+      display:flex; align-items:center; gap:7px;
+      background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(239,68,68,0.12));
+      border: 1px solid rgba(245,158,11,0.35);
+      color: #f59e0b; font-size:12px; font-weight:700; letter-spacing:.5px;
+      padding: 7px 16px; border-radius:20px; cursor:pointer;
+      transition: all .25s; font-family:'Inter',sans-serif;
+    }
+    .replay-launch-btn:hover { border-color:rgba(245,158,11,0.7); box-shadow:0 0 14px rgba(245,158,11,0.15); }
+    .replay-launch-btn.active { background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(239,68,68,0.2)); color:#fff; }
+
+    /* ── STORY MODE OVERLAY ─────────────────────────────── */
+    #story-overlay {
+      display:none; position:fixed; inset:0;
+      background: rgba(0,0,0,0.88); backdrop-filter:blur(12px);
+      z-index:9999; align-items:center; justify-content:center;
+    }
+    #story-overlay.active { display:flex; }
+    .story-modal {
+      width:min(820px,95vw); max-height:90vh; overflow-y:auto;
+      background:#060608; border:1px solid rgba(0,255,128,0.2);
+      border-radius:24px; padding:32px;
+      box-shadow:0 0 0 1px rgba(0,255,128,0.06), 0 40px 120px rgba(0,0,0,0.9);
+      position:relative;
+    }
+    .story-header {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:28px;
+    }
+    .story-title-main { font-size:18px; font-weight:900; color:#fff; }
+    .story-subtitle { font-size:12px; color:var(--muted); margin-top:4px; }
+    .story-close {
+      width:36px; height:36px; border-radius:50%;
+      background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+      color:var(--muted); font-size:18px; cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .2s;
+    }
+    .story-close:hover{background:rgba(255,0,85,0.15);border-color:rgba(255,0,85,0.4);color:#fff;}
+
+    /* Step Progress Bar */
+    .story-progress { display:flex; gap:6px; margin-bottom:28px; }
+    .story-dot {
+      height:4px; flex:1; border-radius:4px;
+      background:rgba(255,255,255,0.08); transition:background .4s;
+    }
+    .story-dot.done { background:rgba(0,255,128,0.5); }
+    .story-dot.active { background:#00ff80; box-shadow:0 0 8px rgba(0,255,128,0.5); }
+
+    /* Step Card */
+    .step-card {
+      display:none; animation:stepIn .45s cubic-bezier(.22,.68,0,1.2) both;
+    }
+    .step-card.visible { display:block; }
+    @keyframes stepIn {
+      from { opacity:0; transform:translateY(18px) scale(0.97); }
+      to   { opacity:1; transform:translateY(0) scale(1); }
+    }
+    .step-session-label {
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:11px; font-weight:700; letter-spacing:1px;
+      padding:4px 14px; border-radius:20px; margin-bottom:14px;
+    }
+    .step-num {
+      font-size:64px; font-weight:900; line-height:1;
+      background:linear-gradient(135deg,var(--step-color-a),var(--step-color-b));
+      -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent; color:transparent;
+      margin-bottom:8px;
+    }
+    .step-event-title { font-size:26px; font-weight:900; color:#fff; margin-bottom:10px; line-height:1.2; }
+    .step-time { font-family:'JetBrains Mono',monospace; font-size:12px; margin-bottom:16px; }
+    .step-desc {
+      font-size:14px; line-height:1.75; color:#a0aec0;
+      background:rgba(255,255,255,0.03); border-left:3px solid;
+      padding:14px 18px; border-radius:0 10px 10px 0; margin-bottom:18px;
+    }
+    .step-insight {
+      display:flex; align-items:flex-start; gap:10px;
+      background:rgba(0,255,128,0.04); border:1px solid rgba(0,255,128,0.12);
+      border-radius:10px; padding:12px 16px;
+      font-size:13px; color:#b8f0d0; line-height:1.6;
+    }
+    .step-data-row {
+      display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;
+    }
+    .step-data-chip {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+      border-radius:8px; padding:8px 14px;
+      font-family:'JetBrains Mono',monospace; font-size:12px;
+    }
+    .step-data-chip span { font-size:10px; color:var(--muted); display:block; margin-bottom:2px; }
+
+    /* Nav Buttons */
+    .story-nav {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-top:28px; padding-top:20px;
+      border-top:1px solid rgba(255,255,255,0.06);
+    }
+    .nav-btn {
+      padding:10px 24px; border-radius:12px; font-size:13px; font-weight:700;
+      cursor:pointer; transition:all .2s; border:1px solid;
+      font-family:'Inter',sans-serif;
+    }
+    .nav-prev {
+      background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.1);
+      color:var(--muted);
+    }
+    .nav-prev:hover{background:rgba(255,255,255,0.08);color:#fff;}
+    .nav-prev:disabled{opacity:0.3;cursor:not-allowed;}
+    .nav-next {
+      background:linear-gradient(135deg,rgba(0,255,128,0.2),rgba(179,102,255,0.2));
+      border-color:rgba(0,255,128,0.4); color:#00ff80;
+    }
+    .nav-next:hover{box-shadow:0 0 20px rgba(0,255,128,0.2);border-color:rgba(0,255,128,0.7);}
+    .step-counter { font-size:12px; color:var(--muted); font-family:'JetBrains Mono',monospace; }
+
+    .panels{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+    @media(max-width:900px){.panels{grid-template-columns:1fr}}
+
+    .panel{
+      background:var(--card); border:1px solid var(--border);
+      border-radius:14px; padding:20px;
+    }
+    .panel-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+
+    .tl-item{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:10px 0; border-bottom:1px solid rgba(255,255,255,.04);
+    }
+    .tl-item:last-child{border-bottom:none}
+    .tl-time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);min-width:46px;padding-top:2px;flex-shrink:0}
+    .tl-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:4px;display:inline-block}
+    .badge-asia  {background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);color:#67e8f9}
+    .badge-london{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#fcd34d}
+    .badge-news  {background:rgba(239,68,68,.25);border:1px solid rgba(239,68,68,.5);color:#fca5a5}
+    .badge-ny    {background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);color:#6ee7b7}
+    .badge-target{background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.5);color:#c4b5fd}
+    .tl-event{font-size:13px;font-weight:700;margin-bottom:2px}
+    .tl-desc{font-size:11px;color:var(--muted);line-height:1.5}
+
+    .anat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .anat-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px 14px}
+    .anat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+    .anat-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;line-height:1.4}
+
+    .journey{display:flex;align-items:stretch;gap:0;margin-top:14px;overflow-x:auto}
+    .j-step{display:flex;flex-direction:column;align-items:center;flex:1;min-width:70px;position:relative}
+    .j-step::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;z-index:1}
+    .j-step:last-child::after{display:none}
+    .j-node{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid;margin-bottom:6px}
+    .j-label{font-size:9px;color:var(--muted);text-align:center;line-height:1.4}
+    .j-price{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;margin-top:2px}
+
+    .foot{text-align:center;padding:20px;color:var(--muted);font-size:11px}
+
+    /* ── REPLAY & STORY MODE BUTTONS ─────────────────── */
+    .replay-launch-btn {
+      background: rgba(6,182,212,.12); border: 1px solid rgba(6,182,212,.35);
+      color: #67e8f9; font-family: 'JetBrains Mono',monospace; font-size: 11px;
+      font-weight: 700; padding: 6px 14px; border-radius: 20px; cursor: pointer;
+      letter-spacing: .5px; transition: all .2s;
+    }
+    .replay-launch-btn:hover  { background: rgba(6,182,212,.22); }
+    .replay-launch-btn.active { background: rgba(6,182,212,.25); border-color: #06b6d4; color: #e0f2fe; }
+    .story-btn {
+      background: rgba(124,58,237,.12); border: 1px solid rgba(124,58,237,.35);
+      color: #c4b5fd; font-family: 'JetBrains Mono',monospace; font-size: 11px;
+      font-weight: 700; padding: 6px 14px; border-radius: 20px; cursor: pointer;
+      letter-spacing: .5px; transition: all .2s;
+    }
+    .story-btn:hover { background: rgba(124,58,237,.22); }
+
+    /* ── REPLAY CONTROL BAR ───────────────────────────── */
+    #replay-bar {
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height .35s ease, opacity .3s ease;
+      background: rgba(6,182,212,.06); border-top: 1px solid rgba(6,182,212,.18);
+      border-radius: 0 0 10px 10px;
+    }
+    #replay-bar.visible { max-height: 220px; opacity: 1; }
+
+    .rp-row {
+      display: flex; align-items: center; gap: 10px; padding: 10px 14px; flex-wrap: wrap;
+    }
+    .rp-btn {
+      background: rgba(6,182,212,.15); border: 1px solid rgba(6,182,212,.3);
+      color: #67e8f9; font-family: 'JetBrains Mono',monospace; font-size: 11px;
+      font-weight: 700; padding: 6px 14px; border-radius: 8px; cursor: pointer;
+      transition: all .2s; white-space: nowrap;
+    }
+    .rp-btn:hover { background: rgba(6,182,212,.28); }
+    .rp-btn.pause { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.4); color: #fcd34d; }
+
+    .rp-speed-group { display: flex; gap: 3px; }
+    .rp-speed {
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+      color: var(--muted); font-size: 10px; padding: 4px 8px; border-radius: 6px;
+      cursor: pointer; transition: all .15s; font-family: 'JetBrains Mono',monospace;
+    }
+    .rp-speed:hover  { background: rgba(6,182,212,.15); color: #67e8f9; }
+    .rp-speed.active { background: rgba(6,182,212,.25); border-color: #06b6d4; color: #e0f2fe; font-weight: 700; }
+
+    .rp-time {
+      font-family: 'JetBrains Mono',monospace; font-size: 11px;
+      color: #67e8f9; min-width: 160px; font-weight: 600;
+    }
+    .rp-progress-wrap { flex: 1; min-width: 120px; }
+    .rp-track {
+      position: relative; height: 6px; background: rgba(255,255,255,.08);
+      border-radius: 3px; overflow: visible;
+    }
+    .rp-fill {
+      position: absolute; left: 0; top: 0; height: 100%;
+      background: linear-gradient(90deg, #06b6d4, #7c3aed); border-radius: 3px;
+      transition: width .15s;
+    }
+    .rp-scrubber {
+      position: absolute; left: 0; top: -5px; width: 100%; height: 16px;
+      opacity: 0; cursor: pointer; margin: 0; -webkit-appearance: none; appearance: none;
+    }
+    #rp-narrative {
+      display: flex; align-items: flex-start; gap: 10px; padding: 8px 14px 10px;
+      border-top: 1px solid rgba(255,255,255,.04);
+    }
+    .rp-step-badge {
+      font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 12px;
+      white-space: nowrap; font-family: 'JetBrains Mono',monospace;
+    }
+    #rp-narrative-text { font-size: 11px; color: var(--muted); line-height: 1.6; flex: 1; }
+    .rp-candle-count {
+      font-family: 'JetBrains Mono',monospace; font-size: 10px; color: var(--muted); white-space: nowrap;
+    }
+  </style>
+
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="logo-badge">NQ RADAR</div>
+    <span style="color:var(--muted);font-size:13px;font-family:'JetBrains Mono',monospace">2026-03-19 · DÍA COMPLETO · 5 MIN</span>
+    <div class="real-badge">✅ DATOS REALES NQ=F</div>
+  </div>
+  <a href="jueves_nq.html" class="back-btn">← Panel Principal</a>
+</div>
+
+<div class="page">
+
+  <!-- DATE HEADER -->
+  <div class="date-header">
+    <div>
+      <div style="font-size:20px;font-weight:900;margin-bottom:4px">📅 Jueves 19 de Marzo 2026 — Sesión Real NQ Futures</div>
+      <div style="color:var(--muted);font-size:12px">🌏 Asia (6PM ET previo) → 📰 Jobless Claims 8:30AM → 🔔 NY Open 9:30AM → 🏁 Cierre 4PM ET</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span class="pattern-badge">↩️ SWEEP L RETURN</span>
+      <span style="background:rgba(0,230,118,.15);border:1px solid rgba(0,230,118,.4);color:#6ee7b7;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600">↑ BULLISH</span>
+    </div>
+  </div>
+
+  <!-- SESSION LEGEND -->
+  <div class="sess-legend">
+    <span style="font-size:11px;color:var(--muted);font-weight:600">SESIONES:</span>
+    <div class="sess-item"><div class="sess-dot" style="background:rgba(6,182,212,.35)"></div><span style="color:#67e8f9">🌏 ASIA · 6PM→2AM ET</span></div>
+    <div class="sess-item"><div class="sess-dot" style="background:rgba(245,158,11,.35)"></div><span style="color:#fcd34d">🇬🇧 LONDON / PRE-MARKET · 2AM→9:30AM</span></div>
+    <div class="sess-item"><div class="sess-dot" style="background:rgba(239,68,68,.35)"></div><span style="color:#fca5a5">📰 JOBLESS CLAIMS · 8:30AM</span></div>
+    <div class="sess-item"><div class="sess-dot" style="background:rgba(16,185,129,.35)"></div><span style="color:#6ee7b7">🗽 NY SESSION · 9:30AM→4PM</span></div>
+    <div class="sess-item"><div class="sess-dot" style="background:#7c3aed"></div><span style="color:#c4b5fd">✅ TARGET POC</span></div>
+  </div>
+
+  <!-- STATS REALES -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Day High</div><div class="stat-value c-cyan">24,725.25</div></div>
+    <div class="stat-card"><div class="stat-label">Day Low</div><div class="stat-value c-bear">24,326.75</div></div>
+    <div class="stat-card"><div class="stat-label">POC Previo</div><div class="stat-value c-purple">24,579.3</div></div>
+    <div class="stat-card"><div class="stat-label">VAH</div><div class="stat-value c-cyan">24,639</div></div>
+    <div class="stat-card"><div class="stat-label">VAL</div><div class="stat-value c-green">24,504.6</div></div>
+    <div class="stat-card"><div class="stat-label">NY Open</div><div class="stat-value c-amber">24,428.75</div></div>
+    <div class="stat-card"><div class="stat-label">NY Low</div><div class="stat-value c-bear">24,326.75</div></div>
+    <div class="stat-card"><div class="stat-label">NY High</div><div class="stat-value c-bull">24,691.50</div></div>
+    <div class="stat-card"><div class="stat-label">NY Close</div><div class="stat-value c-bull">24,590.50</div></div>
+    <div class="stat-card"><div class="stat-label">NY Range</div><div class="stat-value c-amber">364.8</div></div>
+    <div class="stat-card"><div class="stat-label">Move O→C</div><div class="stat-value c-bull">+161.8 pts</div></div>
+    <div class="stat-card"><div class="stat-label">Dirección</div><div class="stat-value c-bull">BULLISH</div></div>
+  </div>
+
+  <!-- CHART FRAME + LABEL -->
+  <div class="chart-section-label">📊 Chart — 5 Min · Día Completo</div>
+  <div class="chart-frame">
+  <div class="chart-wrap-3d">
+  <div class="chart-wrap">
+    <div class="chart-top">
+      <span class="chart-title">NQ FUTURES — 5 MIN — DÍA COMPLETO 2026-03-19 · DATOS REALES (NQ=F via yfinance)</span>
+      <div class="leg-row">
+        <div class="leg-i"><div class="leg-dash" style="border-color:#06b6d4"></div>VAH 24,639</div>
+        <div class="leg-i"><div class="leg-dash" style="border-color:#7c3aed"></div>POC 24,579.3</div>
+        <div class="leg-i"><div class="leg-dash" style="border-color:#10b981"></div>VAL 24,504.6</div>
+        <div class="leg-i"><div class="leg-dash" style="border-color:#f59e0b"></div>NY OPEN 24,428.75</div>
+        <div class="leg-i"><div style="width:10px;height:10px;background:#00e676;border-radius:2px"></div>Bull ▲</div>
+        <div class="leg-i"><div style="width:10px;height:10px;background:#b366ff;border-radius:2px"></div>Bear ▼</div>
+      </div>
+      <!-- REPLAY + STORY MODE BUTTONS -->
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="replay-launch-btn" id="replayLaunchBtn" onclick="toggleReplayBar()">⏪ REPLAY</button>
+        <button class="story-btn" id="storyBtn" onclick="openStory()">📖 STORY MODE</button>
+      </div>
+    </div>
+    <div id="chart"></div>
+    <!-- REPLAY CONTROL BAR (below chart) -->
+    <div id="replay-bar">
+      <div class="rp-row">
+        <!-- Play/Pause -->
+        <button class="rp-btn" id="rpPlayBtn" onclick="replayToggle()">▶ PLAY</button>
+        <!-- Reset -->
+        <button class="rp-btn" style="background:rgba(255,0,85,0.1);border-color:rgba(255,0,85,0.3);color:#ff0055" onclick="replayReset()">⟲ Reset</button>
+        <!-- Speed -->
+        <div class="rp-speed-group">
+          <button class="rp-speed active" data-spd="1" onclick="setSpeed(1,this)">1×</button>
+          <button class="rp-speed" data-spd="3" onclick="setSpeed(3,this)">3×</button>
+          <button class="rp-speed" data-spd="8" onclick="setSpeed(8,this)">8×</button>
+          <button class="rp-speed" data-spd="20" onclick="setSpeed(20,this)">20×</button>
+          <button class="rp-speed" data-spd="50" onclick="setSpeed(50,this)">50×</button>
+        </div>
+        <!-- Time display -->
+        <div class="rp-time" id="rpTimeDisplay">-- -- : -- --</div>
+        <!-- Progress scrubber -->
+        <div class="rp-progress-wrap">
+          <div class="rp-track" id="rpTrack">
+            <div class="rp-fill" id="rpFill" style="width:0%"></div>
+            <input type="range" class="rp-scrubber" id="rpScrubber"
+              min="0" max="100" value="0"
+              oninput="replayScrub(this.value)"
+            >
+          </div>
+        </div>
+      </div>
+      <!-- Narrative mini panel -->
+      <div id="rp-narrative">
+        <span class="rp-step-badge" id="rpStepBadge" style="background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.3);color:#67e8f9">🌏 ASIA</span>
+        <div id="rp-narrative-text">Presiona PLAY para iniciar el replay — empieza 30 minutos antes de la noticia Jobless Claims (8:00 AM ET)</div>
+        <div class="rp-candle-count" id="rpCandleCount">Vela 0 / 0</div>
+      </div>
+    </div>
+  </div>
+  </div><!-- /chart-wrap-3d -->
+  </div><!-- /chart-frame -->
+
+
+  <!-- TWO PANELS -->
+  <div class="panels">
+
+    <!-- TIMELINE -->
+    <div class="panel">
+      <div class="panel-title">📋 Timeline Real del Día</div>
+
+      <div class="tl-item">
+        <div class="tl-time">18:00</div>
+        <div>
+          <span class="tl-badge badge-asia">🌏 ASIA</span>
+          <div class="tl-event c-cyan">Apertura Asia — Consolidación</div>
+          <div class="tl-desc">NQ inicia sesión Asia. Precio consolida bajo el VA anterior. Smart money acumula posiciones.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">2:00</div>
+        <div>
+          <span class="tl-badge badge-london">🇬🇧 LONDON</span>
+          <div class="tl-event c-amber">London Open — Distribución / Precio cae</div>
+          <div class="tl-desc">London distribuye hacia abajo. Presión vendedora gradual acercando precio al VA.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">8:30</div>
+        <div>
+          <span class="tl-badge badge-news">📰 NOTICIA</span>
+          <div class="tl-event c-red">⚡ Jobless Claims — Spike ↓</div>
+          <div class="tl-desc">Datos de desempleo generan spike bajista. Precio cae agresivamente debajo del VA. Setup activado.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">9:30</div>
+        <div>
+          <span class="tl-badge badge-ny">🗽 NY OPEN</span>
+          <div class="tl-event c-amber">NY Open: <strong>24,428.75</strong></div>
+          <div class="tl-desc">NY abre debajo de VAL (24,504.6). Distancia al POC: 151 pts. SWEEP_L_RETURN activado.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">9:30+</div>
+        <div>
+          <span class="tl-badge badge-ny">SWEEP</span>
+          <div class="tl-event c-red">⬇️ Sweep — Low: <strong>24,326.75</strong></div>
+          <div class="tl-desc">Price barre liquidez de stops. Mínimo real del día: <strong>24,326.75</strong> (102 pts abajo del open).</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">~10:00</div>
+        <div>
+          <span class="tl-badge badge-ny">ENTRADA</span>
+          <div class="tl-event c-green">↩️ Reversión — Entry Zone</div>
+          <div class="tl-desc">Sweep fracasa → primera vela verde fuerte. Entry LARGO. Stop: bajo del sweep. Target: POC 24,579.3</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">~11:00</div>
+        <div>
+          <span class="tl-badge badge-target">✅ TARGET</span>
+          <div class="tl-event c-purple">Retorno al POC 24,579.3</div>
+          <div class="tl-desc">Precio alcanza zona POC. Ganancia desde entry. Patrón confirmado. NY Range real: <strong>364.8 pts</strong>.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">16:00</div>
+        <div>
+          <span class="tl-badge badge-ny">CIERRE</span>
+          <div class="tl-event c-bull">Cierre: <strong>24,590.50</strong> (↑ +161.8 pts)</div>
+          <div class="tl-desc">Cierre real de sesión. Movimiento Open→Close: <strong>+161.8 pts</strong>. NY High: 24,691.50.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANATOMY + JOURNEY -->
+    <div style="display:flex;flex-direction:column;gap:16px">
+
+      <!-- PRICE JOURNEY REAL -->
+      <div class="panel">
+        <div class="panel-title">🗺️ Recorrido Real del Precio</div>
+        <div class="journey">
+          <div class="j-step">
+            <div class="j-node" style="background:rgba(6,182,212,.15);border-color:#06b6d4">🌏</div>
+            <div class="j-label">ASIA<br>Inicio</div>
+            <div class="j-price c-cyan">&nbsp;</div>
+          </div>
+          <div class="j-step">
+            <div class="j-node" style="background:rgba(245,158,11,.15);border-color:#f59e0b">🇬🇧</div>
+            <div class="j-label">London<br>Sell</div>
+            <div class="j-price c-amber">&nbsp;</div>
+          </div>
+          <div class="j-step">
+            <div class="j-node" style="background:rgba(239,68,68,.2);border-color:#ef4444">📰</div>
+            <div class="j-label">8:30<br>News</div>
+            <div class="j-price c-red">&nbsp;</div>
+          </div>
+          <div class="j-step">
+            <div class="j-node" style="background:rgba(245,158,11,.15);border-color:#f59e0b">🔔</div>
+            <div class="j-label">NY Open</div>
+            <div class="j-price c-amber">24,429</div>
+          </div>
+          <div class="j-step">
+            <div class="j-node" style="background:rgba(255,23,68,.2);border-color:#ff1744">⬇️</div>
+            <div class="j-label">SWEEP<br>Low</div>
+            <div class="j-price c-bear">24,327</div>
+          </div>
+          <div class="j-step">
+            <div class="j-node" style="background:rgba(0,230,118,.15);border-color:#00e676">↩️</div>
+            <div class="j-label">Entry<br>~10:00</div>
+            <div class="j-price c-bull">&nbsp;</div>
+          </div>
+          <div class="j-step">
+            <div class="j-node" style="background:rgba(124,58,237,.25);border-color:#7c3aed">✅</div>
+            <div class="j-label">POC<br>Target</div>
+            <div class="j-price c-purple">24,579</div>
+          </div>
+          <div class="j-step">
+            <div class="j-node" style="background:rgba(0,230,118,.15);border-color:#00e676">🏁</div>
+            <div class="j-label">Cierre<br>4PM</div>
+            <div class="j-price c-bull">24,590</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANATOMY -->
+      <div class="panel">
+        <div class="panel-title">🔬 Anatomía — SWEEP L RETURN (Real)</div>
+        <div class="anat-grid">
+          <div class="anat-item">
+            <div class="anat-label">Open vs VA</div>
+            <div class="anat-val c-red" style="font-size:11px">BELOW VAL<br>24,428.75 vs 24,504.6</div>
+          </div>
+          <div class="anat-item">
+            <div class="anat-label">Sweep</div>
+            <div class="anat-val c-bear">102 pts ↓</div>
+          </div>
+          <div class="anat-item">
+            <div class="anat-label">POC Target</div>
+            <div class="anat-val c-purple">24,579.3</div>
+          </div>
+          <div class="anat-item">
+            <div class="anat-label">Dist. Open→POC</div>
+            <div class="anat-val c-green">151 pts</div>
+          </div>
+          <div class="anat-item">
+            <div class="anat-label">NY Range Real</div>
+            <div class="anat-val c-amber">364.8 pts</div>
+          </div>
+          <div class="anat-item">
+            <div class="anat-label">Cierre Real</div>
+            <div class="anat-val c-bull">↑ +161.8 pts</div>
+          </div>
+          <div class="anat-item">
+            <div class="anat-label">Day High</div>
+            <div class="anat-val c-bull">24,725.25</div>
+          </div>
+          <div class="anat-item">
+            <div class="anat-label">Day Low</div>
+            <div class="anat-val c-bear">24,326.75</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end right col -->
+  </div><!-- end panels -->
+
+</div>
+
+<div class="foot">NQ Whale Radar © 2026 · Datos reales: NQ=F via yfinance · 264 barras de 5 min · file: jueves_chart_20260319.html</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATOS REALES DE MERCADO — NQ=F — 2026-03-19
+// Fuente: yfinance | 264 barras de 5min
+// ═══════════════════════════════════════════════
+
+const POC     = 24579.3;
+const VAH     = 24639.0;
+const VAL     = 24504.6;
+const NY_OPEN_P  = 24428.75;
+const NY_CLOSE_P = 24590.5;
+
+// Timestamps UTC
+const ASIA_START_UTC   = 1773871200;
+const LONDON_START_UTC = 1773900000;
+const NEWS_UTC         = 1773923400;
+const NY_OPEN_UTC      = 1773927000;
+const NY_CLOSE_UTC     = 1773950400;
+
+// Candles REALES (time en Unix seconds)
+const candles = [{"time":1773871200,"open":24622.0,"high":24628.5,"low":24600.0,"close":24604.75},{"time":1773871500,"open":24606.0,"high":24612.5,"low":24590.25,"close":24603.0},{"time":1773871800,"open":24603.25,"high":24605.5,"low":24591.5,"close":24592.25},{"time":1773872100,"open":24593.5,"high":24605.25,"low":24587.75,"close":24602.5},{"time":1773872400,"open":24602.75,"high":24610.75,"low":24580.0,"close":24583.25},{"time":1773872700,"open":24584.5,"high":24588.25,"low":24577.25,"close":24581.25},{"time":1773873000,"open":24580.25,"high":24588.5,"low":24567.5,"close":24570.25},{"time":1773873300,"open":24570.5,"high":24575.75,"low":24562.25,"close":24573.0},{"time":1773873600,"open":24574.25,"high":24584.5,"low":24568.25,"close":24580.0},{"time":1773873900,"open":24580.0,"high":24591.75,"low":24579.0,"close":24587.0},{"time":1773874200,"open":24586.0,"high":24596.5,"low":24585.25,"close":24587.5},{"time":1773874500,"open":24588.25,"high":24595.75,"low":24584.75,"close":24593.5},{"time":1773874800,"open":24594.25,"high":24614.75,"low":24592.5,"close":24608.25},{"time":1773875100,"open":24608.75,"high":24608.75,"low":24597.0,"close":24606.25},{"time":1773875400,"open":24608.0,"high":24619.0,"low":24605.75,"close":24610.25},{"time":1773875700,"open":24610.5,"high":24614.75,"low":24603.75,"close":24608.5},{"time":1773876000,"open":24608.5,"high":24616.0,"low":24608.25,"close":24615.0},{"time":1773876300,"open":24616.0,"high":24623.25,"low":24612.0,"close":24622.75},{"time":1773876600,"open":24621.75,"high":24624.75,"low":24617.5,"close":24620.25},{"time":1773876900,"open":24619.25,"high":24625.0,"low":24617.25,"close":24622.25},{"time":1773877200,"open":24623.25,"high":24644.25,"low":24617.75,"close":24625.5},{"time":1773877500,"open":24626.0,"high":24628.0,"low":24586.75,"close":24618.0},{"time":1773877800,"open":24616.25,"high":24616.75,"low":24596.75,"close":24613.75},{"time":1773878100,"open":24615.75,"high":24626.0,"low":24605.5,"close":24616.75},{"time":1773878400,"open":24618.25,"high":24634.5,"low":24601.0,"close":24634.25},{"time":1773878700,"open":24634.25,"high":24644.25,"low":24622.0,"close":24622.5},{"time":1773879000,"open":24622.75,"high":24633.75,"low":24606.0,"close":24628.75},{"time":1773879300,"open":24628.25,"high":24634.0,"low":24616.5,"close":24622.5},{"time":1773879600,"open":24621.25,"high":24621.25,"low":24595.25,"close":24596.0},{"time":1773879900,"open":24595.75,"high":24625.5,"low":24594.0,"close":24625.0},{"time":1773880200,"open":24624.25,"high":24634.25,"low":24600.0,"close":24604.5},{"time":1773880500,"open":24604.5,"high":24616.25,"low":24600.75,"close":24601.75},{"time":1773880800,"open":24602.0,"high":24606.25,"low":24588.75,"close":24589.0},{"time":1773881100,"open":24590.25,"high":24617.75,"low":24586.5,"close":24615.25},{"time":1773881400,"open":24616.0,"high":24620.25,"low":24604.0,"close":24616.25},{"time":1773881700,"open":24615.0,"high":24621.5,"low":24610.75,"close":24619.5},{"time":1773882000,"open":24619.75,"high":24624.5,"low":24608.0,"close":24611.5},{"time":1773882300,"open":24612.0,"high":24621.25,"low":24605.0,"close":24618.25},{"time":1773882600,"open":24619.25,"high":24625.5,"low":24616.5,"close":24618.25},{"time":1773882900,"open":24619.75,"high":24631.5,"low":24615.25,"close":24628.5},{"time":1773883200,"open":24627.75,"high":24635.5,"low":24622.75,"close":24634.25},{"time":1773883500,"open":24634.25,"high":24641.0,"low":24632.0,"close":24639.25},{"time":1773883800,"open":24639.75,"high":24643.5,"low":24630.75,"close":24641.25},{"time":1773884100,"open":24641.75,"high":24661.25,"low":24638.0,"close":24656.0},{"time":1773884400,"open":24657.0,"high":24665.25,"low":24650.0,"close":24655.25},{"time":1773884700,"open":24654.5,"high":24661.25,"low":24647.0,"close":24655.25},{"time":1773885000,"open":24654.5,"high":24661.5,"low":24646.25,"close":24659.75},{"time":1773885300,"open":24660.5,"high":24670.0,"low":24636.5,"close":24640.0},{"time":1773885600,"open":24639.75,"high":24642.0,"low":24600.5,"close":24624.0},{"time":1773885900,"open":24624.5,"high":24676.0,"low":24624.25,"close":24666.0},{"time":1773886200,"open":24668.5,"high":24686.5,"low":24668.25,"close":24678.75},{"time":1773886500,"open":24678.75,"high":24692.5,"low":24672.75,"close":24691.5},{"time":1773886800,"open":24692.5,"high":24706.75,"low":24692.25,"close":24704.5},{"time":1773887100,"open":24703.5,"high":24704.5,"low":24693.0,"close":24694.75},{"time":1773887400,"open":24695.75,"high":24713.0,"low":24693.75,"close":24711.5},{"time":1773887700,"open":24712.25,"high":24725.25,"low":24710.75,"close":24716.5},{"time":1773888000,"open":24716.75,"high":24723.5,"low":24711.75,"close":24716.5},{"time":1773888300,"open":24716.0,"high":24717.5,"low":24698.75,"close":24698.75},{"time":1773888600,"open":24699.5,"high":24701.0,"low":24687.25,"close":24694.5},{"time":1773888900,"open":24693.75,"high":24701.25,"low":24688.0,"close":24695.75},{"time":1773889200,"open":24696.0,"high":24703.0,"low":24696.0,"close":24701.5},{"time":1773889500,"open":24701.5,"high":24705.0,"low":24698.0,"close":24704.0},{"time":1773889800,"open":24703.5,"high":24715.0,"low":24703.5,"close":24710.75},{"time":1773890100,"open":24710.75,"high":24712.5,"low":24702.5,"close":24703.0},{"time":1773890400,"open":24702.75,"high":24706.75,"low":24698.0,"close":24698.75},{"time":1773890700,"open":24699.25,"high":24701.0,"low":24692.0,"close":24693.75},{"time":1773891000,"open":24693.5,"high":24694.0,"low":24675.25,"close":24683.75},{"time":1773891300,"open":24684.0,"high":24685.75,"low":24674.75,"close":24681.25},{"time":1773891600,"open":24683.25,"high":24684.5,"low":24674.75,"close":24678.5},{"time":1773891900,"open":24679.0,"high":24688.5,"low":24678.0,"close":24680.75},{"time":1773892200,"open":24680.75,"high":24681.5,"low":24671.5,"close":24679.25},{"time":1773892500,"open":24677.5,"high":24683.0,"low":24667.5,"close":24669.0},{"time":1773893100,"open":24641.5,"high":24645.25,"low":24639.75,"close":24640.75},{"time":1773893400,"open":24640.5,"high":24647.75,"low":24636.5,"close":24644.5},{"time":1773893700,"open":24644.0,"high":24647.5,"low":24636.25,"close":24641.75},{"time":1773894000,"open":24641.75,"high":24648.25,"low":24638.0,"close":24641.5},{"time":1773894300,"open":24641.75,"high":24645.5,"low":24635.25,"close":24638.0},{"time":1773894600,"open":24640.25,"high":24648.0,"low":24633.5,"close":24640.0},{"time":1773894900,"open":24641.0,"high":24644.0,"low":24627.75,"close":24634.5},{"time":1773895200,"open":24633.25,"high":24634.0,"low":24616.25,"close":24628.25},{"time":1773895500,"open":24627.5,"high":24627.5,"low":24610.5,"close":24614.5},{"time":1773895800,"open":24614.75,"high":24624.75,"low":24614.75,"close":24620.75},{"time":1773896100,"open":24622.25,"high":24632.25,"low":24621.75,"close":24629.75},{"time":1773896400,"open":24630.25,"high":24640.0,"low":24630.25,"close":24636.0},{"time":1773896700,"open":24635.25,"high":24639.75,"low":24625.5,"close":24632.0},{"time":1773897000,"open":24631.75,"high":24638.0,"low":24619.75,"close":24635.0},{"time":1773897300,"open":24634.0,"high":24640.5,"low":24628.5,"close":24640.5},{"time":1773897600,"open":24640.0,"high":24648.0,"low":24632.5,"close":24638.0},{"time":1773897900,"open":24637.5,"high":24637.5,"low":24614.5,"close":24615.25},{"time":1773898200,"open":24615.0,"high":24622.0,"low":24604.25,"close":24607.75},{"time":1773898500,"open":24608.25,"high":24617.0,"low":24599.0,"close":24604.5},{"time":1773898800,"open":24603.5,"high":24609.75,"low":24576.0,"close":24581.25},{"time":1773899100,"open":24583.5,"high":24601.0,"low":24579.0,"close":24586.25},{"time":1773899400,"open":24586.75,"high":24616.0,"low":24584.0,"close":24614.0},{"time":1773899700,"open":24615.25,"high":24619.25,"low":24594.0,"close":24597.75},{"time":1773900000,"open":24596.5,"high":24618.0,"low":24589.25,"close":24615.5},{"time":1773900300,"open":24617.5,"high":24628.0,"low":24613.0,"close":24614.25},{"time":1773900600,"open":24612.25,"high":24621.5,"low":24605.75,"close":24616.25},{"time":1773900900,"open":24617.0,"high":24639.0,"low":24615.5,"close":24627.25},{"time":1773901200,"open":24627.0,"high":24634.0,"low":24620.25,"close":24631.0},{"time":1773901500,"open":24631.25,"high":24631.25,"low":24602.0,"close":24602.5},{"time":1773901800,"open":24605.0,"high":24610.0,"low":24591.75,"close":24597.75},{"time":1773902100,"open":24597.25,"high":24602.0,"low":24573.75,"close":24600.5},{"time":1773902400,"open":24601.5,"high":24610.5,"low":24599.25,"close":24604.0},{"time":1773902700,"open":24605.0,"high":24610.0,"low":24596.0,"close":24598.75},{"time":1773903000,"open":24598.25,"high":24599.5,"low":24584.0,"close":24585.75},{"time":1773903300,"open":24585.25,"high":24605.75,"low":24582.5,"close":24605.25},{"time":1773903600,"open":24605.25,"high":24613.5,"low":24568.25,"close":24582.5},{"time":1773903900,"open":24582.75,"high":24594.25,"low":24577.5,"close":24588.75},{"time":1773904200,"open":24588.0,"high":24596.0,"low":24558.0,"close":24574.0},{"time":1773904500,"open":24574.75,"high":24626.75,"low":24573.0,"close":24619.0},{"time":1773904800,"open":24620.0,"high":24621.0,"low":24591.75,"close":24607.0},{"time":1773905100,"open":24608.75,"high":24611.25,"low":24587.75,"close":24589.75},{"time":1773905400,"open":24590.5,"high":24595.5,"low":24567.5,"close":24570.25},{"time":1773905700,"open":24571.5,"high":24579.5,"low":24556.5,"close":24575.25},{"time":1773906000,"open":24576.5,"high":24582.5,"low":24557.0,"close":24564.75},{"time":1773906300,"open":24565.75,"high":24590.75,"low":24563.0,"close":24585.75},{"time":1773906600,"open":24582.0,"high":24592.5,"low":24563.75,"close":24565.25},{"time":1773906900,"open":24564.0,"high":24571.0,"low":24543.5,"close":24557.25},{"time":1773907200,"open":24557.25,"high":24590.75,"low":24545.0,"close":24546.5},{"time":1773907500,"open":24546.75,"high":24581.0,"low":24540.5,"close":24580.75},{"time":1773907800,"open":24582.0,"high":24593.5,"low":24564.75,"close":24578.75},{"time":1773908100,"open":24578.5,"high":24593.25,"low":24561.75,"close":24571.5},{"time":1773908400,"open":24571.75,"high":24589.5,"low":24558.5,"close":24586.75},{"time":1773908700,"open":24586.0,"high":24586.0,"low":24540.0,"close":24548.5},{"time":1773909000,"open":24549.75,"high":24565.5,"low":24531.5,"close":24537.25},{"time":1773909300,"open":24536.75,"high":24549.25,"low":24520.25,"close":24525.75},{"time":1773909600,"open":24526.25,"high":24547.25,"low":24506.5,"close":24507.25},{"time":1773909900,"open":24507.75,"high":24537.75,"low":24505.5,"close":24536.5},{"time":1773910200,"open":24536.0,"high":24571.5,"low":24519.5,"close":24553.25},{"time":1773910500,"open":24553.75,"high":24557.75,"low":24538.0,"close":24546.0},{"time":1773910800,"open":24546.0,"high":24590.25,"low":24546.0,"close":24579.25},{"time":1773911100,"open":24579.5,"high":24590.75,"low":24566.5,"close":24569.0},{"time":1773911400,"open":24569.0,"high":24575.0,"low":24551.25,"close":24570.25},{"time":1773911700,"open":24570.0,"high":24579.0,"low":24555.0,"close":24569.5},{"time":1773912000,"open":24568.25,"high":24596.5,"low":24561.5,"close":24573.25},{"time":1773912300,"open":24573.0,"high":24583.0,"low":24500.0,"close":24517.5},{"time":1773912600,"open":24516.25,"high":24563.5,"low":24513.5,"close":24529.75},{"time":1773912900,"open":24533.0,"high":24557.0,"low":24511.25,"close":24549.0},{"time":1773913200,"open":24547.25,"high":24569.75,"low":24538.75,"close":24544.5},{"time":1773913500,"open":24543.0,"high":24614.5,"low":24539.5,"close":24612.25},{"time":1773913800,"open":24611.0,"high":24650.25,"low":24604.75,"close":24629.75},{"time":1773914100,"open":24629.75,"high":24647.5,"low":24624.0,"close":24627.25},{"time":1773914400,"open":24627.75,"high":24627.75,"low":24600.0,"close":24605.25},{"time":1773914700,"open":24605.0,"high":24626.25,"low":24597.75,"close":24609.75},{"time":1773915000,"open":24610.75,"high":24626.75,"low":24601.0,"close":24603.75},{"time":1773915300,"open":24603.75,"high":24605.5,"low":24592.75,"close":24604.0},{"time":1773915600,"open":24605.0,"high":24605.5,"low":24590.75,"close":24596.25},{"time":1773915900,"open":24595.25,"high":24613.0,"low":24592.0,"close":24606.5},{"time":1773916200,"open":24606.0,"high":24618.75,"low":24606.0,"close":24615.5},{"time":1773916500,"open":24615.5,"high":24616.25,"low":24592.0,"close":24592.0},{"time":1773916800,"open":24592.25,"high":24593.75,"low":24572.0,"close":24584.0},{"time":1773917100,"open":24583.0,"high":24590.25,"low":24573.0,"close":24584.0},{"time":1773917400,"open":24583.75,"high":24595.75,"low":24576.0,"close":24582.75},{"time":1773917700,"open":24582.25,"high":24598.0,"low":24575.0,"close":24591.0},{"time":1773918000,"open":24591.5,"high":24613.5,"low":24576.5,"close":24577.5},{"time":1773918300,"open":24577.75,"high":24586.0,"low":24562.5,"close":24576.5},{"time":1773918600,"open":24576.0,"high":24603.25,"low":24574.5,"close":24583.5},{"time":1773918900,"open":24582.0,"high":24586.75,"low":24561.75,"close":24564.25},{"time":1773919200,"open":24566.0,"high":24571.75,"low":24540.5,"close":24544.0},{"time":1773919500,"open":24544.0,"high":24549.0,"low":24529.0,"close":24546.25},{"time":1773919800,"open":24546.25,"high":24557.25,"low":24523.5,"close":24525.75},{"time":1773920100,"open":24525.5,"high":24526.0,"low":24509.0,"close":24511.0},{"time":1773920400,"open":24511.75,"high":24522.25,"low":24509.5,"close":24513.5},{"time":1773920700,"open":24514.75,"high":24521.5,"low":24510.25,"close":24512.25},{"time":1773921000,"open":24513.25,"high":24543.0,"low":24511.75,"close":24535.0},{"time":1773921300,"open":24534.25,"high":24552.75,"low":24528.5,"close":24545.75},{"time":1773921600,"open":24546.5,"high":24547.25,"low":24478.0,"close":24487.25},{"time":1773921900,"open":24488.75,"high":24558.25,"low":24481.5,"close":24538.0},{"time":1773922200,"open":24537.25,"high":24548.5,"low":24513.75,"close":24520.25},{"time":1773922500,"open":24518.5,"high":24536.0,"low":24498.0,"close":24501.25},{"time":1773922800,"open":24499.25,"high":24515.5,"low":24490.0,"close":24499.0},{"time":1773923100,"open":24498.75,"high":24502.25,"low":24458.25,"close":24478.0},{"time":1773923400,"open":24478.0,"high":24499.5,"low":24438.0,"close":24484.0},{"time":1773923700,"open":24484.0,"high":24499.25,"low":24468.0,"close":24474.0},{"time":1773924000,"open":24471.5,"high":24513.25,"low":24464.5,"close":24500.5},{"time":1773924300,"open":24501.25,"high":24502.25,"low":24452.0,"close":24458.25},{"time":1773924600,"open":24457.75,"high":24462.75,"low":24422.5,"close":24450.0},{"time":1773924900,"open":24449.0,"high":24458.25,"low":24441.25,"close":24446.75},{"time":1773925200,"open":24447.0,"high":24456.25,"low":24424.5,"close":24434.5},{"time":1773925500,"open":24435.0,"high":24439.75,"low":24415.75,"close":24422.5},{"time":1773925800,"open":24421.75,"high":24427.25,"low":24410.5,"close":24415.5},{"time":1773926100,"open":24414.0,"high":24485.75,"low":24401.25,"close":24477.25},{"time":1773926400,"open":24478.5,"high":24508.5,"low":24428.25,"close":24440.0},{"time":1773926700,"open":24439.25,"high":24447.25,"low":24412.75,"close":24429.5},{"time":1773927000,"open":24428.75,"high":24429.25,"low":24329.5,"close":24357.25},{"time":1773927300,"open":24357.0,"high":24407.5,"low":24326.75,"close":24384.75},{"time":1773927600,"open":24384.25,"high":24452.75,"low":24375.0,"close":24432.25},{"time":1773927900,"open":24432.5,"high":24459.25,"low":24392.5,"close":24457.75},{"time":1773928200,"open":24457.75,"high":24521.25,"low":24448.5,"close":24515.0},{"time":1773928500,"open":24515.0,"high":24517.25,"low":24462.75,"close":24504.5},{"time":1773928800,"open":24501.75,"high":24529.75,"low":24483.75,"close":24491.25},{"time":1773929100,"open":24492.25,"high":24523.25,"low":24474.5,"close":24484.5},{"time":1773929400,"open":24485.0,"high":24546.75,"low":24469.5,"close":24496.0},{"time":1773929700,"open":24496.5,"high":24507.0,"low":24460.25,"close":24475.25},{"time":1773930000,"open":24475.5,"high":24496.0,"low":24429.25,"close":24443.25},{"time":1773930300,"open":24444.25,"high":24459.0,"low":24407.25,"close":24426.75},{"time":1773930600,"open":24426.5,"high":24521.0,"low":24422.5,"close":24515.75},{"time":1773930900,"open":24515.5,"high":24540.5,"low":24448.75,"close":24465.75},{"time":1773931200,"open":24466.25,"high":24508.5,"low":24458.0,"close":24467.25},{"time":1773931500,"open":24467.0,"high":24499.25,"low":24451.75,"close":24497.5},{"time":1773931800,"open":24497.0,"high":24523.75,"low":24476.75,"close":24495.5},{"time":1773932100,"open":24495.75,"high":24518.5,"low":24470.0,"close":24489.0},{"time":1773932400,"open":24488.75,"high":24524.5,"low":24480.75,"close":24523.25},{"time":1773932700,"open":24524.0,"high":24577.5,"low":24510.0,"close":24529.5},{"time":1773933000,"open":24529.75,"high":24557.75,"low":24524.5,"close":24554.0},{"time":1773933300,"open":24554.25,"high":24564.0,"low":24482.5,"close":24485.0},{"time":1773933600,"open":24486.75,"high":24497.5,"low":24455.5,"close":24458.5},{"time":1773933900,"open":24459.25,"high":24475.25,"low":24445.25,"close":24461.0},{"time":1773934200,"open":24461.75,"high":24463.25,"low":24414.75,"close":24416.75},{"time":1773934500,"open":24415.75,"high":24436.0,"low":24400.25,"close":24425.0},{"time":1773934800,"open":24425.75,"high":24441.25,"low":24407.0,"close":24412.0},{"time":1773935100,"open":24411.5,"high":24441.25,"low":24397.0,"close":24430.75},{"time":1773935400,"open":24430.25,"high":24443.75,"low":24417.0,"close":24420.0},{"time":1773935700,"open":24419.5,"high":24475.75,"low":24418.75,"close":24475.0},{"time":1773936000,"open":24474.75,"high":24517.25,"low":24453.75,"close":24492.75},{"time":1773936300,"open":24492.75,"high":24522.75,"low":24485.25,"close":24499.25},{"time":1773936600,"open":24500.25,"high":24502.75,"low":24461.75,"close":24471.0},{"time":1773936900,"open":24471.5,"high":24482.5,"low":24449.0,"close":24455.5},{"time":1773937200,"open":24456.5,"high":24471.25,"low":24435.5,"close":24451.25},{"time":1773937500,"open":24451.75,"high":24480.0,"low":24445.25,"close":24468.5},{"time":1773937800,"open":24470.5,"high":24480.75,"low":24446.25,"close":24459.5},{"time":1773938100,"open":24459.5,"high":24476.0,"low":24439.75,"close":24475.0},{"time":1773938400,"open":24475.0,"high":24502.75,"low":24465.5,"close":24482.5},{"time":1773938700,"open":24484.0,"high":24488.25,"low":24462.75,"close":24467.0},{"time":1773939000,"open":24467.0,"high":24467.0,"low":24423.75,"close":24447.75},{"time":1773939300,"open":24447.25,"high":24458.25,"low":24433.25,"close":24454.75},{"time":1773939600,"open":24454.5,"high":24463.5,"low":24421.75,"close":24422.25},{"time":1773939900,"open":24421.75,"high":24428.75,"low":24380.5,"close":24385.25},{"time":1773940200,"open":24386.0,"high":24404.25,"low":24377.75,"close":24388.0},{"time":1773940500,"open":24388.25,"high":24431.5,"low":24379.0,"close":24431.25},{"time":1773940800,"open":24430.5,"high":24458.75,"low":24417.5,"close":24444.75},{"time":1773941100,"open":24445.0,"high":24463.25,"low":24436.0,"close":24449.75},{"time":1773941400,"open":24449.5,"high":24469.0,"low":24434.5,"close":24440.0},{"time":1773941700,"open":24439.75,"high":24447.75,"low":24420.75,"close":24421.25},{"time":1773942000,"open":24421.5,"high":24437.5,"low":24411.25,"close":24428.75},{"time":1773942300,"open":24429.75,"high":24442.0,"low":24415.75,"close":24431.5},{"time":1773942600,"open":24430.75,"high":24488.25,"low":24428.25,"close":24475.25},{"time":1773942900,"open":24475.75,"high":24476.0,"low":24451.25,"close":24453.5},{"time":1773943200,"open":24452.75,"high":24455.5,"low":24425.0,"close":24431.25},{"time":1773943500,"open":24431.5,"high":24468.25,"low":24429.0,"close":24458.25},{"time":1773943800,"open":24459.75,"high":24520.75,"low":24457.5,"close":24508.75},{"time":1773944100,"open":24509.0,"high":24517.0,"low":24482.5,"close":24506.0},{"time":1773944400,"open":24505.5,"high":24510.75,"low":24486.0,"close":24492.0},{"time":1773944700,"open":24491.25,"high":24500.5,"low":24468.0,"close":24468.75},{"time":1773945000,"open":24469.5,"high":24472.25,"low":24452.75,"close":24461.25},{"time":1773945300,"open":24460.75,"high":24469.75,"low":24433.0,"close":24444.75},{"time":1773945600,"open":24444.75,"high":24449.75,"low":24420.25,"close":24428.25},{"time":1773945900,"open":24428.0,"high":24442.0,"low":24421.5,"close":24435.25},{"time":1773946200,"open":24435.0,"high":24448.0,"low":24418.0,"close":24445.0},{"time":1773946500,"open":24444.75,"high":24524.5,"low":24438.25,"close":24509.75},{"time":1773946800,"open":24508.75,"high":24595.5,"low":24506.0,"close":24584.25},{"time":1773947100,"open":24583.75,"high":24690.0,"low":24583.75,"close":24644.0},{"time":1773947400,"open":24643.75,"high":24691.5,"low":24607.5,"close":24657.75},{"time":1773947700,"open":24658.5,"high":24675.75,"low":24630.25,"close":24662.5},{"time":1773948000,"open":24661.75,"high":24665.25,"low":24609.25,"close":24615.0},{"time":1773948300,"open":24615.0,"high":24616.75,"low":24574.5,"close":24597.75},{"time":1773948600,"open":24597.25,"high":24614.5,"low":24574.75,"close":24580.5},{"time":1773948900,"open":24580.25,"high":24598.0,"low":24544.0,"close":24594.75},{"time":1773949200,"open":24596.0,"high":24605.5,"low":24577.25,"close":24588.75},{"time":1773949500,"open":24588.75,"high":24601.25,"low":24569.25,"close":24578.5},{"time":1773949800,"open":24579.5,"high":24589.75,"low":24562.5,"close":24569.75},{"time":1773950100,"open":24570.25,"high":24597.25,"low":24569.5,"close":24574.75},{"time":1773950400,"open":24574.25,"high":24594.5,"low":24563.5,"close":24590.5}];
+
+// ─── INIT CHART ───────────────────────────────────────────────
+const chartEl = document.getElementById('chart');
+const chart = LightweightCharts.createChart(chartEl, {
+  width:  chartEl.offsetWidth,
+  height: 680,
+  layout: {
+    background: { color: '#08061a' },
+    textColor:  '#64748b',
+    fontSize:   11,
+    fontFamily: 'JetBrains Mono, monospace',
+  },
+  grid: {
+    vertLines: { color: 'rgba(124,58,237,0.06)' },
+    horzLines: { color: 'rgba(124,58,237,0.06)' },
+  },
+  crosshair: {
+    mode:     LightweightCharts.CrosshairMode.Normal,
+    vertLine: { color: 'rgba(6,182,212,0.5)', width: 1, style: 2 },
+    horzLine: { color: 'rgba(6,182,212,0.5)', width: 1, style: 2 },
+  },
+  rightPriceScale: {
+    borderColor:  'rgba(30,26,58,0.8)',
+    textColor:    '#64748b',
+    scaleMargins: { top: 0.05, bottom: 0.05 },
+  },
+  timeScale: {
+    borderColor:    'rgba(30,26,58,0.8)',
+    timeVisible:    true,
+    secondsVisible: false,
+    tickMarkFormatter: (time) => {
+      const d = new Date(time * 1000);
+      const h = ((d.getUTCHours() - 4 + 24) % 24);
+      const m = d.getUTCMinutes();
+      return m === 0 ? `${h}:00` : `${h}:${m.toString().padStart(2,'0')}`;
+    },
+  },
+  handleScroll: { mouseWheel: true, pressedMouseMove: true },
+  handleScale:  { mouseWheel: true, pinch: true },
+});
+
+// Glow effect CSS on chart canvas (DeepChart neon style)
+setTimeout(() => {
+  const canvas = chartEl.querySelector('canvas');
+  if (canvas) {
+    canvas.style.filter = 'drop-shadow(0 0 4px rgba(6,182,212,0.08))';
+  }
+}, 100);
+
+// CANDLESTICKS REALES
+// ── DEEPCHART STYLE: hollow neon candles ──────────────────────
+// Bull = neon #00FF80 hollow (semi-transparent body + solid border)
+// Bear = neon #FF0055 hollow (semi-transparent body + solid border)
+const series = chart.addCandlestickSeries({
+  upColor:         'rgba(16,185,129,0.08)',
+  downColor:       'rgba(139,92,246,0.08)',
+  borderUpColor:   '#10b981',
+  borderDownColor: '#8b5cf6',
+  wickUpColor:     '#10b981',
+  wickDownColor:   '#8b5cf6',
+  borderVisible:   true,
+  wickVisible:     true,
+  priceFormat:     { type: 'price', precision: 2, minMove: 0.25 },
+});
+series.setData(candles);
+
+// PRICE LINES — neon accent colors estilo DeepChart
+series.createPriceLine({ price: VAH, color: 'rgba(0,255,128,0.6)',  lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `VAH ${VAH.toLocaleString()}` });
+series.createPriceLine({ price: POC, color: '#00ff80',              lineWidth: 2, lineStyle: 0, axisLabelVisible: true, title: `POC ${POC.toLocaleString()}` });
+series.createPriceLine({ price: VAL, color: 'rgba(0,255,128,0.6)', lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `VAL ${VAL.toLocaleString()}` });
+series.createPriceLine({ price: NY_OPEN_P, color: 'rgba(245,158,11,0.8)', lineWidth: 1, lineStyle: 3, axisLabelVisible: true, title: `NY OPEN ${NY_OPEN_P.toLocaleString()}` });
+
+// ═══════════════════════════════════════════
+// SESSION BACKGROUND BANDS + H/L POR SESIÓN
+// ═══════════════════════════════════════════
+const leftScaleOpts = { leftPriceScale: { visible: false } };
+chart.applyOptions(leftScaleOpts);
+
+const bandHigh = Math.max(...candles.map(c => c.high)) + 200;
+
+function addBand(startTs, endTs, topColor, botColor) {
+  const band = chart.addAreaSeries({
+    topColor, bottomColor: botColor, lineColor: 'rgba(0,0,0,0)',
+    priceScaleId: 'left', crosshairMarkerVisible: false,
+  });
+  band.setData([
+    { time: startTs, value: bandHigh },
+    { time: endTs,   value: bandHigh },
+  ]);
+}
+
+// Bandas de sesión — más visibles
+addBand(ASIA_START_UTC,   LONDON_START_UTC, 'rgba(6,182,212,0.10)',   'rgba(6,182,212,0.03)');
+addBand(LONDON_START_UTC, NY_OPEN_UTC,      'rgba(245,158,11,0.10)',  'rgba(245,158,11,0.03)');
+addBand(NY_OPEN_UTC,      NY_CLOSE_UTC,     'rgba(0,255,128,0.08)',   'rgba(0,255,128,0.02)');
+
+// ─── SESSION H/L LINES (calculadas desde datos reales) ───────
+function sessionHL(fromTs, toTs) {
+  const s = candles.filter(c => c.time >= fromTs && c.time <= toTs);
+  return {
+    high: Math.max(...s.map(c => c.high)),
+    low:  Math.min(...s.map(c => c.low)),
+  };
+}
+
+// ASIA H/L  — cyan
+const asiaHL = sessionHL(ASIA_START_UTC, LONDON_START_UTC - 1);
+series.createPriceLine({ price: asiaHL.high, color: 'rgba(6,182,212,0.9)',  lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `ASIA H ${asiaHL.high.toLocaleString()}` });
+series.createPriceLine({ price: asiaHL.low,  color: 'rgba(6,182,212,0.9)',  lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `ASIA L ${asiaHL.low.toLocaleString()}` });
+
+// LONDON H/L — amber
+const lonHL = sessionHL(LONDON_START_UTC, NY_OPEN_UTC - 1);
+series.createPriceLine({ price: lonHL.high, color: 'rgba(245,158,11,0.9)', lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `LON H ${lonHL.high.toLocaleString()}` });
+series.createPriceLine({ price: lonHL.low,  color: 'rgba(245,158,11,0.9)', lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `LON L ${lonHL.low.toLocaleString()}` });
+
+// NY H/L — neon green
+const nyHL = sessionHL(NY_OPEN_UTC, NY_CLOSE_UTC);
+series.createPriceLine({ price: nyHL.high, color: 'rgba(0,255,128,0.9)',  lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `NY H ${nyHL.high.toLocaleString()}` });
+series.createPriceLine({ price: nyHL.low,  color: 'rgba(0,255,128,0.9)',  lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `NY L ${nyHL.low.toLocaleString()}` });
+
+// MARKERS — buscar candles más cercanos a los hitos
+function nearestCandle(targetTs) {
+  return candles.reduce((best, c) =>
+    Math.abs(c.time - targetTs) < Math.abs(best.time - targetTs) ? c : best
+  );
+}
+
+function lowestInRange(fromTs, toTs) {
+  const sub = candles.filter(c => c.time >= fromTs && c.time <= toTs);
+  return sub.reduce((a, b) => b.low < a.low ? b : a);
+}
+
+const nyCandles = candles.filter(c => c.time >= NY_OPEN_UTC && c.time <= NY_CLOSE_UTC);
+const sweepCandle  = nyCandles.length ? nyCandles.reduce((a,b) => b.low < a.low ? b : a) : candles[candles.length-1];
+const pocCandle    = nearestCandle(NY_OPEN_UTC + 5400); // ~11:00 AM ET aprox
+const newsCandle   = nearestCandle(NEWS_UTC);
+const nyOpenCandle = nearestCandle(NY_OPEN_UTC);
+const londonCandle = nearestCandle(LONDON_START_UTC);
+
+series.setMarkers([
+  { time: candles[0].time,      position: 'belowBar', color: '#06b6d4', shape: 'circle',    text: '🌏 Asia 6PM ET' },
+  { time: londonCandle.time,    position: 'aboveBar', color: '#f59e0b', shape: 'circle',    text: '🇬🇧 London 2AM' },
+  { time: newsCandle.time,      position: 'aboveBar', color: '#b366ff', shape: 'arrowDown', text: '📰 Jobless Claims 8:30AM' },
+  { time: nyOpenCandle.time,    position: 'aboveBar', color: '#f59e0b', shape: 'circle',    text: `🔔 NY Open ${NY_OPEN_P.toLocaleString()}` },
+  { time: sweepCandle.time,     position: 'belowBar', color: '#b366ff', shape: 'arrowDown', text: `⬇️ Sweep Low ${sweepCandle.low.toLocaleString()}` },
+  { time: pocCandle.time,       position: 'aboveBar', color: '#00ff80', shape: 'arrowUp',   text: `✅ POC Zone ${POC.toLocaleString()}` },
+  { time: candles[candles.length-1].time, position: 'inBar', color: '#f59e0b', shape: 'circle', text: `🏁 Cierre ${NY_CLOSE_P.toLocaleString()}` },
+]);
+
+chart.timeScale().fitContent();
+
+window.addEventListener('resize', () => {
+  chart.applyOptions({ width: chartEl.offsetWidth });
+});
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     STORY MODE OVERLAY — 7 pasos del mercado 2026-03-19
+     ═══════════════════════════════════════════════════════════ -->
+<div id="story-overlay">
+  <div class="story-modal">
+
+    <!-- Header -->
+    <div class="story-header">
+      <div>
+        <div class="story-title-main">📖 Historia del Día — NQ 2026-03-19</div>
+        <div class="story-subtitle">Reproducción paso a paso · Sweep Low → POC Target +161 pts</div>
+      </div>
+      <button class="story-close" onclick="closeStory()">✕</button>
+    </div>
+
+    <!-- Progress dots -->
+    <div class="story-progress" id="storyProgress"></div>
+
+    <!-- ── PASO 1: ASIA ── -->
+    <div class="step-card" id="step-0" style="--step-color-a:#06b6d4;--step-color-b:#0891b2">
+      <div class="step-session-label" style="background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);color:#67e8f9">🌏 SESIÓN ASIA</div>
+      <div class="step-num">01</div>
+      <div class="step-event-title">Asia consolida — rango estrecho</div>
+      <div class="step-time" style="color:#67e8f9">📅 Martes 18 Mar 6:00 PM ET → Miércoles 2:00 AM ET</div>
+      <div class="step-desc" style="border-color:#06b6d4">
+        El mercado asiático opera durante la sesión nocturna de EE.UU. El NQ se mueve en un rango comprimido entre los <strong>~24,500 – 24,650</strong> puntos. Es una fase de acumulación silenciosa: los grandes jugadores no muestran su mano todavía. El volumen es bajo, los movimientos son suaves.
+      </div>
+      <div class="step-insight">💡 <span><strong>Clave del trader:</strong> Un rango estrecho en Asia = spring loaded. Cuanto más comprimido, más explosivo el movimiento cuando llegue el volumen europeo o americano.</span></div>
+      <div class="step-data-row">
+        <div class="step-data-chip"><span>Asia High</span><span style="color:#06b6d4" id="s1h">calculando...</span></div>
+        <div class="step-data-chip"><span>Asia Low</span><span style="color:#06b6d4" id="s1l">calculando...</span></div>
+        <div class="step-data-chip"><span>Volumen</span>Bajo-Medio</div>
+        <div class="step-data-chip"><span>Sesgo</span>Neutral / Acum.</div>
+      </div>
+    </div>
+
+    <!-- ── PASO 2: LONDON PRE-MARKET ── -->
+    <div class="step-card" id="step-1" style="--step-color-a:#f59e0b;--step-color-b:#d97706">
+      <div class="step-session-label" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#fcd34d">🇬🇧 SESIÓN LONDON / PRE-MARKET</div>
+      <div class="step-num">02</div>
+      <div class="step-event-title">Londres entra — y el precio cae</div>
+      <div class="step-time" style="color:#fcd34d">⏰ 2:00 AM ET → 8:30 AM ET</div>
+      <div class="step-desc" style="border-color:#f59e0b">
+        Con la apertura de Londres llega volumen real. Los creadores de mercado europeos empiezan a testear la liquidez por debajo de los mínimos de Asia. El NQ empieza a presionar hacia abajo — esto es <strong>engineered liquidity</strong>: los market makers necesitan los stops de los traders que compraron en Asia para llenarse con órdenes institucionales largas.
+      </div>
+      <div class="step-insight">💡 <span><strong>Smart Money:</strong> La "bajada de Londres" casi siempre es trampa. El precio baja para tomar liquidez (sweep), NO para continuar bearish. El smart money está comprando mientras el retail vende sus stops.</span></div>
+      <div class="step-data-row">
+        <div class="step-data-chip"><span>London High</span><span style="color:#f59e0b" id="s2h">calculando...</span></div>
+        <div class="step-data-chip"><span>London Low</span><span style="color:#f59e0b" id="s2l">calculando...</span></div>
+        <div class="step-data-chip"><span>Dirección</span>Bearish → Trampa</div>
+        <div class="step-data-chip"><span>Jugada</span>Barrido de Liquidez</div>
+      </div>
+    </div>
+
+    <!-- ── PASO 3: JOBLESS CLAIMS ── -->
+    <div class="step-card" id="step-2" style="--step-color-a:#b366ff;--step-color-b:#7c3aed">
+      <div class="step-session-label" style="background:rgba(179,102,255,.15);border:1px solid rgba(179,102,255,.3);color:#d8b4fe">📰 NOTICIA ECONÓMICA</div>
+      <div class="step-num">03</div>
+      <div class="step-event-title">Jobless Claims — Pico de Volatilidad</div>
+      <div class="step-time" style="color:#d8b4fe">⏰ 8:30 AM ET — Apertura de datos</div>
+      <div class="step-desc" style="border-color:#b366ff">
+        A las <strong>8:30 AM ET</strong> se publican las Solicitudes Iniciales de Desempleo (Jobless Claims). Este dato mueve el mercado. Si el número es mejor de lo esperado → mercado sube. Las velas en este momento son violetas (bearish) y verdes (bullish) alternas con mechas largas — es volatilidad pura, no tendencia. Los algoritmos reaccionan en milisegundos. El spread se abre, los market orders te pueden llenar mal.
+      </div>
+      <div class="step-insight">⚠️ <span><strong>Regla del profesional:</strong> NO entres 5 minutos antes ni durante el dato. Espera que el polvo se asiente. Las mejores entradas son <em>después</em> de la noticia, cuando el precio retoma su tendencia subyacente.</span></div>
+      <div class="step-data-row">
+        <div class="step-data-chip"><span>Hora</span>8:30 AM ET</div>
+        <div class="step-data-chip"><span>Dato</span>Jobless Claims</div>
+        <div class="step-data-chip"><span>Riesgo</span><span style="color:#b366ff">ALTO ⚡</span></div>
+        <div class="step-data-chip"><span>Acción</span>Esperar → No operar</div>
+      </div>
+    </div>
+
+    <!-- ── PASO 4: NY OPEN ── -->
+    <div class="step-card" id="step-3" style="--step-color-a:#f59e0b;--step-color-b:#f97316">
+      <div class="step-session-label" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#fcd34d">🗽 APERTURA NY</div>
+      <div class="step-num">04</div>
+      <div class="step-event-title">NY Open — El mercado se despierta</div>
+      <div class="step-time" style="color:#fcd34d">⏰ 9:30 AM ET · Open: 24,428.75</div>
+      <div class="step-desc" style="border-color:#f59e0b">
+        A las <strong>9:30 AM ET</strong> abre la sesión oficial de NY. En este día el NQ abre en <strong>24,428.75</strong> — por debajo del POC previo (24,579) y del VAL (24,504). Este es el punto más peligroso y más rico en oportunidades. El precio está en zona de <em>discount</em> respecto a la distribución de ayer. Los primeros 15-30 minutos pueden ser trampa — espera la estructura.
+      </div>
+      <div class="step-insight">🔔 <span><strong>Setup del día:</strong> NY Open por debajo del POC previo = potencial retorno al POC. El precio "quiere" volver a equilibrio. Un sweep del low de London + rechazo = señal de entrada long.</span></div>
+      <div class="step-data-row">
+        <div class="step-data-chip"><span>NY Open</span><span style="color:#f59e0b">24,428.75</span></div>
+        <div class="step-data-chip"><span>POC Previo</span><span style="color:#a78bfa">24,579.3</span></div>
+        <div class="step-data-chip"><span>Distancia</span>-150.5 pts</div>
+        <div class="step-data-chip"><span>Zona</span>Discount 🟢</div>
+      </div>
+    </div>
+
+    <!-- ── PASO 5: SWEEP LOW → TRAMPA ── -->
+    <div class="step-card" id="step-4" style="--step-color-a:#b366ff;--step-color-b:#7c3aed">
+      <div class="step-session-label" style="background:rgba(179,102,255,.15);border:1px solid rgba(179,102,255,.3);color:#d8b4fe">⬇️ SWEEP LOW — TRAMPA BAJISTA</div>
+      <div class="step-num">05</div>
+      <div class="step-event-title">Sweep del Mínimo — La Gran Trampa</div>
+      <div class="step-time" style="color:#d8b4fe">🕐 Primeras horas NY · Low: 24,326.75</div>
+      <div class="step-desc" style="border-color:#b366ff">
+        El NQ baja hasta <strong>24,326.75</strong> — el mínimo del día. Este movimiento activa todos los stops de los compradores de Asia y de la apertura NY. Los traders retail que vendieron en corto creen que van a ganar. Pero esto es un <strong>Sweep &amp; Reverse</strong>: el precio toma toda esa liquidez (stops de longs + órdenes de shorts) y luego invierte violentamente hacia arriba. La vela de reversión tiene mecha larga abajo — señal de rechazo.
+      </div>
+      <div class="step-insight">🎯 <span><strong>La entrada perfecta:</strong> Cuando el precio barre un mínimo previo y luego cierra por encima con fuerza = trampa bajista confirmada. Ahí es donde el smart money está largo. Stop por debajo del sweep, target: POC previo.</span></div>
+      <div class="step-data-row">
+        <div class="step-data-chip"><span>Sweep Low</span><span style="color:#b366ff">24,326.75</span></div>
+        <div class="step-data-chip"><span>Señal</span>Rechazo + Reversión</div>
+        <div class="step-data-chip"><span>Patrón</span>Sweep &amp; Reverse</div>
+        <div class="step-data-chip"><span>R/R</span>~1:3 long trade</div>
+      </div>
+    </div>
+
+    <!-- ── PASO 6: TARGET POC ── -->
+    <div class="step-card" id="step-5" style="--step-color-a:#00ff80;--step-color-b:#10b981">
+      <div class="step-session-label" style="background:rgba(0,255,128,.12);border:1px solid rgba(0,255,128,.3);color:#6ee7b7">✅ TARGET ALCANZADO</div>
+      <div class="step-num">06</div>
+      <div class="step-event-title">POC Target — Equilibrio Restaurado</div>
+      <div class="step-time" style="color:#6ee7b7">📈 Recuperación desde 24,326 → 24,691 · NY Session</div>
+      <div class="step-desc" style="border-color:#00ff80">
+        El precio sube desde el sweep low en <strong>24,326</strong> hasta el área del POC previo en <strong>24,579</strong> y continúa hasta <strong>24,691</strong> (NY High). Este movimiento de <strong>+364 puntos</strong> desde el sweep hasta el high del día es exactamente lo que predice el patrón Sweep Low Return. El mercado devuelve el precio a la zona de mayor volumen previo (POC) — es como un imán. Los traders que compraron en el sweep cosechan sus ganancias en este target.
+      </div>
+      <div class="step-insight">✅ <span><strong>Resultado del trade:</strong> Entrada ~24,350 / Stop ~24,310 / Target POC 24,579 → <strong>Ganancia: ~229 pts</strong>. Con NQ mini (MNQ) cada punto = $2. Con 1 contrato = ~$458 en el trade. R/R realizado: 1:5.7</span></div>
+      <div class="step-data-row">
+        <div class="step-data-chip"><span>Entry aprox.</span>24,350</div>
+        <div class="step-data-chip"><span>POC Target</span><span style="color:#00ff80">24,579</span></div>
+        <div class="step-data-chip"><span>NY High</span><span style="color:#00ff80">24,691.50</span></div>
+        <div class="step-data-chip"><span>Ganancia</span><span style="color:#00ff80">+229-364 pts ✅</span></div>
+      </div>
+    </div>
+
+    <!-- ── PASO 7: CIERRE ── -->
+    <div class="step-card" id="step-6" style="--step-color-a:#f59e0b;--step-color-b:#fbbf24">
+      <div class="step-session-label" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#fcd34d">🏁 CIERRE DEL MERCADO</div>
+      <div class="step-num">07</div>
+      <div class="step-event-title">Cierre NY — Resumen Final</div>
+      <div class="step-time" style="color:#fcd34d">⏰ 4:00 PM ET · Cierre: 24,590.50</div>
+      <div class="step-desc" style="border-color:#f59e0b">
+        El NQ cierra a las <strong>4:00 PM ET</strong> en <strong>24,590.50</strong> — exactamente por encima del POC previo (24,579.3), lo que confirma la fuerza compradora del día. El movimiento total de Apertura a Cierre fue de <strong>+161.8 puntos</strong>. La estructura del día fue perfecta: Sweep Low en el pre-market / primeras horas NY → Rally fuerte → Cierre en zona de valor. Esto es un libro de texto de patrón ICT/Smart Money.
+      </div>
+      <div class="step-insight">📚 <span><strong>Lección del día:</strong> El patrón completo fue Asia (rango) → London (presión bajista) → Sweep Low NY → Rally → POC. Este patrón ocurre 3-4 veces por semana en el NQ. Aprender a leerlo cambia tu trading.</span></div>
+      <div class="step-data-row">
+        <div class="step-data-chip"><span>Open</span>24,428.75</div>
+        <div class="step-data-chip"><span>Cierre</span><span style="color:#f59e0b">24,590.50</span></div>
+        <div class="step-data-chip"><span>O→C</span><span style="color:#00ff80">+161.8 pts 📈</span></div>
+        <div class="step-data-chip"><span>Range Total</span>364.8 pts</div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <div class="story-nav">
+      <button class="nav-btn nav-prev" id="prevBtn" onclick="storyNav(-1)" disabled>← Anterior</button>
+      <span class="step-counter" id="stepCounter">Paso 1 / 7</span>
+      <button class="nav-btn nav-next" id="nextBtn" onclick="storyNav(1)">Siguiente →</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   STORY MODE ENGINE
+   ═══════════════════════════════════════════════════════════ */
+const TOTAL_STEPS = 7;
+let currentStep = 0;
+
+const STORY_RANGES = [
+  { from: 1742338800, to: 1742367600 },
+  { from: 1742367600, to: 1742399400 },
+  { from: 1742399400, to: 1742403000 },
+  { from: 1742403000, to: 1742411400 },
+  { from: 1742404800, to: 1742412000 },
+  { from: 1742410200, to: 1742425800 },
+  { from: 1742420400, to: 1742432400 },
+];
+
+function buildProgress() {
+  const p = document.getElementById('storyProgress');
+  p.innerHTML = '';
+  for(let i = 0; i < TOTAL_STEPS; i++) {
+    const d = document.createElement('div');
+    d.className = 'story-dot';
+    d.setAttribute('data-idx', i);
+    d.onclick = () => { currentStep = i; renderStep(); };
+    p.appendChild(d);
+  }
+}
+
+function renderStep() {
+  document.querySelectorAll('.step-card').forEach((c, i) => {
+    c.classList.remove('visible');
+    if(i === currentStep) c.classList.add('visible');
+  });
+  document.querySelectorAll('.story-dot').forEach((d, i) => {
+    d.className = 'story-dot' + (i < currentStep ? ' done' : i === currentStep ? ' active' : '');
+  });
+  document.getElementById('stepCounter').textContent = `Paso ${currentStep+1} / ${TOTAL_STEPS}`;
+  document.getElementById('prevBtn').disabled = currentStep === 0;
+  document.getElementById('nextBtn').textContent = currentStep === TOTAL_STEPS - 1 ? '🏁 Finalizar' : 'Siguiente →';
+  try {
+    const r = STORY_RANGES[currentStep];
+    if(typeof chart !== 'undefined' && r) chart.timeScale().setVisibleRange({ from: r.from, to: r.to });
+  } catch(e) {}
+  try {
+    if(currentStep===0 && typeof asiaHL!=='undefined'){
+      document.getElementById('s1h').textContent = asiaHL.high.toLocaleString();
+      document.getElementById('s1l').textContent = asiaHL.low.toLocaleString();
+    }
+    if(currentStep===1 && typeof lonHL!=='undefined'){
+      document.getElementById('s2h').textContent = lonHL.high.toLocaleString();
+      document.getElementById('s2l').textContent = lonHL.low.toLocaleString();
+    }
+  } catch(e) {}
+}
+
+function storyNav(dir) {
+  const next = currentStep + dir;
+  if(next < 0) return;
+  if(next >= TOTAL_STEPS) { closeStory(); return; }
+  currentStep = next;
+  renderStep();
+}
+
+function openStory() {
+  currentStep = 0;
+  buildProgress();
+  renderStep();
+  document.getElementById('story-overlay').classList.add('active');
+  document.getElementById('storyBtn').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeStory() {
+  document.getElementById('story-overlay').classList.remove('active');
+  document.getElementById('storyBtn').classList.remove('active');
+  document.body.style.overflow = '';
+  try { chart.timeScale().fitContent(); } catch(e) {}
+}
+
+document.getElementById('story-overlay').addEventListener('click', function(e){
+  if(e.target === this) closeStory();
+});
+
+document.addEventListener('keydown', function(e){
+  if(!document.getElementById('story-overlay').classList.contains('active')) return;
+  if(e.key === 'ArrowRight' || e.key === 'ArrowDown') storyNav(1);
+  if(e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   storyNav(-1);
+  if(e.key === 'Escape') closeStory();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   CINEMATIC REPLAY ENGINE
+   El replay empieza en t=REPLAY_START (8:00 AM ET = 30 min ANTES
+   de la noticia Jobless Claims a las 8:30 AM ET).
+   Las velas se revelan una a una. El Story Mode se sincroniza
+   automáticamente según el timestamp de la vela actual.
+   ═══════════════════════════════════════════════════════════ */
+
+// 8:00 AM ET = 13:00 UTC = Unix 1742396400 (2026-03-19)
+const REPLAY_START_TS = 1742396400;
+
+// Narrativa por franja de tiempo — se actualiza en el mini-panel
+const REPLAY_PHASES = [
+  {
+    from: 1742338800, to: 1742367600,
+    step: 0,
+    badge: '🌏 SESIÓN ASIA',
+    badgeStyle: 'background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.3);color:#67e8f9',
+    text: 'Asia consolida en rango estrecho entre ~24,500 – 24,650. Volumen bajo. Acumulación silenciosa.'
+  },
+  {
+    from: 1742367600, to: 1742399400,
+    step: 1,
+    badge: '🇬🇧 LONDON / PRE-MARKET',
+    badgeStyle: 'background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#fcd34d',
+    text: 'Londres entra — el precio presiona hacia abajo buscando liquidez bajo los mínimos de Asia. Engineered Liquidity.'
+  },
+  {
+    from: 1742399400, to: 1742403000,
+    step: 2,
+    badge: '📰 JOBLESS CLAIMS 8:30AM',
+    badgeStyle: 'background:rgba(179,102,255,0.15);border:1px solid rgba(179,102,255,0.35);color:#d8b4fe',
+    text: '⚠️ NOTICIA EN CURSO — Volatilidad extrema. Mechas largas. NO operar. Esperar que el polvo se asiente.'
+  },
+  {
+    from: 1742403000, to: 1742406600,
+    step: 3,
+    badge: '🗽 NY OPEN 9:30AM',
+    badgeStyle: 'background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#fcd34d',
+    text: 'NY abre en 24,428.75 — por debajo del POC previo (24,579). Zona de discount. Primeros 30 min: trampa potencial.'
+  },
+  {
+    from: 1742406600, to: 1742412000,
+    step: 4,
+    badge: '⬇️ SWEEP LOW — TRAMPA',
+    badgeStyle: 'background:rgba(179,102,255,0.15);border:1px solid rgba(179,102,255,0.35);color:#d8b4fe',
+    text: '🎯 SETUP — Precio barre mínimo en 24,326.75. Vela de rechazo con mecha larga. Sweep & Reverse. Busca entrada long.'
+  },
+  {
+    from: 1742412000, to: 1742425800,
+    step: 5,
+    badge: '📈 RALLY → POC TARGET',
+    badgeStyle: 'background:rgba(0,255,128,0.12);border:1px solid rgba(0,255,128,0.35);color:#6ee7b7',
+    text: '✅ TRADE ACTIVO — Rally desde 24,326 → 24,579 POC (+229 pts). R/R 1:5.7 con stop bajo el sweep.'
+  },
+  {
+    from: 1742425800, to: 1742432400,
+    step: 6,
+    badge: '🏁 CIERRE 4PM ET',
+    badgeStyle: 'background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#fcd34d',
+    text: 'Cierre en 24,590.50 — por encima del POC previo. O→C: +161.8 pts. Bullish day confirmado. Patrón ICT perfecto.'
+  },
+];
+
+// Estado del replay
+let rpAllCandles = [];   // todas las velas del chart original
+let rpStartIdx   = 0;    // índice de la vela REPLAY_START
+let rpCurrentIdx = 0;    // vela actualmente mostrada
+let rpIsPlaying  = false;
+let rpSpeed      = 1;    // multiplicador de velocidad
+let rpTimer      = null;
+let rpSeries     = null; // referencia a la serie del chart
+let rpBarVisible = false;
+const RP_BASE_MS = 350;  // ms por vela a velocidad 1×
+
+function toggleReplayBar() {
+  rpBarVisible = !rpBarVisible;
+  const bar = document.getElementById('replay-bar');
+  const btn = document.getElementById('replayLaunchBtn');
+  if(rpBarVisible) {
+    bar.classList.add('visible');
+    btn.classList.add('active');
+    btn.textContent = '⏪ CERRAR REPLAY';
+    rpInit();
+  } else {
+    bar.classList.remove('visible');
+    btn.classList.remove('active');
+    btn.textContent = '⏪ REPLAY';
+    if(rpIsPlaying) replayPause();
+    // Restaurar todas las velas
+    rpRestoreAll();
+  }
+}
+
+function rpInit() {
+  // Obtener todas las velas del chart (variable global `candles`)
+  try {
+    rpAllCandles = typeof candles !== 'undefined' ? candles.slice() : [];
+  } catch(e) { rpAllCandles = []; }
+
+  if(rpAllCandles.length === 0) {
+    document.getElementById('rp-narrative-text').textContent = '⚠️ No se encontraron datos de velas.';
+    return;
+  }
+
+  // Siempre empezar desde la primera vela (Asia 6PM ET)
+  rpStartIdx   = 0;
+  rpCurrentIdx = 0;
+
+  // Mostrar solo la primera vela al iniciar
+  try {
+    series.setData([ rpAllCandles[0] ]);
+    chart.timeScale().fitContent();
+  } catch(e) {}
+
+  rpUpdateUI();
+}
+
+function rpRestoreAll() {
+  try {
+    if(typeof series !== 'undefined' && rpAllCandles.length > 0) {
+      series.setData(rpAllCandles);
+      chart.timeScale().fitContent();
+    }
+  } catch(e) {}
+}
+
+function replayToggle() {
+  if(rpIsPlaying) replayPause();
+  else replayPlay();
+}
+
+function replayPlay() {
+  if(rpAllCandles.length === 0) { rpInit(); return; }
+  if(rpCurrentIdx >= rpAllCandles.length - 1) { replayReset(); return; }
+  rpIsPlaying = true;
+  const btn = document.getElementById('rpPlayBtn');
+  btn.textContent = '⏸ PAUSE';
+  btn.classList.add('pause');
+  rpTick();
+}
+
+function replayPause() {
+  rpIsPlaying = false;
+  clearTimeout(rpTimer);
+  const btn = document.getElementById('rpPlayBtn');
+  btn.textContent = '▶ PLAY';
+  btn.classList.remove('pause');
+}
+
+function replayReset() {
+  replayPause();
+  rpCurrentIdx = 0;
+  try {
+    series.setData([ rpAllCandles[0] ]);
+    chart.timeScale().fitContent();
+  } catch(e) {}
+  rpUpdateUI();
+}
+
+function rpTick() {
+  if(!rpIsPlaying) return;
+  if(rpCurrentIdx >= rpAllCandles.length - 1) {
+    replayPause();
+    document.getElementById('rp-narrative-text').textContent = '🏁 Replay completado. El patrón Sweep Low Return se cumplió.';
+    return;
+  }
+
+  rpCurrentIdx++;
+
+  // Agregar vela incrementalmente al chart (más eficiente que setData)
+  try {
+    series.update(rpAllCandles[rpCurrentIdx]);
+  } catch(e) {
+    try { series.setData(rpAllCandles.slice(0, rpCurrentIdx + 1)); } catch(e2){}
+  }
+
+  // Ventana rodante: muestra las últimas 80 velas + 8 de margen derecho
+  try {
+    const WINDOW = 80;
+    const fromI  = Math.max(0, rpCurrentIdx - WINDOW);
+    const toI    = Math.min(rpAllCandles.length - 1, rpCurrentIdx + 8);
+    chart.timeScale().setVisibleRange({
+      from: rpAllCandles[fromI].time,
+      to:   rpAllCandles[toI].time
+    });
+  } catch(e) {}
+
+  rpUpdateUI();
+
+  const delay = Math.max(30, Math.round(RP_BASE_MS / rpSpeed));
+  rpTimer = setTimeout(rpTick, delay);
+}
+
+function rpUpdateUI() {
+  const total   = rpAllCandles.length;    // total velas del día
+  const current = rpCurrentIdx + 1;       // 1-indexed
+  const pct     = total > 0 ? ((rpCurrentIdx) / (total - 1)) * 100 : 0;
+
+  // Barra de progreso
+  document.getElementById('rpFill').style.width = pct + '%';
+  document.getElementById('rpScrubber').value = pct;
+
+  // Tiempo ET
+  if(rpAllCandles[rpCurrentIdx]) {
+    const ts = rpAllCandles[rpCurrentIdx].time * 1000;
+    const d  = new Date(ts);
+    const etHour = (d.getUTCHours() - 4 + 24) % 24;
+    const etMin  = d.getUTCMinutes();
+    const period = etHour >= 12 ? 'PM' : 'AM';
+    const h12    = etHour % 12 || 12;
+    document.getElementById('rpTimeDisplay').textContent =
+      `ET ${h12}:${String(etMin).padStart(2,'0')} ${period} ▸ ${rpAllCandles[rpCurrentIdx].close.toLocaleString()}`;
+  }
+
+  // Contador de velas (desde 1)
+  document.getElementById('rpCandleCount').textContent =
+    `Vela ${current} / ${total}`;
+
+  // Narrativa — detectar fase
+  if(rpAllCandles[rpCurrentIdx]) {
+    const ts = rpAllCandles[rpCurrentIdx].time;
+    const phase = REPLAY_PHASES.find(p => ts >= p.from && ts < p.to) ||
+                  REPLAY_PHASES[REPLAY_PHASES.length - 1];
+    document.getElementById('rpStepBadge').textContent = phase.badge;
+    document.getElementById('rpStepBadge').setAttribute('style', phase.badgeStyle);
+    document.getElementById('rp-narrative-text').textContent = phase.text;
+
+    // Sincronizar Story Mode
+    if(document.getElementById('story-overlay').classList.contains('active')) {
+      if(phase.step !== currentStep) {
+        currentStep = phase.step;
+        renderStep();
+      }
+    }
+  }
+}
+
+function replayScrub(pct) {
+  // Saltar a cualquier punto del día completo
+  rpCurrentIdx = Math.round((pct / 100) * (rpAllCandles.length - 1));
+  rpCurrentIdx = Math.min(Math.max(0, rpCurrentIdx), rpAllCandles.length - 1);
+
+  try {
+    series.setData(rpAllCandles.slice(0, rpCurrentIdx + 1));
+    const WINDOW = 80;
+    const fromI  = Math.max(0, rpCurrentIdx - WINDOW);
+    const toI    = Math.min(rpAllCandles.length - 1, rpCurrentIdx + 8);
+    chart.timeScale().setVisibleRange({
+      from: rpAllCandles[fromI].time,
+      to:   rpAllCandles[toI].time
+    });
+  } catch(e) {}
+
+  rpUpdateUI();
+}
+
+function setSpeed(s, el) {
+  rpSpeed = s;
+  document.querySelectorAll('.rp-speed').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Keyboard shortcuts para replay
+document.addEventListener('keydown', function(e) {
+  if(document.getElementById('story-overlay').classList.contains('active')) return; // Story Mode tiene prioridad
+  if(!rpBarVisible) return;
+  if(e.key === ' ' || e.key === 'Space') { e.preventDefault(); replayToggle(); }
+  if(e.key === 'r' || e.key === 'R') replayReset();
+});
+</script>
+
+</body>
+</html>

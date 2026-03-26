@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-03-25T16:18:58.045505+00:00",
-  "prediction_price": 24352.25,
+  "timestamp": "2026-03-26T00:39:41.976549+00:00",
+  "prediction_price": 24394.75,
   "prediction_bias": "NEUTRAL",
-  "prediction_score": 48,
+  "prediction_score": 50,
   "agent_signals": {
     "COT": {
       "dir": -1,
-      "raw": "BEARISH"
+      "raw": "NEUTRAL-BAJISTA"
     },
     "VOLATILITY": {
       "dir": 0,
@@ -26,7 +26,7 @@
     },
     "SILVER_BULLET": {
       "dir": 0,
-      "raw": "UPCOMING"
+      "raw": "INACTIVO"
     },
     "ORDERFLOW": {
       "dir": 1,

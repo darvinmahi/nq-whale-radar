@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-03-24T01:07:04.715063",
+  "config": {
+    "delta_thresh": 2000,
+    "confirm_weeks": 1,
+    "weeks_forward": 4,
+    "period": "2022-01-04 → 2026-03-03"
+  },
+  "total_turns": 86,
+  "bearish_turns": 43,
+  "bullish_turns": 43,
+  "effect_by_week": {
+    "week_1": {
+      "bearish": {
+        "accuracy": "40%",
+        "n": 43
+      },
+      "bullish": {
+        "accuracy": "51%",
+        "n": 43
+      }
+    },
+    "week_2": {
+      "bearish": {
+        "accuracy": "42%",
+        "n": 43
+      },
+      "bullish": {
+        "accuracy": "63%",
+        "n": 43
+      }
+    },
+    "week_3": {
+      "bearish": {
+        "accuracy": "33%",
+        "n": 43
+      },
+      "bullish": {
+        "accuracy": "65%",
+        "n": 43
+      }
+    },
+    "week_4": {
+      "bearish": {
+        "accuracy": "38%",
+        "n": 42
+      },
+      "bullish": {
+        "accuracy": "58%",
+        "n": 43
+      }
+    }
+  },
+  "avg_match_rate": {
+    "bearish": 38.2,
+    "bullish": 59.3
+  },
+  "avg_max_move_pts": {
+    "bearish": 474.7,
+    "bullish": 672.2
+  }
+}

@@ -1,27 +1,27 @@
 {
-    "timestamp": "2026-03-25T21:56:09.165414",
+    "timestamp": "2026-03-26T00:39:42.072455",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-            "size": 326889
+            "size": 332168
         },
         "analisis_promax.html": {
             "exists": true,
-            "size": 52341
+            "size": 53159
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11031
+            "size": 11113
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 1150
+            "size": 811
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 381
+            "size": 393
         }
     },
     "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL en 50 puntos. Monitorea flujos finales.",

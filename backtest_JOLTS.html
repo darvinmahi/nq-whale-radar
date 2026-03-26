@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Backtest JOLTS Job Openings — NQ</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box }
+  body { background:#0b0f1a; color:#e2e8f0; font-family:'Segoe UI',sans-serif; padding:28px 20px }
+  h1 { font-size:1.4rem; color:#34d399; margin-bottom:4px }
+  .sub { font-size:.82rem; color:#475569; margin-bottom:26px }
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:12px; margin-bottom:28px }
+  .kpi { background:#111827; border-radius:10px; padding:14px 18px; border-left:3px solid #34d399 }
+  .kpi.green { border-color:#22c55e }
+  .kpi.red   { border-color:#ef4444 }
+  .kpi.orange{ border-color:#f97316 }
+  .kpi label { font-size:.7rem; color:#64748b; text-transform:uppercase; letter-spacing:.05em }
+  .kpi value { display:block; font-size:1.5rem; font-weight:700; margin-top:4px; color:#f1f5f9 }
+  .kpi small  { font-size:.72rem; color:#94a3b8 }
+  .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:28px }
+  .compare-box { background:#111827; border-radius:10px; padding:16px }
+  .compare-box h3 { font-size:.85rem; margin-bottom:12px }
+  .compare-box .cstat { display:flex; justify-content:space-between; padding:4px 0; font-size:.82rem; border-bottom:1px solid #1e293b }
+  .compare-box .cstat:last-child { border-bottom:none }
+  .tw { overflow-x:auto; border-radius:10px }
+  table { width:100%; border-collapse:collapse; font-size:.81rem }
+  thead tr { background:#0f172a }
+  th { padding:9px 12px; text-align:left; color:#64748b; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; border-bottom:1px solid #1e293b }
+  tbody tr { border-bottom:1px solid #1e293b }
+  tbody tr:hover { background:#111827 }
+  td { padding:8px 12px; vertical-align:middle }
+  .dt { color:#94a3b8; font-size:.75rem; white-space:nowrap }
+  .num { text-align:right; font-variant-numeric:tabular-nums }
+  .bull { color:#22c55e } .bear { color:#ef4444 }
+  .pos  { color:#22c55e } .neg  { color:#ef4444 }
+  .dir  { text-align:center }
+  .badge { display:inline-block; padding:3px 9px; border-radius:20px; font-size:.71rem; font-weight:700; white-space:nowrap }
+  .pat { font-size:.68rem }
+  .note { margin-top:18px; font-size:.73rem; color:#475569; border-left:2px solid #334155; padding-left:10px }
+</style>
+</head>
+<body>
+<h1>💼 Backtest: JOLTS Job Openings × NQ Futures</h1>
+<p class="sub">Noticia: Martes, 10:00 AM ET · Primer martes del mes · 12 sesiones analizadas (2024–2026)</p>
+
+<div class="kpi-grid">
+  <div class="kpi"><label>Sesiones</label><value>12</value><small>Total analizadas</small></div>
+  <div class="kpi green"><label>Días BULL</label><value>50%</value><small>6/12</small></div>
+  <div class="kpi green"><label>BEAT</label><value>5</value><small>42% · FUERTE: 1</small></div>
+  <div class="kpi red"><label>MISS</label><value>7</value><small>58% · FUERTE: 1</small></div>
+  <div class="kpi orange"><label>Avg Range</label><value>387</value><small>puntos NQ</small></div>
+  <div class="kpi"><label>Avg Move</label><value>-66</value><small>Open→Close</small></div>
+</div>
+
+<div class="compare-grid">
+  <div class="compare-box">
+    <h3 style="color:#22c55e">BEAT (5 sesiones)</h3>
+    <div class="cstat"><span>% Días BULL</span><span style="color:#22c55e"><b>20%</b></span></div>
+    <div class="cstat"><span>Avg Range</span><span><b>383 pts</b></span></div>
+    <div class="cstat"><span>Avg Move O→C</span><span><b>-168 pts</b></span></div>
+  </div>
+  <div class="compare-box">
+    <h3 style="color:#ef4444">MISS (7 sesiones)</h3>
+    <div class="cstat"><span>% Días BULL</span><span style="color:#22c55e"><b>71%</b></span></div>
+    <div class="cstat"><span>Avg Range</span><span><b>390 pts</b></span></div>
+    <div class="cstat"><span>Avg Move O→C</span><span><b>+7 pts</b></span></div>
+  </div>
+</div>
+
+<div class="tw">
+<table>
+  <thead><tr>
+    <th>Fecha</th><th>Exp</th><th>Actual</th>
+    <th>Beat/Miss</th><th>Δ</th>
+    <th>Patrón del Día</th>
+    <th>Range</th><th>Move</th><th>Dir</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td class="dt">2025-03-11</td>
+      <td class="num">7.75M</td>
+      <td class="num">7.57M</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-0.18M</td>
+      <td><span class="badge pat" style="background:#64748b22;color:#64748b;border:1px solid #64748b44">RANGO ESTRECHO</span></td>
+      <td class="num">548</td>
+      <td class="num bear">-41</td>
+      <td class="dir bear">▼</td>
+    </tr>
+    <tr>
+      <td class="dt">2025-02-04</td>
+      <td class="num">7.9M</td>
+      <td class="num">7.74M</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-0.16M</td>
+      <td><span class="badge pat" style="background:#a855f722;color:#a855f7;border:1px solid #a855f744">MEGÁFONO</span></td>
+      <td class="num">452</td>
+      <td class="num bull">+78</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2025-01-07</td>
+      <td class="num">7.7M</td>
+      <td class="num">8.1M</td>
+      <td><span class="badge" style="background:#16a34a22;color:#16a34a;border:1px solid #16a34a44">BEAT FUERTE 🟢🟢</span></td>
+      <td class="num pos">+0.4M</td>
+      <td><span class="badge pat" style="background:#f9731622;color:#f97316;border:1px solid #f9731644">NEWS_DRIVE ↓</span></td>
+      <td class="num">526</td>
+      <td class="num bear">-422</td>
+      <td class="dir bear">▼</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-12-03</td>
+      <td class="num">7.48M</td>
+      <td class="num">7.74M</td>
+      <td><span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">BEAT ✅</span></td>
+      <td class="num pos">+0.26M</td>
+      <td><span class="badge pat" style="background:#a855f722;color:#a855f7;border:1px solid #a855f744">MEGÁFONO</span></td>
+      <td class="num">195</td>
+      <td class="num bull">+62</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-11-05</td>
+      <td class="num">7.5M</td>
+      <td class="num">7.44M</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-0.06M</td>
+      <td><span class="badge pat" style="background:#f9731622;color:#f97316;border:1px solid #f9731644">NEWS_DRIVE ↑</span></td>
+      <td class="num">344</td>
+      <td class="num bull">+211</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-10-01</td>
+      <td class="num">7.66M</td>
+      <td class="num">7.44M</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-0.22M</td>
+      <td><span class="badge pat" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">EXPANSIÓN ↓</span></td>
+      <td class="num">514</td>
+      <td class="num bear">-259</td>
+      <td class="dir bear">▼</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-09-04</td>
+      <td class="num">7.65M</td>
+      <td class="num">7.71M</td>
+      <td><span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">BEAT ✅</span></td>
+      <td class="num pos">+0.06M</td>
+      <td><span class="badge pat" style="background:#64748b22;color:#64748b;border:1px solid #64748b44">RANGO ESTRECHO</span></td>
+      <td class="num">289</td>
+      <td class="num bear">-31</td>
+      <td class="dir bear">▼</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-08-06</td>
+      <td class="num">8.1M</td>
+      <td class="num">7.67M</td>
+      <td><span class="badge" style="background:#991b1b22;color:#991b1b;border:1px solid #991b1b44">MISS FUERTE 🔴🔴</span></td>
+      <td class="num neg">-0.43M</td>
+      <td><span class="badge pat" style="background:#64748b22;color:#64748b;border:1px solid #64748b44">RANGO ESTRECHO</span></td>
+      <td class="num">517</td>
+      <td class="num bull">+13</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-07-30</td>
+      <td class="num">8.0M</td>
+      <td class="num">8.18M</td>
+      <td><span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">BEAT ✅</span></td>
+      <td class="num pos">+0.18M</td>
+      <td><span class="badge pat" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">EXPANSIÓN ↓</span></td>
+      <td class="num">595</td>
+      <td class="num bear">-281</td>
+      <td class="dir bear">▼</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-06-04</td>
+      <td class="num">8.37M</td>
+      <td class="num">8.14M</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-0.23M</td>
+      <td><span class="badge pat" style="background:#a855f722;color:#a855f7;border:1px solid #a855f744">MEGÁFONO</span></td>
+      <td class="num">242</td>
+      <td class="num bull">+38</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-05-07</td>
+      <td class="num">8.68M</td>
+      <td class="num">8.49M</td>
+      <td><span class="badge" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">MISS ❌</span></td>
+      <td class="num neg">-0.19M</td>
+      <td><span class="badge pat" style="background:#64748b22;color:#64748b;border:1px solid #64748b44">RANGO ESTRECHO</span></td>
+      <td class="num">115</td>
+      <td class="num bull">+10</td>
+      <td class="dir bull">▲</td>
+    </tr>
+    <tr>
+      <td class="dt">2024-04-02</td>
+      <td class="num">8.75M</td>
+      <td class="num">8.76M</td>
+      <td><span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e44">BEAT ✅</span></td>
+      <td class="num pos">+0.01M</td>
+      <td><span class="badge pat" style="background:#eab30822;color:#eab308;border:1px solid #eab30844">TRAMPA BULL</span></td>
+      <td class="num">310</td>
+      <td class="num bear">-167</td>
+      <td class="dir bear">▼</td>
+    </tr></tbody>
+</table>
+</div>
+<div class="note">
+  ★ JOLTS = Job Openings and Labor Turnover Survey (en millones de puestos).<br>
+  ★ Beat: Actual ≥ Expectativa · FUERTE: diferencia ≥ 0.3M<br>
+  ★ Patrón y Move basados en OHLC diario de NQ=F (yfinance).
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+[
+  {
+    "time": "09:45",
+    "session": "NY AM",
+    "direction": "LONG",
+    "entry_type": "Silver Bullet",
+    "entry_price": 21480.50,
+    "sl": 21460.00,
+    "tp": 21521.50,
+    "rr_planned": 2.0,
+    "rr_achieved": 2.0,
+    "outcome": "WIN",
+    "notes": "BOS alcista en 5min, entré FVG en la sesión de NY AM"
+  },
+  {
+    "time": "10:30",
+    "session": "NY AM",
+    "direction": "SHORT",
+    "entry_type": "FVG",
+    "entry_price": 21525.00,
+    "sl": 21545.00,
+    "tp": 21485.00,
+    "rr_planned": 2.0,
+    "rr_achieved": 0,
+    "outcome": "LOSS",
+    "notes": "Intenté un short contra el bias alcista del motor — me comí el SL"
+  },
+  {
+    "time": "14:15",
+    "session": "NY PM",
+    "direction": "LONG",
+    "entry_type": "OB",
+    "entry_price": 21490.75,
+    "sl": 21475.00,
+    "tp": 21530.00,
+    "rr_planned": 2.5,
+    "rr_achieved": 1.2,
+    "outcome": "WIN",
+    "notes": "Salí antes del TP por miedo — el precio siguió subiendo"
+  }
+]
