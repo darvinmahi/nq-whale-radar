@@ -1,7 +1,7 @@
 {
     "agent": 8,
     "name": "Morgan Psychologist",
-    "timestamp": "2026-03-26T19:57:42.767729+00:00",
+    "timestamp": "2026-03-26T21:05:50.217993+00:00",
     "sentiment": {
         "status": "ALERTA: PÁNICO EXTREMO",
         "operational_risk": "ALTO (Volatilidad Desatada)",
