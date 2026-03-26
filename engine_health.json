@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-03-26T16:44:54.092210+00:00Z",
-  "last_update_human": "2026-03-26 16:44:54 UTC",
+  "timestamp": "2026-03-26T19:57:42.849700+00:00Z",
+  "last_update_human": "2026-03-26 19:57:42 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 2.8,
+  "total_time_sec": 4.0,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -18,15 +18,11 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.6
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.7
-    },
-    "Agent 7 · Probability Analyst": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 3.9
     },
     "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
@@ -36,11 +32,11 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 6 · SMC Detective": {
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 13 · Research Scout": {
+    "Agent 6 · SMC Detective": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -48,11 +44,15 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 4 · Bias Engine": {
+    "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 15 · Journal Writer": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
+    "Agent 4 · Bias Engine": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -62,7 +62,7 @@
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
