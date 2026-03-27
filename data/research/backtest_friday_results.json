@@ -1,0 +1,27 @@
+{
+  "total_sessions": 1,
+  "sessions": [
+    {
+      "date": "2026-03-27",
+      "day": "Viernes",
+      "direction": "BEARISH",
+      "ny_open": 23654.5,
+      "ny_close": 23305.25,
+      "ny_high": 23664.0,
+      "ny_low": 23269.0,
+      "ny_range": 395.0,
+      "ny_move": -349.25,
+      "poc": 23861.5,
+      "vah": 23949.0,
+      "val": 23749.0,
+      "chart_url": "viernes_chart_20260327.html"
+    }
+  ],
+  "directions": {
+    "BULLISH": 0,
+    "BEARISH": 1,
+    "NEUTRAL": 0
+  },
+  "total_fridays": 1,
+  "updated_at": "2026-03-27T16:04:46 ET"
+}
