@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-03-27T15:38:24.488694+00:00Z",
-  "last_update_human": "2026-03-27 15:38:24 UTC",
+  "timestamp": "2026-03-27T18:38:14.340007+00:00Z",
+  "last_update_human": "2026-03-27 18:38:14 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 3.8,
+  "total_time_sec": 4.6,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -18,17 +18,17 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.8
+      "time": 0.5
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.8
+      "time": 4.5
     },
-    "Agent 9 · Silver Bullet": {
+    "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 8 · Morgan Psychologist": {
+    "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -56,15 +56,15 @@
       "status": "✅ OK",
       "time": 0.0
     },
+    "Agent 12 · Backtest Engine": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
       "time": 0.1
     },
     "Agent 16 · Outcome Tracker": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
       "time": 0.1
     },
