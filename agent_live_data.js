@@ -1,17 +1,17 @@
 // ═══════════════════════════════════════════════════════
 // NQ Intelligence Engine — Live Data Feed
-// Generated: 2026-03-27T20:04:46.033841Z
+// Generated: 2026-03-27T21:57:50.285329Z
 // ═══════════════════════════════════════════════════════
 
 window.NQ_LIVE = {
-  timestamp:   "2026-03-27T20:04:46.033841Z",
-  last_update: "27 Mar 2026 20:04 UTC",
+  timestamp:   "2026-03-27T21:57:50.285329Z",
+  last_update: "27 Mar 2026 21:57 UTC",
 
   NDX: { price: 23132.77, change_pct: -1.93 },
-  VXN: { price: 33.65, change_pct: 12.69, color: "#ef4444" },
+  VXN: { price: 33.54, change_pct: 12.32, color: "#ef4444" },
   MACRO: {
     US10Y: { price: null, change_pct: null },
-    DXY:   { price: 100.14, change_pct: 0.24 }
+    DXY:   { price: 100.19, change_pct: 0.29 }
   },
 
   DIX: null,
@@ -20,11 +20,11 @@ window.NQ_LIVE = {
   OI:  241729,
 
   COT: {
-    net:            20350,
+    net:            8832,
     commercial_net: 0,
-    index:          37.2,
+    index:          28.2,
     signal:         "BAJISTA",
-    razonamiento:   "Specs netos liquidando (+20,350). COT Index 37."
+    razonamiento:   "Specs netos liquidando (+8,832). COT Index 28."
   },
 
   BIAS: {
@@ -32,18 +32,18 @@ window.NQ_LIVE = {
     global_label:   "NEUTRAL",
     verdict:        "NEUTRAL",
     icon:           "⚪",
-    breakdown:      {"positioning": 50, "macro": 48.8, "liquidity": 40.0, "timing": 44.0, "algorithmic": 66.0, "order_flow": 50}
+    breakdown:      {"positioning": 50, "macro": 48.55, "liquidity": 40.0, "timing": 44.0, "algorithmic": 66.0, "order_flow": 50}
   },
 
   SESSIONS:  {},
-  SMC:       {"agent": 6, "name": "ICT & SMC Master", "timestamp": "2026-03-27T20:04:45.961550Z", "ict": {"pd_array": "DISCOUNT", "equilibrium": 24816.595703125, "has_liquidity_sweep": "BULLISH"}, "smc": {"last_bull_ob_price": 24455.400390625, "fvg_status": "ZONA_COMPRA", "institution_bias": "BULLISH"}, "signal": "BULLISH", "confidence": 85, "details": "ICT SETUP: Liquidity Sweep en zona de DISCOUNT detectado. Alta probabilidad alcista."},
-  PROB:      {"agent": 7, "name": "Probability Analyst", "version": "2.0", "timestamp": "2026-03-27T20:04:45.953655+00:00", "signals_used": [{"name": "COT", "raw_signal": "BAJISTA", "weight": 0.35}, {"name": "SMC", "raw_signal": "BULLISH", "weight": 0.4}, {"name": "OrderFlow", "raw_signal": null, "weight": 0.25}], "signals_aligned": 1, "signals_neutral": ["OrderFlow"], "confluences": {"label": "SE\u00d1AL AISLADA (1/3)", "cot_smc_match": false, "expectancy_pct": 52.5, "confidence_pct": 40.0, "weighted_score": 0.05, "vol_regime": "UNKNOWN", "vol_multiplier": 1.0}, "verdict": "DISTRIBUCI\u00d3N / NEUTRAL \u2014 ESPERAR CLARIDAD \u23f3", "math_bias": "NEUTRAL"},
-  MINDSET:   {"agent": 8, "name": "Morgan Psychologist", "timestamp": "2026-03-27T20:04:45.954891+00:00", "sentiment": {"status": "ALERTA: P\u00c1NICO EXTREMO", "operational_risk": "ALTO (Volatilidad Desatada)", "alerts": ["Capitulaci\u00f3n en curso. El mercado est\u00e1 barriendo manos d\u00e9biles. Busca niveles SMC para soporte."]}, "morgan_audit": {"institutional_alignment": "LOW", "fear_index": "HIGH"}},
-  SB:        {"agent": 9, "name": "Silver Bullet Tracker", "timestamp": "2026-03-27T20:04:45.954048+00:00Z", "ny_time": "16:04", "status": "INACTIVO", "active_window": "London SB (ma\u00f1ana)", "macro_confluence": "NEUTRAL", "action": "ESPERAR VENTANA", "countdown": "Pr\u00f3xima sesi\u00f3n en 10h 56m"},
+  SMC:       {"agent": 6, "name": "ICT & SMC Master", "timestamp": "2026-03-27T21:57:50.217622Z", "ict": {"pd_array": "DISCOUNT", "equilibrium": 24816.595703125, "has_liquidity_sweep": "BULLISH"}, "smc": {"last_bull_ob_price": 24455.400390625, "fvg_status": "ZONA_COMPRA", "institution_bias": "BULLISH"}, "signal": "BULLISH", "confidence": 85, "details": "ICT SETUP: Liquidity Sweep en zona de DISCOUNT detectado. Alta probabilidad alcista."},
+  PROB:      {"agent": 7, "name": "Probability Analyst", "version": "2.0", "timestamp": "2026-03-27T21:57:50.211395+00:00", "signals_used": [{"name": "COT", "raw_signal": "BAJISTA", "weight": 0.35}, {"name": "SMC", "raw_signal": "BULLISH", "weight": 0.4}, {"name": "OrderFlow", "raw_signal": null, "weight": 0.25}], "signals_aligned": 1, "signals_neutral": ["OrderFlow"], "confluences": {"label": "SE\u00d1AL AISLADA (1/3)", "cot_smc_match": false, "expectancy_pct": 52.5, "confidence_pct": 40.0, "weighted_score": 0.05, "vol_regime": "UNKNOWN", "vol_multiplier": 1.0}, "verdict": "DISTRIBUCI\u00d3N / NEUTRAL \u2014 ESPERAR CLARIDAD \u23f3", "math_bias": "NEUTRAL"},
+  MINDSET:   {"agent": 8, "name": "Morgan Psychologist", "timestamp": "2026-03-27T21:57:50.210632+00:00", "sentiment": {"status": "ALERTA: P\u00c1NICO EXTREMO", "operational_risk": "ALTO (Volatilidad Desatada)", "alerts": ["Capitulaci\u00f3n en curso. El mercado est\u00e1 barriendo manos d\u00e9biles. Busca niveles SMC para soporte."]}, "morgan_audit": {"institutional_alignment": "LOW", "fear_index": "HIGH"}},
+  SB:        {"agent": 9, "name": "Silver Bullet Tracker", "timestamp": "2026-03-27T21:57:50.210455+00:00Z", "ny_time": "17:57", "status": "INACTIVO", "active_window": "London SB (ma\u00f1ana)", "macro_confluence": "NEUTRAL", "action": "ESPERAR VENTANA", "countdown": "Pr\u00f3xima sesi\u00f3n en 9h 03m"},
   ICT_STATS: {"agent": 10, "name": "ICT Session Strategist", "timestamp": "2026-03-13T09:18:07.501467+00:00Z", "stats": {"ny_sweep_low_winrate": 39.1, "ny_sweep_high_winrate": 31.6, "total_days_analyzed": 499, "sample_size_sweeps": 712}, "strategies": [{"name": "NY Continuation Bull", "edge": 39.1, "desc": "NY barre Low de Londres en Bias Alcista"}, {"name": "NY Continuation Bear", "edge": 31.6, "desc": "NY barre High de Londres en Bias Bajista"}]},
-  PROTOCOLS: {"agent": 11, "timestamp": "2026-03-27T20:04:46.029370+00:00Z", "active_protocols": [], "details": {"swing": {"active": false, "confidence": 48, "desc": "Confluencia de COT Alcista y Bias Ponderado positivo. Las instituciones est\u00e1n acumulando."}, "ict": {"active": false, "probability": 31.6, "desc": "Escenario de alta probabilidad detectado por barrido de Londres en direcci\u00f3n de la tendencia macro."}, "contrarian": {"active": false, "desc": "Miedo extremo detectado. Buscando capitulaci\u00f3n para entrada contrarian apoyada por DIX."}, "intraday": {"active": false, "window": "London SB (ma\u00f1ana)", "action": "ESPERAR VENTANA"}}, "master_recommendation": "\u26aa NEUTRAL (48/100) \u2014 Sin sesgo claro \u2014 operar el rango o esperar catalizador."},
-  RESEARCH:  {"agent": 13, "name": "Explorador de Inteligencia Alpha", "last_crawl": "2026-03-27T20:04:45.977203+00:00Z", "insights": {"source": "Web Research & User DNA", "external_bias": "ESTUDIO DE BACKTESTING 3 A\u00d1OS EN CURSO", "confidence": 94, "recommendation": "Enfocarse en la 'Aceptaci\u00f3n' del precio respecto al POC de Londres en la primera hora de NY.", "discoveries": [{"source": "Sistema de Backtesting", "discovery": "Iniciando preparaci\u00f3n para Backtest de 3 a\u00f1os sobre niveles de Asia/Londres."}, {"source": "User Intel", "discovery": "Priorizaci\u00f3n de Niveles de Sesi\u00f3n Pre-Apertura (9:30 AM)."}, {"source": "Order Flow Page", "discovery": "Nueva secci\u00f3n de Mentor\u00eda IA Activa."}]}, "estrategia_maestra": {"nombre": "Aceptaci\u00f3n de Apertura NY sobre POC Londres", "tipo": "Session Profile / Trend", "descripcion": "Si la apertura de las 9:30 AM ocurre por encima del POC de la sesi\u00f3n de Londres y se mantiene as\u00ed por 15 minutos, la probabilidad de visitar el VAH semanal aumenta al 78%.", "reglas": ["1. Definir POC de Londres antes de las 9:30 AM.", "2. Apertura de NY (9:30) por encima del POC de Londres.", "3. Primera vela de 15m cierra por encima con Delta positivo."], "fuente": "Metodolog\u00eda de Usuario / Alpha Flow", "score_alpha": "9.2/10"}, "backtest_config": {"period": "3 A\u00d1OS", "focus": "Asia/London Profiles vs NY Opening", "status": "DATA_COLLECTION_STAGE"}, "knowledge_base_size": "4.1GB", "status": "Aprendiendo patrones de Sesiones..."},
-  ORDERFLOW: {"timestamp": "2026-03-27T20:04:45.984579+00:00Z", "symbol": "NQ1!", "bias_orderflow": "BULLISH (CONFLUENCIA SEMANAL + LONDRES)", "acceptance": "ACEPTACI\u00d3N ALCISTA SOBRE POC LONDRES", "sessions": {"asia": {"high": 24450.75, "low": 24320.5, "poc": 24385.0}, "london": {"high": 24510.25, "low": 24395.0, "poc": 24445.5}}, "weekly": {"poc": 24285.5, "vah": 24580.0, "val": 24150.25}, "daily": {"high": 24550.0, "low": 24310.0, "poc": 24412.5}, "delta": {"cumulative": "+5840", "status": "POSITIVE_ABSORPTION"}, "volume_profile": {"POC": 24412.5, "VAH": 24490.0, "VAL": 24350.0, "status": "ACEPTACI\u00d3N ALCISTA SOBRE POC LONDRES"}, "institutional_activity": "HIGH (SESI\u00d3N NY ABRIENDO SOBRE POC ASIA/LON)", "tape_reading": "Grandes \u00f3rdenes de compra bloqueando ca\u00eddas en el nivel de POC de Londres (24,445)."}
+  PROTOCOLS: {"agent": 11, "timestamp": "2026-03-27T21:57:50.281104+00:00Z", "active_protocols": [], "details": {"swing": {"active": false, "confidence": 48, "desc": "Confluencia de COT Alcista y Bias Ponderado positivo. Las instituciones est\u00e1n acumulando."}, "ict": {"active": false, "probability": 31.6, "desc": "Escenario de alta probabilidad detectado por barrido de Londres en direcci\u00f3n de la tendencia macro."}, "contrarian": {"active": false, "desc": "Miedo extremo detectado. Buscando capitulaci\u00f3n para entrada contrarian apoyada por DIX."}, "intraday": {"active": false, "window": "London SB (ma\u00f1ana)", "action": "ESPERAR VENTANA"}}, "master_recommendation": "\u26aa NEUTRAL (48/100) \u2014 Sin sesgo claro \u2014 operar el rango o esperar catalizador."},
+  RESEARCH:  {"agent": 13, "name": "Explorador de Inteligencia Alpha", "last_crawl": "2026-03-27T21:57:50.231842+00:00Z", "insights": {"source": "Web Research & User DNA", "external_bias": "ESTUDIO DE BACKTESTING 3 A\u00d1OS EN CURSO", "confidence": 94, "recommendation": "Enfocarse en la 'Aceptaci\u00f3n' del precio respecto al POC de Londres en la primera hora de NY.", "discoveries": [{"source": "Sistema de Backtesting", "discovery": "Iniciando preparaci\u00f3n para Backtest de 3 a\u00f1os sobre niveles de Asia/Londres."}, {"source": "User Intel", "discovery": "Priorizaci\u00f3n de Niveles de Sesi\u00f3n Pre-Apertura (9:30 AM)."}, {"source": "Order Flow Page", "discovery": "Nueva secci\u00f3n de Mentor\u00eda IA Activa."}]}, "estrategia_maestra": {"nombre": "Aceptaci\u00f3n de Apertura NY sobre POC Londres", "tipo": "Session Profile / Trend", "descripcion": "Si la apertura de las 9:30 AM ocurre por encima del POC de la sesi\u00f3n de Londres y se mantiene as\u00ed por 15 minutos, la probabilidad de visitar el VAH semanal aumenta al 78%.", "reglas": ["1. Definir POC de Londres antes de las 9:30 AM.", "2. Apertura de NY (9:30) por encima del POC de Londres.", "3. Primera vela de 15m cierra por encima con Delta positivo."], "fuente": "Metodolog\u00eda de Usuario / Alpha Flow", "score_alpha": "9.2/10"}, "backtest_config": {"period": "3 A\u00d1OS", "focus": "Asia/London Profiles vs NY Opening", "status": "DATA_COLLECTION_STAGE"}, "knowledge_base_size": "4.1GB", "status": "Aprendiendo patrones de Sesiones..."},
+  ORDERFLOW: {"timestamp": "2026-03-27T21:57:50.232037+00:00Z", "symbol": "NQ1!", "bias_orderflow": "BULLISH (CONFLUENCIA SEMANAL + LONDRES)", "acceptance": "ACEPTACI\u00d3N ALCISTA SOBRE POC LONDRES", "sessions": {"asia": {"high": 24450.75, "low": 24320.5, "poc": 24385.0}, "london": {"high": 24510.25, "low": 24395.0, "poc": 24445.5}}, "weekly": {"poc": 24285.5, "vah": 24580.0, "val": 24150.25}, "daily": {"high": 24550.0, "low": 24310.0, "poc": 24412.5}, "delta": {"cumulative": "+5840", "status": "POSITIVE_ABSORPTION"}, "volume_profile": {"POC": 24412.5, "VAH": 24490.0, "VAL": 24350.0, "status": "ACEPTACI\u00d3N ALCISTA SOBRE POC LONDRES"}, "institutional_activity": "HIGH (SESI\u00d3N NY ABRIENDO SOBRE POC ASIA/LON)", "tape_reading": "Grandes \u00f3rdenes de compra bloqueando ca\u00eddas en el nivel de POC de Londres (24,445)."}
 };
 
 (function inject() {
