@@ -346,7 +346,7 @@ hist_page = f"""<!DOCTYPE html>
   <h1>📊 COT Historial — NASDAQ-100</h1>
   <div class="meta">CFTC · Traders in Financial Futures · {total_wks} semanas · {updated} UTC · Auto-update viernes</div>
   <div class="toolbar">
-    <a href="index.html#cot-analysis" class="back">← Dashboard</a>
+    <a href="https://darvinmahi.github.io/nq-whale-radar/#cot-analysis" class="back">← Volver al Dashboard</a>
     <input id="srch" type="text" placeholder="Buscar fecha... (Mar 2026)">
     <span style="font-size:9px;color:#1e3a5f;font-family:monospace">{total_wks} registros</span>
   </div>
