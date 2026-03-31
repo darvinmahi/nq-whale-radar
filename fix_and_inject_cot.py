@@ -285,49 +285,56 @@ widget = f"""{MARKER_S}
 {MARKER_E}"""
 
 # ── 6. Reparar + inyectar index.html ────────────────────────────────────
+import re as _re
+
 with open(HTML_PATH, 'r', encoding='utf-8') as f:
     html = f.read()
 
-# ─ Eliminamos el primer bloque stale (línea 1) ─
-# El html empieza con <!DOCTYPE\n<!-- COT_TABLE_START -->...<!-- COT_TABLE_END --> html>
-# Hay que restaurarlo a <!DOCTYPE html>
-first_start = html.find(MARKER_S)
-first_end   = html.find(MARKER_E)
-second_start= html.find(MARKER_S, first_end + len(MARKER_E))
-second_end  = html.find(MARKER_E, second_start + len(MARKER_S))
+# ─ Paso A: Reparar DOCTYPE corrompido ────────────────────────────────────
+# Si empieza con "<!DOCTYPE\n<!-- COT_TABLE_START -->" → corregir
+if html.startswith('<!DOCTYPE\n') or (html.startswith('<!DOCTYPE') and 'html>' not in html[:30]):
+    # Encontrar primer bloque stale y eliminarlo
+    s0 = html.find(MARKER_S)
+    e0_raw = html.find(MARKER_E, s0)
+    if e0_raw > 0:
+        # Reconstruir DOCTYPE limpio
+        html = '<!DOCTYPE html>\n' + html[e0_raw + len(MARKER_E):]
+        # Eliminar " html>" residual al principio si quedó
+        html = _re.sub(r'^\s*html\>', '', html).lstrip('\n')
+        print('✅ DOCTYPE reparado (bloque stale head eliminado)')
 
-print(f'1st block: chars {first_start}–{first_end}')
-print(f'2nd block: chars {second_start}–{second_end}')
+# ─ Paso B: Eliminar TODOS los bloques COT_TABLE_START/END ─────────────────
+# (incluso bloques sin cierre = orphans)
+# Estrategia: eliminar todo lo que esté entre START y END (inclusive)
+# Para orphans sin END: eliminar solo la línea del START
+pat_full   = _re.compile(_re.escape(MARKER_S) + '.*?' + _re.escape(MARKER_E), _re.DOTALL)
+pat_orphan = _re.compile(_re.escape(MARKER_S))
 
-# El HTML está así: "<!DOCTYPE\n" + primer bloque + " html>\n<!-- saved from..."
-# Necesitamos: "<!DOCTYPE html>\n..." + contenido sin primer bloque + nuevo widget en 2nd
+before_count = len(_re.findall(_re.escape(MARKER_S), html))
+html = pat_full.sub('', html)   # quitar bloques completos
+html = pat_orphan.sub('', html) # quitar orphans que queden
+after_count = len(_re.findall(_re.escape(MARKER_S), html))
+print(f'Marcadores START eliminados: {before_count} → {after_count}')
 
-# 1. Quitar primer bloque y reparar DOCTYPE
-doctype_prefix = html[:first_start]          # "<!DOCTYPE\n"
-after_first    = html[first_end + len(MARKER_E):]  # " html>\n<!-- saved from ..."
-
-# Reparar: "<!DOCTYPE\n" → "<!DOCTYPE html>" y " html>\n" → "\n"
-doctype_prefix = doctype_prefix.rstrip('\n\r') + ' html>'
-after_first    = re.sub(r'^\s*html\>', '', after_first, count=1).lstrip()
-
-html_fixed = doctype_prefix + '\n' + after_first
-print(f'HTML reparado. Empieza con: {repr(html_fixed[:60])}')
-
-# 2. Reemplazar el segundo bloque (ahora el único) con el nuevo widget
-if MARKER_S in html_fixed and MARKER_E in html_fixed:
-    pat      = re.compile(re.escape(MARKER_S) + '.*?' + re.escape(MARKER_E), re.DOTALL)
-    html_out = pat.sub(widget, html_fixed, count=1)
-    print('✅ Widget inyectado en posición correcta')
+# ─ Paso C: Inyectar UN SOLO widget al final del section#cot-analysis ──────
+cot_pos = html.find('id="cot-analysis"')
+if cot_pos > 0:
+    sec_end = html.find('</section>', cot_pos)
+    html    = html[:sec_end] + '\n' + widget + '\n' + html[sec_end:]
+    print('✅ Widget inyectado en cot-analysis')
 else:
-    # Fallback: insertar dentro de cot-analysis
-    cot_pos  = html_fixed.find('id="cot-analysis"')
-    sec_end  = html_fixed.find('</section>', cot_pos)
-    html_out = html_fixed[:sec_end] + '\n' + widget + '\n' + html_fixed[sec_end:]
-    print('✅ Widget insertado en cot-analysis (fallback)')
+    html = html.replace('</body>', '\n' + widget + '\n</body>', 1)
+    print('✅ Widget inyectado antes de </body>')
+
+# ─ Verificación final ────────────────────────────────────────────────────
+assert html.startswith('<!DOCTYPE html>'), f'DOCTYPE roto: {html[:50]}'
+starts_final = len(_re.findall(_re.escape(MARKER_S), html))
+ends_final   = len(_re.findall(_re.escape(MARKER_E), html))
+print(f'Verificación: {starts_final} START, {ends_final} END — OK')
 
 with open(HTML_PATH, 'w', encoding='utf-8') as f:
-    f.write(html_out)
-print(f'✅ index.html guardado ({len(html_out)//1024}KB)')
+    f.write(html)
+print(f'✅ index.html guardado ({len(html)//1024}KB)')
 
 # ── 7. Historial premium ─────────────────────────────────────────────────
 all_rows_html = ''
