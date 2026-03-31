@@ -88,198 +88,131 @@ def lbl(d):
         try: return datetime.strptime(d, fmt2).strftime('%d %b %Y').lstrip('0')
         except: pass
     return d
-def bar_html(val, maxv, color, height=6):
-    pct = max(2, min(100, val / maxv * 100)) if maxv > 0 else 2
-    return (f'<div style="height:{height}px;background:rgba(255,255,255,.04);'
-            f'border-radius:3px;overflow:hidden;margin-top:3px">'
-            f'<div style="width:{pct:.0f}%;height:100%;background:{color};'
-            f'border-radius:3px;box-shadow:0 0 6px {color}44"></div></div>')
-
-def chg(n, prev_n):
-    if prev_n is None: return ''
-    d = n - prev_n
-    c = '#00ff88' if d > 0 else '#ff3355' if d < 0 else '#444'
-    s = f'+{K(d,0)}' if d > 0 else K(d,0)
-    return f'<span style="font-size:8px;color:{c};font-weight:700">{s}</span>'
 
 # ── 5. Generar widget premium ─────────────────────────────────────────────
 last4     = list(reversed(rows[-4:]))
 last      = rows[-1]
 updated   = datetime.now().strftime('%d/%m/%Y %H:%M')
 total_wks = len(rows)
-maxNC     = max(max(r['nc_l'], r['nc_s']) for r in last4)
-maxCOM    = max(max(r['dl_l'], r['dl_s']) for r in last4)
-maxAM     = max(max(r['am_l'], r['am_s']) for r in last4)
-maxRET    = max(max(r['ret_l'], r['ret_s']) for r in last4) or 1
 
-def category_card(label, icon, rows4, get_l, get_s, get_net, max_val, accent):
-    rows_html = ''
-    for i, r in enumerate(rows4):
-        prev   = rows[rows.index(r)-1] if rows.index(r) > 0 else None
-        is_live= i == 0
-        l, s, n= get_l(r), get_s(r), get_net(r)
-        lp     = max(2, l/max_val*100) if max_val else 2
-        sp     = max(2, s/max_val*100) if max_val else 2
-        chg_l  = chg(l, get_l(prev)) if prev else ''
-        chg_s  = chg(s, get_s(prev)) if prev else ''
-        live_t = f'<span style="font-size:7px;background:{accent}22;color:{accent};padding:1px 5px;border-radius:3px;margin-left:5px">LIVE</span>' if is_live else ''
-        date_c = accent if is_live else '#333'
-        rows_html += f'''
-<div style="padding:8px 10px;border-radius:8px;margin-bottom:4px;
-            background:{'rgba(0,0,0,.25)' if is_live else 'transparent'};
-            border:{'1px solid '+accent+'22' if is_live else '1px solid transparent'}">
-  <div style="font-size:8px;color:{date_c};font-family:monospace;margin-bottom:5px;letter-spacing:.04em">
-    {lbl(r['date'])}{live_t}
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-    <div>
-      <div style="display:flex;justify-content:space-between;align-items:baseline">
-        <span style="font-size:7px;color:#00ff8866;font-weight:700">LONG</span>
-        <span style="font-size:10px;color:#00ff88;font-family:monospace;font-weight:900">{K(l)}</span>
-        {chg_l}
-      </div>
-      <div style="height:5px;background:rgba(255,255,255,.04);border-radius:3px;overflow:hidden;margin-top:2px">
-        <div style="width:{lp:.0f}%;height:100%;background:#00ff88;box-shadow:0 0 4px #00ff8866;border-radius:3px"></div>
-      </div>
-    </div>
-    <div>
-      <div style="display:flex;justify-content:space-between;align-items:baseline">
-        <span style="font-size:7px;color:#ff335566;font-weight:700">SHORT</span>
-        <span style="font-size:10px;color:#ff3355;font-family:monospace;font-weight:900">{K(s)}</span>
-        {chg_s}
-      </div>
-      <div style="height:5px;background:rgba(255,255,255,.04);border-radius:3px;overflow:hidden;margin-top:2px">
-        <div style="width:{sp:.0f}%;height:100%;background:#ff3355;box-shadow:0 0 4px #ff335566;border-radius:3px"></div>
-      </div>
-    </div>
-  </div>
-  <div style="margin-top:5px;display:flex;justify-content:flex-end;align-items:center;gap:6px">
-    <span style="font-size:7px;color:#333;text-transform:uppercase;letter-spacing:.05em">Net</span>
-    <span style="font-size:11px;font-weight:900;font-family:monospace;color:{clr(n)}">{n:+,}</span>
-  </div>
-</div>'''
-    return f'''
-<div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);
-            border-radius:12px;padding:12px 14px;flex:1;min-width:200px">
-  <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;
-              padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.05)">
-    <span style="font-size:14px">{icon}</span>
-    <div>
-      <div style="font-size:10px;font-weight:700;color:#e2e8f0;text-transform:uppercase;letter-spacing:.06em">{label}</div>
-    </div>
-  </div>
-  {rows_html}
-</div>'''
+def week_table(r, prev, is_live=False):
+    """Tabla CFTC compacta: Long/Short/Net/Cambio por categoría + TOTAL. Solo inline styles."""
+    nc_l, nc_s = r['nc_l'], r['nc_s']
+    dl_l, dl_s = r['dl_l'], r['dl_s']
+    am_l, am_s = r['am_l'], r['am_s']
+    rt_l, rt_s = r['ret_l'], r['ret_s']
+    tot_l = nc_l + dl_l + am_l + rt_l
+    tot_s = nc_s + dl_s + am_s + rt_s
+    nc_n  = nc_l - nc_s
+    dl_n  = dl_l - dl_s
+    am_n  = am_l - am_s
+    rt_n  = rt_l - rt_s
+    tot_n = tot_l - tot_s
+    ci    = r['ci']
 
-# Cuatro tarjetas de categoría
-specs_card = category_card('Non-Commercial','📈',last4,
-    lambda r:r['nc_l'], lambda r:r['nc_s'], lambda r:r['nc_net'], maxNC, '#00f2ff')
-banks_card = category_card('Commercial','🏦',last4,
-    lambda r:r['dl_l'], lambda r:r['dl_s'], lambda r:r['dl_net'], maxCOM, '#60a5fa')
-inst_card  = category_card('Institucional','💼',last4,
-    lambda r:r['am_l'], lambda r:r['am_s'], lambda r:r['am_net'], maxAM, '#a78bfa')
-ret_card   = category_card('Retail','👾',last4,
-    lambda r:r['ret_l'], lambda r:r['ret_s'], lambda r:r['ret_net'], maxRET, '#fb923c')
+    def chg_cell(r, prv):
+        if prv is None: return '<td colspan="5" style="font-size:8px;color:#333;padding:4px 6px;text-align:center">—</td>'
+        def b(n):
+            if n is None: return '—'
+            c = '#00ff88' if n > 0 else '#ff3355' if n < 0 else '#555'
+            return f'<span style="color:{c};font-weight:700">{n:+,}</span>'
+        dnc = (r['nc_l']-prv['nc_l']) - (r['nc_s']-prv['nc_s'])
+        ddl = (r['dl_l']-prv['dl_l']) - (r['dl_s']-prv['dl_s'])
+        dam = (r['am_l']-prv['am_l']) - (r['am_s']-prv['am_s'])
+        drt = (r['ret_l']-prv['ret_l']) - (r['ret_s']-prv['ret_s'])
+        dtot= dnc+ddl+dam+drt
+        return (
+            f'<td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)">{b(r["nc_l"]-prv["nc_l"])} / {b(r["nc_s"]-prv["nc_s"])}</td>'
+            f'<td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)">{b(r["dl_l"]-prv["dl_l"])} / {b(r["dl_s"]-prv["dl_s"])}</td>'
+            f'<td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)">{b(r["am_l"]-prv["am_l"])} / {b(r["am_s"]-prv["am_s"])}</td>'
+            f'<td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)">{b(r["ret_l"]-prv["ret_l"])} / {b(r["ret_s"]-prv["ret_s"])}</td>'
+            f'<td style="padding:4px 6px;text-align:right;border-left:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.03);font-weight:700">{b(dtot)}</td>'
+        )
 
-# Tabla compacta de totales
-ci_last = last['ci']
-table_rows = ''
+    live_badge = '<span style="font-size:7px;background:rgba(0,242,255,.12);color:#00f2ff;padding:1px 6px;border-radius:3px;margin-left:6px">LIVE</span>' if is_live else ''
+    hdr_bg = 'rgba(0,242,255,.03)' if is_live else 'rgba(255,255,255,.02)'
+    hdr_bd = 'rgba(0,242,255,.3)' if is_live else 'rgba(255,255,255,.06)'
+    chg_row = chg_cell(r, prev)
+
+    return f"""
+<div style="background:rgba(0,0,0,.25);border:1px solid {hdr_bd};border-radius:10px;overflow:hidden;margin-bottom:12px">
+  <div style="background:{hdr_bg};padding:8px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+    <span style="font-size:10px;font-weight:700;color:#e2e8f0;font-family:monospace">
+      📅 {lbl(r['date'])}{live_badge}
+    </span>
+    <span style="font-size:10px;font-weight:900;color:{ci_clr(ci)}">COT Index: {ci:.1f}% — {ci_sig(ci)}</span>
+  </div>
+  <div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:10px;min-width:600px">
+    <thead>
+      <tr style="background:rgba(255,255,255,.02)">
+        <th style="padding:6px 10px;text-align:left;font-size:8px;color:#334155;text-transform:uppercase;letter-spacing:.06em;font-weight:700;width:80px"></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#00f2ff;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Non-Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Hedge Funds</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#60a5fa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Dealers</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#a78bfa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Institucional<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Asset Mgr</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#fb923c;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Retail<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Non-Rept</span></th>
+        <th style="padding:6px 10px;text-align:right;font-size:8px;color:#e2e8f0;text-transform:uppercase;letter-spacing:.05em;font-weight:700;border-left:1px solid rgba(255,255,255,.08)">TOTAL<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Todas categ.</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#4ade80;font-weight:700;text-transform:uppercase;letter-spacing:.06em">LONG</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">{fmt(nc_l)}</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">{fmt(dl_l)}</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">{fmt(am_l)}</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">{fmt(rt_l)}</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">{fmt(tot_l)}</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#f87171;font-weight:700;text-transform:uppercase;letter-spacing:.06em">SHORT</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">{fmt(nc_s)}</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">{fmt(dl_s)}</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">{fmt(am_s)}</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">{fmt(rt_s)}</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">{fmt(tot_s)}</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.15);border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.06em">NET</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:{clr(nc_n)}">{nc_n:+,}</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:{clr(dl_n)}">{dl_n:+,}</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:{clr(am_n)}">{am_n:+,}</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:{clr(rt_n)}">{rt_n:+,}</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:{clr(tot_n)};border-left:1px solid rgba(255,255,255,.08);font-size:12px">{tot_n:+,}</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.08)">
+        <td style="padding:4px 10px;font-size:8px;color:#334155;font-weight:700;text-transform:uppercase;letter-spacing:.06em">CAMBIO</td>
+        {chg_row}
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>"""
+
+# Generar 4 semanas
+four_weeks_html = ''
 for i, r in enumerate(last4):
-    prev = rows[rows.index(r)-1] if rows.index(r) > 0 else None
-    dot = f'<span style="color:#00f2ff;margin-right:4px">●</span>' if i == 0 else '''<span style="margin-right:4px;color:#222">○</span>'''
-    bg  = 'background:rgba(0,242,255,.03)' if i == 0 else ''
-    nc_n= r['nc_net']
-    dl_n= r['dl_net']
-    am_n= r['am_net']
-    rt_n= r['ret_net']
-    tot = r['tot_net']
-    ci  = r['ci']
-    table_rows += (
-        f'<tr style="border-bottom:1px solid rgba(255,255,255,.04);{bg}">'
-        f'<td style="padding:7px 10px;font-size:9px;color:#94a3b8;font-family:monospace;white-space:nowrap">{dot}{lbl(r["date"])}</td>'
-        f'<td style="padding:7px 8px;font-family:monospace;font-size:10px;font-weight:700;color:{clr(nc_n)};text-align:right">{nc_n:+,}</td>'
-        f'<td style="padding:7px 8px;font-family:monospace;font-size:10px;color:{clr(dl_n)};text-align:right">{dl_n:+,}</td>'
-        f'<td style="padding:7px 8px;font-family:monospace;font-size:10px;color:{clr(am_n)};text-align:right">{am_n:+,}</td>'
-        f'<td style="padding:7px 8px;font-family:monospace;font-size:10px;color:{clr(rt_n)};text-align:right">{rt_n:+,}</td>'
-        f'<td style="padding:7px 10px;font-family:monospace;font-size:11px;font-weight:900;color:{clr(tot)};text-align:right;border-left:1px solid rgba(255,255,255,.06)">{tot:+,}</td>'
-        f'<td style="padding:7px 10px;font-family:monospace;font-size:10px;font-weight:700;color:{ci_clr(ci)};text-align:right">{ci:.1f}%</td>'
-        f'</tr>'
-    )
+    idx  = rows.index(r)
+    prev = rows[idx-1] if idx > 0 else None
+    four_weeks_html += week_table(r, prev, is_live=(i == 0))
 
 widget = f"""{MARKER_S}
-<style>
-.cot-cards-wrap {{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px }}
-@media(max-width:900px) {{ .cot-cards-wrap {{ flex-direction:column }} }}
-</style>
-
 <div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06)">
-
-  <!-- Header -->
-  <div style="display:flex;align-items:center;justify-content:space-between;
-              margin-bottom:18px;flex-wrap:wrap;gap:10px">
-    <div>
-      <div style="font-size:9px;font-family:monospace;color:#1e3a5f;
-                  text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px">
-        CFTC · TFF · NASDAQ-100 CONSOLIDATED · {total_wks} SEMANAS
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <span style="font-size:11px;font-weight:900;color:{ci_clr(ci_last)}">
-          COT Index: {ci_last:.1f}% — {ci_sig(ci_last)}
-        </span>
-        <span style="font-size:9px;color:#1e3a5f;font-family:monospace">
-          {lbl(last['date'])} · {updated}
-        </span>
-      </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+    <div style="font-size:9px;font-family:monospace;color:#1e3a5f;text-transform:uppercase;letter-spacing:.08em">
+      CFTC · Traders in Financial Futures · NASDAQ-100 · {total_wks} semanas · {updated}
     </div>
     <a href="cot_historial.html" target="_blank"
-       style="display:inline-flex;align-items:center;gap:6px;
-              background:rgba(0,242,255,.05);border:1px solid rgba(0,242,255,.15);
-              color:#00f2ff;padding:7px 16px;border-radius:20px;text-decoration:none;
-              font-size:10px;font-weight:700;font-family:monospace;letter-spacing:.04em;
-              transition:all .2s">
-      HISTORIAL {total_wks}W ↗
+       style="display:inline-flex;align-items:center;gap:5px;background:rgba(0,242,255,.05);
+              border:1px solid rgba(0,242,255,.2);color:#00f2ff;padding:6px 14px;
+              border-radius:16px;text-decoration:none;font-size:9px;font-weight:700;font-family:monospace">
+      📂 HISTORIAL {total_wks}W ↗
     </a>
   </div>
-
-  <!-- 4 tarjetas con barras -->
-  <div class="cot-cards-wrap">
-    {specs_card}
-    {banks_card}
-    {inst_card}
-    {ret_card}
-  </div>
-
-  <!-- Tabla de totales -->
-  <div style="background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.05);
-              border-radius:12px;overflow:hidden">
-    <table style="width:100%;border-collapse:collapse">
-      <thead>
-        <tr style="background:rgba(255,255,255,.03)">
-          <th style="padding:8px 10px;font-size:8px;color:#1e3a5f;text-align:left;
-                     text-transform:uppercase;letter-spacing:.08em;font-weight:700">Semana</th>
-          <th style="padding:8px 8px;font-size:8px;color:#00f2ff;text-align:right;
-                     text-transform:uppercase;letter-spacing:.06em;font-weight:700">NC Net</th>
-          <th style="padding:8px 8px;font-size:8px;color:#60a5fa;text-align:right;
-                     text-transform:uppercase;letter-spacing:.06em;font-weight:700">COM Net</th>
-          <th style="padding:8px 8px;font-size:8px;color:#a78bfa;text-align:right;
-                     text-transform:uppercase;letter-spacing:.06em;font-weight:700">AM Net</th>
-          <th style="padding:8px 8px;font-size:8px;color:#fb923c;text-align:right;
-                     text-transform:uppercase;letter-spacing:.06em;font-weight:700">Retail</th>
-          <th style="padding:8px 10px;font-size:8px;color:#e2e8f0;text-align:right;
-                     text-transform:uppercase;letter-spacing:.06em;font-weight:700;
-                     border-left:1px solid rgba(255,255,255,.06)">Total Net</th>
-          <th style="padding:8px 10px;font-size:8px;color:#ffd600;text-align:right;
-                     text-transform:uppercase;letter-spacing:.06em;font-weight:700">COT Index</th>
-        </tr>
-      </thead>
-      <tbody>
-        {table_rows}
-      </tbody>
     </table>
   </div>
 
-  <div style="text-align:right;margin-top:8px;font-size:8px;color:#111;font-family:monospace">
-    CFTC · Traders in Financial Futures · Auto-update cada viernes 22:00 UTC
+  <div style="text-align:right;margin-top:6px;font-size:8px;color:#1e3a5f;font-family:monospace">
+    CFTC · Auto-update viernes 22:00 UTC
   </div>
 </div>
 {MARKER_E}"""
