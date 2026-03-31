@@ -1,9 +1,8 @@
 """
-inject_cot_table.py  — Genera tabla COT estilo CFTC (hardcoded HTML) e inyecta en index.html
-Columnas: Non-Commercial(L/S) | Commercial(L/S) | Institutional(L/S) | Retail Net | OI | COT Index
-Filas: datos + cambio semana + % de OI
-4 semanas por defecto + botón "Ver historial completo"
-No depende de ningún JS externo.
+inject_cot_table.py
+— Inyecta la tabla de 4 semanas DENTRO del WHALE RADAR COT (sin tocar el diseño)
+— Genera cot_historial.html (página separada con 221 semanas)
+— Botón "Historial" abre la página en nueva pestaña
 """
 import csv, re, requests, zipfile, io, sys
 from datetime import datetime
@@ -11,10 +10,11 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 CSV_PATH  = 'data/cot/nasdaq_cot_historical.csv'
 HTML_PATH = 'index.html'
+HIST_PATH = 'cot_historial.html'
 MARKER_S  = '<!-- COT_TABLE_START -->'
 MARKER_E  = '<!-- COT_TABLE_END -->'
 
-# ── 1. Cargar CSV ─────────────────────────────────────────────────────────
+# ── 1. CSV ────────────────────────────────────────────────────────────────
 rows = []
 with open(CSV_PATH, encoding='utf-8') as f:
     for r in csv.DictReader(f):
@@ -27,18 +27,18 @@ with open(CSV_PATH, encoding='utf-8') as f:
             am_l = int(r.get('Asset_Mgr_Positions_Long_All') or 0)
             am_s = int(r.get('Asset_Mgr_Positions_Short_All') or 0)
             if nc_l or nc_s:
-                # OI aproximado = suma de todos los longs reportables
-                oi_est = nc_l + dl_l + am_l
-                rows.append({'date': d, 'nc_l': nc_l, 'nc_s': nc_s,
+                oi = nc_l + dl_l + am_l
+                rows.append({'date': d,
+                             'nc_l': nc_l, 'nc_s': nc_s,
                              'dl_l': dl_l, 'dl_s': dl_s,
                              'am_l': am_l, 'am_s': am_s,
                              'ret_l': 0, 'ret_s': 0, 'ret_net': None,
-                             'oi': oi_est})
+                             'oi': oi})
         except: pass
 
 rows.sort(key=lambda x: x['date'])
 
-# ── 2. Retail desde CFTC ─────────────────────────────────────────────────
+# ── 2. Retail ─────────────────────────────────────────────────────────────
 try:
     resp = requests.get(
         'https://www.cftc.gov/files/dea/history/fut_fin_txt_2026.zip', timeout=60)
@@ -63,290 +63,288 @@ except Exception as e:
 
 # ── 3. COT Index ─────────────────────────────────────────────────────────
 for i, r in enumerate(rows):
-    hist = [x['nc_l'] - x['nc_s'] for x in rows[max(0, i-156):i+1]]
+    hist   = [x['nc_l'] - x['nc_s'] for x in rows[max(0, i-156):i+1]]
     mn, mx = min(hist), max(hist)
-    net = r['nc_l'] - r['nc_s']
-    r['ci'] = round((net - mn) / (mx - mn) * 100, 1) if mx > mn else 50.0
+    net    = r['nc_l'] - r['nc_s']
+    r['ci']     = round((net - mn) / (mx - mn) * 100, 1) if mx > mn else 50.0
+    r['nc_net'] = net
+    r['dl_net'] = r['dl_l'] - r['dl_s']
+    r['am_net'] = r['am_l'] - r['am_s']
 
 # ── 4. Helpers ───────────────────────────────────────────────────────────
 def fmt(n):      return f'{n:,}' if n else '—'
 def pct(n, oi):  return f'{n/oi*100:.1f}%' if oi > 0 else '—'
-def chg_badge(n):
-    if n is None or n == 0: return '<span class="cotbadge neutral">0</span>'
-    cls = 'pos' if n > 0 else 'neg'
-    return f'<span class="cotbadge {cls}">{n:+,}</span>'
 def ci_color(ci):
-    return '#ff1744' if ci < 25 else '#ff9800' if ci < 45 else '#ffd60a' if ci < 60 else '#69f0ae' if ci < 80 else '#00e676'
+    return ('#ff1744' if ci < 25 else '#ff5722' if ci < 45
+            else '#ffd600' if ci < 60 else '#69f0ae' if ci < 80 else '#00e676')
 def ci_label(ci):
     return ('🔴 MUY BAJISTA' if ci < 25 else '🔴 BEARISH' if ci < 45
             else '🟡 NEUTRAL' if ci < 60 else '🟢 BULLISH' if ci < 80 else '🟢 MUY BULLISH')
-
-def fmt_date(d):
+def net_clr(n): return '#69f0ae' if n >= 0 else '#ff5252'
+def chg_badge(n):
+    if n is None: return '<span class="cb neu">—</span>'
+    if n == 0:    return '<span class="cb neu">0</span>'
+    c = 'pos' if n > 0 else 'neg'
+    return f'<span class="cb {c}">{n:+,}</span>'
+def lbl(d):
     for fmt in ('%Y-%m-%d', '%m/%d/%Y'):
         try: return datetime.strptime(d, fmt).strftime('%d %b %Y').lstrip('0')
         except: pass
     return d
 
-def make_week_block(r, prev, is_latest=False, hidden=False):
-    nc_net  = r['nc_l'] - r['nc_s']
-    dl_net  = r['dl_l'] - r['dl_s']
-    am_net  = r['am_l'] - r['am_s']
+SHARED_CSS = """
+<style>
+* { box-sizing:border-box; margin:0; padding:0 }
+body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-serif }
+.cot-tbl { width:100%; border-collapse:collapse; font-size:11px; margin-bottom:20px;
+           border:1px solid rgba(255,255,255,.07); border-radius:12px; overflow:hidden }
+.cot-tbl th, .cot-tbl td { padding:7px 10px; text-align:right }
+.cot-tbl td:first-child, .cot-tbl th:first-child { text-align:left }
+.cot-tbl thead th { background:rgba(255,255,255,.04); border-bottom:1px solid rgba(255,255,255,.08);
+                    font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em }
+.cot-tbl tbody tr { border-bottom:1px solid rgba(255,255,255,.04) }
+.cot-tbl tbody tr:hover { background:rgba(255,255,255,.02) }
+.row-data  td { font-family:monospace; font-weight:700; font-size:12px }
+.row-net   td { background:rgba(0,0,0,.2); font-family:monospace }
+.row-chg   td { background:rgba(0,0,0,.12) }
+.row-pct   td { font-family:monospace; font-size:10px; color:#4a5a7a }
+.lbl-cell  { color:#4a5a7a; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; white-space:nowrap }
+.num-l     { color:#4ade80 }
+.num-s     { color:#f87171 }
+.wk-hdr    { background:rgba(255,255,255,.03); border-top:2px solid transparent }
+.wk-hdr.live { border-top-color:rgba(0,242,255,.4) }
+.wk-hdr th { font-size:12px; font-weight:700; color:#e2e8f0; text-align:left; padding:10px 12px }
+.live-tag  { font-size:8px; background:rgba(0,242,255,.15); color:#00f2ff;
+             padding:2px 7px; border-radius:4px; margin-left:8px; vertical-align:middle }
+.ci-tag    { font-size:11px; font-weight:900 }
+.cb { display:inline-block; padding:1px 5px; border-radius:4px; font-family:monospace;
+      font-size:10px; font-weight:700 }
+.cb.pos { background:rgba(74,222,128,.12); color:#4ade80 }
+.cb.neg { background:rgba(248,113,113,.12); color:#f87171 }
+.cb.neu { background:rgba(255,255,255,.05); color:#444 }
+</style>"""
+
+def week_block(r, prev, is_live=False):
+    """Genera HTML de un bloque semanal completo"""
+    oi = r['oi']
+    ci = r['ci']
+    nc_net = r['nc_net']
+    dl_net = r['dl_net']
+    am_net = r['am_net']
     ret_net = r.get('ret_net') or 0
-    oi      = r['oi']
 
-    # Cambios vs semana anterior
     if prev:
-        d_nc_l  = r['nc_l'] - prev['nc_l']
-        d_nc_s  = r['nc_s'] - prev['nc_s']
-        d_dl_l  = r['dl_l'] - prev['dl_l']
-        d_dl_s  = r['dl_s'] - prev['dl_s']
-        d_am_l  = r['am_l'] - prev['am_l']
-        d_am_s  = r['am_s'] - prev['am_s']
-        d_oi    = oi - prev['oi']
-        d_ret_l = r['ret_l'] - prev['ret_l']
-        d_ret_s = r['ret_s'] - prev['ret_s']
+        d = {k: r[k] - prev.get(k, r[k]) for k in ['nc_l','nc_s','dl_l','dl_s','am_l','am_s','ret_l','ret_s']}
     else:
-        d_nc_l = d_nc_s = d_dl_l = d_dl_s = d_am_l = d_am_s = d_oi = d_ret_l = d_ret_s = None
+        d = {k: None for k in ['nc_l','nc_s','dl_l','dl_s','am_l','am_s','ret_l','ret_s']}
 
-    live_badge = '<span class="cotlive">LIVE</span>' if is_latest else ''
-    hide_attr  = 'class="cot-hist-row"' if hidden else ''
-    row_bg     = 'style="border-top:2px solid rgba(0,242,255,.3)"' if is_latest else ''
+    live_span = '<span class="live-tag">LIVE</span>' if is_live else ''
+    hdr_cls   = 'wk-hdr live' if is_live else 'wk-hdr'
+    ci_c      = ci_color(ci)
 
-    return f'''
-<div {hide_attr}>
-<table class="cot-full-table" {row_bg}>
+    return f"""<table class="cot-tbl">
   <thead>
-    <tr class="cot-week-header">
-      <th colspan="9" style="text-align:left;padding:10px 12px;font-size:12px;color:#e2e8f0">
-        📅 {fmt_date(r['date'])} {live_badge}
-        <span style="float:right;font-size:11px;font-weight:400;color:#555">OI: {fmt(oi)}</span>
-        <span style="float:right;margin-right:20px;font-size:12px;font-weight:900;color:{ci_color(r['ci'])}">
-          COT Index: {r['ci']:.1f}% — {ci_label(r['ci'])}
+    <tr class="{hdr_cls}">
+      <th colspan="9">
+        📅 {lbl(r['date'])} {live_span}
+        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈{fmt(oi)}</span>
+        <span style="float:right;margin-right:20px" class="ci-tag" style="color:{ci_c}">
+          <span style="color:{ci_c}">COT Index: {ci:.1f}% — {ci_label(ci)}</span>
         </span>
       </th>
     </tr>
-    <tr class="cot-col-header">
+    <tr>
       <th></th>
-      <th colspan="2" style="color:#60a5fa">Non-Commercial<br><small>Hedge Funds</small></th>
-      <th colspan="2" style="color:#f59e0b">Commercial<br><small>Dealers/Bancos</small></th>
-      <th colspan="2" style="color:#a78bfa">Institutional<br><small>Asset Managers</small></th>
-      <th colspan="2" style="color:#888">Retail<br><small>Non-Reportable</small></th>
+      <th colspan="2" style="color:#60a5fa">Non-Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Hedge Funds</small></th>
+      <th colspan="2" style="color:#f59e0b">Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Dealers</small></th>
+      <th colspan="2" style="color:#a78bfa">Institutional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
+      <th colspan="2" style="color:#6b7280">Retail<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Non-Rept</small></th>
     </tr>
-    <tr class="cot-subheader">
-      <th>Categoría</th>
-      <th style="color:#4ade80">Long</th>
-      <th style="color:#f87171">Short</th>
-      <th style="color:#4ade80">Long</th>
-      <th style="color:#f87171">Short</th>
-      <th style="color:#4ade80">Long</th>
-      <th style="color:#f87171">Short</th>
-      <th style="color:#4ade80">Long</th>
-      <th style="color:#f87171">Short</th>
+    <tr>
+      <th style="color:#2a3a5a"></th>
+      <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
+      <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
+      <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
+      <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
     </tr>
   </thead>
   <tbody>
-    <!-- POSICIONES -->
-    <tr class="cot-data-row">
-      <td class="rowlabel">Contratos</td>
-      <td class="num-l">{fmt(r['nc_l'])}</td>
-      <td class="num-s">{fmt(r['nc_s'])}</td>
-      <td class="num-l">{fmt(r['dl_l'])}</td>
-      <td class="num-s">{fmt(r['dl_s'])}</td>
-      <td class="num-l">{fmt(r['am_l'])}</td>
-      <td class="num-s">{fmt(r['am_s'])}</td>
-      <td class="num-l">{fmt(r['ret_l'])}</td>
-      <td class="num-s">{fmt(r['ret_s'])}</td>
+    <tr class="row-data">
+      <td class="lbl-cell">Contratos</td>
+      <td class="num-l">{fmt(r['nc_l'])}</td><td class="num-s">{fmt(r['nc_s'])}</td>
+      <td class="num-l">{fmt(r['dl_l'])}</td><td class="num-s">{fmt(r['dl_s'])}</td>
+      <td class="num-l">{fmt(r['am_l'])}</td><td class="num-s">{fmt(r['am_s'])}</td>
+      <td class="num-l">{fmt(r['ret_l'])}</td><td class="num-s">{fmt(r['ret_s'])}</td>
     </tr>
-    <!-- NET -->
-    <tr class="cot-net-row">
-      <td class="rowlabel">Neto</td>
-      <td colspan="2" style="text-align:center;font-weight:900;color:{'#4ade80' if nc_net>=0 else '#f87171'}">{nc_net:+,}</td>
-      <td colspan="2" style="text-align:center;font-weight:900;color:{'#4ade80' if dl_net>=0 else '#f87171'}">{dl_net:+,}</td>
-      <td colspan="2" style="text-align:center;font-weight:900;color:{'#4ade80' if am_net>=0 else '#f87171'}">{am_net:+,}</td>
-      <td colspan="2" style="text-align:center;font-weight:900;color:{'#4ade80' if ret_net>=0 else '#f87171'}">{ret_net:+,}</td>
+    <tr class="row-net">
+      <td class="lbl-cell">Neto</td>
+      <td colspan="2" style="text-align:center;font-weight:900;color:{net_clr(nc_net)}">{nc_net:+,}</td>
+      <td colspan="2" style="text-align:center;font-weight:900;color:{net_clr(dl_net)}">{dl_net:+,}</td>
+      <td colspan="2" style="text-align:center;font-weight:900;color:{net_clr(am_net)}">{am_net:+,}</td>
+      <td colspan="2" style="text-align:center;font-weight:900;color:{net_clr(ret_net)}">{ret_net:+,}</td>
     </tr>
-    <!-- CAMBIOS -->
-    <tr class="cot-chg-row">
-      <td class="rowlabel" style="color:#555">Cambio sem.</td>
-      <td>{chg_badge(d_nc_l)}</td>
-      <td>{chg_badge(d_nc_s)}</td>
-      <td>{chg_badge(d_dl_l)}</td>
-      <td>{chg_badge(d_dl_s)}</td>
-      <td>{chg_badge(d_am_l)}</td>
-      <td>{chg_badge(d_am_s)}</td>
-      <td>{chg_badge(d_ret_l)}</td>
-      <td>{chg_badge(d_ret_s)}</td>
+    <tr class="row-chg">
+      <td class="lbl-cell" style="color:#2a3a5a">Cambio sem.</td>
+      <td>{chg_badge(d['nc_l'])}</td><td>{chg_badge(d['nc_s'])}</td>
+      <td>{chg_badge(d['dl_l'])}</td><td>{chg_badge(d['dl_s'])}</td>
+      <td>{chg_badge(d['am_l'])}</td><td>{chg_badge(d['am_s'])}</td>
+      <td>{chg_badge(d['ret_l'])}</td><td>{chg_badge(d['ret_s'])}</td>
     </tr>
-    <!-- % OI -->
-    <tr class="cot-pct-row">
-      <td class="rowlabel" style="color:#555">% Open Int.</td>
-      <td>{pct(r['nc_l'],oi)}</td>
-      <td>{pct(r['nc_s'],oi)}</td>
-      <td>{pct(r['dl_l'],oi)}</td>
-      <td>{pct(r['dl_s'],oi)}</td>
-      <td>{pct(r['am_l'],oi)}</td>
-      <td>{pct(r['am_s'],oi)}</td>
-      <td>{pct(r['ret_l'],oi)}</td>
-      <td>{pct(r['ret_s'],oi)}</td>
+    <tr class="row-pct">
+      <td class="lbl-cell" style="color:#2a3a5a">% Open Int.</td>
+      <td>{pct(r['nc_l'],oi)}</td><td>{pct(r['nc_s'],oi)}</td>
+      <td>{pct(r['dl_l'],oi)}</td><td>{pct(r['dl_s'],oi)}</td>
+      <td>{pct(r['am_l'],oi)}</td><td>{pct(r['am_s'],oi)}</td>
+      <td>{pct(r['ret_l'],oi)}</td><td>{pct(r['ret_s'],oi)}</td>
     </tr>
   </tbody>
-</table>
-</div>'''
+</table>"""
 
-# ── 5. Construir el widget completo ───────────────────────────────────────
+# ── 5. 4 semanas para index.html ──────────────────────────────────────────
 last4     = list(reversed(rows[-4:]))
-hist_rows = list(reversed(rows[:-4]))
 last      = rows[-1]
 updated   = datetime.now().strftime('%d/%m/%Y %H:%M')
 total_wks = len(rows)
 
-# 4 semanas visibles
 four_html = ''
 for i, r in enumerate(last4):
-    prev = rows[rows.index(r) - 1] if rows.index(r) > 0 else None
-    four_html += make_week_block(r, prev, is_latest=(i == 0))
-
-# historial oculto
-hist_html = ''
-for r in hist_rows:
-    idx  = rows.index(r)
-    prev = rows[idx - 1] if idx > 0 else None
-    hist_html += make_week_block(r, prev, hidden=True)
-
-css = """
-<style>
-.cot-full-table {
-  width:100%;border-collapse:collapse;margin-bottom:16px;
-  border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;
-  background:rgba(0,0,0,.3);font-size:11px;
-}
-.cot-week-header td,.cot-week-header th {
-  background:rgba(255,255,255,.04);
-}
-.cot-col-header th {
-  padding:6px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,.06);
-  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
-}
-.cot-col-header small { display:block;font-weight:400;color:#444;font-size:9px;text-transform:none }
-.cot-subheader th {
-  padding:4px 8px;text-align:right;font-size:9px;font-weight:600;
-  color:#444;border-bottom:1px solid rgba(255,255,255,.08);
-  background:rgba(0,0,0,.2);
-}
-.cot-subheader th:first-child { text-align:left }
-.cot-data-row td, .cot-net-row td, .cot-chg-row td, .cot-pct-row td {
-  padding:7px 10px;text-align:right;border-bottom:1px solid rgba(255,255,255,.04);
-}
-.cot-data-row td { font-family:monospace;font-size:12px;font-weight:700;color:#e2e8f0 }
-.cot-net-row td  { font-family:monospace;font-size:11px;background:rgba(0,0,0,.15) }
-.cot-chg-row td  { background:rgba(0,0,0,.1) }
-.cot-pct-row td  { font-size:10px;color:#555;font-family:monospace }
-.rowlabel { text-align:left!important;color:#444;font-size:10px;font-weight:600;
-            text-transform:uppercase;letter-spacing:.04em;white-space:nowrap }
-.num-l { color:#4ade80;font-family:monospace }
-.num-s { color:#f87171;font-family:monospace }
-.cotbadge {
-  display:inline-block;padding:1px 6px;border-radius:4px;
-  font-family:monospace;font-size:10px;font-weight:700;
-}
-.cotbadge.pos     { background:rgba(74,222,128,.15);color:#4ade80 }
-.cotbadge.neg     { background:rgba(248,113,113,.15);color:#f87171 }
-.cotbadge.neutral { background:rgba(255,255,255,.06);color:#555 }
-.cotlive {
-  display:inline-block;font-size:8px;padding:1px 6px;border-radius:4px;
-  background:rgba(0,242,255,.15);color:#00f2ff;margin-left:8px;vertical-align:middle;
-}
-.cot-hist-row { display:none }
-#cot-expand-btn2 {
-  background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);
-  color:#a78bfa;padding:10px 24px;border-radius:20px;cursor:pointer;
-  font-size:12px;font-family:inherit;transition:all .2s;margin:8px auto;display:block;
-}
-#cot-expand-btn2:hover { background:rgba(167,139,250,.18);border-color:#a78bfa }
-</style>"""
+    prev = rows[rows.index(r)-1] if rows.index(r) > 0 else None
+    four_html += week_block(r, prev, is_live=(i == 0))
 
 widget = f"""{MARKER_S}
-{css}
-<section style="padding:0 0 40px 0">
-  <div style="max-width:1400px;margin:0 auto;padding:0 20px">
-
-    <!-- Cabecera -->
-    <div style="display:flex;align-items:center;justify-content:space-between;
-                margin-bottom:20px;flex-wrap:wrap;gap:10px">
-      <div>
-        <h3 style="font-size:14px;font-weight:900;color:#e2e8f0;margin:0;
-                   text-transform:uppercase;letter-spacing:.06em">
-          📊 CFTC — Traders in Financial Futures · NASDAQ-100
-        </h3>
-        <p style="color:#333;font-size:10px;margin:4px 0 0;font-family:monospace">
-          {total_wks} semanas · Último: {fmt_date(last['date'])} · Actualizado: {updated}
-          &nbsp;|&nbsp; Auto-update cada viernes 22:00 UTC
-        </p>
+{SHARED_CSS}
+<div style="margin-top:24px;border-top:1px solid rgba(255,255,255,.06);padding-top:20px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+    <div>
+      <div style="font-size:10px;font-family:monospace;color:#4a5a7a;text-transform:uppercase;letter-spacing:.08em">
+        CFTC · Traders in Financial Futures · {total_wks} semanas
       </div>
-      <div style="text-align:right">
-        <div style="font-size:24px;font-weight:900;color:{ci_color(last['ci'])}">{last['ci']:.1f}%</div>
-        <div style="font-size:10px;color:#444">COT Index (3 años)</div>
-        <div style="font-size:11px;font-weight:700;color:{ci_color(last['ci'])}">{ci_label(last['ci'])}</div>
+      <div style="font-size:10px;color:#2a3a5a;margin-top:3px;font-family:monospace">
+        Actualizado: {updated} · Auto-update cada viernes 22:00 UTC
       </div>
     </div>
-
-    <!-- 4 semanas -->
-    {four_html}
-
-    <!-- historial -->
-    {hist_html}
-
-    <!-- botón -->
-    <button id="cot-expand-btn2" onclick="(function(){{
-      var rs=document.querySelectorAll('.cot-hist-row');
-      var btn=document.getElementById('cot-expand-btn2');
-      var open=rs[0]&&rs[0].style.display!=='none';
-      rs.forEach(function(r){{r.style.display=open?'none':'block'}});
-      btn.textContent=open?'📂 Ver historial completo ({total_wks} semanas)':'📂 Ocultar historial';
-    }})()">
-      📂 Ver historial completo ({total_wks} semanas)
-    </button>
-
-    <p style="text-align:right;font-size:9px;color:#222;margin-top:8px;font-family:monospace">
-      Fuente: CFTC · Traders in Financial Futures · NASDAQ-100 Consolidated CME
-    </p>
+    <a href="cot_historial.html" target="_blank"
+       style="display:inline-flex;align-items:center;gap:6px;
+              background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);
+              color:#a78bfa;padding:8px 18px;border-radius:20px;text-decoration:none;
+              font-size:11px;font-weight:700;transition:all .2s;font-family:inherit">
+      📂 Historial completo ({total_wks} semanas) ↗
+    </a>
   </div>
-</section>
+  {four_html}
+</div>
 {MARKER_E}"""
 
-# ── 6. Inyectar en index.html ─────────────────────────────────────────────
+# ── 6. Inyectar en el WHALE RADAR COT ────────────────────────────────────
 with open(HTML_PATH, 'r', encoding='utf-8') as f:
     html = f.read()
 
 if MARKER_S in html and MARKER_E in html:
     pat  = re.compile(re.escape(MARKER_S) + '.*?' + re.escape(MARKER_E), re.DOTALL)
     html = pat.sub(widget, html)
-    print('✅ Tabla COT actualizada')
+    print('✅ Widget actualizado')
 else:
-    # Insertar después del cierre del section cot-analysis
-    close = '</section>\n<!-- COT_WIDGET_START -->'
-    if '<!-- COT_WIDGET_START -->' in html:
-        html = html.replace('<!-- COT_WIDGET_START -->', MARKER_S, 1)
-        # Buscar ref cierre y añadir el widget justo antes
-        pos = html.find('<section id="cot-analysis"')
-        end = html.find('</section>', pos) + len('</section>')
-        html = html[:end] + '\n' + widget + html[end:]
+    # Insertar AL FINAL del section#cot-analysis, antes de </section>
+    cot_pos   = html.find('id="cot-analysis"')
+    if cot_pos > 0:
+        sec_end = html.find('</section>', cot_pos)
+        html    = html[:sec_end] + '\n' + widget + '\n' + html[sec_end:]
+        print('✅ Widget insertado en cot-analysis')
     else:
-        # Insertar después del section cot-analysis
-        pos = html.find('<section id="cot-analysis"')
-        if pos > 0:
-            end = html.find('</section>', pos) + len('</section>')
-            html = html[:end] + '\n' + widget + html[end:]
-        else:
-            html = html.replace('</body>', widget + '\n</body>')
-    print('✅ Tabla COT insertada')
+        html = html.replace('</body>', widget + '\n</body>')
+        print('✅ Widget insertado antes de </body>')
 
 with open(HTML_PATH, 'w', encoding='utf-8') as f:
     f.write(html)
 
-print(f'\n📊 Resumen:')
-print(f'   Último: {last["date"]}  |  NC Net: {last["nc_l"]-last["nc_s"]:+,}  |  COT Index: {last["ci"]:.1f}%')
-print(f'   NC  L:{last["nc_l"]:,}  S:{last["nc_s"]:,}  Net:{last["nc_l"]-last["nc_s"]:+,}')
-print(f'   COM L:{last["dl_l"]:,}  S:{last["dl_s"]:,}  Net:{last["dl_l"]-last["dl_s"]:+,}')
-print(f'   AM  L:{last["am_l"]:,}  S:{last["am_s"]:,}  Net:{last["am_l"]-last["am_s"]:+,}')
-print(f'   OI: {last["oi"]:,}  |  Semanas: {total_wks}')
+# ── 7. Generar cot_historial.html ────────────────────────────────────────
+all_blocks = ''
+for i, r in enumerate(reversed(rows)):
+    idx  = rows.index(r)
+    prev = rows[idx-1] if idx > 0 else None
+    all_blocks += week_block(r, prev, is_live=(i == 0))
+
+hist_page = f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COT Historial — NASDAQ-100 · {total_wks} semanas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <meta name="description" content="Historial completo de {total_wks} semanas del COT Report CFTC para NASDAQ-100 — Non-Commercial, Commercial, Institutional, Retail">
+  {SHARED_CSS}
+  <style>
+  body {{ padding:24px 16px; max-width:1400px; margin:0 auto }}
+  .page-header {{
+    display:flex; align-items:flex-start; justify-content:space-between;
+    margin-bottom:28px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,.07);
+    flex-wrap:wrap; gap:12px;
+  }}
+  .back-btn {{
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(0,242,255,.08); border:1px solid rgba(0,242,255,.2);
+    color:#00f2ff; padding:8px 16px; border-radius:20px; text-decoration:none;
+    font-size:11px; font-weight:700; font-family:inherit;
+  }}
+  .back-btn:hover {{ background:rgba(0,242,255,.15) }}
+  .search-wrap {{ margin-bottom:20px }}
+  #wk-search {{
+    background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1);
+    color:#e2e8f0; padding:8px 16px; border-radius:20px; font-family:monospace;
+    font-size:12px; width:220px; outline:none;
+  }}
+  #wk-search:focus {{ border-color:rgba(167,139,250,.4) }}
+  .ci-bar {{
+    display:inline-block; width:60px; height:6px; border-radius:3px; margin-left:8px;
+    background:linear-gradient(90deg, #ff1744, #ffd600, #00e676); position:relative; vertical-align:middle;
+  }}
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <div>
+      <h1 style="font-size:22px;font-weight:900;color:#e2e8f0;margin-bottom:6px">
+        📊 COT Historial — NASDAQ-100
+      </h1>
+      <p style="font-size:11px;color:#4a5a7a;font-family:monospace">
+        CFTC · Traders in Financial Futures · {total_wks} semanas · Actualizado: {updated}
+      </p>
+      <p style="font-size:10px;color:#2a3a5a;margin-top:4px">
+        Non-Commercial = Lev. Money (Hedge Funds) · Commercial = Dealers ·
+        Institutional = Asset Managers · Retail = Non-Reportable
+      </p>
+    </div>
+    <a href="index.html#cot-analysis" class="back-btn">← Volver al dashboard</a>
+  </div>
+
+  <div class="search-wrap">
+    <input id="wk-search" type="text" placeholder="Buscar semana (ej: Mar 2026)..."
+           oninput="filterWeeks(this.value)">
+  </div>
+
+  <div id="weeks-container">
+    {all_blocks}
+  </div>
+
+  <script>
+  function filterWeeks(q) {{
+    q = q.toLowerCase();
+    document.querySelectorAll('.cot-tbl').forEach(function(t) {{
+      var hdr = t.querySelector('thead tr th')?.innerText?.toLowerCase() || '';
+      t.style.display = (!q || hdr.includes(q)) ? '' : 'none';
+    }});
+  }}
+  </script>
+</body>
+</html>"""
+
+with open(HIST_PATH, 'w', encoding='utf-8') as f:
+    f.write(hist_page)
+
+print(f'✅ {HIST_PATH} generado ({total_wks} semanas, {len(hist_page)//1024}KB)')
+print(f'\n📊 Último COT: {lbl(last["date"])}')
+print(f'   NC  L:{last["nc_l"]:,}  S:{last["nc_s"]:,}  Net:{last["nc_net"]:+,}')
+print(f'   COM L:{last["dl_l"]:,}  S:{last["dl_s"]:,}  Net:{last["dl_net"]:+,}')
+print(f'   AM  L:{last["am_l"]:,}  S:{last["am_s"]:,}  Net:{last["am_net"]:+,}')
+print(f'   COT Index: {last["ci"]:.1f}% → {ci_label(last["ci"])}')
