@@ -27,17 +27,18 @@ jobs:
       - name: Repair & Download latest COT from CFTC
         run: python repair_and_update_cot.py
         timeout-minutes: 5
+        continue-on-error: false
 
-      - name: Inject COT widget into index.html
-        run: python inject_cot_widget.py
+      - name: Update agent_live_data.js with COT Trifecta
+        run: python generate_cot_update.py
         timeout-minutes: 5
 
-      - name: Commit & Push updated COT data + HTML
+      - name: Commit & Push updated COT data + JS
         run: |
           git config user.name  "COT-Bot"
           git config user.email "cot-bot@nq-whale-radar"
-          git add data/cot/nasdaq_cot_historical.csv index.html
+          git add data/cot/nasdaq_cot_historical.csv agent_live_data.js generate_cot_update.py
           git diff --cached --quiet && echo "No changes" && exit 0
           WEEK=$(date -u +"%Y-%m-%d")
-          git commit -m "cot: weekly update ${WEEK} (CFTC data + widget)"
+          git commit -m "cot: weekly update ${WEEK} — Trifecta + COT Index actualizado"
           git push
