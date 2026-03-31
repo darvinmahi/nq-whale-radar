@@ -1,0 +1,43 @@
+name: COT Weekly Update
+
+on:
+  schedule:
+    # Cada viernes a las 22:00 UTC (CFTC publica ~3:30pm ET = 20:30 UTC)
+    - cron: '0 22 * * 5'
+  workflow_dispatch:   # también se puede lanzar manualmente desde GitHub
+
+jobs:
+  update-cot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Repair & Download latest COT from CFTC
+        run: python repair_and_update_cot.py
+        timeout-minutes: 5
+
+      - name: Inject COT widget into index.html
+        run: python inject_cot_widget.py
+        timeout-minutes: 5
+
+      - name: Commit & Push updated COT data + HTML
+        run: |
+          git config user.name  "COT-Bot"
+          git config user.email "cot-bot@nq-whale-radar"
+          git add data/cot/nasdaq_cot_historical.csv index.html
+          git diff --cached --quiet && echo "No changes" && exit 0
+          WEEK=$(date -u +"%Y-%m-%d")
+          git commit -m "cot: weekly update ${WEEK} (CFTC data + widget)"
+          git push
