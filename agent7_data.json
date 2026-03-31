@@ -2,11 +2,11 @@
     "agent": 7,
     "name": "Probability Analyst",
     "version": "2.0",
-    "timestamp": "2026-03-31T16:35:32.392031+00:00",
+    "timestamp": "2026-03-31T19:57:48.900638+00:00",
     "signals_used": [
         {
             "name": "COT",
-            "raw_signal": "NEUTRAL-BAJISTA",
+            "raw_signal": "BAJISTA",
             "weight": 0.35
         },
         {
