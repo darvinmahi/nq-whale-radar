@@ -1,72 +1,48 @@
 {
-    "last_updated": "2026-03-19T03:27:08.992930Z",
+    "last_updated": "2026-03-29T20:24:46.315606Z",
     "economic_calendar": [
         {
-            "event": "Philly Fed Index",
-            "impact": "low",
-            "icon": "⚪",
-            "time_et": "08:30",
-            "date": "2026-03-19",
-            "day": "Thu",
-            "week": 3,
-            "previous": null,
-            "forecast": null,
-            "actual": null
-        },
-        {
-            "event": "PMI Flash",
+            "event": "ADP Employment",
             "impact": "medium",
             "icon": "🟡",
-            "time_et": "09:45",
-            "date": "2026-03-20",
-            "day": "Fri",
-            "week": 3,
+            "time_et": "08:15",
+            "date": "2026-04-01",
+            "day": "Wed",
+            "week": 1,
             "previous": null,
             "forecast": null,
             "actual": null
         },
         {
-            "event": "Consumer Confidence",
+            "event": "NFP (Non-Farm Payrolls)",
+            "impact": "high",
+            "icon": "🔴",
+            "time_et": "08:30",
+            "date": "2026-04-03",
+            "day": "Fri",
+            "week": 1,
+            "previous": null,
+            "forecast": null,
+            "actual": null
+        },
+        {
+            "event": "ISM Manufacturing",
             "impact": "medium",
             "icon": "🟡",
             "time_et": "10:00",
-            "date": "2026-03-24",
-            "day": "Tue",
-            "week": 4,
-            "previous": null,
-            "forecast": null,
-            "actual": null
-        },
-        {
-            "event": "GDP (Preliminary)",
-            "impact": "high",
-            "icon": "🔴",
-            "time_et": "08:30",
-            "date": "2026-03-26",
-            "day": "Thu",
-            "week": 4,
-            "previous": null,
-            "forecast": null,
-            "actual": null
-        },
-        {
-            "event": "Core PCE (Fed Preferred)",
-            "impact": "high",
-            "icon": "🔴",
-            "time_et": "08:30",
-            "date": "2026-03-27",
-            "day": "Fri",
-            "week": 4,
+            "date": "2026-04-06",
+            "day": "Mon",
+            "week": 1,
             "previous": null,
             "forecast": null,
             "actual": null
         }
     ],
     "market_sentiment": {
-        "fear_greed_index": 38,
+        "fear_greed_index": 23,
         "fear_greed_label": "FEAR",
-        "vix": 25.1,
-        "vxn": 27.7,
+        "vix": 31.0,
+        "vxn": 33.5,
         "put_call_ratio": 1.0,
         "put_call_signal": "NEUTRAL",
         "aaii_bulls": 33.0,
@@ -89,19 +65,19 @@
         "market_terminal_rate": "3.50%"
     },
     "agent13_strategy": {
-        "nombre": "Aceptación de Apertura NY sobre POC Londres",
-        "tipo": "Session Profile / Trend",
-        "descripcion": "Si la apertura de las 9:30 AM ocurre por encima del POC de la sesión de Londres y se mantiene así por 15 minutos, la probabilidad de visitar el VAH semanal aumenta al 78%.",
+        "nombre": "Fallo de Sesión Asia (Asia Low Sweep)",
+        "tipo": "Liquidity Sweep",
+        "descripcion": "El precio rompe el mínimo de la sesión de Asia durante Londres o NY para capturar liquidez, seguido de una recuperación inmediata del POC Diario.",
         "reglas": [
-            "1. Definir POC de Londres antes de las 9:30 AM.",
-            "2. Apertura de NY (9:30) por encima del POC de Londres.",
-            "3. Primera vela de 15m cierra por encima con Delta positivo."
+            "1. Barrido (Sweep) del mínimo de Asia (Asia Low).",
+            "2. Rechazo violento con volumen en el Footprint.",
+            "3. Re-entrada al Value Area diaria."
         ],
-        "fuente": "Metodología de Usuario / Alpha Flow",
-        "score_alpha": "9.2/10",
+        "fuente": "Order Flow Masterclass",
+        "score_alpha": "8.7/10",
         "external_bias": "ESTUDIO DE BACKTESTING 3 AÑOS EN CURSO"
     },
-    "sentinel_verdict": "ALERTA: Ciclo FOMC (W3). Dominio de TRAMPAS (31.6%). El precio suele barrer liquidez antes de la FED.",
+    "sentinel_verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo BEARISH en 37 puntos. Monitorea flujos finales.",
     "cycle_stats": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,

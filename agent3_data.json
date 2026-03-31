@@ -1,27 +1,27 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-03-26T00:39:38.266281Z",
+  "timestamp": "2026-03-31T00:17:42.671855Z",
   "input_source": "agent1_data.json",
   "raw_inputs": {
-    "VXN": 27.65,
-    "GEX_B": 1.201,
-    "DIX": 44.63
+    "VXN": 33.26,
+    "GEX_B": 2.3,
+    "DIX": null
   },
   "vxn_analysis": {
-    "level": "ELEVATED",
-    "signal": "NEUTRAL",
-    "score": 35,
-    "description": "VXN 27.65 — Volatilidad elevada. Reducir tamaño de posiciones.",
-    "risk": "Probable continuación de movimientos erráticos"
+    "level": "PANIC",
+    "signal": "BEARISH",
+    "score": 20,
+    "description": "VXN 33.26 — Pánico. No operar longs sin cobertura.",
+    "risk": "Alta probabilidad de continuación bajista"
   },
   "gex_analysis": {
-    "level": "POSITIVE",
-    "signal": "NEUTRAL",
-    "score": 60,
-    "description": "GEX +1.20B — GEX levemente positivo. Estabilidad moderada.",
-    "impact": "Rango de trading estrecho esperado."
+    "level": "STRONG_POSITIVE",
+    "signal": "BULLISH",
+    "score": 70,
+    "description": "GEX +2.30B — Dealers comprando en caídas. Mercado amortiguado.",
+    "impact": "Los dealers frenan la volatilidad. Movimientos más suaves."
   },
-  "signal": "NEUTRAL",
-  "score": 44
+  "signal": "BEARISH",
+  "score": 38
 }

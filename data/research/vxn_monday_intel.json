@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "source": "backtest_lunes_sentimiento.py",
+    "period": "2025-04-07 a 2026-03-23",
+    "total_mondays": 47,
+    "instrument": "NQ (QQQ proxy)",
+    "session_window": "09:30-11:30 ET (NY Open)",
+    "last_updated": "2026-03-29",
+    "description": "Relacion entre VXN del viernes anterior y comportamiento del lunes en NQ"
+  },
+  "vxn_zones": {
+    "XFEAR": {
+      "threshold_min": 33,
+      "threshold_max": 999,
+      "label": "Panico Extremo",
+      "mondays_in_sample": 2,
+      "pct_bullish": 100,
+      "pct_bearish": 0,
+      "avg_return_pct": 0.46,
+      "avg_range_pct": 6.32,
+      "nq_range_pts_approx": 238,
+      "interpretation": "Todo el miedo se descargo el viernes. El lunes rebota tecnicamente. RANGO ENORME en ambas direcciones antes de cerrar arriba.",
+      "pattern_ict_esperado": "SWEEP_H_RETURN o SWEEP_L_RETURN con barridas de mayor amplitud (+40-60 pts vs buffer normal de 20)",
+      "buffer_recomendado_pts": 50,
+      "accion": "ESPERAR confirmacion de vuelta al rango. No entrar en el pico del sweep."
+    },
+    "FEAR": {
+      "threshold_min": 25,
+      "threshold_max": 32.99,
+      "label": "Miedo",
+      "mondays_in_sample": 10,
+      "pct_bullish": 60,
+      "pct_bearish": 40,
+      "avg_return_pct": 0.84,
+      "avg_range_pct": 1.70,
+      "nq_range_pts_approx": 85,
+      "interpretation": "Ligero sesgo alcista. 60/40. Hay incertidumbre pero el miedo ya empieza a descontarse.",
+      "pattern_ict_esperado": "SWEEP & RETURN o NEWS_DRIVE",
+      "buffer_recomendado_pts": 25,
+      "accion": "Sesgo leve LONG. Esperar setup ICT claro."
+    },
+    "NEUTRAL": {
+      "threshold_min": 18,
+      "threshold_max": 24.99,
+      "label": "Neutral",
+      "mondays_in_sample": 31,
+      "pct_bullish": 81,
+      "pct_bearish": 19,
+      "avg_return_pct": 0.51,
+      "avg_range_pct": 1.04,
+      "nq_range_pts_approx": 52,
+      "interpretation": "Zona mas favorable. Las instituciones operan con normalidad. Lunes mayoritariamente alcistas.",
+      "pattern_ict_esperado": "ROTATION_POC o EXPANSION_H",
+      "buffer_recomendado_pts": 20,
+      "accion": "Sesgo LONG. Setup ICT estandar. Buffer de 20 pts normal."
+    },
+    "GREED": {
+      "threshold_min": 0,
+      "threshold_max": 17.99,
+      "label": "Codicia / Euforia",
+      "mondays_in_sample": 4,
+      "pct_bullish": 25,
+      "pct_bearish": 75,
+      "avg_return_pct": -0.13,
+      "avg_range_pct": 0.60,
+      "nq_range_pts_approx": 30,
+      "interpretation": "PELIGRO. Mercado sobrecomprado, nadie tiene miedo. Los lunes en GREED son mayoritariamente BEARISH. Mercado vulnerable a correccion.",
+      "pattern_ict_esperado": "SWEEP_H_RETURN o EXPANSION_L",
+      "buffer_recomendado_pts": 20,
+      "accion": "Sesgo SHORT. Cuidado con longs. El mercado puede caer sin catalizador."
+    }
+  },
+  "regla_clave": {
+    "titulo": "Efecto Capitulacion de Viernes",
+    "descripcion": "VXN alto viernes = miedo ya descontado = lunes BULLISH (contraintuitivo). VXN bajo viernes = euforia = lunes BEARISH.",
+    "formula": "VXN_viernes_alto → rebote_lunes. VXN_viernes_bajo → correccion_lunes.",
+    "excepcion": "Con VXN >33 el RANGO es enorme (~238 pts NQ). No es subida directa — hay barridas violentas en ambas direcciones antes del cierre."
+  },
+  "lunes_metodologia": {
+    "patron_dominante": "SWEEP & RETURN",
+    "descripcion": "Post-weekend gap. El precio barre liquidez (Range High o Range Low) y vuelve al rango de Asia+Londres.",
+    "value_profile_inicio": "Viernes 18:00 ET",
+    "value_profile_fin": "Lunes 09:20 ET",
+    "niveles_clave": ["VAH", "POC", "VAL", "Range High", "Range Low"],
+    "nota_vxn_alto": "Con VXN >33: el sweep puede superar el Range High/Low por 40-60 pts antes de volver. Aumentar buffer de confirmacion."
+  }
+}

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monday Brief — NQ Whale Radar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050b14;
+      --card: #0b1624;
+      --border: #1a2d45;
+      --accent: #00e5ff;
+      --green: #00e676;
+      --red: #ff1744;
+      --yellow: #ffea00;
+      --orange: #ff9100;
+      --text: #cfe1f5;
+      --muted: #5a7a9a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* HERO HEADER */
+    .hero {
+      background: linear-gradient(135deg, #020912 0%, #061428 50%, #0a1f38 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(0,229,255,0.06) 0%, transparent 60%);
+    }
+    .hero-top { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .hero-badge {
+      background: rgba(0,229,255,0.12);
+      border: 1px solid rgba(0,229,255,0.3);
+      color: var(--accent);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 20px;
+    }
+    .hero-date { color: var(--muted); font-size: 13px; }
+    .hero h1 {
+      font-size: clamp(24px, 5vw, 42px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub { color: var(--muted); font-size: 14px; margin-top: 8px; }
+
+    /* ALERT STRIP */
+    .alert-strip {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 14px 24px;
+      background: rgba(255,23,68,0.06);
+      border-bottom: 1px solid rgba(255,23,68,0.2);
+    }
+    .alert-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,23,68,0.12);
+      border: 1px solid rgba(255,23,68,0.3);
+      border-radius: 20px; padding: 4px 12px;
+      font-size: 12px; font-weight: 600; color: #ff6090;
+    }
+    .alert-chip.ok {
+      background: rgba(0,230,118,0.1);
+      border-color: rgba(0,230,118,0.3);
+      color: var(--green);
+    }
+    .alert-chip.warn {
+      background: rgba(255,145,0,0.1);
+      border-color: rgba(255,145,0,0.3);
+      color: var(--orange);
+    }
+
+    /* GRID LAYOUT */
+    .grid { display: grid; gap: 16px; padding: 20px 24px; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.3;
+    }
+    .card.green-top::before { background: linear-gradient(90deg, transparent, var(--green), transparent); }
+    .card.red-top::before { background: linear-gradient(90deg, transparent, var(--red), transparent); }
+    .card.orange-top::before { background: linear-gradient(90deg, transparent, var(--orange), transparent); }
+    .card.yellow-top::before { background: linear-gradient(90deg, transparent, var(--yellow), transparent); }
+
+    .card-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    }
+    .card-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+
+    /* STAT BLOCKS */
+    .stat-big { font-size: 36px; font-weight: 900; line-height: 1; }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .accent { color: var(--accent); }
+    .green { color: var(--green); }
+    .red { color: var(--red); }
+    .orange { color: var(--orange); }
+    .yellow { color: var(--yellow); }
+
+    /* PROGRESS BAR */
+    .progress-row { margin: 8px 0; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+    .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+    .fill-green { background: var(--green); }
+    .fill-red { background: var(--red); }
+    .fill-accent { background: var(--accent); }
+    .fill-orange { background: var(--orange); }
+    .fill-yellow { background: var(--yellow); }
+
+    /* TABLE */
+    .mini-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .mini-table th {
+      text-align: left; color: var(--muted);
+      font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+      padding: 6px 8px; border-bottom: 1px solid var(--border);
+    }
+    .mini-table td { padding: 8px 8px; border-bottom: 1px solid rgba(26,45,69,0.5); }
+    .mini-table tr:last-child td { border-bottom: none; }
+    .mini-table tr:hover td { background: rgba(0,229,255,0.03); }
+    .tag {
+      display: inline-flex; align-items: center;
+      padding: 2px 8px; border-radius: 10px;
+      font-size: 11px; font-weight: 600;
+    }
+    .tag-green { background: rgba(0,230,118,0.15); color: var(--green); }
+    .tag-red { background: rgba(255,23,68,0.15); color: var(--red); }
+    .tag-orange { background: rgba(255,145,0,0.15); color: var(--orange); }
+    .tag-accent { background: rgba(0,229,255,0.15); color: var(--accent); }
+    .tag-yellow { background: rgba(255,234,0,0.15); color: var(--yellow); }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); padding: 24px 24px 0;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: var(--border);
+    }
+
+    /* STRATEGY STEPS */
+    .steps { display: flex; flex-direction: column; gap: 8px; }
+    .step {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: rgba(0,229,255,0.04);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 10px; padding: 12px;
+    }
+    .step-num {
+      background: var(--accent);
+      color: #000; font-weight: 900;
+      font-size: 11px; min-width: 22px; height: 22px;
+      border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text { font-size: 13px; line-height: 1.5; }
+    .step-text strong { color: var(--accent); }
+
+    /* MACRO SECTION */
+    .macro-row {
+      display: flex; gap: 12px;
+      background: rgba(255,145,0,0.05);
+      border: 1px solid rgba(255,145,0,0.15);
+      border-radius: 10px; padding: 12px;
+      margin-bottom: 8px;
+    }
+    .macro-icon { font-size: 20px; flex-shrink: 0; }
+    .macro-text h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+    .macro-text p { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+    /* DIVIDER */
+    hr { border: none; border-top: 1px solid var(--border); margin: 0 24px; }
+
+    /* FOOTER */
+    .footer {
+      text-align: center; color: var(--muted);
+      font-size: 11px; padding: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-top">
+    <span class="hero-badge">🐋 Whale Radar</span>
+    <span class="hero-date">Lunes · 30 Marzo 2026 · Semana Q1 Cierre</span>
+  </div>
+  <h1>Monday <span>Briefing</span> NQ</h1>
+  <p class="hero-sub">Análisis pre-mercado · Backtest + Macro + Estrategia operativa</p>
+</div>
+
+<!-- ═══ ALERT STRIP ═══ -->
+<div class="alert-strip">
+  <div class="alert-chip">⚠️ Goldman Sachs: Sentimiento -0.9 (mínimo Aug 2025)</div>
+  <div class="alert-chip">🛢️ Petróleo $110/bbl — Presión stagflacionaria</div>
+  <div class="alert-chip warn">📊 Recesión USA: 30% probabilidad</div>
+  <div class="alert-chip ok">✅ Q1 earnings season — catalizador próximo</div>
+  <div class="alert-chip warn">🏦 Fed: sin recorte hasta Sep 2026</div>
+</div>
+
+
+<!-- ═══ SECCIÓN: KPIs BACKTEST LUNES ═══ -->
+<p class="section-title">📊 Backtest Lunes NQ · 8 sesiones · Ene–Mar 2026</p>
+<div class="grid grid-4">
+  <div class="card green-top">
+    <div class="card-label">Patrón dominante</div>
+    <div class="stat-big accent">62.5%</div>
+    <div class="stat-label">NEWS_DRIVE · Noticia del fin de semana mueve el día</div>
+  </div>
+  <div class="card green-top">
+    <div class="card-label">Sesgo direccional</div>
+    <div class="stat-big green">75%</div>
+    <div class="stat-label">BULLISH · 6 de 8 lunes cerraron al alza</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Rango promedio NY</div>
+    <div class="stat-big accent">313 <span style="font-size:20px">pts</span></div>
+    <div class="stat-label">Max 414 · Min 158 pts</div>
+  </div>
+  <div class="card orange-top">
+    <div class="card-label">Rango Asia previo</div>
+    <div class="stat-big orange">426 <span style="font-size:20px">pts</span></div>
+    <div class="stat-label">Asia sets the tone del lunes</div>
+  </div>
+</div>
+
+
+<!-- ═══ NIVELES DE REACCIÓN ═══ -->
+<p class="section-title">🎯 Hit Rate de Niveles en Días Lunes</p>
+<div class="grid grid-2">
+
+  <div class="card">
+    <div class="card-label">Probabilidad de tocar y reaccionar</div>
+    <div class="card-title">Niveles más fiables los lunes</div>
+
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>📐 EMA 200</span>
+        <span class="accent"><strong>87.5%</strong> hit · 292 pts reacción</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill fill-accent" style="width:87.5%"></div></div>
+    </div>
+
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>🔼 VAH (Value Area High)</span>
+        <span class="green"><strong>75.0%</strong> hit · 287 pts reacción</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill fill-green" style="width:75%"></div></div>
+    </div>
+
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>⚫ POC (Point of Control)</span>
+        <span class="yellow"><strong>37.5%</strong> hit · 374 pts reacción</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:37.5%"></div></div>
+    </div>
+
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>🔽 VAL (Value Area Low)</span>
+        <span class="orange"><strong>37.5%</strong> hit · 370 pts reacción</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:37.5%"></div></div>
+    </div>
+
+    <div style="margin-top:14px; padding:10px; background:rgba(0,229,255,0.06); border-radius:8px; font-size:12px; color:var(--muted);">
+      💡 <strong style="color:var(--accent)">Conclusión:</strong> La EMA200 es el nivel más importante de los lunes con <strong style="color:var(--accent)">87.5%</strong> de probabilidad de tocarla y reaccionar en promedio <strong style="color:var(--accent)">292 pts</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Historial de sesiones lunes</div>
+    <div class="card-title">Últimos 8 lunes — patrón y dirección</div>
+    <table class="mini-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Patrón</th>
+          <th>Dir</th>
+          <th>Range NY</th>
+          <th>EMA Hit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>26 Ene</td>
+          <td><span class="tag tag-accent">EXP_H</span></td>
+          <td><span class="green">▲ BULL</span></td>
+          <td>224</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>02 Feb</td>
+          <td><span class="tag tag-orange">NEWS_D</span></td>
+          <td><span class="green">▲ BULL</span></td>
+          <td>373</td>
+          <td><span class="green">✓</span></td>
+        </tr>
+        <tr>
+          <td>09 Feb</td>
+          <td><span class="tag tag-orange">NEWS_D</span></td>
+          <td><span class="green">▲ BULL</span></td>
+          <td>411</td>
+          <td><span class="green">✓</span></td>
+        </tr>
+        <tr>
+          <td>23 Feb</td>
+          <td><span class="tag tag-orange">NEWS_D</span></td>
+          <td><span class="red">▼ BEAR</span></td>
+          <td>372</td>
+          <td><span class="green">✓</span></td>
+        </tr>
+        <tr>
+          <td>02 Mar</td>
+          <td><span class="tag tag-orange">NEWS_D</span></td>
+          <td><span class="green">▲ BULL</span></td>
+          <td>414</td>
+          <td><span class="green">✓</span></td>
+        </tr>
+        <tr>
+          <td>09 Mar</td>
+          <td><span class="tag tag-orange">NEWS_D</span></td>
+          <td><span class="green">▲ BULL</span></td>
+          <td>337</td>
+          <td><span class="green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══ SECCIÓN MACRO - GS ═══ -->
+<p class="section-title">🏦 Goldman Sachs Weekly Kickstart — Semana 30 Mar 2026</p>
+<div class="grid grid-2">
+
+  <div class="card red-top">
+    <div class="card-label">Contexto macro — Goldman Sachs</div>
+    <div class="card-title">Señales de alerta activas esta semana</div>
+
+    <div class="macro-row">
+      <div class="macro-icon">📉</div>
+      <div class="macro-text">
+        <h4>Sentimiento S&P500: <span class="red">-0.9</span></h4>
+        <p>Mínimo desde Agosto 2025. Históricamente precede rebotes cuando baja de -1</p>
+      </div>
+    </div>
+
+    <div class="macro-row">
+      <div class="macro-icon">🛢️</div>
+      <div class="macro-text">
+        <h4>Petróleo Brent: <span class="red">$110/bbl</span></h4>
+        <p>Conflicto Irán → Estrecho Ormuz. GS sube forecast de $77 → $85 para todo 2026. Presión stagflacionaria</p>
+      </div>
+    </div>
+
+    <div class="macro-row">
+      <div class="macro-icon">⚠️</div>
+      <div class="macro-text">
+        <h4>Recesión USA: <span class="orange">30%</span> probabilidad</h4>
+        <p>Subió desde 25%. Desempleo 4.5%, energía cara, desgaste fiscal</p>
+      </div>
+    </div>
+
+    <div class="macro-row" style="background:rgba(0,230,118,0.05); border-color:rgba(0,230,118,0.15);">
+      <div class="macro-icon">💰</div>
+      <div class="macro-text">
+        <h4 style="color:var(--green)">EPS 2026: +12% estimado</h4>
+        <p>GS sube estimados EPS +3% pese a corrección. Q1 earnings = catalizador clave próximas semanas</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">KPIs macro de la semana</div>
+    <div class="card-title">Dashboard Goldman Sachs — 30 Mar</div>
+
+    <table class="mini-table">
+      <thead>
+        <tr><th>Indicador</th><th>Valor</th><th>Señal</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GS Sentiment S&P</td>
+          <td><strong class="red">-0.9</strong></td>
+          <td><span class="tag tag-red">BEARISH</span></td>
+        </tr>
+        <tr>
+          <td>P/E S&P500 actual</td>
+          <td>19x <span class="muted">(era 21x)</span></td>
+          <td><span class="tag tag-orange">COMPRIMIDO</span></td>
+        </tr>
+        <tr>
+          <td>Fed Funds Rate</td>
+          <td>3.50%–3.75%</td>
+          <td><span class="tag tag-accent">HOLD</span></td>
+        </tr>
+        <tr>
+          <td>Próximo recorte Fed</td>
+          <td>Sep 2026</td>
+          <td><span class="tag tag-orange">LEJANO</span></td>
+        </tr>
+        <tr>
+          <td>Brent Crude</td>
+          <td>~$110/bbl</td>
+          <td><span class="tag tag-red">PELIGRO</span></td>
+        </tr>
+        <tr>
+          <td>EPS growth 2026</td>
+          <td>+12%</td>
+          <td><span class="tag tag-green">POSITIVO</span></td>
+        </tr>
+        <tr>
+          <td>Recesión USA</td>
+          <td>30%</td>
+          <td><span class="tag tag-orange">ELEVADO</span></td>
+        </tr>
+        <tr>
+          <td>Sesgo equities GS</td>
+          <td>Constructivo</td>
+          <td><span class="tag tag-green">BULL LT</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══ IMPACTO CPI ═══ -->
+<p class="section-title">📅 Reglas CPI — Para días de dato macro</p>
+<div class="grid grid-3">
+  <div class="card" style="border-color:rgba(255,23,68,0.3);">
+    <div class="card-label">🔥 CPI HOT</div>
+    <div class="card-title red">Dato &gt; Estimado</div>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">NQ NO baja automáticamente. 67% del tiempo queda NEUTRAL el mismo día. El mercado pre-pricea el miedo. Posible "buy the news".</p>
+    <div style="margin-top:10px; padding:8px; background:rgba(255,23,68,0.08); border-radius:8px; font-size:12px; color:#ff6090;">
+      ⚠️ Esperar confirmación de vela 15min post-dato antes de entrar SHORT
+    </div>
+  </div>
+  <div class="card" style="border-color:rgba(0,230,118,0.3);">
+    <div class="card-label">🧊 CPI COLD</div>
+    <div class="card-title green">Dato &lt; Estimado</div>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">NQ tampoco sube automáticamente. Solo 1 evento en datos → cerró NEUTRAL. Inflación bajando es bueno pero puede estar descontado.</p>
+    <div style="margin-top:10px; padding:8px; background:rgba(0,230,118,0.08); border-radius:8px; font-size:12px; color:var(--green);">
+      ✅ Buscar LONGS desde soportes tras confirmación
+    </div>
+  </div>
+  <div class="card" style="border-color:rgba(255,145,0,0.3);">
+    <div class="card-label">➡️ CPI IN LINE</div>
+    <div class="card-title orange">Dato = Estimado</div>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">El MÁS PELIGROSO. 50/50 dirección pero rango enorme de 231pts. Kills stops sin dirección clara. Los días CPI tienen 1.67× más rango que días normales.</p>
+    <div style="margin-top:10px; padding:8px; background:rgba(255,145,0,0.08); border-radius:8px; font-size:12px; color:var(--orange);">
+      🚨 Reducir tamaño, esperar 30min mínimo
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ ESTRATEGIA OPERATIVA ═══ -->
+<p class="section-title">⚡ Estrategia Operativa — Lunes 30 Mar 2026</p>
+<div class="grid grid-2">
+
+  <div class="card green-top">
+    <div class="card-label">Checklist pre-apertura</div>
+    <div class="card-title">Pasos antes de las 09:30 ET</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">Ver <strong>Asia session range</strong>. Si Asia hizo más de 400pts → esperar porque el lunes arranca volátil</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">Marcar la <strong>EMA200 de 1h</strong> en el chart. Es el nivel con 87.5% hit rate los lunes. Zona de entrada potencial</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">Marcar <strong>VAH del perfil semanal anterior</strong>. Hit rate 75% — si el precio va ahí, reacciona grande</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">Revisar si hay <strong>noticias del fin de semana</strong>. 62.5% de lunes son NEWS_DRIVE → la apertura sigue el gap</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-text">Sesgo macro GS = <strong>constructivo pero cauteloso</strong>. Entorno stagflacionario = no perseguir breakouts sin soporte</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Reglas de entrada lunes</div>
+    <div class="card-title">Decision tree NYC open</div>
+
+    <table class="mini-table" style="margin-top:4px;">
+      <thead>
+        <tr><th>Condición</th><th>Acción</th><th>Target</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Open &gt; EMA200 + Asia bull</td>
+          <td><span class="tag tag-green">LONG</span></td>
+          <td>VAH + 100-200 pts</td>
+        </tr>
+        <tr>
+          <td>Open &lt; EMA200 + Asia bear</td>
+          <td><span class="tag tag-red">SHORT</span></td>
+          <td>VAL − 150 pts</td>
+        </tr>
+        <tr>
+          <td>Gap abierto &gt; 200pts</td>
+          <td><span class="tag tag-orange">ESPERAR</span></td>
+          <td>Fill gap posible</td>
+        </tr>
+        <tr>
+          <td>Asia range &gt; 500pts</td>
+          <td><span class="tag tag-orange">REDUCIR</span></td>
+          <td>½ tamaño normal</td>
+        </tr>
+        <tr>
+          <td>Precio en EMA200</td>
+          <td><span class="tag tag-accent">MÁXIMO</span></td>
+          <td>R/R &gt; 3:1</td>
+        </tr>
+        <tr>
+          <td>Sin setup claro</td>
+          <td><span class="tag tag-accent">FLAT</span></td>
+          <td>Cash is position</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:14px; padding:12px; background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.15); border-radius:10px;">
+      <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">⚡ REGLA MACRO GS ESTA SEMANA</div>
+      <div style="font-size:13px;">Sentimiento en <strong class="red">-0.9</strong> → históricamente precede rebotes. Pero GS pide <em>mejora de fundamentales</em> para confirmar. Operar con <strong class="orange">stops más amplios</strong> esta semana.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ RESUMEN FINAL ═══ -->
+<p class="section-title">🎯 TL;DR — Lo que necesitas saber el lunes 30 Mar</p>
+<div class="grid" style="grid-template-columns: 1fr;">
+  <div class="card" style="background: linear-gradient(135deg, #0b1624 0%, #0d1e35 100%);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+
+      <div>
+        <div class="card-label">Sesgo del día</div>
+        <div style="font-size:22px; font-weight:900; color:var(--green);">📈 BULLISH</div>
+        <div style="font-size:12px; color:var(--muted);">75% de lunes han cerrado al alza en los últimos 3 meses</div>
+      </div>
+
+      <div>
+        <div class="card-label">Nivel #1 a vigilar</div>
+        <div style="font-size:22px; font-weight:900; color:var(--accent);">EMA200</div>
+        <div style="font-size:12px; color:var(--muted);">87.5% de hit rate · reacción promedio 292 pts</div>
+      </div>
+
+      <div>
+        <div class="card-label">Rango esperado</div>
+        <div style="font-size:22px; font-weight:900; color:var(--yellow);">313 pts</div>
+        <div style="font-size:12px; color:var(--muted);">Promedio histórico · Planifica stops acorde</div>
+      </div>
+
+      <div>
+        <div class="card-label">Macro dominante</div>
+        <div style="font-size:22px; font-weight:900; color:var(--orange);">GS ⚠️</div>
+        <div style="font-size:12px; color:var(--muted);">Sentimiento negativo + petróleo = volatilidad elevada</div>
+      </div>
+
+      <div>
+        <div class="card-label">Patrón más probable</div>
+        <div style="font-size:22px; font-weight:900; color:var(--accent);">NEWS_DRIVE</div>
+        <div style="font-size:12px; color:var(--muted);">62.5% → el fin de semana dicta el movimiento</div>
+      </div>
+
+      <div>
+        <div class="card-label">Regla de oro</div>
+        <div style="font-size:16px; font-weight:700; color:#cfe1f5; margin-top:4px;">No perseguir el open</div>
+        <div style="font-size:12px; color:var(--muted);">Esperar retroceso a EMA200 o VAH para entrada de calidad</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  🐋 Whale Radar NQ · Monday Briefing · 30 Mar 2026 · Datos: backtest propio + Goldman Sachs Weekly Kickstart<br>
+  <span style="color:rgba(90,122,154,0.5);">Este análisis es educativo. No es consejo financiero.</span>
+</div>
+
+</body>
+</html>

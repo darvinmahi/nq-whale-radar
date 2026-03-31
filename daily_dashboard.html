@@ -946,8 +946,12 @@ function hideLoading() {
 // ═══════════════════════════════════════════════════════════════════
 function renderStats(d, day) {
   const cfg = DAY_CONFIG[day];
-  const total = d.total_mondays || d.total_sessions || 0;
   const dirs  = d.directions || {BULLISH:0,BEARISH:0,NEUTRAL:0};
+  const total  = d.total_sessions
+    || d['total_'+day+'s']
+    || d.total_mondays
+    || ((dirs.BULLISH||0) + (dirs.BEARISH||0) + (dirs.NEUTRAL||0))
+    || 0;
   const bullPct = total ? (dirs.BULLISH||0)/total*100 : 0;
   const bearPct = total ? (dirs.BEARISH||0)/total*100 : 0;
   const neutPct = total ? (dirs.NEUTRAL||0)/total*100 : 0;

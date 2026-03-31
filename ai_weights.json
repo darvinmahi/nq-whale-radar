@@ -1,12 +1,12 @@
 {
-    "layer1": 0.0483,
-    "layer2": 0.5588,
-    "layer3": 0.0483,
-    "layer4": 0.2479,
-    "layer5": 0.0483,
-    "layer6": 0.0483,
-    "status": "Adaptando — WR 50.8% [BACKTEST (estimado)] (bajo target 55.0%)",
-    "last_learning": "2026-03-26T00:39:41.971650+00:00",
+    "layer1": 0.0642,
+    "layer2": 0.0493,
+    "layer3": 0.4798,
+    "layer4": 0.0493,
+    "layer5": 0.3082,
+    "layer6": 0.0493,
+    "status": "Adaptando — WR 50.5% [REAL (outcomes)] (bajo target 55.0%)",
+    "last_learning": "2026-03-31T00:17:46.835144+00:00",
     "version": "4.0",
-    "wr_source": "BACKTEST (estimado)"
+    "wr_source": "REAL (outcomes)"
 }

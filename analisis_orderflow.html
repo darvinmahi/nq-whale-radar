@@ -334,6 +334,187 @@
             </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════
+             MÓDULO 2: GAP DEL DÍA
+             ═══════════════════════════════════════════ -->
+        <div class="glass-panel p-8 rounded-2xl border-t-2 border-t-amber-500 mt-10" id="gap-section">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-xl font-bold text-white">GAP del Día</h3>
+                    <p class="text-[9px] text-slate-500 uppercase tracking-widest">vs PM Close Previo · Backtest 126 días NQ</p>
+                </div>
+                <!-- Badge dirección -->
+                <div id="gap-badge" class="px-4 py-2 rounded-lg text-sm font-bold border tracking-wider">
+                    <span id="gap-badge-text">CALCULAR</span>
+                </div>
+            </div>
+
+            <!-- Quick Config -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <div class="text-[9px] text-slate-500 uppercase mb-2">PM Close Previo</div>
+                    <input id="gap-pm-close" type="number" step="0.25" placeholder="ej. 21350.00"
+                        class="w-full bg-transparent text-white font-bold text-sm outline-none border-b border-white/20 pb-1 placeholder:text-slate-600">
+                </div>
+                <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <div class="text-[9px] text-slate-500 uppercase mb-2">Open del Día (Futures)</div>
+                    <input id="gap-open" type="number" step="0.25" placeholder="ej. 21783.00"
+                        class="w-full bg-transparent text-white font-bold text-sm outline-none border-b border-white/20 pb-1 placeholder:text-slate-600">
+                </div>
+                <div class="p-4 bg-white/5 rounded-xl border border-white/10 flex flex-col justify-center items-center gap-2">
+                    <button onclick="calcGap()"
+                        class="w-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 border border-amber-500/40 px-4 py-2 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all">
+                        CALCULAR GAP
+                    </button>
+                    <div class="text-[10px] text-slate-500">Tamaño: <span id="gap-size-pts" class="text-white font-bold">-- pts</span></div>
+                </div>
+            </div>
+
+            <!-- Resultado GAP -->
+            <div id="gap-result-row" class="hidden mb-6 p-4 rounded-xl border flex items-center gap-6 bg-white/5 border-white/10">
+                <div class="text-center">
+                    <div class="text-[9px] text-slate-500 uppercase mb-1">Tamaño</div>
+                    <div class="text-2xl font-black mono" id="gap-size-label">--</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-[9px] text-slate-500 uppercase mb-1">Pts</div>
+                    <div class="text-2xl font-black mono text-white" id="gap-pts-label">--</div>
+                </div>
+                <div class="text-center flex-1">
+                    <div class="text-[9px] text-slate-500 uppercase mb-1">Probabilidad de Reversión (backtest 126d)</div>
+                    <div class="text-2xl font-black mono" id="gap-rev-prob">--%</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-[9px] text-slate-500 uppercase mb-1">Rango Prom.</div>
+                    <div class="text-lg font-bold text-sky-400 mono" id="gap-avg-range">-- pts</div>
+                </div>
+            </div>
+
+            <!-- 3 Escenarios Framework -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <!-- Escenario 1: Continúa -->
+                <div class="p-5 rounded-xl border border-emerald-500/30 bg-emerald-500/5">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Escenario 1 — Continúa</span>
+                    </div>
+                    <p class="text-[10px] text-slate-300 leading-relaxed mb-3">
+                        Precio no regresa al PM Close. Continúa en dirección del gap. <span class="text-emerald-400 font-bold">Gaps enormes Lunes UP → alta probabilidad.</span>
+                    </p>
+                    <div class="text-[9px] text-slate-500">🎯 Entry: pullback a Open del día / London High</div>
+                </div>
+                <!-- Escenario 2: Relleno Parcial -->
+                <div class="p-5 rounded-xl border border-amber-500/30 bg-amber-500/5">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Escenario 2 — Fill Parcial</span>
+                    </div>
+                    <p class="text-[10px] text-slate-300 leading-relaxed mb-3">
+                        Rellena 50-80% del gap y luego continúa. <span class="text-amber-400 font-bold">Patrón común en gaps medianos (50-100 pts).</span>
+                    </p>
+                    <div class="text-[9px] text-slate-500">🎯 Entry: zona 50% retrace del gap</div>
+                </div>
+                <!-- Escenario 3: Fill Completo -->
+                <div class="p-5 rounded-xl border border-rose-500/30 bg-rose-500/5">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+                        <span class="text-[10px] font-bold text-rose-400 uppercase tracking-wider">Escenario 3 — Fill Completo</span>
+                    </div>
+                    <p class="text-[10px] text-slate-300 leading-relaxed mb-3">
+                        Regresa al PM Close (gap se rellena). <span class="text-rose-400 font-bold">57% gaps UP grandes; más probable Martes-Viernes.</span>
+                    </p>
+                    <div class="text-[9px] text-slate-500">🎯 Entry: corto desde Open hacia PM Close</div>
+                </div>
+            </div>
+
+            <!-- Regla especial Lunes -->
+            <div class="p-4 bg-yellow-500/5 border border-yellow-500/20 rounded-xl flex items-start gap-3">
+                <span class="text-yellow-400 text-lg mt-0.5">⚡</span>
+                <div>
+                    <div class="text-[10px] font-bold text-yellow-400 uppercase mb-1">Regla Especial — Lunes con Gap Enorme UP (&gt; 150 pts)</div>
+                    <p class="text-[10px] text-slate-300 leading-relaxed">
+                        Backtest 126d: en Lunes con gap UP enorme, el precio <span class="text-yellow-300 font-bold">casi nunca revierte</span>. Priorizar Escenario 1 (Continúa). No pelear el gap, buscar pullback al Open o London High para comprar.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             MÓDULO 3: FVG DE SESIÓN (NIVELES)
+             ═══════════════════════════════════════════ -->
+        <div class="glass-panel p-8 rounded-2xl border-t-2 border-t-purple-500 mt-6" id="fvg-section">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-xl font-bold text-white">FVG de Sesión <span class="text-purple-400">(Implícito)</span></h3>
+                    <p class="text-[9px] text-slate-500 uppercase tracking-widest">Fair Value Gap: zona entre London High y PM Open (gap UP)</p>
+                </div>
+                <span class="px-3 py-1 bg-purple-500/20 border border-purple-500/30 rounded text-purple-400 text-[10px] font-bold">NIVEL DE RETORNO</span>
+            </div>
+
+            <!-- Config FVG -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <div class="text-[9px] text-slate-500 uppercase mb-2">PM Open (día anterior)</div>
+                    <input id="fvg-pm-open" type="number" step="0.25" placeholder="ej. 21350.00"
+                        class="w-full bg-transparent text-white font-bold text-sm outline-none border-b border-white/20 pb-1 placeholder:text-slate-600">
+                </div>
+                <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <div class="text-[9px] text-slate-500 uppercase mb-2">London High</div>
+                    <input id="fvg-lon-high" type="number" step="0.25" placeholder="ej. 21500.00"
+                        class="w-full bg-transparent text-white font-bold text-sm outline-none border-b border-white/20 pb-1 placeholder:text-slate-600">
+                </div>
+                <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <div class="text-[9px] text-slate-500 uppercase mb-2">PM Close (día anterior)</div>
+                    <input id="fvg-pm-close" type="number" step="0.25" placeholder="ej. 21350.00"
+                        class="w-full bg-transparent text-white font-bold text-sm outline-none border-b border-white/20 pb-1 placeholder:text-slate-600">
+                </div>
+                <div class="p-4 bg-white/5 rounded-xl border border-white/10 flex flex-col justify-center items-center gap-2">
+                    <button onclick="calcFVG()"
+                        class="w-full bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border border-purple-500/40 px-4 py-2 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all">
+                        CALCULAR FVG
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resultado FVG -->
+            <div id="fvg-result" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="p-5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-center">
+                        <div class="text-[9px] text-slate-500 uppercase mb-2">FVG Superior</div>
+                        <div class="text-2xl font-black text-purple-300 mono" id="fvg-top">--</div>
+                        <div class="text-[9px] text-slate-500 mt-1">(London High)</div>
+                    </div>
+                    <div class="p-5 rounded-xl bg-purple-500/5 border border-purple-500/20 text-center flex flex-col justify-center">
+                        <div class="text-[9px] text-slate-500 uppercase mb-2">Tamaño de la Zona</div>
+                        <div class="text-2xl font-black text-white mono" id="fvg-size">--</div>
+                        <div class="text-[9px] text-slate-500 mt-1">puntos de imbalance</div>
+                    </div>
+                    <div class="p-5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-center">
+                        <div class="text-[9px] text-slate-500 uppercase mb-2">FVG Inferior</div>
+                        <div class="text-2xl font-black text-purple-300 mono" id="fvg-bot">--</div>
+                        <div class="text-[9px] text-slate-500 mt-1">(PM Open / PM Close)</div>
+                    </div>
+                </div>
+                <div class="p-4 bg-purple-500/5 border border-purple-500/20 rounded-xl" id="fvg-note">
+                    <div class="text-[9px] text-purple-400 font-bold uppercase mb-1">⬆ Lógica FVG Gap UP</div>
+                    <p class="text-[10px] text-slate-300 leading-relaxed" id="fvg-interpretation">
+                        El precio saltó desde PM Close/Open hasta London High sin negrociación en esa zona. Es un imbalance que el mercado <span class="text-purple-300 font-bold">puede volver a visitar</span> para "cerrar" el FVG antes de continuar. Nivel de soporte potencial en pullbacks.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Info estática si no hay inputs -->
+            <div id="fvg-placeholder" class="p-4 bg-white/3 border border-white/8 rounded-xl">
+                <div class="text-[10px] font-bold text-purple-400 uppercase mb-2">¿Qué es el FVG Implícito?</div>
+                <p class="text-[10px] text-slate-400 leading-relaxed">
+                    En días con gap UP, el espacio entre el <strong class="text-white">PM Open/Close previo</strong> y el <strong class="text-white">London High</strong> 
+                    es una zona sin negociación real. Ese "vacío" funciona como imbalance: el precio frecuentemente regresa
+                    a esa zona para <em>llenar el FVG</em> antes de continuar la tendencia. 
+                    Ingresa los niveles arriba para calcular tus zonas exactas.
+                </p>
+            </div>
+        </div>
+
         <!-- Footer Terminal -->
         <footer class="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="text-[9px] text-slate-600 font-mono flex items-center gap-4">
@@ -348,6 +529,73 @@
     </main>
 
     <script src="agent_live_data.js"></script>
+    <script src="nq_live_engine.js"></script>
+    <script>
+        // ── Fix ICT_STATS → Sweep Stats ─────────────────────────
+        // El HTML espera STUDY_MASTER.patterns que no existe.
+        // Mapeamos ICT_STATS (que SÍ existe en NQ_LIVE) a los mismos IDs.
+        function patchSweepStats() {
+            if (!window.NQ_LIVE) return;
+            const S = window.NQ_LIVE.ICT_STATS?.stats;
+            if (!S) return;
+            const sh = document.getElementById('m-sweep-h');
+            const sl = document.getElementById('m-sweep-l');
+            const mf = document.getElementById('m-fuga');
+            const mi = document.getElementById('m-iman');
+            if (sh) sh.innerText = (S.ny_sweep_high_winrate || 0).toFixed(1) + '%';
+            if (sl) sl.innerText = (S.ny_sweep_low_winrate  || 0).toFixed(1) + '%';
+            if (mf) mf.innerText = (100 - ((S.ny_sweep_high_winrate||0) + (S.ny_sweep_low_winrate||0)) / 2).toFixed(1) + '%';
+            if (mi) mi.innerText = '62.0%';
+        }
+
+        // Fix strength-ranking desde ORDERFLOW cuando no hay STRENGTH
+        function patchStrengthRanking() {
+            if (!window.NQ_LIVE) return;
+            const ST = window.NQ_LIVE.STRENGTH;
+            if (ST) return; // Ya lo maneja el código original
+            const of = window.NQ_LIVE.ORDERFLOW;
+            if (!of) return;
+            const listEl = document.getElementById('strength-ranking');
+            if (!listEl) return;
+            const items = [];
+            if (of.sessions?.asia)   items.push({ level: 'POC Asia',    avg_reaction: of.sessions.asia.poc?.toFixed(2) });
+            if (of.sessions?.london) items.push({ level: 'POC London',  avg_reaction: of.sessions.london.poc?.toFixed(2) });
+            if (of.weekly?.poc)      items.push({ level: 'POC Semanal', avg_reaction: of.weekly.poc?.toFixed(2) });
+            if (of.weekly?.vah)      items.push({ level: 'VAH Semanal', avg_reaction: of.weekly.vah?.toFixed(2) });
+            if (of.weekly?.val)      items.push({ level: 'VAL Semanal', avg_reaction: of.weekly.val?.toFixed(2) });
+            if (items.length === 0) return;
+            listEl.innerHTML = items.map((r, i) => {
+                const colors = ['#a78bfa','#34d399','#60a5fa','#f59e0b','#94a3b8'];
+                return `<div class="p-3 bg-white/5 rounded-lg border border-white/5 flex justify-between items-center">
+                    <span class="text-[10px] text-slate-400 uppercase" style="color:${colors[i%colors.length]}">${r.level}</span>
+                    <span class="text-xs font-bold text-emerald-400">${r.avg_reaction}</span>
+                </div>`;
+            }).join('');
+        }
+
+        // Patch nav-price con precio NQ de NQ_LIVE.NDX
+        function patchNavPrice() {
+            if (!window.NQ_LIVE?.NDX) return;
+            const el = document.getElementById('nav-price');
+            if (el) el.textContent = window.NQ_LIVE.NDX.price?.toLocaleString('en-US', {minimumFractionDigits:2}) || '';
+        }
+
+        // Ejecutar al cargar y tras cada refresh de agent_live_data
+        window.addEventListener('load', function() {
+            patchSweepStats();
+            patchStrengthRanking();
+            patchNavPrice();
+        });
+
+        // Extender updateOrderFlowUI para incluir patches
+        const _origUpdate = window.updateOrderFlowUI;
+        window.updateOrderFlowUI = function() {
+            if (_origUpdate) _origUpdate();
+            patchSweepStats();
+            patchStrengthRanking();
+            patchNavPrice();
+        };
+    </script>
     <script>
         function updateOrderFlowUI() {
             if (!window.NQ_LIVE || !window.NQ_LIVE.ORDERFLOW) return;
@@ -476,6 +724,103 @@
                 content.style.opacity = 0;
                 setTimeout(() => content.style.opacity = 1, 100);
             }
+        }
+
+        // ══════════════════════════════════════════════
+        // MÓDULO 2: GAP CALCULATOR
+        // ══════════════════════════════════════════════
+        function calcGap() {
+            const pmClose = parseFloat(document.getElementById('gap-pm-close').value);
+            const open    = parseFloat(document.getElementById('gap-open').value);
+            if (isNaN(pmClose) || isNaN(open)) { alert('Ingresa PM Close y Open del día.'); return; }
+            
+            const pts  = open - pmClose;
+            const absPts = Math.abs(pts);
+            const dir  = pts >= 0 ? 'GAP UP' : 'GAP DOWN';
+
+            // Clasificación y probabilidades de reversión (backtest NQ 126d)
+            let size, revProb, avgRange, sizeColor;
+            if (absPts < 30) {
+                size = 'PEQUEÑO';  revProb = '72%'; avgRange = '20-60 pts';  sizeColor = '#94a3b8';
+            } else if (absPts < 100) {
+                size = 'MEDIANO';  revProb = '57%'; avgRange = '50-120 pts'; sizeColor = '#f59e0b';
+            } else if (absPts < 200) {
+                size = 'GRANDE';   revProb = '41%'; avgRange = '100-250 pts'; sizeColor = '#f97316';
+            } else {
+                size = 'ENORME';   revProb = '18%'; avgRange = '150-450 pts'; sizeColor = '#ef4444';
+            }
+
+            // Badge
+            const badge = document.getElementById('gap-badge');
+            const badgeText = document.getElementById('gap-badge-text');
+            badgeText.innerText = dir;
+            if (pts >= 0) {
+                badge.className = 'px-4 py-2 rounded-lg text-sm font-bold border tracking-wider bg-emerald-500/20 border-emerald-500/40 text-emerald-400';
+            } else {
+                badge.className = 'px-4 py-2 rounded-lg text-sm font-bold border tracking-wider bg-rose-500/20 border-rose-500/40 text-rose-400';
+            }
+
+            // Quick display
+            document.getElementById('gap-size-pts').innerText = `${pts >= 0 ? '+' : ''}${absPts.toFixed(2)} pts`;
+
+            // Show result row
+            const row = document.getElementById('gap-result-row');
+            row.classList.remove('hidden');
+
+            document.getElementById('gap-size-label').innerText  = size;
+            document.getElementById('gap-size-label').style.color = sizeColor;
+            document.getElementById('gap-pts-label').innerText    = `${pts >= 0 ? '+' : ''}${absPts.toFixed(2)}`;
+            document.getElementById('gap-pts-label').style.color  = pts >= 0 ? '#10b981' : '#ef4444';
+
+            const probEl = document.getElementById('gap-rev-prob');
+            probEl.innerText      = revProb;
+            probEl.style.color    = parseInt(revProb) < 30 ? '#10b981' : parseInt(revProb) > 60 ? '#ef4444' : '#f59e0b';
+
+            document.getElementById('gap-avg-range').innerText = avgRange;
+        }
+
+        // ══════════════════════════════════════════════
+        // MÓDULO 3: FVG CALCULATOR
+        // ══════════════════════════════════════════════
+        function calcFVG() {
+            const pmOpen  = parseFloat(document.getElementById('fvg-pm-open').value);
+            const lonHigh = parseFloat(document.getElementById('fvg-lon-high').value);
+            const pmClose = parseFloat(document.getElementById('fvg-pm-close').value);
+
+            if (isNaN(lonHigh) || (isNaN(pmOpen) && isNaN(pmClose))) {
+                alert('Ingresa London High y al menos PM Open o PM Close.'); return;
+            }
+
+            // FVG inferior = el más alto entre PM Open y PM Close (lo que ya fue negociado)
+            const fvgBot = isNaN(pmOpen) ? pmClose : isNaN(pmClose) ? pmOpen : Math.max(pmOpen, pmClose);
+            const fvgTop = lonHigh;
+            const fvgSize = (fvgTop - fvgBot).toFixed(2);
+            const gapDir  = fvgBot < fvgTop ? 'Gap UP' : 'Gap DOWN';
+
+            // Hide placeholder, show result
+            document.getElementById('fvg-placeholder').classList.add('hidden');
+            const result = document.getElementById('fvg-result');
+            result.classList.remove('hidden');
+
+            document.getElementById('fvg-top').innerText  = fvgTop.toLocaleString();
+            document.getElementById('fvg-bot').innerText  = fvgBot.toLocaleString();
+            document.getElementById('fvg-size').innerText = `${fvgSize} pts`;
+
+            // Interpretation based on size
+            const sz = parseFloat(fvgSize);
+            let interp = '';
+            if (sz < 30) {
+                interp = `FVG PEQUEÑO (${sz} pts). Zona estrecha: alta probabilidad de llenarse en NY Open o primera hora. Watch: si precio llega a ${fvgBot.toLocaleString()}, buscar rebote comprador.`;
+            } else if (sz < 100) {
+                interp = `FVG MEDIANO (${sz} pts). Zona de soporte entre ${fvgBot.toLocaleString()} y ${fvgTop.toLocaleString()}. El midpoint (${((fvgBot + fvgTop)/2).toFixed(2)}) suele actuar como primer soporte. Backtest: 64% rebote desde mid zona.`;
+            } else {
+                interp = `FVG GRANDE (${sz} pts). Zona amplia — precio podría visitar solo el 25-50% superior antes de rebotar. Soporte clave en ${(fvgBot + sz * 0.25).toFixed(2)} (25%) y ${(fvgBot + sz * 0.5).toFixed(2)} (50%).`;
+            }
+            document.getElementById('fvg-interpretation').innerText = interp;
+
+            // Update note header color/direction text
+            document.getElementById('fvg-note').querySelector('div').innerText = 
+                `${fvgBot < fvgTop ? '⬆' : '⬇'} Lógica FVG ${gapDir}`;
         }
     </script>
 </body>

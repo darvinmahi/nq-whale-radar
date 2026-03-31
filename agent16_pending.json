@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-03-26T00:39:41.976549+00:00",
-  "prediction_price": 24394.75,
+  "timestamp": "2026-03-31T00:17:46.838142+00:00",
+  "prediction_price": 23052.5,
   "prediction_bias": "NEUTRAL",
-  "prediction_score": 50,
+  "prediction_score": 51,
   "agent_signals": {
     "COT": {
       "dir": -1,
       "raw": "NEUTRAL-BAJISTA"
     },
     "VOLATILITY": {
-      "dir": 0,
-      "raw": "NEUTRAL"
+      "dir": -1,
+      "raw": "BEARISH"
     },
     "SMC": {
       "dir": 1,
@@ -21,11 +21,11 @@
       "raw": "DISTRIBUCIÓN / NEUTRAL — ESPERAR CLARIDAD ⏳"
     },
     "SENTIMENT": {
-      "dir": 0,
+      "dir": -1,
       "raw": "ESTABLE"
     },
     "SILVER_BULLET": {
-      "dir": 0,
+      "dir": -1,
       "raw": "INACTIVO"
     },
     "ORDERFLOW": {

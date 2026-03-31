@@ -1,0 +1,245 @@
+{
+    "title": "Backtest CPI Impact en NQ",
+    "total_cpi_events": 21,
+    "avg_cpi_range_pts": 215.8,
+    "avg_normal_range_pts": 129.6,
+    "volatility_multiplier": 1.67,
+    "by_category": {
+        "HOT": {
+            "count": 3,
+            "avg_range": 80.5,
+            "avg_change_day": 20.4,
+            "avg_change_5d": 44.7,
+            "bull_pct": 33.3,
+            "bear_pct": 0.0
+        },
+        "COLD": {
+            "count": 1,
+            "avg_range": 356.5,
+            "avg_change_day": -0.5,
+            "avg_change_5d": 65.5,
+            "bull_pct": 0.0,
+            "bear_pct": 0.0
+        },
+        "IN LINE": {
+            "count": 17,
+            "avg_range": 231.4,
+            "avg_change_day": -32.2,
+            "avg_change_5d": -23.5,
+            "bull_pct": 47.1,
+            "bear_pct": 47.1
+        }
+    },
+    "all_events": [
+        {
+            "date": "2024-02-13",
+            "category": "HOT",
+            "delta_vs_est": 0.2,
+            "yoy": 3.1,
+            "range_pts": 31.2,
+            "change_pts": -7.8,
+            "direction": "NEUTRAL",
+            "change_5d_pts": -124.2
+        },
+        {
+            "date": "2024-03-12",
+            "category": "IN LINE",
+            "delta_vs_est": 0.0,
+            "yoy": 3.2,
+            "range_pts": 99.0,
+            "change_pts": 72.8,
+            "direction": "BULLISH",
+            "change_5d_pts": null
+        },
+        {
+            "date": "2024-05-15",
+            "category": "IN LINE",
+            "delta_vs_est": -0.1,
+            "yoy": 3.4,
+            "range_pts": 74.2,
+            "change_pts": 65.8,
+            "direction": "BULLISH",
+            "change_5d_pts": 218.5
+        },
+        {
+            "date": "2024-06-12",
+            "category": "IN LINE",
+            "delta_vs_est": -0.1,
+            "yoy": 3.3,
+            "range_pts": 156.0,
+            "change_pts": 88.2,
+            "direction": "BULLISH",
+            "change_5d_pts": 445.8
+        },
+        {
+            "date": "2024-09-11",
+            "category": "IN LINE",
+            "delta_vs_est": 0.0,
+            "yoy": 2.5,
+            "range_pts": 271.8,
+            "change_pts": 235.0,
+            "direction": "BULLISH",
+            "change_5d_pts": 572.5
+        },
+        {
+            "date": "2024-12-11",
+            "category": "IN LINE",
+            "delta_vs_est": 0.0,
+            "yoy": 2.7,
+            "range_pts": 289.2,
+            "change_pts": -275.8,
+            "direction": "BEARISH",
+            "change_5d_pts": -531.2
+        },
+        {
+            "date": "2025-01-15",
+            "category": "IN LINE",
+            "delta_vs_est": 0.0,
+            "yoy": 2.9,
+            "range_pts": 71.5,
+            "change_pts": -10.5,
+            "direction": "NEUTRAL",
+            "change_5d_pts": 535.0
+        },
+        {
+            "date": "2025-02-12",
+            "category": "HOT",
+            "delta_vs_est": 0.2,
+            "yoy": 3.0,
+            "range_pts": 118.2,
+            "change_pts": 81.0,
+            "direction": "BULLISH",
+            "change_5d_pts": 358.2
+        },
+        {
+            "date": "2025-03-12",
+            "category": "IN LINE",
+            "delta_vs_est": -0.1,
+            "yoy": 2.8,
+            "range_pts": 371.2,
+            "change_pts": -174.0,
+            "direction": "BEARISH",
+            "change_5d_pts": 170.5
+        },
+        {
+            "date": "2025-04-10",
+            "category": "COLD",
+            "delta_vs_est": -0.2,
+            "yoy": 2.4,
+            "range_pts": 356.5,
+            "change_pts": -0.5,
+            "direction": "NEUTRAL",
+            "change_5d_pts": 65.5
+        },
+        {
+            "date": "2025-05-13",
+            "category": "IN LINE",
+            "delta_vs_est": -0.1,
+            "yoy": 2.3,
+            "range_pts": 91.0,
+            "change_pts": -39.0,
+            "direction": "BEARISH",
+            "change_5d_pts": 101.8
+        },
+        {
+            "date": "2025-06-11",
+            "category": "IN LINE",
+            "delta_vs_est": 0.0,
+            "yoy": 2.7,
+            "range_pts": 398.0,
+            "change_pts": -146.2,
+            "direction": "BEARISH",
+            "change_5d_pts": -262.8
+        },
+        {
+            "date": "2025-07-15",
+            "category": "IN LINE",
+            "delta_vs_est": 0.0,
+            "yoy": 2.7,
+            "range_pts": 188.0,
+            "change_pts": -116.5,
+            "direction": "BEARISH",
+            "change_5d_pts": 131.5
+        },
+        {
+            "date": "2025-08-12",
+            "category": "IN LINE",
+            "delta_vs_est": -0.1,
+            "yoy": 2.9,
+            "range_pts": 71.0,
+            "change_pts": 56.0,
+            "direction": "BULLISH",
+            "change_5d_pts": -482.5
+        },
+        {
+            "date": "2025-09-10",
+            "category": "IN LINE",
+            "delta_vs_est": 0.0,
+            "yoy": 2.4,
+            "range_pts": 343.0,
+            "change_pts": -232.8,
+            "direction": "BEARISH",
+            "change_5d_pts": 210.8
+        },
+        {
+            "date": "2025-10-15",
+            "category": "IN LINE",
+            "delta_vs_est": 0.0,
+            "yoy": 2.6,
+            "range_pts": 233.8,
+            "change_pts": 126.5,
+            "direction": "BULLISH",
+            "change_5d_pts": 171.8
+        },
+        {
+            "date": "2025-11-12",
+            "category": "IN LINE",
+            "delta_vs_est": 0.1,
+            "yoy": 2.7,
+            "range_pts": 191.5,
+            "change_pts": 108.0,
+            "direction": "BULLISH",
+            "change_5d_pts": -431.5
+        },
+        {
+            "date": "2025-12-10",
+            "category": "IN LINE",
+            "delta_vs_est": 0.1,
+            "yoy": 2.9,
+            "range_pts": 482.2,
+            "change_pts": -267.5,
+            "direction": "BEARISH",
+            "change_5d_pts": -1181.5
+        },
+        {
+            "date": "2026-01-15",
+            "category": "HOT",
+            "delta_vs_est": 0.2,
+            "yoy": 3.0,
+            "range_pts": 92.0,
+            "change_pts": -12.0,
+            "direction": "NEUTRAL",
+            "change_5d_pts": -99.8
+        },
+        {
+            "date": "2026-02-12",
+            "category": "IN LINE",
+            "delta_vs_est": -0.1,
+            "yoy": 2.8,
+            "range_pts": 205.8,
+            "change_pts": -127.8,
+            "direction": "BEARISH",
+            "change_5d_pts": -24.0
+        },
+        {
+            "date": "2026-03-12",
+            "category": "IN LINE",
+            "delta_vs_est": -0.1,
+            "yoy": 2.8,
+            "range_pts": 395.8,
+            "change_pts": 90.0,
+            "direction": "BULLISH",
+            "change_5d_pts": -20.2
+        }
+    ]
+}

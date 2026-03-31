@@ -1,0 +1,379 @@
+{
+    "title": "Backtest Jueves + COT Index NQ · 1 Año",
+    "period": "2025-03-13 → 2026-03-13",
+    "config": {
+        "cot_extremo_largo_max": 30,
+        "cot_extremo_corto_min": 70
+    },
+    "total_thursdays": 10,
+    "avg_range_all": 345.1,
+    "directions_all": {
+        "BULLISH": 1,
+        "BEARISH": 8,
+        "NEUTRAL": 1
+    },
+    "patterns_all": {
+        "EXPANSION_L": 10.0,
+        "EXPANSION_H": 10.0,
+        "ROTATION_POC": 10.0,
+        "NEWS_DRIVE": 60.0,
+        "SWEEP_L_RETURN": 10.0
+    },
+    "cot_regime_stats": {
+        "EXTREMO_LARGO": {
+            "count": 1,
+            "avg_range": 279.2,
+            "directions": {
+                "BULLISH": 1,
+                "BEARISH": 0,
+                "NEUTRAL": 0
+            },
+            "patterns": {
+                "NEWS_DRIVE": 1
+            },
+            "news_types": {
+                "JOBLESS": 1
+            }
+        },
+        "NEUTRO": {
+            "count": 2,
+            "avg_range": 345.5,
+            "directions": {
+                "BEARISH": 2,
+                "BULLISH": 0,
+                "NEUTRAL": 0
+            },
+            "patterns": {
+                "NEWS_DRIVE": 2
+            },
+            "news_types": {
+                "JOBLESS": 2
+            }
+        },
+        "EXTREMO_CORTO": {
+            "count": 7,
+            "avg_range": 354.4,
+            "directions": {
+                "BEARISH": 6,
+                "NEUTRAL": 1,
+                "BULLISH": 0
+            },
+            "patterns": {
+                "EXPANSION_L": 1,
+                "EXPANSION_H": 1,
+                "ROTATION_POC": 1,
+                "NEWS_DRIVE": 3,
+                "SWEEP_L_RETURN": 1
+            },
+            "news_types": {
+                "JOBLESS": 7
+            }
+        }
+    },
+    "cot_news_matrix": {
+        "EXTREMO_CORTO×JOBLESS": {
+            "count": 7,
+            "directions": {
+                "BEARISH": 6,
+                "NEUTRAL": 1,
+                "BULLISH": 0
+            },
+            "dominant_pattern": "NEWS_DRIVE"
+        },
+        "NEUTRO×JOBLESS": {
+            "count": 2,
+            "directions": {
+                "BEARISH": 2
+            },
+            "dominant_pattern": "NEWS_DRIVE"
+        },
+        "EXTREMO_LARGO×JOBLESS": {
+            "count": 1,
+            "directions": {
+                "BULLISH": 1
+            },
+            "dominant_pattern": "NEWS_DRIVE"
+        }
+    },
+    "value_area": {
+        "vah": {
+            "hit_rate": "70.0%",
+            "avg_reaction": 377.9
+        },
+        "poc": {
+            "hit_rate": "80.0%",
+            "avg_reaction": 345.7
+        },
+        "val": {
+            "hit_rate": "90.0%",
+            "avg_reaction": 353.1
+        }
+    },
+    "ema200": {
+        "hit_rate": "60.0%",
+        "avg_reaction": 371.2,
+        "open_above_ema_pct": 60.0
+    },
+    "all_thursdays": [
+        {
+            "date": "2026-01-08",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "EXPANSION_L",
+            "direction": "BEARISH",
+            "range_asia_lon": 179.8,
+            "ny_range": 233.5,
+            "ny_open": 25786.0,
+            "ny_close": 25648.25,
+            "full_close": 25689.5,
+            "r_high": 25849.75,
+            "r_low": 25670.0,
+            "profile_val": 25755.38,
+            "profile_poc": 25773.36,
+            "profile_vah": 25805.71,
+            "ema200": 25763.06,
+            "open_vs_ema": 22.9,
+            "vah_hit": true,
+            "poc_hit": true,
+            "val_hit": true,
+            "ema_hit": true,
+            "cot_index": 74.5,
+            "cot_week": "2026-01-06",
+            "cot_regime": "EXTREMO_CORTO"
+        },
+        {
+            "date": "2026-01-15",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "EXPANSION_H",
+            "direction": "BEARISH",
+            "range_asia_lon": 331.5,
+            "ny_range": 149.5,
+            "ny_open": 25924.75,
+            "ny_close": 25915.0,
+            "full_close": 25702.0,
+            "r_high": 25894.0,
+            "r_low": 25562.5,
+            "profile_val": 25576.1,
+            "profile_poc": 25607.18,
+            "profile_vah": 25646.03,
+            "ema200": 25752.98,
+            "open_vs_ema": 171.8,
+            "vah_hit": false,
+            "poc_hit": false,
+            "val_hit": false,
+            "ema_hit": false,
+            "cot_index": 97.7,
+            "cot_week": "2026-01-13",
+            "cot_regime": "EXTREMO_CORTO"
+        },
+        {
+            "date": "2026-01-22",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "ROTATION_POC",
+            "direction": "BEARISH",
+            "range_asia_lon": 232.0,
+            "ny_range": 195.0,
+            "ny_open": 25729.0,
+            "ny_close": 25681.25,
+            "full_close": 25644.5,
+            "r_high": 25715.75,
+            "r_low": 25483.75,
+            "profile_val": 25556.71,
+            "profile_poc": 25566.95,
+            "profile_vah": 25569.51,
+            "ema200": 25482.94,
+            "open_vs_ema": 246.1,
+            "vah_hit": true,
+            "poc_hit": true,
+            "val_hit": true,
+            "ema_hit": false,
+            "cot_index": 76.4,
+            "cot_week": "2026-01-20",
+            "cot_regime": "EXTREMO_CORTO"
+        },
+        {
+            "date": "2026-01-29",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "NEWS_DRIVE",
+            "direction": "BEARISH",
+            "range_asia_lon": 210.5,
+            "ny_range": 639.0,
+            "ny_open": 26133.25,
+            "ny_close": 25709.5,
+            "full_close": 25982.75,
+            "r_high": 26296.0,
+            "r_low": 26085.5,
+            "profile_val": 26168.65,
+            "profile_poc": 26170.75,
+            "profile_vah": 26187.59,
+            "ema200": 26141.95,
+            "open_vs_ema": -8.7,
+            "vah_hit": true,
+            "poc_hit": true,
+            "val_hit": true,
+            "ema_hit": true,
+            "cot_index": 75.8,
+            "cot_week": "2026-01-27",
+            "cot_regime": "EXTREMO_CORTO"
+        },
+        {
+            "date": "2026-02-05",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "NEWS_DRIVE",
+            "direction": "BEARISH",
+            "range_asia_lon": 461.5,
+            "ny_range": 417.5,
+            "ny_open": 24770.25,
+            "ny_close": 24783.5,
+            "full_close": 24605.5,
+            "r_high": 25169.0,
+            "r_low": 24707.5,
+            "profile_val": 24977.48,
+            "profile_poc": 25028.24,
+            "profile_vah": 25120.54,
+            "ema200": 25236.28,
+            "open_vs_ema": -466.0,
+            "vah_hit": false,
+            "poc_hit": false,
+            "val_hit": true,
+            "ema_hit": false,
+            "cot_index": 58.9,
+            "cot_week": "2026-02-03",
+            "cot_regime": "NEUTRO"
+        },
+        {
+            "date": "2026-02-12",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "NEWS_DRIVE",
+            "direction": "BEARISH",
+            "range_asia_lon": 213.8,
+            "ny_range": 586.8,
+            "ny_open": 25346.25,
+            "ny_close": 24875.25,
+            "full_close": 24804.5,
+            "r_high": 25419.75,
+            "r_low": 25206.0,
+            "profile_val": 25309.67,
+            "profile_poc": 25341.73,
+            "profile_vah": 25369.52,
+            "ema200": 25292.98,
+            "open_vs_ema": 53.3,
+            "vah_hit": true,
+            "poc_hit": true,
+            "val_hit": true,
+            "ema_hit": true,
+            "cot_index": 80.1,
+            "cot_week": "2026-02-10",
+            "cot_regime": "EXTREMO_CORTO"
+        },
+        {
+            "date": "2026-02-19",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "SWEEP_L_RETURN",
+            "direction": "NEUTRAL",
+            "range_asia_lon": 256.0,
+            "ny_range": 196.5,
+            "ny_open": 24833.75,
+            "ny_close": 24842.75,
+            "full_close": 24852.75,
+            "r_high": 25054.0,
+            "r_low": 24798.0,
+            "profile_val": 24929.84,
+            "profile_poc": 24973.36,
+            "profile_vah": 24998.96,
+            "ema200": 24899.42,
+            "open_vs_ema": -65.7,
+            "vah_hit": false,
+            "poc_hit": true,
+            "val_hit": true,
+            "ema_hit": true,
+            "cot_index": 79.7,
+            "cot_week": "2026-02-17",
+            "cot_regime": "EXTREMO_CORTO"
+        },
+        {
+            "date": "2026-02-26",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "NEWS_DRIVE",
+            "direction": "BEARISH",
+            "range_asia_lon": 153.5,
+            "ny_range": 480.2,
+            "ny_open": 25341.25,
+            "ny_close": 25001.5,
+            "full_close": 25070.0,
+            "r_high": 25418.25,
+            "r_low": 25264.75,
+            "profile_val": 25291.61,
+            "profile_poc": 25300.82,
+            "profile_vah": 25319.24,
+            "ema200": 25201.97,
+            "open_vs_ema": 139.3,
+            "vah_hit": true,
+            "poc_hit": true,
+            "val_hit": true,
+            "ema_hit": true,
+            "cot_index": 75.5,
+            "cot_week": "2026-02-24",
+            "cot_regime": "EXTREMO_CORTO"
+        },
+        {
+            "date": "2026-03-05",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "NEWS_DRIVE",
+            "direction": "BULLISH",
+            "range_asia_lon": 276.8,
+            "ny_range": 279.2,
+            "ny_open": 24987.75,
+            "ny_close": 25005.75,
+            "full_close": 25030.75,
+            "r_high": 25250.0,
+            "r_low": 24973.25,
+            "profile_val": 25030.25,
+            "profile_poc": 25087.7,
+            "profile_vah": 25116.43,
+            "ema200": 24956.22,
+            "open_vs_ema": 31.5,
+            "vah_hit": true,
+            "poc_hit": true,
+            "val_hit": true,
+            "ema_hit": true,
+            "cot_index": 23.0,
+            "cot_week": "2026-03-03",
+            "cot_regime": "EXTREMO_LARGO"
+        },
+        {
+            "date": "2026-03-12",
+            "news_type": "JOBLESS",
+            "news_impact": "BAJO",
+            "pattern": "NEWS_DRIVE",
+            "direction": "BEARISH",
+            "range_asia_lon": 253.8,
+            "ny_range": 273.5,
+            "ny_open": 24775.75,
+            "ny_close": 24688.0,
+            "full_close": 24531.5,
+            "r_high": 24949.25,
+            "r_low": 24695.5,
+            "profile_val": 24717.07,
+            "profile_poc": 24729.76,
+            "profile_vah": 24732.29,
+            "ema200": 24885.66,
+            "open_vs_ema": -109.9,
+            "vah_hit": true,
+            "poc_hit": true,
+            "val_hit": true,
+            "ema_hit": false,
+            "cot_index": 65.5,
+            "cot_week": "2026-03-10",
+            "cot_regime": "NEUTRO"
+        }
+    ]
+}
