@@ -125,18 +125,30 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
 </style>"""
 
 def week_block(r, prev, is_live=False):
-    """Genera HTML de un bloque semanal completo"""
-    oi = r['oi']
-    ci = r['ci']
-    nc_net = r['nc_net']
-    dl_net = r['dl_net']
-    am_net = r['am_net']
+    """Genera HTML de un bloque semanal completo con columna TOTAL"""
+    oi      = r['oi']
+    ci      = r['ci']
+    nc_net  = r['nc_net']
+    dl_net  = r['dl_net']
+    am_net  = r['am_net']
     ret_net = r.get('ret_net') or 0
 
+    # ── TOTAL (suma de todas las categorias) ──
+    tot_l   = r['nc_l'] + r['dl_l'] + r['am_l'] + r['ret_l']
+    tot_s   = r['nc_s'] + r['dl_s'] + r['am_s'] + r['ret_s']
+    tot_net = tot_l - tot_s
+    # Recalcular OI real como total de longs (mejor proxy)
+    real_oi = tot_l if tot_l > 0 else oi
+
     if prev:
-        d = {k: r[k] - prev.get(k, r[k]) for k in ['nc_l','nc_s','dl_l','dl_s','am_l','am_s','ret_l','ret_s']}
+        d = {k: r[k] - prev.get(k, r[k])
+             for k in ['nc_l','nc_s','dl_l','dl_s','am_l','am_s','ret_l','ret_s']}
+        prev_tot_l = prev['nc_l']+prev['dl_l']+prev['am_l']+prev['ret_l']
+        prev_tot_s = prev['nc_s']+prev['dl_s']+prev['am_s']+prev['ret_s']
+        d['tot_l'] = tot_l - prev_tot_l
+        d['tot_s'] = tot_s - prev_tot_s
     else:
-        d = {k: None for k in ['nc_l','nc_s','dl_l','dl_s','am_l','am_s','ret_l','ret_s']}
+        d = {k: None for k in ['nc_l','nc_s','dl_l','dl_s','am_l','am_s','ret_l','ret_s','tot_l','tot_s']}
 
     live_span = '<span class="live-tag">LIVE</span>' if is_live else ''
     hdr_cls   = 'wk-hdr live' if is_live else 'wk-hdr'
@@ -145,11 +157,11 @@ def week_block(r, prev, is_live=False):
     return f"""<table class="cot-tbl">
   <thead>
     <tr class="{hdr_cls}">
-      <th colspan="9">
+      <th colspan="11">
         📅 {lbl(r['date'])} {live_span}
-        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈{fmt(oi)}</span>
-        <span style="float:right;margin-right:20px" class="ci-tag" style="color:{ci_c}">
-          <span style="color:{ci_c}">COT Index: {ci:.1f}% — {ci_label(ci)}</span>
+        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈{fmt(real_oi)}</span>
+        <span style="float:right;margin-right:20px;color:{ci_c};font-weight:900;font-size:11px">
+          COT Index: {ci:.1f}% — {ci_label(ci)}
         </span>
       </th>
     </tr>
@@ -157,8 +169,9 @@ def week_block(r, prev, is_live=False):
       <th></th>
       <th colspan="2" style="color:#60a5fa">Non-Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Hedge Funds</small></th>
       <th colspan="2" style="color:#f59e0b">Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Dealers</small></th>
-      <th colspan="2" style="color:#a78bfa">Institutional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
+      <th colspan="2" style="color:#a78bfa">Institucional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
       <th colspan="2" style="color:#6b7280">Retail<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Non-Rept</small></th>
+      <th colspan="2" style="color:#e2e8f0;border-left:1px solid rgba(255,255,255,.1)">TOTAL<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Todas categ.</small></th>
     </tr>
     <tr>
       <th style="color:#2a3a5a"></th>
@@ -166,6 +179,7 @@ def week_block(r, prev, is_live=False):
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
+      <th style="color:#4ade80;font-weight:600;border-left:1px solid rgba(255,255,255,.08)">Long</th><th style="color:#f87171;font-weight:600">Short</th>
     </tr>
   </thead>
   <tbody>
@@ -175,6 +189,8 @@ def week_block(r, prev, is_live=False):
       <td class="num-l">{fmt(r['dl_l'])}</td><td class="num-s">{fmt(r['dl_s'])}</td>
       <td class="num-l">{fmt(r['am_l'])}</td><td class="num-s">{fmt(r['am_s'])}</td>
       <td class="num-l">{fmt(r['ret_l'])}</td><td class="num-s">{fmt(r['ret_s'])}</td>
+      <td class="num-l" style="border-left:1px solid rgba(255,255,255,.08);font-size:13px;color:#e2e8f0">{fmt(tot_l)}</td>
+      <td class="num-s" style="font-size:13px;color:#e2e8f0">{fmt(tot_s)}</td>
     </tr>
     <tr class="row-net">
       <td class="lbl-cell">Neto</td>
@@ -182,6 +198,7 @@ def week_block(r, prev, is_live=False):
       <td colspan="2" style="text-align:center;font-weight:900;color:{net_clr(dl_net)}">{dl_net:+,}</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:{net_clr(am_net)}">{am_net:+,}</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:{net_clr(ret_net)}">{ret_net:+,}</td>
+      <td colspan="2" style="text-align:center;font-weight:900;font-size:13px;color:{net_clr(tot_net)};border-left:1px solid rgba(255,255,255,.08)">{tot_net:+,}</td>
     </tr>
     <tr class="row-chg">
       <td class="lbl-cell" style="color:#2a3a5a">Cambio sem.</td>
@@ -189,13 +206,16 @@ def week_block(r, prev, is_live=False):
       <td>{chg_badge(d['dl_l'])}</td><td>{chg_badge(d['dl_s'])}</td>
       <td>{chg_badge(d['am_l'])}</td><td>{chg_badge(d['am_s'])}</td>
       <td>{chg_badge(d['ret_l'])}</td><td>{chg_badge(d['ret_s'])}</td>
+      <td style="border-left:1px solid rgba(255,255,255,.08)">{chg_badge(d.get('tot_l'))}</td><td>{chg_badge(d.get('tot_s'))}</td>
     </tr>
     <tr class="row-pct">
       <td class="lbl-cell" style="color:#2a3a5a">% Open Int.</td>
-      <td>{pct(r['nc_l'],oi)}</td><td>{pct(r['nc_s'],oi)}</td>
-      <td>{pct(r['dl_l'],oi)}</td><td>{pct(r['dl_s'],oi)}</td>
-      <td>{pct(r['am_l'],oi)}</td><td>{pct(r['am_s'],oi)}</td>
-      <td>{pct(r['ret_l'],oi)}</td><td>{pct(r['ret_s'],oi)}</td>
+      <td>{pct(r['nc_l'],real_oi)}</td><td>{pct(r['nc_s'],real_oi)}</td>
+      <td>{pct(r['dl_l'],real_oi)}</td><td>{pct(r['dl_s'],real_oi)}</td>
+      <td>{pct(r['am_l'],real_oi)}</td><td>{pct(r['am_s'],real_oi)}</td>
+      <td>{pct(r['ret_l'],real_oi)}</td><td>{pct(r['ret_s'],real_oi)}</td>
+      <td style="border-left:1px solid rgba(255,255,255,.08);color:#e2e8f0;font-weight:700">{pct(tot_l,real_oi)}</td>
+      <td style="color:#e2e8f0;font-weight:700">{pct(tot_s,real_oi)}</td>
     </tr>
   </tbody>
 </table>"""

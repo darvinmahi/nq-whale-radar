@@ -38,7 +38,7 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
         CFTC · Traders in Financial Futures · 221 semanas
       </div>
       <div style="font-size:10px;color:#2a3a5a;margin-top:3px;font-family:monospace">
-        Actualizado: 31/03/2026 03:13 · Auto-update cada viernes 22:00 UTC
+        Actualizado: 31/03/2026 03:28 · Auto-update cada viernes 22:00 UTC
       </div>
     </div>
     <a href="cot_historial.html" target="_blank"
@@ -52,11 +52,11 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
   <table class="cot-tbl">
   <thead>
     <tr class="wk-hdr live">
-      <th colspan="9">
+      <th colspan="11">
         📅 24 Mar 2026 <span class="live-tag">LIVE</span>
-        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈185,227</span>
-        <span style="float:right;margin-right:20px" class="ci-tag" style="color:#ff5722">
-          <span style="color:#ff5722">COT Index: 32.5% — 🔴 BEARISH</span>
+        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈223,135</span>
+        <span style="float:right;margin-right:20px;color:#ff5722;font-weight:900;font-size:11px">
+          COT Index: 32.5% — 🔴 BEARISH
         </span>
       </th>
     </tr>
@@ -64,8 +64,9 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <th></th>
       <th colspan="2" style="color:#60a5fa">Non-Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Hedge Funds</small></th>
       <th colspan="2" style="color:#f59e0b">Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Dealers</small></th>
-      <th colspan="2" style="color:#a78bfa">Institutional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
+      <th colspan="2" style="color:#a78bfa">Institucional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
       <th colspan="2" style="color:#6b7280">Retail<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Non-Rept</small></th>
+      <th colspan="2" style="color:#e2e8f0;border-left:1px solid rgba(255,255,255,.1)">TOTAL<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Todas categ.</small></th>
     </tr>
     <tr>
       <th style="color:#2a3a5a"></th>
@@ -73,6 +74,7 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
+      <th style="color:#4ade80;font-weight:600;border-left:1px solid rgba(255,255,255,.08)">Long</th><th style="color:#f87171;font-weight:600">Short</th>
     </tr>
   </thead>
   <tbody>
@@ -82,6 +84,8 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td class="num-l">47,617</td><td class="num-s">65,488</td>
       <td class="num-l">92,538</td><td class="num-s">41,080</td>
       <td class="num-l">37,908</td><td class="num-s">33,181</td>
+      <td class="num-l" style="border-left:1px solid rgba(255,255,255,.08);font-size:13px;color:#e2e8f0">223,135</td>
+      <td class="num-s" style="font-size:13px;color:#e2e8f0">227,447</td>
     </tr>
     <tr class="row-net">
       <td class="lbl-cell">Neto</td>
@@ -89,6 +93,7 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td colspan="2" style="text-align:center;font-weight:900;color:#ff5252">-17,871</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:#69f0ae">+51,458</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:#69f0ae">+4,727</td>
+      <td colspan="2" style="text-align:center;font-weight:900;font-size:13px;color:#ff5252;border-left:1px solid rgba(255,255,255,.08)">-4,312</td>
     </tr>
     <tr class="row-chg">
       <td class="lbl-cell" style="color:#2a3a5a">Cambio sem.</td>
@@ -96,23 +101,26 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td><span class="cb neg">-1,542</span></td><td><span class="cb neg">-9,770</span></td>
       <td><span class="cb neg">-5,347</span></td><td><span class="cb pos">+4,586</span></td>
       <td><span class="cb neg">-4,498</span></td><td><span class="cb neg">-5,230</span></td>
+      <td style="border-left:1px solid rgba(255,255,255,.08)"><span class="cb neg">-11,311</span></td><td><span class="cb neg">-8,753</span></td>
     </tr>
     <tr class="row-pct">
       <td class="lbl-cell" style="color:#2a3a5a">% Open Int.</td>
-      <td>24.3%</td><td>47.3%</td>
-      <td>25.7%</td><td>35.4%</td>
-      <td>50.0%</td><td>22.2%</td>
-      <td>20.5%</td><td>17.9%</td>
+      <td>20.2%</td><td>39.3%</td>
+      <td>21.3%</td><td>29.3%</td>
+      <td>41.5%</td><td>18.4%</td>
+      <td>17.0%</td><td>14.9%</td>
+      <td style="border-left:1px solid rgba(255,255,255,.08);color:#e2e8f0;font-weight:700">100.0%</td>
+      <td style="color:#e2e8f0;font-weight:700">101.9%</td>
     </tr>
   </tbody>
 </table><table class="cot-tbl">
   <thead>
     <tr class="wk-hdr">
-      <th colspan="9">
+      <th colspan="11">
         📅 17 Mar 2026 
-        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈192,040</span>
-        <span style="float:right;margin-right:20px" class="ci-tag" style="color:#ff5722">
-          <span style="color:#ff5722">COT Index: 34.3% — 🔴 BEARISH</span>
+        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈234,446</span>
+        <span style="float:right;margin-right:20px;color:#ff5722;font-weight:900;font-size:11px">
+          COT Index: 34.3% — 🔴 BEARISH
         </span>
       </th>
     </tr>
@@ -120,8 +128,9 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <th></th>
       <th colspan="2" style="color:#60a5fa">Non-Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Hedge Funds</small></th>
       <th colspan="2" style="color:#f59e0b">Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Dealers</small></th>
-      <th colspan="2" style="color:#a78bfa">Institutional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
+      <th colspan="2" style="color:#a78bfa">Institucional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
       <th colspan="2" style="color:#6b7280">Retail<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Non-Rept</small></th>
+      <th colspan="2" style="color:#e2e8f0;border-left:1px solid rgba(255,255,255,.1)">TOTAL<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Todas categ.</small></th>
     </tr>
     <tr>
       <th style="color:#2a3a5a"></th>
@@ -129,6 +138,7 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
+      <th style="color:#4ade80;font-weight:600;border-left:1px solid rgba(255,255,255,.08)">Long</th><th style="color:#f87171;font-weight:600">Short</th>
     </tr>
   </thead>
   <tbody>
@@ -138,6 +148,8 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td class="num-l">49,159</td><td class="num-s">75,258</td>
       <td class="num-l">97,885</td><td class="num-s">36,494</td>
       <td class="num-l">42,406</td><td class="num-s">38,411</td>
+      <td class="num-l" style="border-left:1px solid rgba(255,255,255,.08);font-size:13px;color:#e2e8f0">234,446</td>
+      <td class="num-s" style="font-size:13px;color:#e2e8f0">236,200</td>
     </tr>
     <tr class="row-net">
       <td class="lbl-cell">Neto</td>
@@ -145,6 +157,7 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td colspan="2" style="text-align:center;font-weight:900;color:#ff5252">-26,099</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:#69f0ae">+61,391</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:#69f0ae">+3,995</td>
+      <td colspan="2" style="text-align:center;font-weight:900;font-size:13px;color:#ff5252;border-left:1px solid rgba(255,255,255,.08)">-1,754</td>
     </tr>
     <tr class="row-chg">
       <td class="lbl-cell" style="color:#2a3a5a">Cambio sem.</td>
@@ -152,23 +165,26 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td><span class="cb pos">+2,405</span></td><td><span class="cb neg">-4,733</span></td>
       <td><span class="cb neg">-3,682</span></td><td><span class="cb pos">+445</span></td>
       <td><span class="cb pos">+5,145</span></td><td><span class="cb pos">+1,487</span></td>
+      <td style="border-left:1px solid rgba(255,255,255,.08)"><span class="cb pos">+1,623</span></td><td><span class="cb pos">+2,051</span></td>
     </tr>
     <tr class="row-pct">
       <td class="lbl-cell" style="color:#2a3a5a">% Open Int.</td>
-      <td>23.4%</td><td>44.8%</td>
-      <td>25.6%</td><td>39.2%</td>
-      <td>51.0%</td><td>19.0%</td>
-      <td>22.1%</td><td>20.0%</td>
+      <td>19.2%</td><td>36.7%</td>
+      <td>21.0%</td><td>32.1%</td>
+      <td>41.8%</td><td>15.6%</td>
+      <td>18.1%</td><td>16.4%</td>
+      <td style="border-left:1px solid rgba(255,255,255,.08);color:#e2e8f0;font-weight:700">100.0%</td>
+      <td style="color:#e2e8f0;font-weight:700">100.7%</td>
     </tr>
   </tbody>
 </table><table class="cot-tbl">
   <thead>
     <tr class="wk-hdr">
-      <th colspan="9">
+      <th colspan="11">
         📅 10 Mar 2026 
-        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈195,562</span>
-        <span style="float:right;margin-right:20px" class="ci-tag" style="color:#ff5722">
-          <span style="color:#ff5722">COT Index: 42.5% — 🔴 BEARISH</span>
+        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈232,823</span>
+        <span style="float:right;margin-right:20px;color:#ff5722;font-weight:900;font-size:11px">
+          COT Index: 42.5% — 🔴 BEARISH
         </span>
       </th>
     </tr>
@@ -176,8 +192,9 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <th></th>
       <th colspan="2" style="color:#60a5fa">Non-Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Hedge Funds</small></th>
       <th colspan="2" style="color:#f59e0b">Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Dealers</small></th>
-      <th colspan="2" style="color:#a78bfa">Institutional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
+      <th colspan="2" style="color:#a78bfa">Institucional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
       <th colspan="2" style="color:#6b7280">Retail<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Non-Rept</small></th>
+      <th colspan="2" style="color:#e2e8f0;border-left:1px solid rgba(255,255,255,.1)">TOTAL<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Todas categ.</small></th>
     </tr>
     <tr>
       <th style="color:#2a3a5a"></th>
@@ -185,6 +202,7 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
+      <th style="color:#4ade80;font-weight:600;border-left:1px solid rgba(255,255,255,.08)">Long</th><th style="color:#f87171;font-weight:600">Short</th>
     </tr>
   </thead>
   <tbody>
@@ -194,6 +212,8 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td class="num-l">46,754</td><td class="num-s">79,991</td>
       <td class="num-l">101,567</td><td class="num-s">36,049</td>
       <td class="num-l">37,261</td><td class="num-s">36,924</td>
+      <td class="num-l" style="border-left:1px solid rgba(255,255,255,.08);font-size:13px;color:#e2e8f0">232,823</td>
+      <td class="num-s" style="font-size:13px;color:#e2e8f0">234,149</td>
     </tr>
     <tr class="row-net">
       <td class="lbl-cell">Neto</td>
@@ -201,6 +221,7 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td colspan="2" style="text-align:center;font-weight:900;color:#ff5252">-33,237</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:#69f0ae">+65,518</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:#69f0ae">+337</td>
+      <td colspan="2" style="text-align:center;font-weight:900;font-size:13px;color:#ff5252;border-left:1px solid rgba(255,255,255,.08)">-1,326</td>
     </tr>
     <tr class="row-chg">
       <td class="lbl-cell" style="color:#2a3a5a">Cambio sem.</td>
@@ -208,23 +229,26 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td><span class="cb neg">-4,834</span></td><td><span class="cb neg">-8,231</span></td>
       <td><span class="cb neg">-2,347</span></td><td><span class="cb pos">+753</span></td>
       <td><span class="cb neg">-3,201</span></td><td><span class="cb neg">-2,904</span></td>
+      <td style="border-left:1px solid rgba(255,255,255,.08)"><span class="cb neg">-14,303</span></td><td><span class="cb neg">-12,940</span></td>
     </tr>
     <tr class="row-pct">
       <td class="lbl-cell" style="color:#2a3a5a">% Open Int.</td>
-      <td>24.2%</td><td>41.5%</td>
-      <td>23.9%</td><td>40.9%</td>
-      <td>51.9%</td><td>18.4%</td>
-      <td>19.1%</td><td>18.9%</td>
+      <td>20.3%</td><td>34.9%</td>
+      <td>20.1%</td><td>34.4%</td>
+      <td>43.6%</td><td>15.5%</td>
+      <td>16.0%</td><td>15.9%</td>
+      <td style="border-left:1px solid rgba(255,255,255,.08);color:#e2e8f0;font-weight:700">100.0%</td>
+      <td style="color:#e2e8f0;font-weight:700">100.6%</td>
     </tr>
   </tbody>
 </table><table class="cot-tbl">
   <thead>
     <tr class="wk-hdr">
-      <th colspan="9">
+      <th colspan="11">
         📅 3 Mar 2026 
-        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈206,664</span>
-        <span style="float:right;margin-right:20px" class="ci-tag" style="color:#ff5722">
-          <span style="color:#ff5722">COT Index: 44.1% — 🔴 BEARISH</span>
+        <span style="float:right;font-size:10px;font-weight:400;color:#444">OI≈247,126</span>
+        <span style="float:right;margin-right:20px;color:#ff5722;font-weight:900;font-size:11px">
+          COT Index: 44.1% — 🔴 BEARISH
         </span>
       </th>
     </tr>
@@ -232,8 +256,9 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <th></th>
       <th colspan="2" style="color:#60a5fa">Non-Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Hedge Funds</small></th>
       <th colspan="2" style="color:#f59e0b">Commercial<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Dealers</small></th>
-      <th colspan="2" style="color:#a78bfa">Institutional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
+      <th colspan="2" style="color:#a78bfa">Institucional<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Asset Mgr</small></th>
       <th colspan="2" style="color:#6b7280">Retail<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Non-Rept</small></th>
+      <th colspan="2" style="color:#e2e8f0;border-left:1px solid rgba(255,255,255,.1)">TOTAL<br><small style="color:#2a3a5a;font-weight:400;text-transform:none">Todas categ.</small></th>
     </tr>
     <tr>
       <th style="color:#2a3a5a"></th>
@@ -241,6 +266,7 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
       <th style="color:#4ade80;font-weight:600">Long</th><th style="color:#f87171;font-weight:600">Short</th>
+      <th style="color:#4ade80;font-weight:600;border-left:1px solid rgba(255,255,255,.08)">Long</th><th style="color:#f87171;font-weight:600">Short</th>
     </tr>
   </thead>
   <tbody>
@@ -250,6 +276,8 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td class="num-l">51,588</td><td class="num-s">88,222</td>
       <td class="num-l">103,914</td><td class="num-s">35,296</td>
       <td class="num-l">40,462</td><td class="num-s">39,828</td>
+      <td class="num-l" style="border-left:1px solid rgba(255,255,255,.08);font-size:13px;color:#e2e8f0">247,126</td>
+      <td class="num-s" style="font-size:13px;color:#e2e8f0">247,089</td>
     </tr>
     <tr class="row-net">
       <td class="lbl-cell">Neto</td>
@@ -257,6 +285,7 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td colspan="2" style="text-align:center;font-weight:900;color:#ff5252">-36,634</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:#69f0ae">+68,618</td>
       <td colspan="2" style="text-align:center;font-weight:900;color:#69f0ae">+634</td>
+      <td colspan="2" style="text-align:center;font-weight:900;font-size:13px;color:#69f0ae;border-left:1px solid rgba(255,255,255,.08)">+37</td>
     </tr>
     <tr class="row-chg">
       <td class="lbl-cell" style="color:#2a3a5a">Cambio sem.</td>
@@ -264,13 +293,16 @@ body { background:#080d18; color:#c8d0dd; font-family:'Inter',system-ui,sans-ser
       <td><span class="cb pos">+2,967</span></td><td><span class="cb neg">-13,947</span></td>
       <td><span class="cb neg">-3,189</span></td><td><span class="cb neg">-1,646</span></td>
       <td><span class="cb neg">-1,766</span></td><td><span class="cb pos">+4,151</span></td>
+      <td style="border-left:1px solid rgba(255,255,255,.08)"><span class="cb neg">-3,643</span></td><td><span class="cb neg">-4,773</span></td>
     </tr>
     <tr class="row-pct">
       <td class="lbl-cell" style="color:#2a3a5a">% Open Int.</td>
-      <td>24.8%</td><td>40.5%</td>
-      <td>25.0%</td><td>42.7%</td>
-      <td>50.3%</td><td>17.1%</td>
-      <td>19.6%</td><td>19.3%</td>
+      <td>20.7%</td><td>33.9%</td>
+      <td>20.9%</td><td>35.7%</td>
+      <td>42.0%</td><td>14.3%</td>
+      <td>16.4%</td><td>16.1%</td>
+      <td style="border-left:1px solid rgba(255,255,255,.08);color:#e2e8f0;font-weight:700">100.0%</td>
+      <td style="color:#e2e8f0;font-weight:700">100.0%</td>
     </tr>
   </tbody>
 </table>
