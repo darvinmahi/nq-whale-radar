@@ -859,11 +859,151 @@ async function refreshAll() {
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
-  await fetchCOT();           // COT auto desde CFTC
+  await fetchCOT();
   await refreshAll();
   setTimeout(injectCOTWidget, 1500);
+  setTimeout(injectCOTTrifecta, 800);   // Trifecta con números de contratos
   setInterval(refreshAll, 60_000);
-  setInterval(fetchCOT, 30 * 60_000);  // Re-check COT cada 30 min
+  setInterval(fetchCOT, 30 * 60_000);
 });
 
 window.NQ = { LIVE, calcBiasEngine, updateCOT, refreshAll };
+
+// ── TRIFECTA COT — Lee de window.NQ_COT (cot_data.js) ────────────────────────
+function injectCOTTrifecta() {
+  const COT = window.NQ_COT;
+  if (!COT || !COT.recent_weeks || !COT.recent_weeks.length) {
+    console.warn('[NQ COT] NQ_COT no disponible — cot_data.js cargado?');
+    return;
+  }
+
+  const weeks  = COT.recent_weeks.slice(0, 4);
+  const fmt    = n => n.toLocaleString('en-US');
+  const sign   = n => n >= 0 ? '+' : '';
+  const netClr = n => n >= 0 ? '#00ff88' : '#ff3355';
+
+  // Calcular máximos para barras
+  const maxNC  = Math.max(...weeks.map(w => Math.max(w.nc_long,  w.nc_short,  1)));
+  const maxCOM = Math.max(...weeks.map(w => Math.max(w.com_long, w.com_short, 1)));
+  const maxAM  = Math.max(...weeks.map(w => Math.max(w.am_long,  w.am_short,  1)));
+
+  // Construir una fila con barra + número exacto
+  function makeRow(label, long, short, max, isFirst, bg) {
+    const lPct = Math.max(3, long  / max * 100).toFixed(0);
+    const sPct = Math.max(3, short / max * 100).toFixed(0);
+    const net  = long - short;
+    const tag  = isFirst ? `<span style="font-size:7px;background:rgba(0,242,255,.15);color:#00f2ff;padding:1px 5px;border-radius:4px;margin-left:5px">LIVE</span>` : '';
+    return `
+<div style="padding:8px 10px;border-radius:8px;margin-bottom:6px;background:${bg}">
+  <div style="display:flex;align-items:center;margin-bottom:5px">
+    <span style="font-size:9px;color:#94a3b8;font-family:monospace">${label}</span>${tag}
+  </div>
+  <!-- LONG -->
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+    <span style="font-size:8px;color:#00ff88;min-width:10px;font-weight:700">L</span>
+    <div style="flex:1;height:9px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden">
+      <div style="width:${lPct}%;height:100%;background:#00ff88;border-radius:4px;transition:width .6s"></div>
+    </div>
+    <span style="font-size:9px;color:#00ff88;font-family:monospace;min-width:62px;text-align:right;font-weight:700">${fmt(long)}</span>
+  </div>
+  <!-- SHORT -->
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+    <span style="font-size:8px;color:#ff3355;min-width:10px;font-weight:700">S</span>
+    <div style="flex:1;height:9px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden">
+      <div style="width:${sPct}%;height:100%;background:#ff3355;border-radius:4px;transition:width .6s"></div>
+    </div>
+    <span style="font-size:9px;color:#ff3355;font-family:monospace;min-width:62px;text-align:right;font-weight:700">${fmt(short)}</span>
+  </div>
+  <!-- NET -->
+  <div style="display:flex;justify-content:flex-end">
+    <span style="font-size:9px;color:#4a5a7a">Net: </span>
+    <span style="font-size:9px;font-weight:900;font-family:monospace;color:${netClr(net)};margin-left:3px">${sign(net)}${fmt(net)}</span>
+  </div>
+</div>`;
+  }
+
+  const specsEl  = document.getElementById('cot-specs-bars');
+  const banksEl  = document.getElementById('cot-comm-bars');
+  const retailEl = document.getElementById('cot-retail-bars');
+  const tableEl  = document.getElementById('cot-table-body');
+
+  // Specs (Non-Commercial = Hedge Funds)
+  if (specsEl) {
+    specsEl.innerHTML = weeks.map((w, i) =>
+      makeRow(w.label, w.nc_long, w.nc_short, maxNC, i === 0,
+        i === 0 ? 'rgba(0,242,255,.04)' : 'transparent')
+    ).join('');
+  }
+
+  // Banks (Commercial = Dealers)
+  if (banksEl) {
+    banksEl.innerHTML = weeks.map((w, i) =>
+      makeRow(w.label, w.com_long, w.com_short, maxCOM, i === 0,
+        i === 0 ? 'rgba(96,165,250,.04)' : 'transparent')
+    ).join('');
+  }
+
+  // Retail (Non-Reportable) — si no hay long/short, mostrar solo net
+  if (retailEl) {
+    retailEl.innerHTML = weeks.map((w, i) => {
+      const n = w.ret_net || 0;
+      const c = netClr(n);
+      const l = w.ret_long || 0, s = w.ret_short || 0;
+      const max = Math.max(l, s, 1);
+      if (l > 0) return makeRow(w.label, l, s, max, i === 0,
+        i === 0 ? 'rgba(251,146,60,.04)' : 'transparent');
+      return `<div style="padding:8px 10px;border-radius:8px;margin-bottom:6px;background:${i===0?'rgba(251,146,60,.04)':'transparent'}">
+        <div style="font-size:9px;color:#94a3b8;margin-bottom:4px">${w.label}</div>
+        <div style="font-size:16px;font-weight:900;font-family:monospace;color:${c}">${sign(n)}${fmt(n)}</div>
+        <div style="font-size:8px;color:#4a5a7a">contratos netos</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Tabla "Handshake Raw Matrix" con números exactos
+  if (tableEl) {
+    tableEl.innerHTML = weeks.map((w, i) => {
+      const dot = i === 0 ? '<span style="color:#00f2ff;font-size:10px;margin-right:4px">●</span>' : '';
+      const bg  = i === 0 ? 'background:rgba(0,242,255,.04)' : '';
+      const nc  = `<span style="color:${netClr(w.nc_net)};font-weight:700">${sign(w.nc_net)}${fmt(w.nc_net)}</span>`;
+      const com = `<span style="color:${netClr(w.com_net)}">${sign(w.com_net)}${fmt(w.com_net)}</span>`;
+      const ret = w.ret_net != null ? `<span style="color:${netClr(w.ret_net)}">${sign(w.ret_net)}${fmt(w.ret_net)}</span>` : '—';
+      const ci  = `<span style="color:${w.cot_index<45?'#ff3355':w.cot_index>60?'#00ff88':'#ffd60a'};font-weight:700">${w.cot_index.toFixed(1)}%</span>`;
+      return `<tr style="${bg}">
+        <td style="font-family:monospace;font-size:10px;white-space:nowrap">${dot}${w.label}</td>
+        <td class="r" style="font-family:monospace;font-size:10px">${nc}</td>
+        <td class="r" style="font-family:monospace;font-size:10px">${com}</td>
+        <td class="r" style="font-family:monospace;font-size:10px">${ret}</td>
+        <td class="r" style="font-family:monospace;font-size:10px">${ci}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Actualizar header de la tabla para añadir columna COT Index
+  const thead = tableEl?.closest('table')?.querySelector('thead tr');
+  if (thead && thead.children.length === 5 && !thead.innerHTML.includes('COT')) {
+    thead.children[4].innerHTML = 'COT Index';
+  }
+
+  // Hero panel
+  const heroEl  = document.getElementById('cot-net-val');
+  const dateEl  = document.getElementById('cot-date-label');
+  const signalEl= document.getElementById('cot-signal-label');
+  const pinEl   = document.getElementById('cot-pin');
+  const heroIdx = document.getElementById('hero-cot-index');
+  const minEl   = document.querySelector('.text-risk-red');
+  const maxEl   = document.querySelector('.text-emerald-400');
+  const first   = weeks[0];
+  const ci      = first.cot_index;
+  const ciC     = ci > 60 ? '#00ff88' : ci < 40 ? '#ff3355' : '#ffd60a';
+
+  if (heroEl)   { heroEl.innerText = `${sign(first.nc_net)}${fmt(first.nc_net)}`; heroEl.style.color = netClr(first.nc_net); }
+  if (dateEl)   dateEl.innerText = first.label + ' · CFTC';
+  if (heroIdx)  { heroIdx.innerText = ci.toFixed(1) + '% · 3Y'; heroIdx.style.color = ciC; }
+  if (pinEl)    pinEl.style.left = Math.max(1, Math.min(99, ci)) + '%';
+  if (signalEl) { signalEl.innerText = COT.signal + ' · COT ' + ci.toFixed(0) + '/100'; signalEl.style.color = ciC; }
+  if (minEl)    minEl.innerText = '🔴 MÍN: ' + fmt(COT.hist_min);
+  if (maxEl)    maxEl.innerText = '🟢 MÁX: ' + fmt(COT.hist_max);
+
+  console.log(`[NQ COT Trifecta] ✅ ${first.label} | NC Net: ${fmt(first.nc_net)} | COT Index: ${ci.toFixed(1)}%`);
+}
