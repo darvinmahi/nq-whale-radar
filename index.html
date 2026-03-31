@@ -3603,137 +3603,238 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 <!-- ═══ SECCIÓN COT PERFECTA (RESTAURADA) ═══ -->
 <section class="relative z-20 max-w-7xl mx-auto px-6 py-12" id="cot-analysis">
-  <div class="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
-    <h2 class="text-3xl font-barlow font-bold text-white tracking-tighter uppercase flex items-center gap-3">
-      <span class="text-electric-cyan material-symbols-outlined">account_balance</span>
-      WHALE <span class="text-electric-cyan">RADAR</span> · COT
-    </h2>
-    <div class="flex flex-col items-end">
-        <span class="text-[10px] font-mono text-data-gray uppercase tracking-widest">CFTC HANDSHAKE: <span id="health-status" class="text-emerald-400">OPTIMAL</span></span>
-        <span class="text-[9px] text-vibrant-blue font-bold mt-1 uppercase" id="neural-pulse-status">SYNCING NEURAL LINK...</span>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- COT Report Hero & Meter -->
-    <div class="cot-card lg:col-span-1 glass-panel p-6 rounded-2xl border border-white/5 relative overflow-hidden group transition-all duration-1000 opacity-100 translate-y-0">
-      <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:rotate-12 transition-transform">
-          <span class="material-symbols-outlined text-9xl">monitoring</span>
-      </div>
-      <div class="flex justify-between items-start mb-6">
-          <div>
-              <div class="text-[10px] font-mono text-electric-cyan uppercase tracking-widest mb-1">Non-Commercial Net</div>
-              <div class="text-xs text-data-gray font-mono italic" id="cot-date-label">March 2026</div>
-          </div>
-          <span class="px-3 py-1 bg-vibrant-blue/20 text-vibrant-blue text-[9px] font-bold rounded-full uppercase">Asset Managers</span>
-      </div>
-
-      <div class="flex items-baseline gap-2 mb-8">
-          <div class="text-5xl font-barlow font-black text-white" id="cot-net-val">--</div>
-          <div class="text-[10px] text-data-gray font-mono uppercase">contratos</div>
-      </div>
-
-      <div class="meter-wrap mb-8">
-          <div class="flex justify-between text-[10px] font-mono text-data-gray mb-4">
-              <span class="text-risk-red">🔴 MÍN: --</span>
-              <span class="text-white font-bold">ACTUAL</span>
-              <span class="text-emerald-400">🟢 MÁX: --</span>
-          </div>
-          <div class="relative h-2 bg-white/5 rounded-full overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-r from-risk-red via-yellow-500 to-emerald-400 opacity-30"></div>
-              <div id="cot-pin" class="absolute top-0 w-1.5 h-full bg-white shadow-[0_0_10px_white] transition-all duration-1000" style="left:50%"></div>
-          </div>
-          <div class="mt-4 text-[10px] font-mono flex justify-between">
-              <span class="text-data-gray uppercase">COT Index:</span>
-              <span id="hero-cot-index" class="text-electric-cyan font-bold font-mono">--%</span>
-          </div>
-      </div>
-
-      <div class="bg-navy-void/40 p-4 rounded-xl border border-white/5">
-          <div class="text-[9px] font-mono text-vibrant-blue uppercase mb-2">Señal del Analista</div>
-          <div id="cot-signal-label" class="text-xs font-bold text-white uppercase mb-2 tracking-widest">CALCULANDO...</div>
-          <p id="cot-razonamiento-label" class="text-[10px] text-data-gray leading-relaxed italic"></p>
-      </div>
-    <div class="scanning-sweep"></div></div>
-
-    <!-- Bloques de Barras Comparativas Separados (Trifecta) -->
-    <div class="glass-panel rounded-2xl lg:col-span-2 overflow-hidden flex flex-col border border-white/5 bg-navy-void/20 transition-all duration-1000 opacity-100 translate-y-0">
-      <div class="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
-          <span class="text-xs font-bold text-white uppercase tracking-widest text-electric-cyan">Institutional Liquidity Trifecta</span>
-          <span class="text-[9px] font-mono text-data-gray uppercase italic">Comparative Analysis · Rolling 4 Weeks</span>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-          <!-- Bloque: NON-COMMERCIALS (BALLENAS) -->
-          <div class="space-y-3">
-              <div class="flex items-center gap-2 mb-4 border-b border-electric-cyan/20 pb-2">
-                  <span class="w-1.5 h-3 bg-electric-cyan rounded-full"></span>
-                  <span class="text-[10px] font-black text-white uppercase tracking-tighter">Specs (Whales)</span>
-              </div>
-              <div id="cot-specs-bars" class="space-y-3">
-                  <!-- Inyectado: 4 semanas -->
-              </div>
-          </div>
-
-          <!-- Bloque: COMMERCIALS (BANCOS) -->
-          <div class="space-y-3">
-              <div class="flex items-center gap-2 mb-4 border-b border-vibrant-blue/20 pb-2">
-                  <span class="w-1.5 h-3 bg-vibrant-blue rounded-full"></span>
-                  <span class="text-[10px] font-black text-white uppercase tracking-tighter">Banks (Smart)</span>
-              </div>
-              <div id="cot-comm-bars" class="space-y-3">
-                  <!-- Inyectado: 4 semanas -->
-              </div>
-          </div>
-
-          <!-- Bloque: RETAIL (MINORISTAS) -->
-          <div class="space-y-3">
-              <div class="flex items-center gap-2 mb-4 border-b border-orange-500/20 pb-2">
-                  <span class="w-1.5 h-3 bg-orange-500 rounded-full"></span>
-                  <span class="text-[10px] font-black text-white uppercase tracking-tighter">Retail (Specs)</span>
-              </div>
-              <div id="cot-retail-bars" class="space-y-3">
-                  <!-- Inyectado: 4 semanas -->
-              </div>
-          </div>
-      </div>
-
-      <!-- Tabla Detallada Matrix -->
-      <div class="px-6 pb-6 overflow-x-auto">
-          <div class="text-[9px] font-mono text-data-gray uppercase mb-3 opacity-60">Handshake Raw Matrix</div>
-          <table class="tbl">
-              <thead>
-                  <tr>
-                      <th>Semana</th>
-                      <th class="r">Whales Net</th>
-                      <th class="r">Banks Net</th>
-                      <th class="r">Retail Net</th>
-                      <th class="r">Open Int</th>
-                  </tr>
-              </thead>
-              <tbody id="cot-table-body">
-                  <!-- Inyectado cada 1s -->
-              </tbody>
-          </table>
-      </div>
-    <div class="scanning-sweep"></div></div>
-  </div>
-
 <!-- COT_TABLE_START -->
-<div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06)">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-    <div style="font-size:9px;font-family:monospace;color:#1e3a5f;text-transform:uppercase;letter-spacing:.08em">
-      CFTC · Traders in Financial Futures · NASDAQ-100 · 221 semanas · 31/03/2026 05:12
+<div style="padding-top:8px">
+
+  <!-- COT Header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06)">
+    <div>
+      <div style="font-size:9px;font-family:monospace;color:#334155;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">
+        CFTC · Traders in Financial Futures · NASDAQ-100 · 221 semanas
+      </div>
+      <div style="font-size:11px;font-weight:900;color:#ff5722">
+        COT Index: 32.5% — ↘ BEARISH
+        <span style="font-size:9px;color:#334155;font-weight:400;margin-left:8px">24 Mar 2026 · 31/03/2026 05:28</span>
+      </div>
     </div>
     <a href="cot_historial.html" target="_blank"
        style="display:inline-flex;align-items:center;gap:5px;background:rgba(0,242,255,.05);
               border:1px solid rgba(0,242,255,.2);color:#00f2ff;padding:6px 14px;
-              border-radius:16px;text-decoration:none;font-size:9px;font-weight:700;font-family:monospace">
+              border-radius:16px;text-decoration:none;font-size:10px;font-weight:700;font-family:monospace">
       📂 HISTORIAL 221W ↗
     </a>
   </div>
-    </table>
+
+  <!-- 4 semanas con datos exactos -->
+  
+<div style="background:rgba(0,0,0,.25);border:1px solid rgba(0,242,255,.3);border-radius:10px;overflow:hidden;margin-bottom:12px">
+  <div style="background:rgba(0,242,255,.03);padding:8px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+    <span style="font-size:10px;font-weight:700;color:#e2e8f0;font-family:monospace">
+      📅 24 Mar 2026<span style="font-size:7px;background:rgba(0,242,255,.12);color:#00f2ff;padding:1px 6px;border-radius:3px;margin-left:6px">LIVE</span>
+    </span>
+    <span style="font-size:10px;font-weight:900;color:#ff5722">COT Index: 32.5% — ↘ BEARISH</span>
   </div>
+  <div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:10px;min-width:600px">
+    <thead>
+      <tr style="background:rgba(255,255,255,.02)">
+        <th style="padding:6px 10px;text-align:left;font-size:8px;color:#334155;text-transform:uppercase;letter-spacing:.06em;font-weight:700;width:80px"></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#00f2ff;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Non-Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Hedge Funds</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#60a5fa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Dealers</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#a78bfa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Institucional<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Asset Mgr</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#fb923c;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Retail<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Non-Rept</span></th>
+        <th style="padding:6px 10px;text-align:right;font-size:8px;color:#e2e8f0;text-transform:uppercase;letter-spacing:.05em;font-weight:700;border-left:1px solid rgba(255,255,255,.08)">TOTAL<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Todas categ.</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#4ade80;font-weight:700;text-transform:uppercase;letter-spacing:.06em">LONG</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">45,072</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">47,617</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">92,538</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">37,908</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">223,135</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#f87171;font-weight:700;text-transform:uppercase;letter-spacing:.06em">SHORT</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">87,698</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">65,488</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">41,080</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">33,181</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">227,447</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.15);border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.06em">NET</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355">-42,626</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355">-17,871</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#00ff88">+51,458</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#00ff88">+4,727</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355;border-left:1px solid rgba(255,255,255,.08);font-size:12px">-4,312</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.08)">
+        <td style="padding:4px 10px;font-size:8px;color:#334155;font-weight:700;text-transform:uppercase;letter-spacing:.06em">CAMBIO</td>
+        <td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#00ff88;font-weight:700">+76</span> / <span style="color:#00ff88;font-weight:700">+1,661</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-1,542</span> / <span style="color:#ff3355;font-weight:700">-9,770</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-5,347</span> / <span style="color:#00ff88;font-weight:700">+4,586</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-4,498</span> / <span style="color:#ff3355;font-weight:700">-5,230</span></td><td style="padding:4px 6px;text-align:right;border-left:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.03);font-weight:700"><span style="color:#ff3355;font-weight:700">-2,558</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+<div style="background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;margin-bottom:12px">
+  <div style="background:rgba(255,255,255,.02);padding:8px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+    <span style="font-size:10px;font-weight:700;color:#e2e8f0;font-family:monospace">
+      📅 17 Mar 2026
+    </span>
+    <span style="font-size:10px;font-weight:900;color:#ff5722">COT Index: 34.3% — ↘ BEARISH</span>
+  </div>
+  <div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:10px;min-width:600px">
+    <thead>
+      <tr style="background:rgba(255,255,255,.02)">
+        <th style="padding:6px 10px;text-align:left;font-size:8px;color:#334155;text-transform:uppercase;letter-spacing:.06em;font-weight:700;width:80px"></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#00f2ff;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Non-Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Hedge Funds</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#60a5fa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Dealers</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#a78bfa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Institucional<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Asset Mgr</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#fb923c;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Retail<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Non-Rept</span></th>
+        <th style="padding:6px 10px;text-align:right;font-size:8px;color:#e2e8f0;text-transform:uppercase;letter-spacing:.05em;font-weight:700;border-left:1px solid rgba(255,255,255,.08)">TOTAL<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Todas categ.</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#4ade80;font-weight:700;text-transform:uppercase;letter-spacing:.06em">LONG</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">44,996</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">49,159</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">97,885</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">42,406</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">234,446</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#f87171;font-weight:700;text-transform:uppercase;letter-spacing:.06em">SHORT</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">86,037</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">75,258</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">36,494</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">38,411</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">236,200</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.15);border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.06em">NET</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355">-41,041</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355">-26,099</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#00ff88">+61,391</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#00ff88">+3,995</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355;border-left:1px solid rgba(255,255,255,.08);font-size:12px">-1,754</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.08)">
+        <td style="padding:4px 10px;font-size:8px;color:#334155;font-weight:700;text-transform:uppercase;letter-spacing:.06em">CAMBIO</td>
+        <td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-2,245</span> / <span style="color:#00ff88;font-weight:700">+4,852</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#00ff88;font-weight:700">+2,405</span> / <span style="color:#ff3355;font-weight:700">-4,733</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-3,682</span> / <span style="color:#00ff88;font-weight:700">+445</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#00ff88;font-weight:700">+5,145</span> / <span style="color:#00ff88;font-weight:700">+1,487</span></td><td style="padding:4px 6px;text-align:right;border-left:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.03);font-weight:700"><span style="color:#ff3355;font-weight:700">-428</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+<div style="background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;margin-bottom:12px">
+  <div style="background:rgba(255,255,255,.02);padding:8px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+    <span style="font-size:10px;font-weight:700;color:#e2e8f0;font-family:monospace">
+      📅 10 Mar 2026
+    </span>
+    <span style="font-size:10px;font-weight:900;color:#ffd600">COT Index: 42.5% — → NEUTRAL</span>
+  </div>
+  <div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:10px;min-width:600px">
+    <thead>
+      <tr style="background:rgba(255,255,255,.02)">
+        <th style="padding:6px 10px;text-align:left;font-size:8px;color:#334155;text-transform:uppercase;letter-spacing:.06em;font-weight:700;width:80px"></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#00f2ff;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Non-Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Hedge Funds</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#60a5fa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Dealers</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#a78bfa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Institucional<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Asset Mgr</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#fb923c;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Retail<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Non-Rept</span></th>
+        <th style="padding:6px 10px;text-align:right;font-size:8px;color:#e2e8f0;text-transform:uppercase;letter-spacing:.05em;font-weight:700;border-left:1px solid rgba(255,255,255,.08)">TOTAL<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Todas categ.</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#4ade80;font-weight:700;text-transform:uppercase;letter-spacing:.06em">LONG</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">47,241</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">46,754</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">101,567</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">37,261</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">232,823</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#f87171;font-weight:700;text-transform:uppercase;letter-spacing:.06em">SHORT</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">81,185</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">79,991</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">36,049</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">36,924</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">234,149</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.15);border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.06em">NET</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355">-33,944</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355">-33,237</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#00ff88">+65,518</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#00ff88">+337</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355;border-left:1px solid rgba(255,255,255,.08);font-size:12px">-1,326</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.08)">
+        <td style="padding:4px 10px;font-size:8px;color:#334155;font-weight:700;text-transform:uppercase;letter-spacing:.06em">CAMBIO</td>
+        <td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-3,921</span> / <span style="color:#ff3355;font-weight:700">-2,558</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-4,834</span> / <span style="color:#ff3355;font-weight:700">-8,231</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-2,347</span> / <span style="color:#00ff88;font-weight:700">+753</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-3,201</span> / <span style="color:#ff3355;font-weight:700">-2,904</span></td><td style="padding:4px 6px;text-align:right;border-left:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.03);font-weight:700"><span style="color:#ff3355;font-weight:700">-1,363</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+<div style="background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;margin-bottom:12px">
+  <div style="background:rgba(255,255,255,.02);padding:8px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+    <span style="font-size:10px;font-weight:700;color:#e2e8f0;font-family:monospace">
+      📅 3 Mar 2026
+    </span>
+    <span style="font-size:10px;font-weight:900;color:#ffd600">COT Index: 44.1% — → NEUTRAL</span>
+  </div>
+  <div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:10px;min-width:600px">
+    <thead>
+      <tr style="background:rgba(255,255,255,.02)">
+        <th style="padding:6px 10px;text-align:left;font-size:8px;color:#334155;text-transform:uppercase;letter-spacing:.06em;font-weight:700;width:80px"></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#00f2ff;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Non-Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Hedge Funds</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#60a5fa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Commercial<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Dealers</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#a78bfa;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Institucional<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Asset Mgr</span></th>
+        <th style="padding:6px 8px;text-align:right;font-size:8px;color:#fb923c;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Retail<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Non-Rept</span></th>
+        <th style="padding:6px 10px;text-align:right;font-size:8px;color:#e2e8f0;text-transform:uppercase;letter-spacing:.05em;font-weight:700;border-left:1px solid rgba(255,255,255,.08)">TOTAL<br><span style="color:#1e3a5f;font-weight:400;text-transform:none;font-size:7px">Todas categ.</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#4ade80;font-weight:700;text-transform:uppercase;letter-spacing:.06em">LONG</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">51,162</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">51,588</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">103,914</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#4ade80">40,462</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">247,126</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#f87171;font-weight:700;text-transform:uppercase;letter-spacing:.06em">SHORT</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">83,743</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">88,222</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">35,296</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:700;color:#f87171">39,828</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#e2e8f0;border-left:1px solid rgba(255,255,255,.08);font-size:11px">247,089</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.15);border-bottom:1px solid rgba(255,255,255,.04)">
+        <td style="padding:6px 10px;font-size:8px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.06em">NET</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355">-32,581</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#ff3355">-36,634</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#00ff88">+68,618</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:900;color:#00ff88">+634</td>
+        <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:900;color:#00ff88;border-left:1px solid rgba(255,255,255,.08);font-size:12px">+37</td>
+      </tr>
+      <tr style="background:rgba(0,0,0,.08)">
+        <td style="padding:4px 10px;font-size:8px;color:#334155;font-weight:700;text-transform:uppercase;letter-spacing:.06em">CAMBIO</td>
+        <td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-1,655</span> / <span style="color:#00ff88;font-weight:700">+6,669</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#00ff88;font-weight:700">+2,967</span> / <span style="color:#ff3355;font-weight:700">-13,947</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-3,189</span> / <span style="color:#ff3355;font-weight:700">-1,646</span></td><td style="padding:4px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.03)"><span style="color:#ff3355;font-weight:700">-1,766</span> / <span style="color:#00ff88;font-weight:700">+4,151</span></td><td style="padding:4px 6px;text-align:right;border-left:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.03);font-weight:700"><span style="color:#00ff88;font-weight:700">+1,130</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
 
   <div style="text-align:right;margin-top:6px;font-size:8px;color:#1e3a5f;font-family:monospace">
     CFTC · Auto-update viernes 22:00 UTC

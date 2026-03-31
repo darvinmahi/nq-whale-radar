@@ -195,21 +195,32 @@ for i, r in enumerate(last4):
     prev = rows[idx-1] if idx > 0 else None
     four_weeks_html += week_table(r, prev, is_live=(i == 0))
 
+ci_last = last['ci']
+
 widget = f"""{MARKER_S}
-<div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06)">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-    <div style="font-size:9px;font-family:monospace;color:#1e3a5f;text-transform:uppercase;letter-spacing:.08em">
-      CFTC · Traders in Financial Futures · NASDAQ-100 · {total_wks} semanas · {updated}
+<div style="padding-top:8px">
+
+  <!-- COT Header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06)">
+    <div>
+      <div style="font-size:9px;font-family:monospace;color:#334155;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">
+        CFTC · Traders in Financial Futures · NASDAQ-100 · {total_wks} semanas
+      </div>
+      <div style="font-size:11px;font-weight:900;color:{ci_clr(ci_last)}">
+        COT Index: {ci_last:.1f}% — {ci_sig(ci_last)}
+        <span style="font-size:9px;color:#334155;font-weight:400;margin-left:8px">{lbl(last['date'])} · {updated}</span>
+      </div>
     </div>
     <a href="cot_historial.html" target="_blank"
        style="display:inline-flex;align-items:center;gap:5px;background:rgba(0,242,255,.05);
               border:1px solid rgba(0,242,255,.2);color:#00f2ff;padding:6px 14px;
-              border-radius:16px;text-decoration:none;font-size:9px;font-weight:700;font-family:monospace">
+              border-radius:16px;text-decoration:none;font-size:10px;font-weight:700;font-family:monospace">
       📂 HISTORIAL {total_wks}W ↗
     </a>
   </div>
-    </table>
-  </div>
+
+  <!-- 4 semanas con datos exactos -->
+  {four_weeks_html}
 
   <div style="text-align:right;margin-top:6px;font-size:8px;color:#1e3a5f;font-family:monospace">
     CFTC · Auto-update viernes 22:00 UTC
@@ -249,12 +260,15 @@ html = pat_orphan.sub('', html) # quitar orphans que queden
 after_count = len(_re.findall(_re.escape(MARKER_S), html))
 print(f'Marcadores START eliminados: {before_count} → {after_count}')
 
-# ─ Paso C: Inyectar UN SOLO widget al final del section#cot-analysis ──────
+# ─ Paso C: REEMPLAZAR todo el contenido del section#cot-analysis ────────────
 cot_pos = html.find('id="cot-analysis"')
 if cot_pos > 0:
-    sec_end = html.find('</section>', cot_pos)
-    html    = html[:sec_end] + '\n' + widget + '\n' + html[sec_end:]
-    print('✅ Widget inyectado en cot-analysis')
+    # Encontrar el cierre del tag de apertura del section
+    tag_open_end = html.find('>', cot_pos) + 1
+    sec_end      = html.find('</section>', cot_pos)
+    # REEMPLAZAR todo el interior del section (no solo append)
+    html = html[:tag_open_end] + '\n' + widget + '\n' + html[sec_end:]
+    print('✅ Widget REEMPLAZA contenido de cot-analysis (viejo eliminado)')
 else:
     html = html.replace('</body>', '\n' + widget + '\n</body>', 1)
     print('✅ Widget inyectado antes de </body>')
