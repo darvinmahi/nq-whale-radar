@@ -3506,13 +3506,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="bias-score-blk"><div class="bias-score text-emerald-400" id="weeklyScore">68</div><div class="bias-score-lbl">Score /100</div></div>
       </div>
       <div class="ind-rows" id="weeklyBars">
-        <div class="ind-row"><span class="ind-nm text-electric-cyan">COT 30%</span><div class="bar-t"><div id="weeklyCOTBar" class="bar-f" style="width:27%;background:var(--orange);"></div></div><span class="ind-vl text-orange-500" id="weeklyCOTVal">27/100</span></div>
+        <div class="ind-row"><span class="ind-nm text-electric-cyan">COT 32%</span><div class="bar-t"><div id="weeklyCOTBar" class="bar-f" style="width:32%;background:var(--orange);"></div></div><span class="ind-vl text-orange-500" id="weeklyCOTVal">32/100</span></div>
         <div class="ind-row"><span class="ind-nm text-orange-500">VXN 20%</span><div class="bar-t"><div id="weeklyVXNBar" class="bar-f" style="width:70%;background:var(--green);"></div></div><span class="ind-vl text-emerald-400" id="weeklyVXNVal">▲</span></div>
         <div class="ind-row"><span class="ind-nm text-purple-500">DIX 25%</span><div class="bar-t"><div id="weeklyDIXBar" class="bar-f" style="width:55%;background:var(--yellow);"></div></div><span class="ind-vl text-yellow-500" id="weeklyDIXVal">◆</span></div>
         <div class="ind-row"><span class="ind-nm text-emerald-500">GEX 15%</span><div class="bar-t"><div id="weeklyGEXBar" class="bar-f" style="width:55%;background:var(--yellow);"></div></div><span class="ind-vl text-yellow-500" id="weeklyGEXVal">◆</span></div>
         <div class="ind-row"><span class="ind-nm text-yellow-500">P/C 10%</span><div class="bar-t"><div id="weeklyPCBar" class="bar-f" style="width:80%;background:var(--green);"></div></div><span class="ind-vl text-emerald-400" id="weeklyPCVal">▲</span></div>
       </div>
-      <div class="bias-note" id="weeklyBiasNote">⚠️ COT en zona baja 3 años (27/100). VXN y Put/Call confirman calma. DIX y GEX neutros. Sesgo favorable pero sin convicción institucional fuerte.</div>
+      <div class="bias-note" id="weeklyBiasNote">⚠️ COT en zona baja 3 años (32/100). VXN y Put/Call confirman calma. DIX y GEX neutros. Sesgo favorable pero sin convicción institucional fuerte.</div>
     </div>
     
     <div class="card card-blue">
@@ -3766,14 +3766,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── FALLBACK — datos reales 10 Mar 2026 ─────────────────
   const FALLBACK = [
-    { date:"10 Mar 2026", nc_long:100576, nc_short:36155,  co_long:46264,  co_short:86931, nr_long:33480, nr_short:3776,  oi:259842 },
-    { date:"03 Mar 2026", nc_long:95200,  nc_short:36900,  co_long:48100,  co_short:85900, nr_long:31200, nr_short:4100,  oi:257301 },
-    { date:"24 Feb 2026", nc_long:88400,  nc_short:44300,  co_long:51300,  co_short:83400, nr_long:29800, nr_short:5100,  oi:261599 },
-    { date:"17 Feb 2026", nc_long:79100,  nc_short:47500,  co_long:54200,  co_short:78600, nr_long:27400, nr_short:5800,  oi:272951 },
-    { date:"10 Feb 2026", nc_long:82400,  nc_short:44200,  co_long:55100,  co_short:77200, nr_long:26800, nr_short:6100,  oi:270000 },
-    { date:"03 Feb 2026", nc_long:91200,  nc_short:41100,  co_long:52300,  co_short:79800, nr_long:28100, nr_short:5400,  oi:268000 },
-    { date:"27 Jan 2026", nc_long:98300,  nc_short:38200,  co_long:49100,  co_short:82100, nr_long:29600, nr_short:4900,  oi:265000 },
-    { date:"20 Jan 2026", nc_long:112000, nc_short:34100,  co_long:46800,  co_short:84500, nr_long:31200, nr_short:4300,  oi:272000 },
+    { date:"24 Mar 2026", nc_long:137610, nc_short:128778, co_long:47617, co_short:65488, nr_long:0, nr_short:0, oi:379493 },
+    { date:"17 Mar 2026", nc_long:142881, nc_short:122531, co_long:49159, co_short:75258, nr_long:0, nr_short:0, oi:389829 },
+    { date:"10 Mar 2026", nc_long:148808, nc_short:117234, co_long:46754, co_short:79991, nr_long:0, nr_short:0, oi:392787 },
+    { date:"3 Mar 2026", nc_long:155076, nc_short:119039, co_long:51588, co_short:88222, nr_long:0, nr_short:0, oi:413925 },
+    { date:"24 Feb 2026", nc_long:159920, nc_short:114016, co_long:48621, co_short:102169, nr_long:0, nr_short:0, oi:424726 },
+    { date:"17 Feb 2026", nc_long:170033, nc_short:112323, co_long:39724, co_short:107575, nr_long:0, nr_short:0, oi:429655 },
+    { date:"10 Feb 2026", nc_long:159647, nc_short:100159, co_long:41959, co_short:114173, nr_long:0, nr_short:0, oi:415938 },
+    { date:"3 Feb 2026", nc_long:164558, nc_short:107451, co_long:38879, co_short:115328, nr_long:0, nr_short:0, oi:426216 }
   ];
 
   // ─── FETCH CFTC ──────────────────────────────────────────
@@ -3787,12 +3787,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const d = new Date(f.report_date_as_yyyy_mm_dd || f.report_date);
         return {
           date:     d.toLocaleDateString("en-US",{ day:"2-digit", month:"short", year:"numeric" }),
-          nc_long:  +( f.asset_mgr_positions_long  || f.noncomm_positions_long_all  || 0),
-          nc_short: +( f.asset_mgr_positions_short || f.noncomm_positions_short_all || 0),
+          nc_long:  ( +(f.lev_money_positions_long||0) + +(f.asset_mgr_positions_long||0) ) || +(f.noncomm_positions_long_all||0),
+          nc_short: ( +(f.lev_money_positions_short||0) + +(f.asset_mgr_positions_short||0) ) || +(f.noncomm_positions_short_all||0),
           co_long:  +( f.dealer_positions_long     || f.comm_positions_long_all     || 0),
           co_short: +( f.dealer_positions_short    || f.comm_positions_short_all    || 0),
-          nr_long:  +( f.lev_money_positions_long  || f.nonrept_positions_long_all  || 0),
-          nr_short: +( f.lev_money_positions_short || f.nonrept_positions_short_all || 0),
+          nr_long:  +( f.nonrept_positions_long_all  || 0),
+          nr_short: +( f.nonrept_positions_short_all || 0),
           oi:       +( f.open_interest_all         || 0),
         };
       }).filter(r => r.nc_long > 0);

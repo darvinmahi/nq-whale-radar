@@ -32,12 +32,16 @@ jobs:
         run: python fix_and_inject_cot.py
         timeout-minutes: 8
 
-      - name: 3. Commit & Push
+      - name: 3. Parchear motor JS (FALLBACK real + API mapping correcto)
+        run: python patch_cot_engine.py
+        timeout-minutes: 3
+
+      - name: 4. Commit y Push
         run: |
           git config user.name  "COT-Bot"
           git config user.email "cot-bot@nq-whale-radar"
           git add data/cot/nasdaq_cot_historical.csv index.html cot_historial.html
           git diff --cached --quiet && echo "No hay cambios esta semana" && exit 0
           WEEK=$(date -u +"%Y-%m-%d")
-          git commit -m "cot: auto-update ${WEEK} — CFTC data + widget + historial"
+          git commit -m "cot: auto-update ${WEEK} — CFTC data + widget + JS engine + historial"
           git push
