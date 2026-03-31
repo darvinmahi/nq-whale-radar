@@ -1,0 +1,27 @@
+{
+  "total_sessions": 1,
+  "sessions": [
+    {
+      "date": "2026-03-31",
+      "day": "Martes",
+      "direction": "BULLISH",
+      "ny_open": 23381.75,
+      "ny_close": 23878.0,
+      "ny_high": 23975.25,
+      "ny_low": 23376.5,
+      "ny_range": 598.75,
+      "ny_move": 496.25,
+      "poc": 23324.0,
+      "vah": 23411.5,
+      "val": 23261.5,
+      "chart_url": "martes_chart_20260331.html"
+    }
+  ],
+  "directions": {
+    "BULLISH": 1,
+    "BEARISH": 0,
+    "NEUTRAL": 0
+  },
+  "total_tuesdays": 1,
+  "updated_at": "2026-03-31T17:58:55 ET"
+}

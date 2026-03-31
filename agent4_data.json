@@ -1,13 +1,13 @@
 {
   "agent": 4,
-  "timestamp": "2026-03-31T19:57:48.930653Z",
+  "timestamp": "2026-03-31T21:58:54.351676Z",
   "verdict": "⚪ NEUTRAL (51/100) — Sin sesgo claro — operar el rango o esperar catalizador.",
   "global_score": 51,
   "global_label": "NEUTRAL",
   "icon": "⚪",
   "layers": {
     "positioning": 50,
-    "macro": 53.1,
+    "macro": 53.15,
     "liquidity": 40.0,
     "timing": 56.0,
     "algorithmic": 66.0,
