@@ -72,10 +72,11 @@ for i, r in enumerate(rows):
     r['COM_N'] = r['COM_L'] - r['COM_S']
     r['RET_N'] = r['RET_L'] - r['RET_S']
     r['TOT_N'] = r['TOT_L'] - r['TOT_S']
-    # COT Index (trailing 3 años sobre NC Net)
-    hist = [x['NC_L']-x['NC_S'] for x in rows[max(0, i-156):i+1]]
+    # COT Index basado en Lev_Money SOLO (hedge funds = especuladores puros, 156sem=3 anos)
+    hist = [x['lm_l']-x['lm_s'] for x in rows[max(0, i-156):i+1]]
     mn, mx = min(hist), max(hist)
-    r['ci'] = round((r['NC_N']-mn)/(mx-mn)*100, 1) if mx > mn else 50.0
+    lm_net = r['lm_l'] - r['lm_s']
+    r['ci'] = round((lm_net-mn)/(mx-mn)*100, 1) if mx > mn else 50.0
 
 # ── 4. Helpers ────────────────────────────────────────────────────────────────
 def fmt(n):
