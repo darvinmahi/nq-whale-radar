@@ -1,10 +1,10 @@
 {
-  "cycle": 2,
-  "timestamp": "2026-03-31T00:17:47.302333+00:00Z",
-  "last_update_human": "2026-03-31 00:17:47 UTC",
+  "cycle": 18,
+  "timestamp": "2026-04-01T07:01:20.262874+00:00Z",
+  "last_update_human": "2026-04-01 07:01:20 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 4.7,
+  "total_time_sec": 3.4,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -22,7 +22,11 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 4.1
+      "time": 2.8
+    },
+    "Agent 8 · Morgan Psychologist": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -32,11 +36,11 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 8 · Morgan Psychologist": {
+    "Agent 6 · SMC Detective": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 6 · SMC Detective": {
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -48,13 +52,9 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 14 · Order Flow Expert": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
@@ -66,7 +66,7 @@
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 0.4
+      "time": 0.5
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",

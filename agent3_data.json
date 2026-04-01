@@ -1,25 +1,25 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-03-31T00:17:42.671855Z",
+  "timestamp": "2026-04-01T07:01:16.898785Z",
   "input_source": "agent1_data.json",
   "raw_inputs": {
-    "VXN": 33.26,
-    "GEX_B": 2.3,
-    "DIX": null
+    "VXN": 28.24,
+    "GEX_B": 2.33,
+    "DIX": 44.55
   },
   "vxn_analysis": {
     "level": "PANIC",
     "signal": "BEARISH",
     "score": 20,
-    "description": "VXN 33.26 — Pánico. No operar longs sin cobertura.",
+    "description": "VXN 28.24 — Pánico. No operar longs sin cobertura.",
     "risk": "Alta probabilidad de continuación bajista"
   },
   "gex_analysis": {
     "level": "STRONG_POSITIVE",
     "signal": "BULLISH",
     "score": 70,
-    "description": "GEX +2.30B — Dealers comprando en caídas. Mercado amortiguado.",
+    "description": "GEX +2.33B — Dealers comprando en caídas. Mercado amortiguado.",
     "impact": "Los dealers frenan la volatilidad. Movimientos más suaves."
   },
   "signal": "BEARISH",
