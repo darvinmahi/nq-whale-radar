@@ -9,334 +9,406 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;800&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
-        :root {
-            --navy-void: #05070A;
-            --electric-cyan: #00F5FF;
-            --vibrant-blue: #3D5AFE;
-            --risk-red: #FF3D00;
-            --data-gray: #94A3B8;
-        }
-        body {
-            background-color: var(--navy-void);
-            color: white;
-            font-family: 'Inter', sans-serif;
-        }
-        .font-barlow { font-family: 'Barlow', sans-serif; }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 1rem;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, var(--electric-cyan), var(--vibrant-blue));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-glow {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 400px;
-            background: radial-gradient(circle at center, rgba(0, 245, 255, 0.05) 0%, transparent 70%);
-            z-index: 0;
-        }
-        .news-card {
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-        }
-        .news-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-left-color: var(--electric-cyan);
-            transform: translateX(4px);
-        }
-        .source-badge {
-            font-size: 9px;
-            padding: 2px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-        }
-        .source-reuters { background: rgba(255, 120, 0, 0.15); color: #FF7800; border: 1px solid rgba(255, 120, 0, 0.3); }
-        .source-cnbc { background: rgba(0, 167, 225, 0.15); color: #00A7E1; border: 1px solid rgba(0, 167, 225, 0.3); }
-        .source-bloomberg { background: rgba(128, 0, 255, 0.15); color: #9B59FF; border: 1px solid rgba(128, 0, 255, 0.3); }
-        .source-marketwatch { background: rgba(0, 200, 83, 0.15); color: #00C853; border: 1px solid rgba(0, 200, 83, 0.3); }
-        .source-investing { background: rgba(220, 20, 60, 0.15); color: #FF4757; border: 1px solid rgba(220, 20, 60, 0.3); }
-        .source-yahoo { background: rgba(107, 70, 193, 0.15); color: #8B5CF6; border: 1px solid rgba(107, 70, 193, 0.3); }
-        .source-default { background: rgba(148, 163, 184, 0.15); color: #94A3B8; border: 1px solid rgba(148, 163, 184, 0.3); }
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
-        .filter-btn {
-            transition: all 0.2s ease;
+        :root {
+            --void: #03050A;
+            --panel: rgba(8,14,26,0.9);
+            --cyan: #00F5FF;
+            --cyan-dim: rgba(0,245,255,0.08);
+            --cyan-border: rgba(0,245,255,0.15);
+            --blue: #3D5AFE;
+            --red: #FF3D00;
+            --green: #00E676;
+            --amber: #FFB300;
+            --purple: #A855F7;
+            --gray: #4A5568;
+            --gray-light: #94A3B8;
+            --text: #E2E8F0;
+            --text-dim: #64748B;
         }
-        .filter-btn.active {
-            background: rgba(0, 245, 255, 0.2);
-            border-color: var(--electric-cyan);
-            color: var(--electric-cyan);
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--void);
+            background-image:
+                radial-gradient(ellipse 80% 40% at 20% 0%, rgba(0,245,255,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 30% at 80% 100%, rgba(61,90,254,0.04) 0%, transparent 60%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
-        .skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 4px;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .pulse-dot {
-            animation: pulse-live 2s infinite;
-        }
-        @keyframes pulse-live {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        .sweep-line {
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.04), transparent);
-            animation: sweep 6s infinite;
-        }
-        /* SIDEBAR PANELS */
-        .sidebar-panel {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-        }
-        .sidebar-panel h4 {
-            font-family: 'Barlow', sans-serif;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--electric-cyan);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .sidebar-panel h4 .material-symbols-outlined { font-size: 16px; }
-        .cal-row {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
-            font-size: 11px;
-        }
-        .cal-row:last-child { border-bottom: none; }
-        .cal-date { font-family: 'JetBrains Mono', monospace; color: var(--data-gray); min-width: 44px; }
-        .cal-event { flex: 1; margin: 0 8px; color: #e2e8f0; font-weight: 500; }
-        .cal-impact-high { color: #FF3D00; font-weight: 700; }
-        .cal-impact-medium { color: #FFA726; }
-        .cal-impact-low { color: var(--data-gray); }
-        .fear-gauge {
-            width: 100%; height: 8px; border-radius: 4px;
-            background: linear-gradient(90deg, #FF3D00, #FFA726, #4CAF50, #2196F3);
-            position: relative; margin: 10px 0;
-        }
-        .fear-gauge .indicator {
-            position: absolute; top: -4px; width: 16px; height: 16px;
-            border-radius: 50%; border: 2px solid #fff;
-            background: var(--navy-void); transform: translateX(-50%);
-            box-shadow: 0 0 8px rgba(255,255,255,0.3);
-        }
-        .stat-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 4px 0; font-size: 11px;
-        }
-        .stat-label { color: var(--data-gray); }
-        .stat-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
-        .prob-bar {
-            height: 6px; border-radius: 3px;
-            background: rgba(255,255,255,0.05);
-            margin-top: 4px; overflow: hidden;
-        }
-        .prob-fill {
-            height: 100%; border-radius: 3px;
-            transition: width 0.6s ease;
-        }
+
+        /* ── GRID ─────────────────────────────────────────── */
         .main-grid {
             display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 24px;
+            grid-template-columns: 1fr 360px;
+            gap: 20px;
             align-items: start;
         }
-        @media (max-width: 1024px) {
-            .main-grid { grid-template-columns: 1fr; }
+        @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr; } }
+
+        /* ── NAV ──────────────────────────────────────────── */
+        .navbar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 32px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            background: rgba(3,5,10,0.85);
+            backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 100;
         }
-        @keyframes sweep {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
+        .nav-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+        .nav-brand span { color: var(--cyan); }
+        .live-badge {
+            display: flex; align-items: center; gap: 6px;
+            padding: 4px 12px; border-radius: 20px;
+            background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.2);
+            font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+            color: var(--green); text-transform: uppercase; letter-spacing: .1em;
         }
+        .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: blink 1.4s infinite; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+        /* ── TICKER BAR ───────────────────────────────────── */
+        .ticker-bar {
+            background: rgba(0,245,255,0.03); border-bottom: 1px solid rgba(0,245,255,0.06);
+            padding: 8px 0; overflow: hidden; white-space: nowrap;
+        }
+        .ticker-inner {
+            display: inline-flex; gap: 40px;
+            animation: ticker-scroll 40s linear infinite;
+        }
+        .ticker-inner:hover { animation-play-state: paused; }
+        @keyframes ticker-scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        .ticker-item { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; }
+        .t-up { color: var(--green); }
+        .t-dn { color: var(--red); }
+        .t-label { color: var(--gray-light); margin-right: 4px; font-weight: 400; }
+
+        /* ── STATUS BAR ────────────────────────────────────── */
+        .status-bar {
+            background: var(--panel);
+            border: 1px solid rgba(0,245,255,0.08);
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-bottom: 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 12px;
+            position: relative; overflow: hidden;
+        }
+        .status-bar::before {
+            content: ''; position: absolute; top:0; left:0; right:0; height:1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: .4;
+        }
+        .sweep-line {
+            position: absolute; top:0; left:-100%; width:40%; height:100%;
+            background: linear-gradient(90deg, transparent, rgba(0,245,255,0.03), transparent);
+            animation: sweep 7s infinite;
+        }
+        @keyframes sweep { 0%{left:-100%} 60%,100%{left:120%} }
+
+        /* ── FILTER TABS ─────────────────────────────────── */
+        .filter-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+        .filter-btn {
+            padding: 5px 14px; border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .08em;
+            border: 1px solid rgba(255,255,255,0.07); color: var(--gray-light);
+            cursor: pointer; background: transparent; transition: all .2s;
+        }
+        .filter-btn:hover { border-color: rgba(0,245,255,0.3); color: var(--cyan); }
+        .filter-btn.active {
+            background: rgba(0,245,255,0.1); border-color: rgba(0,245,255,0.3); color: var(--cyan);
+            box-shadow: 0 0 12px rgba(0,245,255,0.12);
+        }
+
+        /* ── NEWS CARDS ──────────────────────────────────── */
+        .news-card {
+            background: var(--panel);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-left: 3px solid transparent;
+            border-radius: 8px;
+            padding: 14px 16px;
+            transition: all .25s ease;
+            cursor: pointer; position: relative; overflow: hidden;
+        }
+        .news-card:hover {
+            background: rgba(12,20,38,0.95);
+            border-left-color: var(--cyan);
+            transform: translateX(3px);
+            box-shadow: -4px 0 20px rgba(0,245,255,0.08), 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .news-card.high-impact { border-left-color: rgba(255,61,0,0.5); }
+        .news-card.high-impact:hover { border-left-color: var(--red); box-shadow: -4px 0 20px rgba(255,61,0,0.12), 0 4px 20px rgba(0,0,0,0.4); }
+        .news-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+        .news-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 5px; }
+        .news-title:hover { color: var(--cyan); }
+        .news-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+        .news-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); }
+
+        /* Source badges */
+        .badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+            padding: 2px 7px; border-radius: 3px;
+        }
+        .b-reuters  { background: rgba(255,120,0,.12); color: #FF7800; border: 1px solid rgba(255,120,0,.25); }
+        .b-cnbc     { background: rgba(0,167,225,.12); color: #00A7E1; border: 1px solid rgba(0,167,225,.25); }
+        .b-bloomberg{ background: rgba(155,89,255,.12); color: #9B59FF; border: 1px solid rgba(155,89,255,.25); }
+        .b-marketwatch{ background: rgba(0,200,83,.12); color: #00C853; border: 1px solid rgba(0,200,83,.25); }
+        .b-investing{ background: rgba(255,71,87,.12); color: #FF4757; border: 1px solid rgba(255,71,87,.25); }
+        .b-yahoo    { background: rgba(139,92,246,.12); color: #8B5CF6; border: 1px solid rgba(139,92,246,.25); }
+        .b-default  { background: rgba(148,163,184,.1); color: #94A3B8; border: 1px solid rgba(148,163,184,.2); }
+        .b-impact   { background: rgba(255,179,0,.12); color: var(--amber); border: 1px solid rgba(255,179,0,.25); font-size: 9px; }
+        .b-nq       { background: rgba(0,245,255,.1); color: var(--cyan); border: 1px solid rgba(0,245,255,.2); }
+
+        /* ── SIDEBAR ─────────────────────────────────────── */
+        .sp {
+            background: rgba(8,14,26,0.8);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            position: relative; overflow: hidden;
+            transition: border-color .3s;
+        }
+        .sp:hover { border-color: rgba(0,245,255,0.12); }
+        .sp-glow-cyan  { border-color: rgba(0,245,255,0.1); }
+        .sp-glow-green { border-color: rgba(0,230,118,0.1); }
+        .sp-glow-purple{ border-color: rgba(168,85,247,0.12); }
+        .sp-glow-red   { border-color: rgba(255,61,0,0.12); }
+        .sp-glow-amber { border-color: rgba(255,179,0,0.12); }
+        .sp::after {
+            content:''; position:absolute; top:0; left:0; right:0; height:1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(0,245,255,0.15) 50%, transparent 100%);
+        }
+        .sp-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .15em;
+            color: var(--cyan); margin-bottom: 12px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .sp-title .material-symbols-outlined { font-size: 15px; }
+        .sp-title.purple { color: var(--purple); }
+        .sp-title.red { color: var(--red); }
+        .sp-title.green { color: var(--green); }
+        .sp-title.amber { color: var(--amber); }
+
+        /* Stat rows */
+        .srow { display:flex; justify-content:space-between; align-items:center; padding: 4px 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .srow:last-child { border-bottom: none; }
+        .slabel { color: var(--gray-light); font-size: 10px; }
+        .sval { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; }
+
+        /* Calendar */
+        .cal-row { display:flex; align-items:center; gap:8px; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 10px; }
+        .cal-row:last-child { border-bottom: none; }
+        .cal-time { font-family:'JetBrains Mono',monospace; color:var(--text-dim); min-width:36px; }
+        .cal-name { flex:1; color:var(--text); font-weight:500; }
+        .cal-high { color: var(--red); font-weight: 700; }
+        .cal-med  { color: var(--amber); }
+        .cal-low  { color: var(--gray-light); }
+
+        /* Fear/Greed */
+        .fg-number { font-family:'Barlow Condensed',sans-serif; font-size:40px; font-weight:900; line-height:1; }
+        .fg-bar { height:6px; border-radius:3px; background:linear-gradient(90deg,#FF3D00 0%,#FFB300 40%,#00E676 75%,#2196F3 100%); position:relative; margin:8px 0; }
+        .fg-dot { position:absolute; top:-5px; width:16px; height:16px; border-radius:50%; background:var(--void); border:2px solid #fff; transform:translateX(-50%); box-shadow:0 0 10px rgba(255,255,255,0.4); }
+
+        /* Prob bars */
+        .pbar { height:4px; border-radius:2px; background:rgba(255,255,255,0.05); margin-top:3px; overflow:hidden; }
+        .pbar-fill { height:100%; border-radius:2px; transition: width .8s ease; }
+
+        /* Yield curve pill */
+        .yield-pill {
+            display:flex; flex-direction:column; gap:4px;
+            padding:10px; border-radius:8px; margin-bottom:10px;
+        }
+        .yield-pill.normal { background:rgba(0,230,118,0.06); border:1px solid rgba(0,230,118,0.2); }
+        .yield-pill.inverted { background:rgba(255,61,0,0.06); border:1px solid rgba(255,61,0,0.2); }
+
+        /* Skeleton */
+        .sk { background:linear-gradient(90deg,rgba(255,255,255,0.03) 25%,rgba(255,255,255,0.07) 50%,rgba(255,255,255,0.03) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:3px; }
+        @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+        /* Refresh btn */
+        .refresh-btn {
+            display:flex; align-items:center; gap:5px;
+            padding: 5px 14px; border-radius: 6px; cursor: pointer;
+            background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.2);
+            color: var(--cyan); font-family:'JetBrains Mono',monospace;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            transition: all .2s;
+        }
+        .refresh-btn:hover { background: rgba(0,245,255,0.15); box-shadow: 0 0 16px rgba(0,245,255,0.15); }
+        .refresh-btn .material-symbols-outlined { font-size: 14px; }
+
+        /* Count badge */
+        .count-badge {
+            padding: 4px 10px; border-radius: 6px;
+            background: rgba(0,245,255,0.06); border: 1px solid rgba(0,245,255,0.15);
+            font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700;
+            color: var(--cyan);
+        }
+
+        /* Animate in */
+        .fade-in { animation: fadeUp .4s ease forwards; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
-    <div class="hero-glow"></div>
+<body>
 
-    <!-- NAVIGATION -->
-    <nav class="relative z-50 flex items-center justify-between px-8 py-6 border-b border-white/5">
-        <a href="index.html" class="flex items-center gap-2 group">
-            <span class="material-symbols-outlined text-electric-cyan group-hover:-translate-x-1 transition-transform" style="color: var(--electric-cyan);">arrow_back</span>
-            <span class="text-xs font-mono uppercase tracking-widest" style="color: var(--data-gray);">Volver al Terminal</span>
+    <!-- NAV -->
+    <nav class="navbar">
+        <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--gray-light);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;transition:color .2s" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--gray-light)'">
+            <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span> Terminal
         </a>
-        <div class="text-center">
-            <h1 class="text-2xl font-barlow font-extrabold uppercase tracking-tighter">
-                NOTICIAS <span style="color: var(--electric-cyan);">NASDAQ</span>
-            </h1>
-        </div>
-        <div class="flex items-center gap-3">
-            <div class="w-2 h-2 rounded-full pulse-dot" style="background: var(--electric-cyan);"></div>
-            <span class="text-xs font-mono uppercase" style="color: var(--data-gray);" id="lastUpdate">Cargando...</span>
+        <div class="nav-brand">Whale Radar <span>Intelligence</span></div>
+        <div class="live-badge">
+            <div class="live-dot"></div>
+            LIVE · <span id="timerDisplay">5:00</span>
         </div>
     </nav>
 
-    <main class="relative z-10 max-w-7xl mx-auto px-6 py-8">
+    <!-- TICKER BAR -->
+    <div class="ticker-bar">
+        <div class="ticker-inner" id="tickerInner">
+            <span class="ticker-item"><span class="t-label">NQ</span><span class="t-up" id="tk-nq">cargando...</span></span>
+            <span class="ticker-item"><span class="t-label">ES</span><span class="t-up" id="tk-es">···</span></span>
+            <span class="ticker-item"><span class="t-label">VIX</span><span class="t-dn" id="tk-vix">···</span></span>
+            <span class="ticker-item"><span class="t-label">10Y</span><span class="t-dn" id="tk-10y">···</span></span>
+            <span class="ticker-item"><span class="t-label">DXY</span><span class="t-dn" id="tk-dxy">···</span></span>
+            <span class="ticker-item"><span class="t-label">GOLD</span><span class="t-up" id="tk-gold">···</span></span>
+            <span class="ticker-item"><span class="t-label">OIL</span><span id="tk-oil">···</span></span>
+            <span class="ticker-item"><span class="t-label">F&G</span><span class="t-dn" id="tk-fg">···</span></span>
+            <!-- duplicate for seamless loop -->
+            <span class="ticker-item"><span class="t-label">NQ</span><span class="t-up" id="tk-nq2">···</span></span>
+            <span class="ticker-item"><span class="t-label">ES</span><span class="t-up" id="tk-es2">···</span></span>
+            <span class="ticker-item"><span class="t-label">VIX</span><span class="t-dn" id="tk-vix2">···</span></span>
+            <span class="ticker-item"><span class="t-label">10Y</span><span class="t-dn" id="tk-10y2">···</span></span>
+            <span class="ticker-item"><span class="t-label">DXY</span><span class="t-dn" id="tk-dxy2">···</span></span>
+            <span class="ticker-item"><span class="t-label">GOLD</span><span class="t-up" id="tk-gold2">···</span></span>
+            <span class="ticker-item"><span class="t-label">OIL</span><span id="tk-oil2">···</span></span>
+            <span class="ticker-item"><span class="t-label">F&G</span><span class="t-dn" id="tk-fg2">···</span></span>
+        </div>
+    </div>
+
+    <main style="max-width:1440px;margin:0 auto;padding:20px 24px">
 
         <!-- STATUS BAR -->
-        <div class="glass-panel p-4 mb-8 flex flex-wrap items-center justify-between gap-4 relative overflow-hidden">
+        <div class="status-bar">
             <div class="sweep-line"></div>
-            <div class="flex items-center gap-4 relative z-10">
-                <span class="material-symbols-outlined text-2xl" style="color: var(--electric-cyan);">rss_feed</span>
+            <div style="display:flex;align-items:center;gap:12px;position:relative;z-index:1">
+                <span class="material-symbols-outlined" style="color:var(--cyan);font-size:20px">rss_feed</span>
                 <div>
-                    <div class="text-xs font-barlow font-bold uppercase tracking-wider">FEED EN VIVO — MERCADOS FINANCIEROS</div>
-                    <div class="text-[10px] font-mono" style="color: var(--data-gray);">Reuters · CNBC · Bloomberg · MarketWatch · Investing.com</div>
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.1em">FEED EN VIVO — Mercados Financieros</div>
+                    <div style="font-size:10px;color:var(--text-dim);font-family:'JetBrains Mono',monospace">Reuters · CNBC · Bloomberg · MarketWatch · Investing.com</div>
                 </div>
             </div>
-            <div class="flex items-center gap-4 relative z-10">
-                <div class="flex items-center gap-2 px-3 py-1 rounded" style="background: rgba(0, 245, 255, 0.1); border: 1px solid rgba(0, 245, 255, 0.2);">
-                    <span class="text-[10px] font-mono font-bold" style="color: var(--electric-cyan);" id="newsCount">0</span>
-                    <span class="text-[10px] font-mono uppercase" style="color: var(--data-gray);">noticias</span>
-                </div>
-                <button onclick="refreshAllFeeds()" class="px-3 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider transition-all hover:scale-105" style="background: rgba(0, 245, 255, 0.1); border: 1px solid rgba(0, 245, 255, 0.2); color: var(--electric-cyan);">
-                    <span class="material-symbols-outlined text-sm align-middle" id="refreshIcon">refresh</span> Actualizar
+            <div style="display:flex;align-items:center;gap:10px;position:relative;z-index:1">
+                <span class="count-badge"><span id="newsCount">0</span> noticias</span>
+                <button onclick="refreshAllFeeds()" class="refresh-btn">
+                    <span class="material-symbols-outlined" id="refreshIcon">refresh</span> Actualizar
                 </button>
             </div>
         </div>
 
         <!-- FILTER TABS -->
-        <div class="flex flex-wrap gap-2 mb-8">
-            <button onclick="filterBySource('all')" class="filter-btn active px-4 py-2 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest transition-all" style="border: 1px solid rgba(255,255,255,0.1);" data-source="all">
-                TODAS
-            </button>
-            <button onclick="filterBySource('reuters')" class="filter-btn px-4 py-2 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest transition-all" style="border: 1px solid rgba(255,255,255,0.1); color: var(--data-gray);" data-source="reuters">
-                Reuters
-            </button>
-            <button onclick="filterBySource('cnbc')" class="filter-btn px-4 py-2 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest transition-all" style="border: 1px solid rgba(255,255,255,0.1); color: var(--data-gray);" data-source="cnbc">
-                CNBC
-            </button>
-            <button onclick="filterBySource('bloomberg')" class="filter-btn px-4 py-2 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest transition-all" style="border: 1px solid rgba(255,255,255,0.1); color: var(--data-gray);" data-source="bloomberg">
-                Bloomberg
-            </button>
-            <button onclick="filterBySource('marketwatch')" class="filter-btn px-4 py-2 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest transition-all" style="border: 1px solid rgba(255,255,255,0.1); color: var(--data-gray);" data-source="marketwatch">
-                MarketWatch
-            </button>
-            <button onclick="filterBySource('investing')" class="filter-btn px-4 py-2 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest transition-all" style="border: 1px solid rgba(255,255,255,0.1); color: var(--data-gray);" data-source="investing">
-                Investing
-            </button>
+        <div class="filter-tabs">
+            <button onclick="filterBySource('all')" class="filter-btn active" data-source="all">Todas</button>
+            <button onclick="filterBySource('reuters')" class="filter-btn" data-source="reuters">Reuters</button>
+            <button onclick="filterBySource('cnbc')" class="filter-btn" data-source="cnbc">CNBC</button>
+            <button onclick="filterBySource('bloomberg')" class="filter-btn" data-source="bloomberg">Bloomberg</button>
+            <button onclick="filterBySource('marketwatch')" class="filter-btn" data-source="marketwatch">MarketWatch</button>
+            <button onclick="filterBySource('investing')" class="filter-btn" data-source="investing">Investing</button>
         </div>
 
-        <!-- ═══ 2-COLUMN GRID: NEWS + SIDEBAR ═══ -->
+        <!-- MAIN GRID -->
         <div class="main-grid">
 
             <!-- LEFT: NEWS FEED -->
             <div>
-                <!-- NEWS GRID -->
-                <div id="newsContainer" class="space-y-3">
-                    <div class="glass-panel p-6 space-y-3"><div class="skeleton h-4 w-3/4"></div><div class="skeleton h-3 w-full"></div><div class="skeleton h-3 w-5/6"></div></div>
-                    <div class="glass-panel p-6 space-y-3"><div class="skeleton h-4 w-2/3"></div><div class="skeleton h-3 w-full"></div><div class="skeleton h-3 w-4/6"></div></div>
-                    <div class="glass-panel p-6 space-y-3"><div class="skeleton h-4 w-4/5"></div><div class="skeleton h-3 w-full"></div><div class="skeleton h-3 w-3/6"></div></div>
+                <div id="newsContainer" style="display:flex;flex-direction:column;gap:6px">
+                    <div class="news-card"><div class="sk" style="height:14px;width:70%;margin-bottom:8px"></div><div class="sk" style="height:10px;width:100%;margin-bottom:4px"></div><div class="sk" style="height:10px;width:80%"></div></div>
+                    <div class="news-card"><div class="sk" style="height:14px;width:60%;margin-bottom:8px"></div><div class="sk" style="height:10px;width:100%;margin-bottom:4px"></div><div class="sk" style="height:10px;width:90%"></div></div>
+                    <div class="news-card"><div class="sk" style="height:14px;width:75%;margin-bottom:8px"></div><div class="sk" style="height:10px;width:100%;margin-bottom:4px"></div><div class="sk" style="height:10px;width:65%"></div></div>
                 </div>
-
-                <!-- ERROR STATE -->
-                <div id="errorState" class="hidden glass-panel p-12 text-center" style="border: 1px solid rgba(255, 61, 0, 0.2);">
-                    <span class="material-symbols-outlined text-5xl mb-4 block" style="color: var(--risk-red);">cloud_off</span>
-                    <h3 class="text-lg font-barlow font-bold uppercase mb-2">Error de Conexión</h3>
-                    <p class="text-sm mb-6" style="color: var(--data-gray);">No se pudieron cargar las noticias.</p>
-                    <button onclick="refreshAllFeeds()" class="px-6 py-2 rounded text-xs font-bold uppercase" style="background: var(--electric-cyan); color: var(--navy-void);">Reintentar</button>
+                <div id="errorState" style="display:none;padding:40px;text-align:center;background:rgba(255,61,0,0.04);border:1px solid rgba(255,61,0,0.15);border-radius:10px">
+                    <span class="material-symbols-outlined" style="font-size:40px;color:var(--red);display:block;margin-bottom:12px">cloud_off</span>
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;margin-bottom:8px">Sin Conexión</div>
+                    <button onclick="refreshAllFeeds()" style="padding:8px 20px;background:var(--cyan);color:var(--void);border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:12px">Reintentar</button>
                 </div>
-
-                <!-- EMPTY STATE -->
-                <div id="emptyState" class="hidden glass-panel p-12 text-center">
-                    <span class="material-symbols-outlined text-5xl mb-4 block" style="color: var(--data-gray);">inbox</span>
-                    <h3 class="text-lg font-barlow font-bold uppercase mb-2">Sin Noticias</h3>
-                    <p class="text-sm" style="color: var(--data-gray);">Se actualizará automáticamente.</p>
-                </div>
+                <div id="emptyState" style="display:none;"></div>
             </div>
 
-            <!-- RIGHT: SIDEBAR PANELS -->
-            <aside id="sidebarPanels">
+            <!-- RIGHT: SIDEBAR -->
+            <aside>
 
-                <!-- 1. ECONOMIC CALENDAR -->
-                <div class="sidebar-panel">
-                    <h4><span class="material-symbols-outlined">calendar_month</span> Calendario Económico</h4>
+                <!-- 1. CALENDARIO -->
+                <div class="sp sp-glow-cyan">
+                    <div class="sp-title"><span class="material-symbols-outlined">calendar_month</span> Calendario</div>
                     <div id="calendarPanel">
-                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
-                        <div class="skeleton h-3 w-4/5" style="margin-bottom:6px"></div>
-                        <div class="skeleton h-3 w-3/4"></div>
+                        <div class="sk" style="height:10px;margin-bottom:6px"></div>
+                        <div class="sk" style="height:10px;width:85%;margin-bottom:6px"></div>
+                        <div class="sk" style="height:10px;width:70%"></div>
                     </div>
                 </div>
 
-                <!-- 2. MARKET SENTIMENT -->
-                <div class="sidebar-panel">
-                    <h4><span class="material-symbols-outlined">psychology</span> Sentimiento de Mercado</h4>
+                <!-- 2. SENTIMIENTO -->
+                <div class="sp sp-glow-amber">
+                    <div class="sp-title amber"><span class="material-symbols-outlined">psychology</span> Sentimiento</div>
                     <div id="sentimentPanel">
-                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
-                        <div class="skeleton h-3 w-2/3"></div>
+                        <div class="sk" style="height:40px;margin-bottom:8px;border-radius:6px"></div>
+                        <div class="sk" style="height:10px;margin-bottom:4px"></div>
+                        <div class="sk" style="height:10px;width:75%"></div>
                     </div>
                 </div>
 
                 <!-- 3. FED WATCH -->
-                <div class="sidebar-panel">
-                    <h4><span class="material-symbols-outlined">account_balance</span> FED Watch</h4>
+                <div class="sp sp-glow-cyan">
+                    <div class="sp-title"><span class="material-symbols-outlined">account_balance</span> FED Watch</div>
                     <div id="fedWatchPanel">
-                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
-                        <div class="skeleton h-3 w-3/5"></div>
+                        <div class="sk" style="height:10px;margin-bottom:6px"></div>
+                        <div class="sk" style="height:10px;width:60%;margin-bottom:6px"></div>
+                        <div class="sk" style="height:4px"></div>
                     </div>
                 </div>
 
                 <!-- 4. MACRO FRED + YIELD CURVE -->
-                <div class="sidebar-panel" style="border-color: rgba(0,245,255,0.12);">
-                    <h4><span class="material-symbols-outlined">monitoring</span> Macro FRED · Yield Curve</h4>
+                <div class="sp sp-glow-green">
+                    <div class="sp-title green"><span class="material-symbols-outlined">monitoring</span> Macro · Yield Curve</div>
                     <div id="fredMacroPanel">
-                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
-                        <div class="skeleton h-3 w-5/6" style="margin-bottom:6px"></div>
-                        <div class="skeleton h-3 w-4/5" style="margin-bottom:6px"></div>
-                        <div class="skeleton h-3 w-3/4"></div>
+                        <div class="sk" style="height:50px;margin-bottom:8px;border-radius:6px"></div>
+                        <div class="sk" style="height:10px;margin-bottom:4px"></div>
+                        <div class="sk" style="height:10px;width:85%;margin-bottom:4px"></div>
+                        <div class="sk" style="height:10px;width:70%"></div>
                     </div>
                 </div>
 
-                <!-- 5. AGENT13 STRATEGY -->
-                <div class="sidebar-panel" style="border-color: rgba(168,85,247,0.15);">
-                    <h4 style="color: #a855f7;"><span class="material-symbols-outlined">smart_toy</span> Agent13 Estrategia</h4>
+                <!-- 5. AGENT13 -->
+                <div class="sp sp-glow-purple">
+                    <div class="sp-title purple"><span class="material-symbols-outlined">smart_toy</span> Agent13 Strategy</div>
                     <div id="agent13Panel">
-                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
-                        <div class="skeleton h-3 w-4/5"></div>
+                        <div class="sk" style="height:12px;margin-bottom:6px"></div>
+                        <div class="sk" style="height:10px;width:80%"></div>
                     </div>
                 </div>
 
-                <!-- 5. SENTINEL VERDICT -->
-                <div class="sidebar-panel" style="border-color: rgba(255,61,0,0.15);">
-                    <h4 style="color: #FF3D00;"><span class="material-symbols-outlined">shield</span> Sentinel Verdict</h4>
-                    <p id="sentinelPanel" class="text-[11px] leading-relaxed" style="color: var(--data-gray);">Cargando...</p>
+                <!-- 6. SENTINEL -->
+                <div class="sp sp-glow-red">
+                    <div class="sp-title red"><span class="material-symbols-outlined">shield</span> Sentinel Verdict</div>
+                    <p id="sentinelPanel" style="font-size:11px;line-height:1.6;color:var(--gray-light)">Cargando...</p>
                 </div>
 
             </aside>
-
-        </div><!-- /main-grid -->
-
+        </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="relative z-10 border-t border-white/5 py-6 text-center">
-        <p class="text-[10px] font-mono uppercase tracking-widest" style="color: var(--data-gray);">
-            Whale Radar Intelligence · Feed Auto-Refresh: <span id="timerDisplay">5:00</span>
-        </p>
+    <footer style="border-top:1px solid rgba(255,255,255,0.04);padding:16px;text-align:center">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim)">Whale Radar Intelligence · Auto-refresh cada 5 min</p>
     </footer>
 
 <script>
@@ -542,12 +614,12 @@ async function refreshAllFeeds() {
     const emptyState = document.getElementById('emptyState');
 
     container.innerHTML = `
-        <div class="glass-panel p-6 space-y-3"><div class="skeleton h-4 w-3/4"></div><div class="skeleton h-3 w-full"></div><div class="skeleton h-3 w-5/6"></div></div>
-        <div class="glass-panel p-6 space-y-3"><div class="skeleton h-4 w-2/3"></div><div class="skeleton h-3 w-full"></div><div class="skeleton h-3 w-4/6"></div></div>
-        <div class="glass-panel p-6 space-y-3"><div class="skeleton h-4 w-4/5"></div><div class="skeleton h-3 w-full"></div><div class="skeleton h-3 w-3/6"></div></div>
+        <div class="news-card"><div class="sk" style="height:14px;width:70%;margin-bottom:8px"></div><div class="sk" style="height:10px;width:100%"></div></div>
+        <div class="news-card"><div class="sk" style="height:14px;width:60%;margin-bottom:8px"></div><div class="sk" style="height:10px;width:100%"></div></div>
+        <div class="news-card"><div class="sk" style="height:14px;width:75%;margin-bottom:8px"></div><div class="sk" style="height:10px;width:100%"></div></div>
     `;
-    errorState.classList.add('hidden');
-    emptyState.classList.add('hidden');
+    errorState.style.display = 'none';
+    emptyState.style.display = 'none';
 
     try {
         const results = await Promise.allSettled(RSS_FEEDS.map(f => fetchFeed(f)));
@@ -580,14 +652,16 @@ async function refreshAllFeeds() {
         document.getElementById('newsCount').textContent = allNews.length;
 
         const liveLabel = feedsLoaded ? '🟢 LIVE' : '🟡 CACHE';
-        document.getElementById('lastUpdate').textContent = `${liveLabel} ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+        const t = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        // Update live badge
+        const badge = document.querySelector('.live-badge');
+        if (badge) badge.innerHTML = `<div class="live-dot"></div>${liveLabel.includes('LIVE') ? 'LIVE' : 'CACHE'} · <span id="timerDisplay">${document.getElementById('timerDisplay')?.textContent || '5:00'}</span>`;
 
     } catch (err) {
         // Even on total failure, show curated news
         allNews = getCuratedFallbackNews();
         renderNews();
         document.getElementById('newsCount').textContent = allNews.length;
-        document.getElementById('lastUpdate').textContent = `🟡 CACHE ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
         console.error('[Refresh Error]', err);
     }
 
@@ -605,26 +679,35 @@ function renderNews() {
         : allNews.filter(n => n.sourceKey === currentFilter);
 
     if (filtered.length === 0) {
-        container.innerHTML = `
-            <div class="glass-panel p-8 text-center">
-                <span class="material-symbols-outlined text-3xl mb-2 block" style="color: var(--data-gray);">filter_alt_off</span>
-                <p class="text-sm" style="color: var(--data-gray);">Sin noticias para este filtro.</p>
-            </div>`;
+        container.innerHTML = `<div style="padding:40px;text-align:center">
+            <span class="material-symbols-outlined" style="font-size:36px;color:var(--gray-light);display:block;margin-bottom:8px">filter_alt_off</span>
+            <p style="color:var(--text-dim);font-size:13px">Sin noticias para este filtro.</p>
+        </div>`;
         return;
     }
 
+    const badgeMap = {
+        'source-reuters':'b-reuters','source-cnbc':'b-cnbc','source-bloomberg':'b-bloomberg',
+        'source-marketwatch':'b-marketwatch','source-investing':'b-investing',
+        'source-yahoo':'b-yahoo','source-default':'b-default'
+    };
+
     container.innerHTML = filtered.map((news, i) => {
         const date = timeAgo(news.pubDate);
-        const impactTag = detectImpact(news.title);
+        const impact = detectImpact(news.title);
+        const bClass = badgeMap[news.badgeClass] || 'b-default';
+        const isHigh = impact?.label?.includes('ALTO');
         return `
-        <a href="${news.link}" target="_blank" rel="noopener noreferrer" class="news-card glass-panel p-5 block cursor-pointer" style="animation: fadeIn 0.3s ease ${i * 0.04}s both;">
-            <div class="flex flex-wrap items-center gap-3 mb-2">
-                <span class="source-badge ${news.badgeClass}">${news.source}</span>
-                ${impactTag ? `<span class="source-badge ${impactTag.class}">${impactTag.label}</span>` : ''}
-                <span class="text-[10px] font-mono" style="color: var(--data-gray);">${date}</span>
+        <a href="${news.link}" target="_blank" rel="noopener noreferrer"
+           class="news-card ${isHigh ? 'high-impact' : ''} fade-in"
+           style="display:block;text-decoration:none;animation-delay:${i*0.03}s">
+            <div class="news-meta">
+                <span class="badge ${bClass}">${news.source}</span>
+                ${impact ? `<span class="badge ${impact.badgeCls}">${impact.label}</span>` : ''}
+                <span class="news-time">${date}</span>
             </div>
-            <h3 class="text-sm font-bold text-white leading-snug mb-1">${news.title}</h3>
-            ${news.description ? `<p class="text-[11px] leading-relaxed" style="color: var(--data-gray);">${news.description}...</p>` : ''}
+            <div class="news-title">${news.title}</div>
+            ${news.description ? `<div class="news-desc">${news.description}</div>` : ''}
         </a>`;
     }).join('');
 }
@@ -633,9 +716,8 @@ function detectImpact(title) {
     const t = title.toLowerCase();
     const highImpact = ['fed ', 'fomc', 'interest rate', 'cpi', 'inflation', 'nfp', 'payroll', 'gdp', 'recession', 'crash', 'crisis', 'tariff', 'treasury'];
     const nasdaqDirect = ['nasdaq', 'qqq', 'tech stock', 'magnificent seven', 'mag 7', 'nvda', 'nvidia', 'apple', 'aapl', 'msft', 'microsoft', 'google', 'googl', 'meta', 'amazon', 'amzn', 'tesla', 'tsla', 'broadcom', 'semiconductor'];
-
-    if (highImpact.some(k => t.includes(k))) return { label: '🔴 ALTO IMPACTO', class: 'source-investing' };
-    if (nasdaqDirect.some(k => t.includes(k))) return { label: '⚡ NQ DIRECTO', class: 'source-cnbc' };
+    if (highImpact.some(k => t.includes(k))) return { label: '⬆ ALTO IMPACTO', badgeCls: 'b-impact' };
+    if (nasdaqDirect.some(k => t.includes(k))) return { label: '⚡ NQ', badgeCls: 'b-nq' };
     return null;
 }
 
@@ -685,7 +767,31 @@ document.addEventListener('DOMContentLoaded', () => {
     refreshAllFeeds();
     startTimer();
     loadSidebarData();
+    loadTicker();
 });
+
+// Live ticker (Yahoo Finance via allorigins)
+async function loadTicker() {
+    const symbols = { '%5ENDX':'NQ', '%5EGSPC':'ES', '%5EVIX':'VIX', 'GC%3DF':'GOLD', 'CL%3DF':'OIL', 'DX-Y.NYB':'DXY' };
+    const proxied = (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    for (const [sym, key] of Object.entries(symbols)) {
+        try {
+            const r = await fetch(proxied(`https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=2d`));
+            const d = await r.json();
+            const meta = d?.chart?.result?.[0]?.meta;
+            if (!meta) continue;
+            const price = meta.regularMarketPrice;
+            const prev  = meta.chartPreviousClose;
+            const chg   = ((price - prev) / prev * 100).toFixed(2);
+            const up    = chg >= 0;
+            const label = `${price.toLocaleString('en-US', {maximumFractionDigits:2})} <span style="color:${up?'var(--green)':'var(--red)'}">${up?'+':''}${chg}%</span>`;
+            ['','2'].forEach(s => {
+                const el = document.getElementById(`tk-${key.toLowerCase()}${s}`);
+                if (el) el.innerHTML = label;
+            });
+        } catch(e) { /* silent */ }
+    }
+}
 
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
@@ -837,60 +943,60 @@ async function loadSentinelLocal() {
 
 function renderCalendar(events) {
     const el = document.getElementById('calendarPanel');
-    if (!events.length) { el.innerHTML = '<p class="text-[10px]" style="color:var(--data-gray)">Sin eventos próximos</p>'; return; }
-    el.innerHTML = events.slice(0, 7).map(ev => {
-        const impClass = ev.impact === 'high' ? 'cal-impact-high' : ev.impact === 'medium' ? 'cal-impact-medium' : 'cal-impact-low';
+    if (!events.length) { el.innerHTML = '<p style="font-size:10px;color:var(--text-dim)">Sin eventos próximos</p>'; return; }
+    el.innerHTML = events.slice(0, 8).map(ev => {
+        const cls = ev.impact === 'high' ? 'cal-high' : ev.impact === 'medium' ? 'cal-med' : 'cal-low';
         return `<div class="cal-row">
-            <span class="cal-date">${ev.icon} ${ev.day}</span>
-            <span class="cal-event ${impClass}">${ev.event}</span>
-            <span class="cal-date">${ev.time_et || ''}</span>
+            <span style="font-size:11px">${ev.icon}</span>
+            <span class="cal-name ${cls}">${ev.event}</span>
+            <span class="cal-time">${ev.time_et || ''}</span>
         </div>`;
     }).join('');
 }
 
 function renderSentiment(s) {
     const el = document.getElementById('sentimentPanel');
-    const fgColor = s.fear_greed_index < 30 ? '#FF3D00' : s.fear_greed_index < 50 ? '#FFA726' : s.fear_greed_index < 70 ? '#4CAF50' : '#2196F3';
+    const fgi = s.fear_greed_index;
+    const fgColor = fgi < 30 ? 'var(--red)' : fgi < 50 ? 'var(--amber)' : fgi < 70 ? 'var(--green)' : '#2196F3';
     el.innerHTML = `
-        <div style="text-align:center;margin-bottom:8px">
-            <span class="text-2xl font-barlow font-extrabold" style="color:${fgColor}">${s.fear_greed_index}</span>
-            <span class="text-[10px] font-mono uppercase block" style="color:${fgColor}">${s.fear_greed_label}</span>
+        <div style="text-align:center;margin-bottom:10px">
+            <div class="fg-number" style="color:${fgColor}">${fgi}</div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:${fgColor}">${s.fear_greed_label}</div>
         </div>
-        <div class="fear-gauge"><div class="indicator" style="left:${s.fear_greed_index}%"></div></div>
-        <div class="stat-row"><span class="stat-label">VIX</span><span class="stat-value" style="color:${s.vix > 25 ? '#FF3D00' : s.vix > 18 ? '#FFA726' : '#4CAF50'}">${s.vix}</span></div>
-        <div class="stat-row"><span class="stat-label">VXN (Nasdaq)</span><span class="stat-value" style="color:${s.vxn > 28 ? '#FF3D00' : s.vxn > 20 ? '#FFA726' : '#4CAF50'}">${s.vxn}</span></div>
-        <div class="stat-row"><span class="stat-label">Put/Call</span><span class="stat-value" style="color:${s.put_call_ratio > 1.0 ? '#FF3D00' : '#4CAF50'}">${s.put_call_ratio} (${s.put_call_signal})</span></div>
-        <div class="stat-row"><span class="stat-label">AAII Bulls</span><span class="stat-value" style="color:#4CAF50">${s.aaii_bulls}%</span></div>
-        <div class="stat-row"><span class="stat-label">AAII Bears</span><span class="stat-value" style="color:#FF3D00">${s.aaii_bears}%</span></div>
+        <div class="fg-bar"><div class="fg-dot" style="left:${fgi}%"></div></div>
+        <div class="srow" style="margin-top:8px"><span class="slabel">VIX</span><span class="sval" style="color:${s.vix>25?'var(--red)':s.vix>18?'var(--amber)':'var(--green)'}">${s.vix}</span></div>
+        <div class="srow"><span class="slabel">VXN</span><span class="sval" style="color:${s.vxn>28?'var(--red)':s.vxn>20?'var(--amber)':'var(--green)'}">${s.vxn}</span></div>
+        <div class="srow"><span class="slabel">Put/Call</span><span class="sval">${s.put_call_ratio} <span style="color:var(--text-dim);font-weight:400">(${s.put_call_signal})</span></span></div>
+        <div class="srow"><span class="slabel">AAII Bulls</span><span class="sval" style="color:var(--green)">${s.aaii_bulls}%</span></div>
+        <div class="srow"><span class="slabel">AAII Bears</span><span class="sval" style="color:var(--red)">${s.aaii_bears}%</span></div>
     `;
 }
 
 function renderFedWatch(fw) {
     const el = document.getElementById('fedWatchPanel');
     const probs = fw.probabilities || {};
-    const barItems = [
-        { label: 'HOLD', val: probs.hold || 0, color: '#94A3B8' },
-        { label: 'CUT 25bp', val: probs.cut_25bp || 0, color: '#4CAF50' },
-        { label: 'CUT 50bp', val: probs.cut_50bp || 0, color: '#2196F3' },
-        { label: 'HIKE 25bp', val: probs.hike_25bp || 0, color: '#FF3D00' }
+    const items = [
+        { label:'HOLD',    val:probs.hold||0,    color:'var(--gray-light)' },
+        { label:'CUT 25bp',val:probs.cut_25bp||0,color:'var(--green)' },
+        { label:'CUT 50bp',val:probs.cut_50bp||0,color:'#2196F3' },
+        { label:'HIKE 25bp',val:probs.hike_25bp||0,color:'var(--red)' },
     ];
     el.innerHTML = `
-        <div class="stat-row"><span class="stat-label">Next Meeting</span><span class="stat-value" style="color:var(--electric-cyan)">${fw.next_meeting || 'N/A'}</span></div>
-        <div class="stat-row"><span class="stat-label">Current Rate</span><span class="stat-value">${fw.current_rate || 'N/A'}</span></div>
-        <div style="margin-top:8px">
-            ${barItems.map(b => `
-                <div class="stat-row" style="margin-bottom:2px">
-                    <span class="stat-label">${b.label}</span>
-                    <span class="stat-value" style="color:${b.color}">${b.val.toFixed(1)}%</span>
-                </div>
-                <div class="prob-bar"><div class="prob-fill" style="width:${b.val}%;background:${b.color}"></div></div>
+        <div class="srow"><span class="slabel">Next Meeting</span><span class="sval" style="color:var(--cyan)">${fw.next_meeting||'N/A'}</span></div>
+        <div class="srow"><span class="slabel">Current Rate</span><span class="sval">${fw.current_rate||'N/A'}</span></div>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">
+            ${items.map(b => `
+            <div style="display:flex;justify-content:space-between;font-size:10px">
+                <span style="color:var(--gray-light)">${b.label}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:${b.color}">${b.val.toFixed(1)}%</span>
+            </div>
+            <div class="pbar"><div class="pbar-fill" style="width:${b.val}%;background:${b.color}"></div></div>
             `).join('')}
         </div>
-        <div class="stat-row" style="margin-top:8px;border-top:1px solid rgba(255,255,255,0.05);padding-top:6px">
-            <span class="stat-label">Cuts Priced 2026</span>
-            <span class="stat-value" style="color:#4CAF50">${fw.cuts_priced_2026 || 0}x</span>
+        <div class="srow" style="margin-top:8px;border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">
+            <span class="slabel">Cuts 2026</span><span class="sval" style="color:var(--green)">${fw.cuts_priced_2026||0}x</span>
         </div>
-        <div class="stat-row"><span class="stat-label">Dot Plot Median</span><span class="stat-value">${fw.dot_plot_median_2026 || 'N/A'}</span></div>
+        <div class="srow"><span class="slabel">Dot Plot</span><span class="sval">${fw.dot_plot_median_2026||'N/A'}</span></div>
     `;
 }
 
@@ -926,33 +1032,33 @@ async function loadFredMacro() {
     const el = document.getElementById('fredMacroPanel');
     const KEY = '2bc91ee8b5ec802e9cba9b1f2d73bc0b';
     const BASE = 'https://api.stlouisfed.org/fred/series/observations';
-    const params = (id, lim) => `?series_id=${id}&api_key=${KEY}&file_type=json&sort_order=desc&limit=${lim}`;
+    // Wrap in allorigins proxy to bypass GitHub Pages CORS restriction
+    const proxied = (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    const build  = (id, lim) => BASE + `?series_id=${id}&api_key=${KEY}&file_type=json&sort_order=desc&limit=${lim}`;
 
-    // Series a cargar: [id, límite de observaciones]
     const targets = [
-        ['GS10',     2],   // Yield 10Y Treasury (diario, ya en %)
-        ['GS2',      2],   // Yield 2Y Treasury  (diario, ya en %)
-        ['FEDFUNDS', 2],   // FED Funds Rate
-        ['CPIAUCSL', 13],  // CPI (índice) — 13 obs para calcular YoY
-        ['CPILFESL', 13],  // Core CPI
-        ['UNRATE',   2],   // Desempleo %
-        ['M2SL',     2],   // M2 en miles de millones USD
+        ['GS10',     2],
+        ['GS2',      2],
+        ['FEDFUNDS', 2],
+        ['CPIAUCSL', 13],
+        ['CPILFESL', 13],
+        ['UNRATE',   2],
+        ['M2SL',     2],
     ];
 
     try {
         const fetches = targets.map(([id, lim]) =>
-            fetch(BASE + params(id, lim)).then(r => r.ok ? r.json() : null).catch(() => null)
+            fetch(proxied(build(id, lim))).then(r => r.ok ? r.json() : null).catch(() => null)
         );
         const results = await Promise.all(fetches);
 
-        // Construir mapa id → {current, previous, yoy, date}
         const d = {};
         targets.forEach(([id, lim], i) => {
             const obs = results[i]?.observations?.filter(o => o.value !== '.');
             if (!obs?.length) return;
-            const cur = parseFloat(obs[0].value);
+            const cur  = parseFloat(obs[0].value);
             const prev = parseFloat(obs[1]?.value ?? obs[0].value);
-            const yoy = lim === 13 && obs[12]
+            const yoy  = lim === 13 && obs[12]
                 ? ((cur - parseFloat(obs[12].value)) / parseFloat(obs[12].value) * 100)
                 : null;
             d[id] = { current: cur, previous: prev, yoy, date: obs[0].date };
@@ -961,84 +1067,60 @@ async function loadFredMacro() {
         renderFredMacro(d);
     } catch (e) {
         console.warn('[FRED]', e.message);
-        el.innerHTML = '<p class="text-[10px] font-mono" style="color:var(--data-gray)">FRED API no disponible</p>';
+        el.innerHTML = '<p style="font-size:10px;color:var(--text-dim)">FRED API no disponible</p>';
     }
 }
 
 function renderFredMacro(d) {
     const el = document.getElementById('fredMacroPanel');
     const fmt = (v, dec) => isNaN(v) ? '--' : v.toFixed(dec);
-    const delta = (cur, prev, dec) => {
+    const arw = (cur, prev) => {
         const ch = cur - prev;
-        const c = ch > 0 ? '#FF3D00' : ch < 0 ? '#4CAF50' : '#94A3B8';
-        const sym = ch > 0 ? '▲' : ch < 0 ? '▼' : '─';
-        return `<span style="font-size:9px;color:${c}">${sym}${Math.abs(ch).toFixed(dec)}</span>`;
+        const c = ch > 0 ? 'var(--red)' : ch < 0 ? 'var(--green)' : 'var(--gray-light)';
+        return ch === 0 ? '' : `<span style="font-size:9px;color:${c};margin-left:3px">${ch>0?'▲':'▼'}${Math.abs(ch).toFixed(2)}</span>`;
     };
 
-    // ── Yield Curve ──────────────────────────────────────────────
-    const gs10 = d['GS10']?.current;
-    const gs2  = d['GS2']?.current;
+    // Yield Curve block
+    const gs10 = d['GS10']?.current, gs2 = d['GS2']?.current;
     const spread = (gs10 != null && gs2 != null) ? gs10 - gs2 : null;
     const inv = spread !== null && spread < 0;
-    const spreadColor = inv ? '#FF3D00' : '#4CAF50';
-    const yieldHTML = spread !== null ? `
-        <div style="padding:8px 10px;margin-bottom:10px;border-radius:6px;
-            background:${inv ? 'rgba(255,61,0,0.08)' : 'rgba(76,175,80,0.08)'};
-            border:1px solid ${inv ? 'rgba(255,61,0,0.25)' : 'rgba(76,175,80,0.25)'}">
-            <div style="font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
-                color:${spreadColor};margin-bottom:4px">
-                ${inv ? '⚠️ CURVA INVERTIDA' : '✅ CURVA NORMAL'}
-            </div>
-            <div style="font-size:11px;font-family:'JetBrains Mono',monospace">
-                2Y <span style="color:#2196F3;font-weight:700">${fmt(gs2,2)}%</span>
+    const sc  = inv ? 'var(--red)' : 'var(--green)';
+    let html = spread !== null ? `
+        <div class="yield-pill ${inv ? 'inverted' : 'normal'}">
+            <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:${sc}">${inv ? '⚠️ CURVA INVERTIDA' : '✅ CURVA NORMAL'}</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px">
+                <span style="color:var(--gray-light)">2Y </span><span style="color:#2196F3;font-weight:700">${fmt(gs2,2)}%</span>
                 &nbsp;·&nbsp;
-                10Y <span style="color:#4CAF50;font-weight:700">${fmt(gs10,2)}%</span>
+                <span style="color:var(--gray-light)">10Y </span><span style="color:var(--green);font-weight:700">${fmt(gs10,2)}%</span>
             </div>
-            <div style="font-size:10px;font-family:'JetBrains Mono',monospace;margin-top:2px">
-                Spread&nbsp;<span style="color:${spreadColor};font-weight:700">${spread >= 0 ? '+' : ''}${fmt(spread,2)}%</span>
-                <span style="font-size:9px;color:var(--data-gray)">&nbsp;(10Y-2Y)</span>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px">
+                Spread&nbsp;<span style="color:${sc};font-weight:700">${spread>=0?'+':''}${fmt(spread,2)}%</span>
+                <span style="font-size:9px;color:var(--text-dim)">&nbsp;(10Y-2Y)</span>
             </div>
         </div>` : '';
 
-    // ── Macro rows ───────────────────────────────────────────────
+    // Macro rows
     const rows = [
-        { label: 'FED Rate', id: 'FEDFUNDS', suffix: '%', dec: 2, invert: false },
-        { label: 'CPI YoY',  id: 'CPIAUCSL', suffix: '%', dec: 1, useYoy: true, invert: true },
-        { label: 'Core CPI YoY', id: 'CPILFESL', suffix: '%', dec: 1, useYoy: true, invert: true },
-        { label: 'Desempleo', id: 'UNRATE',  suffix: '%', dec: 1, invert: true },
-        { label: 'M2 Dinero', id: 'M2SL',   suffix: 'T',  dec: 1, scale: 1000, invert: false },
+        { label: 'FED Rate',     id:'FEDFUNDS', dec:2, suffix:'%', yoy:false },
+        { label: 'CPI YoY',      id:'CPIAUCSL', dec:1, suffix:'%', yoy:true },
+        { label: 'Core CPI YoY', id:'CPILFESL', dec:1, suffix:'%', yoy:true },
+        { label: 'Desempleo',    id:'UNRATE',   dec:1, suffix:'%', yoy:false },
+        { label: 'M2 Liquidez', id:'M2SL',     dec:1, suffix:'T',  scale:1000 },
     ];
 
-    const rowsHTML = rows.map(row => {
-        const entry = d[row.id];
-        if (!entry) return '';
-        const val = row.useYoy && entry.yoy != null
-            ? entry.yoy
-            : row.scale ? entry.current / row.scale : entry.current;
-        const prev = row.scale ? entry.previous / row.scale : entry.previous;
-        const dispVal = (row.id === 'M2SL')
-            ? '$' + fmt(val, row.dec) + row.suffix
-            : fmt(val, row.dec) + row.suffix;
-        // For YoY, delta = current yoy vs previous entry approx
-        const deltaHTML = (row.useYoy && entry.yoy != null)
-            ? '' // skip delta for YoY — not meaningful without more obs
-            : delta(val, prev, row.dec);
-        return `<div class="stat-row">
-            <span class="stat-label">${row.label}</span>
-            <span class="stat-value" style="color:#e2e8f0">${dispVal} ${deltaHTML}</span>
-        </div>`;
-    }).join('');
+    rows.forEach(row => {
+        const entry = d[row.id]; if (!entry) return;
+        const val = row.yoy && entry.yoy != null ? entry.yoy : row.scale ? entry.current/row.scale : entry.current;
+        const prev = row.scale ? entry.previous/row.scale : entry.previous;
+        const disp = row.id === 'M2SL' ? `$${fmt(val,row.dec)}${row.suffix}` : `${fmt(val,row.dec)}${row.suffix}`;
+        const deltaHtml = row.yoy ? '' : arw(val, prev);
+        html += `<div class="srow"><span class="slabel">${row.label}</span><span class="sval">${disp}${deltaHtml}</span></div>`;
+    });
 
-    // ── Date stamp ───────────────────────────────────────────────
     const lastDate = d['UNRATE']?.date || d['GS10']?.date || '';
-    const stampHTML = lastDate
-        ? `<div style="margin-top:7px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.05);
-            font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--data-gray)">
-            Fuente: FRED · ${lastDate}
-          </div>` : '';
+    if (lastDate) html += `<div style="margin-top:6px;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--text-dim)">FRED · ${lastDate}</div>`;
 
-    el.innerHTML = yieldHTML + rowsHTML + stampHTML
-        || '<p class="text-[10px]" style="color:var(--data-gray)">Sin datos FRED</p>';
+    el.innerHTML = html || '<p style="font-size:10px;color:var(--text-dim)">Sin datos</p>';
 }
 </script>
 </body>
