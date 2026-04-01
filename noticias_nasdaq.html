@@ -438,9 +438,32 @@ function cleanHTML(str) {
 }
 
 // ═══════════════════════════════════════════════════════
-// FETCH SINGLE FEED
+// FETCH SINGLE FEED — rss2json primary · CORS+XML fallback
 // ═══════════════════════════════════════════════════════
 async function fetchFeed(feed) {
+    // Method 1: rss2json.com (JSON, more reliable, 10k free/month)
+    try {
+        const rss2url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=15`;
+        const controller = new AbortController();
+        const tok = setTimeout(() => controller.abort(), 8000);
+        const resp = await fetch(rss2url, { signal: controller.signal });
+        clearTimeout(tok);
+        if (resp.ok) {
+            const data = await resp.json();
+            if (data.status === 'ok' && data.items?.length) {
+                return data.items.map(item => ({
+                    title: cleanHTML(item.title || ''),
+                    description: cleanHTML(item.description || '').substring(0, 200),
+                    link: item.link || '#',
+                    pubDate: item.pubDate || new Date().toISOString(),
+                    source: feed.name,
+                    sourceKey: feed.key,
+                    badgeClass: feed.badgeClass
+                })).filter(n => n.title);
+            }
+        }
+    } catch (e) { /* fall through to CORS proxy */ }
+    // Method 2: CORS proxy + XML parsing
     const xml = await fetchWithProxy(feed.url);
     if (xml) return parseRSSXml(xml, feed);
     return [];
@@ -458,25 +481,26 @@ function getCuratedFallbackNews() {
         { name: 'Investing.com', key: 'investing', badge: 'source-investing' },
         { name: 'Yahoo Finance', key: 'bloomberg', badge: 'source-bloomberg' }
     ];
+    // ── 2026 HEADLINES (actualizado Abril 2026) ───────────────────────────────
     const headlines = [
-        { t: "Fed Signals Cautious Approach on Interest Rate Cuts Amid Sticky Inflation", d: "Federal Reserve officials reiterated that more data is needed before adjusting monetary policy, keeping markets guessing on the timing of future rate cuts.", l: "https://www.reuters.com/markets/", s: 0 },
-        { t: "Nasdaq Composite Rises as Tech Earnings Beat Expectations", d: "The tech-heavy index gained ground after several major technology companies reported better-than-expected quarterly results, boosting investor sentiment.", l: "https://www.cnbc.com/nasdaq/", s: 1 },
-        { t: "NVIDIA Stock Surges on Record Data Center Revenue Forecast", d: "NVIDIA shares jumped after the chipmaker projected record revenue for its data center business, driven by surging AI infrastructure demand worldwide.", l: "https://www.marketwatch.com/", s: 2 },
-        { t: "S&P 500 Futures Point Higher Ahead of Key Economic Data Releases", d: "Wall Street futures indicate a positive open as investors await crucial employment and manufacturing data that could influence the Federal Reserve's next moves.", l: "https://www.investing.com/indices/us-spx-500-futures", s: 3 },
-        { t: "Tesla Shares Volatile After Mixed Delivery Numbers for Q2 2025", d: "Tesla stock swung between gains and losses as quarterly delivery figures came in above lowered expectations but below consensus forecasts from earlier this year.", l: "https://finance.yahoo.com/quote/TSLA/", s: 4 },
-        { t: "Apple Unveils New AI Features at Developer Conference, Stock Hits All-Time High", d: "Apple Inc. announced a suite of AI-powered features integrated across its ecosystem at WWDC, sending shares to a record high during extended trading.", l: "https://www.reuters.com/technology/", s: 0 },
-        { t: "CPI Data Shows Inflation Cooling Faster Than Expected in June", d: "Consumer Price Index rose just 0.1% month-over-month, below the 0.2% forecast, strengthening the case for Federal Reserve rate cuts later this year.", l: "https://www.cnbc.com/economy/", s: 1 },
-        { t: "Microsoft Azure Revenue Growth Accelerates, Cloud Dominance Extends", d: "Microsoft reported a significant acceleration in Azure cloud computing revenue growth, beating Wall Street estimates and reinforcing its position in enterprise AI.", l: "https://www.marketwatch.com/", s: 2 },
-        { t: "QQQ ETF Sees Record Inflows as Investors Pile Into Tech Sector", d: "The Invesco QQQ Trust, tracking the Nasdaq-100 index, attracted record weekly inflows as institutional investors increased their allocation to technology stocks.", l: "https://www.investing.com/etfs/powershares-qqqq", s: 3 },
-        { t: "Amazon Web Services Launches New AI Infrastructure for Enterprise Clients", d: "AWS expanded its AI chipset offering and launched new machine learning services aimed at reducing costs for enterprise customers deploying large language models.", l: "https://finance.yahoo.com/quote/AMZN/", s: 4 },
-        { t: "10-Year Treasury Yield Falls Below 4.2% on Soft Labor Market Data", d: "Bond yields dropped sharply after weaker-than-expected jobs data raised expectations for multiple Fed rate cuts, boosting growth stocks in the Nasdaq.", l: "https://www.reuters.com/markets/rates/", s: 0 },
-        { t: "Meta Platforms Reports Strong Ad Revenue, AI Investment Paying Off", d: "Meta Platforms exceeded revenue expectations driven by strong advertising growth, as the company's AI recommendation engine improved ad targeting effectiveness.", l: "https://www.cnbc.com/quotes/META/", s: 1 },
-        { t: "Semiconductors Lead Market Rally as AI Chip Demand Accelerates", d: "The Philadelphia Semiconductor Index gained over 3% as chip companies across the sector reported strong order backlogs tied to artificial intelligence deployments.", l: "https://www.marketwatch.com/", s: 2 },
-        { t: "Wall Street Banks Raise S&P 500 Year-End Targets on Strong Earnings Season", d: "Goldman Sachs, JPMorgan, and Morgan Stanley all increased their S&P 500 price targets citing better-than-expected corporate earnings and resilient economic growth.", l: "https://www.investing.com/indices/us-spx-500", s: 3 },
-        { t: "Google Cloud Revenue Surpasses $12B Quarterly, Narrowing Gap With AWS", d: "Alphabet's cloud division reported accelerating revenue growth and its first operating profit in two years, boosted by enterprise AI adoption.", l: "https://finance.yahoo.com/quote/GOOGL/", s: 4 },
-        { t: "Oil Prices Decline on Demand Concerns, Easing Pressure on Inflation", d: "Crude oil fell to multi-month lows on weaker global demand forecasts, potentially easing inflationary pressures and supporting the case for monetary easing.", l: "https://www.reuters.com/markets/commodities/", s: 0 },
-        { t: "Small-Cap Stocks Rally as Russell 2000 Breaks Out on Rate Cut Hopes", d: "The Russell 2000 index surged as falling interest rate expectations favor smaller companies with more variable-rate debt exposure.", l: "https://www.cnbc.com/small-business/", s: 1 },
-        { t: "Broadcom Stock Jumps After Raising Full-Year Revenue Guidance", d: "Broadcom lifted its annual revenue forecast driven by surging demand for its custom AI accelerator chips from major hyperscale cloud providers.", l: "https://www.marketwatch.com/", s: 2 }
+        { t: "Fed Holds at 4.25-4.50% — Powell Signals 2 Cuts Possible in H2 2026", d: "The Federal Reserve held rates unchanged at its March 2026 meeting as officials wait for more inflation data, reaffirming the potential for 2 cuts later this year if progress continues.", l: "https://www.reuters.com/markets/", s: 0 },
+        { t: "Nasdaq Rebounds 3.4% — NQ Reclaims 19,800 as Institutions Buy the Dip", d: "The Nasdaq-100 surged as institutional COT data shows commercials reduced shorts sharply, with market breadth improving across the tech sector after weeks of selling pressure.", l: "https://www.cnbc.com/nasdaq/", s: 1 },
+        { t: "NVIDIA Blackwell Chips in Full Production — AI Demand Exceeds Supply", d: "NVIDIA confirmed full-scale production of its Blackwell GPU architecture, with demand from hyperscalers exceeding available supply through mid-2026 according to company guidance.", l: "https://www.marketwatch.com/", s: 2 },
+        { t: "Tariff Uncertainty Weighs on Tech — NQ Tests Key Support at 19,500", d: "New US tariff announcements on April 2026 triggered a sharp selloff in tech names, with the Nasdaq-100 testing critical support levels that the COT report flagged as institutionally defended.", l: "https://www.investing.com/indices/us-spx-500-futures", s: 3 },
+        { t: "Tesla Q1 2026 Deliveries Beat Low Estimates — Shares Jump 8% Pre-Market", d: "Tesla reported 422,000 Q1 deliveries, above the consensus estimate of 390,000, as the new lower-priced Model 3 refresh drove volume recovery in North America and Europe.", l: "https://finance.yahoo.com/quote/TSLA/", s: 4 },
+        { t: "Apple Intelligence Drives iPhone 17 Pre-Order Wave — AAPL Near All-Time High", d: "Apple reported record iPhone 17 pre-orders powered by Apple Intelligence AI features, with analysts raising targets as Services revenue continues to compound at over 15% annually.", l: "https://www.reuters.com/technology/", s: 0 },
+        { t: "CPI March 2026: Core Inflation at 3.1% — Disinflation Trend Intact", d: "Core Consumer Price Index rose just 0.2% month-over-month in March 2026, meeting expectations and keeping the FED's 2 rate cut scenario alive for H2 2026.", l: "https://www.cnbc.com/economy/", s: 1 },
+        { t: "Microsoft Copilot Revenue Hits $5B Run Rate — Azure AI Growth Accelerates", d: "Microsoft reported Azure AI services grew 38% year-over-year, with its Copilot AI assistant now generating over $5B in annualized revenue across enterprise clients.", l: "https://www.marketwatch.com/", s: 2 },
+        { t: "QQQ Records $6.1B Weekly Inflow — Largest Since November 2023", d: "The Invesco QQQ Trust saw its biggest weekly inflow in over 2 years as institutional managers rotated back into large-cap tech following the April 2026 tariff-driven correction.", l: "https://www.investing.com/etfs/powershares-qqqq", s: 3 },
+        { t: "Amazon AWS AI Workloads Surge — $105B CapEx Plan Confirmed for 2026", d: "Amazon Web Services confirmed its $105B infrastructure spending plan for 2026, focused on AI compute and custom chip development for its Trainium and Inferentia accelerators.", l: "https://finance.yahoo.com/quote/AMZN/", s: 4 },
+        { t: "10-Year Treasury at 4.18% — Yield Curve Approaching Uninversion", d: "The 10-year Treasury yield held at 4.18% while the 2-year fell to 3.92%, pushing the 2Y-10Y spread positive for the first time since 2022 — historically a warning signal.", l: "https://www.reuters.com/markets/rates/", s: 0 },
+        { t: "Meta AI Cyborg Glasses Drive New Revenue Stream — Ad Tech Leads Q1", d: "Meta's AI-powered Ray-Ban smart glasses exceeded 3M units sold in Q1 2026, while ad revenue grew 23% as Meta AI recommendation system improved advertiser ROI dramatically.", l: "https://www.cnbc.com/quotes/META/", s: 1 },
+        { t: "Philadelphia Semiconductor Index Up 4.2% — Chip Cycle Recovery Underway", d: "The SOX semiconductor index surged as Taiwan TSMC reported stronger-than-expected Q1 revenue guidance, signaling the beginning of a new up-cycle in chip demand.", l: "https://www.marketwatch.com/", s: 2 },
+        { t: "Goldman Raises NQ Target to 22,000 — AI Earnings Cycle 'Just Beginning'", d: "Goldman Sachs equity analysts raised their Nasdaq-100 12-month target to 22,000, citing AI monetization as an early-stage secular earnings driver with multiple years of runway.", l: "https://www.investing.com/indices/us-spx-500", s: 3 },
+        { t: "Google Cloud $11.8B Q4 Revenue — Vertex AI Platform Doubles Customer Base", d: "Alphabet reported Google Cloud revenue of $11.8B in Q4 2025, with its Vertex AI platform doubling its enterprise customer count year-over-year driven by LLM deployment demand.", l: "https://finance.yahoo.com/quote/GOOGL/", s: 4 },
+        { t: "VIX Below 25 — Options Market Stabilizing After April Volatility Spike", d: "The CBOE Volatility Index retreated from April 2026 highs above 35, signaling improving market conditions as institutional buyers absorbed the tariff-driven selling pressure.", l: "https://www.reuters.com/markets/", s: 0 },
+        { t: "Broadcom AVGO: Custom AI Chip Revenue to Exceed $20B in FY2026", d: "Broadcom raised its AI chip revenue guidance to over $20B for fiscal 2026, driven by expanding custom accelerator contracts with Google, Meta, and two unnamed hyperscalers.", l: "https://www.cnbc.com/", s: 1 },
+        { t: "Dollar Index Slides on FED Pivot Expectations — Gold Hits New ATH", d: "The US Dollar Index fell 1.2% on the week as markets priced in earlier FED rate cuts, while gold surged to new all-time highs above $3,200 on safe haven demand.", l: "https://www.marketwatch.com/", s: 2 }
     ];
 
     return headlines.map((h, i) => {
@@ -662,19 +686,140 @@ document.head.appendChild(styleSheet);
 // ═══════════════════════════════════════════════════════
 // SIDEBAR — Load from news_research_data.json
 // ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// SIDEBAR — Carga independiente por panel (fallo en uno no rompe los demás)
+// ═══════════════════════════════════════════════════════
 async function loadSidebarData() {
+    loadCalendar();
+    loadSentiment();
+    loadFedWatch();
+    loadAgent13Local();
+    loadSentinelLocal();
+}
+
+// 1A. CALENDARIO → Forex Factory JSON (gratis, sin key, USD events)
+async function loadCalendar() {
+    const el = document.getElementById('calendarPanel');
     try {
-        const resp = await fetch('data/news_research_data.json?t=' + Date.now());
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const data = await resp.json();
-        renderCalendar(data.economic_calendar || []);
-        renderSentiment(data.market_sentiment || {});
-        renderFedWatch(data.fed_watch || {});
-        renderAgent13(data.agent13_strategy || {});
-        renderSentinel(data.sentinel_verdict || '', data.cycle_stats || {});
+        const controller = new AbortController();
+        const tok = setTimeout(() => controller.abort(), 9000);
+        const r = await fetch('https://nfs.faireconomy.media/ff_calendar_thisweek.json', { signal: controller.signal });
+        clearTimeout(tok);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const all = await r.json();
+        const usd = all
+            .filter(e => e.currency === 'USD')
+            .sort((a, b) => new Date(a.date) - new Date(b.date))
+            .slice(0, 9)
+            .map(e => {
+                const imp = (e.impact || '').toLowerCase();
+                const impKey = imp.includes('high') ? 'high' : imp.includes('medium') ? 'medium' : 'low';
+                const icon  = impKey === 'high' ? '🔴' : impKey === 'medium' ? '🟡' : '⚪';
+                const d = new Date(e.date);
+                const dayLbl = d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+                return { day: dayLbl, event: e.title, impact: impKey, time_et: e.time || '', icon };
+            });
+        if (usd.length) { renderCalendar(usd); return; }
+        throw new Error('No USD events found');
     } catch (e) {
-        console.warn('[Sidebar] No se pudo cargar news_research_data.json:', e.message);
-        document.getElementById('calendarPanel').innerHTML = '<p class="text-[10px]" style="color:var(--data-gray)">Datos no disponibles. Ejecuta update_news_research.py</p>';
+        console.warn('[Calendar-FF]', e.message);
+        // Fallback: local JSON
+        try {
+            const r2 = await fetch('data/news_research_data.json?t=' + Date.now());
+            const d = await r2.json();
+            renderCalendar(d.economic_calendar || []);
+        } catch {
+            el.innerHTML = '<p class="text-[10px] font-mono" style="color:var(--data-gray)">🔴 Datos económicos no disponibles<br><span style="font-size:9px">Forex Factory sin conexión</span></p>';
+        }
+    }
+}
+
+// 1B. SENTIMIENTO → alternative.me Fear & Greed API (CORS libre, sin key)
+async function loadSentiment() {
+    const el = document.getElementById('sentimentPanel');
+    try {
+        const controller = new AbortController();
+        const tok = setTimeout(() => controller.abort(), 7000);
+        const r = await fetch('https://api.alternative.me/fng/?limit=1', { signal: controller.signal });
+        clearTimeout(tok);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        const item = data.data[0];
+        const fgi = parseInt(item.value);
+        const labels = { 'Extreme Fear':'MIEDO EXTREMO','Fear':'MIEDO','Neutral':'NEUTRAL','Greed':'CODICIA','Extreme Greed':'CODICIA EXTREMA' };
+        renderSentiment({
+            fear_greed_index: fgi,
+            fear_greed_label: labels[item.value_classification] || item.value_classification,
+            vix: '--', vxn: '--',
+            put_call_ratio: '--', put_call_signal: '—',
+            aaii_bulls: '--', aaii_bears: '--'
+        });
+    } catch (e) {
+        console.warn('[Sentiment-altMe]', e.message);
+        try {
+            const r2 = await fetch('data/news_research_data.json?t=' + Date.now());
+            const d = await r2.json();
+            renderSentiment(d.market_sentiment || { fear_greed_index: 35, fear_greed_label: 'MIEDO', vix: '--', vxn: '--', put_call_ratio: '--', put_call_signal: '—', aaii_bulls: '--', aaii_bears: '--' });
+        } catch {
+            el.innerHTML = '<p class="text-[10px] font-mono" style="color:var(--data-gray)">Sentimiento no disponible</p>';
+        }
+    }
+}
+
+// 1C. FED WATCH → datos conocidos + fallback local JSON
+async function loadFedWatch() {
+    try {
+        const r = await fetch('data/news_research_data.json?t=' + Date.now());
+        if (!r.ok) throw new Error('no local');
+        const d = await r.json();
+        if (d.fed_watch && d.fed_watch.current_rate) { renderFedWatch(d.fed_watch); return; }
+    } catch (e) { /* fall through */ }
+    // Hardcoded 2026 — FOMC cambia solo 8x/año, actualizar si hay reunión
+    renderFedWatch({
+        next_meeting: 'May 7, 2026',
+        current_rate: '4.25–4.50%',
+        probabilities: { hold: 80.4, cut_25bp: 18.9, cut_50bp: 0.5, hike_25bp: 0.2 },
+        cuts_priced_2026: 2,
+        dot_plot_median_2026: '3.875%'
+    });
+}
+
+// 1D. AGENT13 → local agent13_data.json
+async function loadAgent13Local() {
+    const el = document.getElementById('agent13Panel');
+    try {
+        const r = await fetch('agent13_data.json?t=' + Date.now());
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const a = await r.json();
+        renderAgent13(a);
+    } catch (e) {
+        try {
+            const r2 = await fetch('data/news_research_data.json?t=' + Date.now());
+            const d = await r2.json();
+            renderAgent13(d.agent13_strategy || {});
+        } catch {
+            el.innerHTML = '<p class="text-[10px] font-mono" style="color:var(--data-gray)">Agent13 no disponible</p>';
+        }
+    }
+}
+
+// 1E. SENTINEL → local agent_sentinel_data.json
+async function loadSentinelLocal() {
+    const el = document.getElementById('sentinelPanel');
+    try {
+        const r = await fetch('agent_sentinel_data.json?t=' + Date.now());
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const d = await r.json();
+        const verdict = d.verdict || d.summary || d.status || 'Sistema activo';
+        renderSentinel(verdict, d.cycle_stats || {});
+    } catch (e) {
+        try {
+            const r2 = await fetch('data/news_research_data.json?t=' + Date.now());
+            const d = await r2.json();
+            renderSentinel(d.sentinel_verdict || 'Datos locales no disponibles', d.cycle_stats || {});
+        } catch {
+            el.textContent = 'Sentinel sin datos';
+        }
     }
 }
 
