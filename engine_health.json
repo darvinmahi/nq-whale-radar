@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-03-31T21:58:54.594027+00:00Z",
-  "last_update_human": "2026-03-31 21:58:54 UTC",
+  "timestamp": "2026-04-01T16:15:09.674332+00:00Z",
+  "last_update_human": "2026-04-01 16:15:09 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 3.5,
+  "total_time_sec": 3.1,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -22,7 +22,7 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.2
+      "time": 2.8
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -58,11 +58,11 @@
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 0.2
+      "time": 0.3
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 0.2
+      "time": 0.3
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
