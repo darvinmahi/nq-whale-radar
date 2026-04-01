@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-01T07:01:19.669316+00:00",
+  "generated_at": "2026-04-01T07:27:33.688264+00:00",
   "total_predictions": 500,
   "validated": 108,
   "win_rate_real": 50.0,
@@ -12,25 +12,25 @@
   },
   "agent_accuracy": {
     "COT": {
-      "accuracy_pct": 50.4,
-      "wins": 59,
-      "losses": 58,
-      "neutrals": 383,
-      "total_calls": 117
+      "accuracy_pct": 51.5,
+      "wins": 67,
+      "losses": 63,
+      "neutrals": 370,
+      "total_calls": 130
     },
     "VOLATILITY": {
-      "accuracy_pct": 52.0,
-      "wins": 66,
-      "losses": 61,
-      "neutrals": 373,
-      "total_calls": 127
+      "accuracy_pct": 52.9,
+      "wins": 74,
+      "losses": 66,
+      "neutrals": 360,
+      "total_calls": 140
     },
     "SMC": {
-      "accuracy_pct": 48.0,
-      "wins": 61,
-      "losses": 66,
-      "neutrals": 373,
-      "total_calls": 127
+      "accuracy_pct": 47.1,
+      "wins": 66,
+      "losses": 74,
+      "neutrals": 360,
+      "total_calls": 140
     },
     "PROBABILITY": {
       "accuracy_pct": null,
@@ -47,81 +47,81 @@
       "total_calls": 123
     },
     "SILVER_BULLET": {
-      "accuracy_pct": 50.4,
-      "wins": 60,
+      "accuracy_pct": 50.8,
+      "wins": 61,
       "losses": 59,
-      "neutrals": 381,
-      "total_calls": 119
+      "neutrals": 380,
+      "total_calls": 120
     },
     "ORDERFLOW": {
-      "accuracy_pct": 48.0,
-      "wins": 61,
-      "losses": 66,
-      "neutrals": 373,
-      "total_calls": 127
+      "accuracy_pct": 47.1,
+      "wins": 66,
+      "losses": 74,
+      "neutrals": 360,
+      "total_calls": 140
     }
   },
-  "best_agent": "VOLATILITY (52.0%)",
-  "worst_agent": "ORDERFLOW (48.0%)",
+  "best_agent": "VOLATILITY (52.9%)",
+  "worst_agent": "ORDERFLOW (47.1%)",
   "last_10_outcomes": [
     {
-      "time": "2026-04-01T06:52:12.534365+00:00",
+      "time": "2026-04-01T07:18:36.848520+00:00",
       "outcome": "NEUTRAL",
-      "delta": -5.25,
+      "delta": -11.0,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T06:56:28.655260+00:00",
+      "time": "2026-04-01T07:22:25.183846+00:00",
       "outcome": "NEUTRAL",
-      "delta": 3.5,
+      "delta": -2.75,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T06:56:28.655260+00:00",
+      "time": "2026-04-01T07:26:40.434984+00:00",
       "outcome": "NEUTRAL",
-      "delta": 3.5,
+      "delta": -5.0,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T06:56:28.655260+00:00",
+      "time": "2026-04-01T07:26:40.434984+00:00",
       "outcome": "NEUTRAL",
-      "delta": 3.5,
+      "delta": -5.0,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T06:57:02.370092+00:00",
+      "time": "2026-04-01T07:26:40.434984+00:00",
       "outcome": "NEUTRAL",
-      "delta": 0.25,
+      "delta": -5.0,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T06:57:02.370092+00:00",
+      "time": "2026-04-01T07:27:16.828013+00:00",
       "outcome": "NEUTRAL",
       "delta": 0.0,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T06:57:09.464785+00:00",
-      "outcome": "NEUTRAL",
-      "delta": -2.0,
-      "bias": "NEUTRAL"
-    },
-    {
-      "time": "2026-04-01T06:57:12.193026+00:00",
-      "outcome": "NEUTRAL",
-      "delta": 3.5,
-      "bias": "NEUTRAL"
-    },
-    {
-      "time": "2026-04-01T06:57:17.585188+00:00",
+      "time": "2026-04-01T07:27:16.828013+00:00",
       "outcome": "NEUTRAL",
       "delta": 0.0,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T06:57:18.313733+00:00",
+      "time": "2026-04-01T07:27:24.332494+00:00",
       "outcome": "NEUTRAL",
-      "delta": -5.5,
+      "delta": 0.0,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-04-01T07:27:27.017027+00:00",
+      "outcome": "NEUTRAL",
+      "delta": -1.0,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-04-01T07:27:27.017027+00:00",
+      "outcome": "NEUTRAL",
+      "delta": -1.0,
       "bias": "NEUTRAL"
     }
   ],

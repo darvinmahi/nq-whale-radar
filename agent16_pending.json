@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-04-01T07:01:19.669316+00:00",
-  "prediction_price": 24156.0,
+  "timestamp": "2026-04-01T07:27:33.590230+00:00",
+  "prediction_price": 24142.5,
   "prediction_bias": "NEUTRAL",
   "prediction_score": 49,
   "agent_signals": {
@@ -26,7 +26,7 @@
     },
     "SILVER_BULLET": {
       "dir": 0,
-      "raw": "UPCOMING"
+      "raw": "ACTIVE"
     },
     "ORDERFLOW": {
       "dir": 1,

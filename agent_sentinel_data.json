@@ -1,30 +1,30 @@
 {
-    "timestamp": "2026-04-01T08:01:20.216123",
+    "timestamp": "2026-03-31T21:58:54.588881",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-            "size": 353243
+            "size": 336361
         },
         "analisis_promax.html": {
             "exists": true,
-            "size": 53159
+            "size": 52341
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11076
+            "size": 11036
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 809
+            "size": 1149
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 393
+            "size": 381
         }
     },
-    "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL fuerte. Busca seguir el flujo de la EMA 200.",
+    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL en 51 puntos. Monitorea flujos finales.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
