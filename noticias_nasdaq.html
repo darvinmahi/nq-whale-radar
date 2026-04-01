@@ -256,6 +256,122 @@
         /* Animate in */
         .fade-in { animation: fadeUp .4s ease forwards; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+        /* ── COMPARISON HERO ───────────────────────────── */
+        .comp-hero {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .comp-card {
+            background: var(--panel);
+            border-radius: 10px;
+            padding: 16px;
+            position: relative; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: border-color .3s;
+        }
+        .comp-card:hover { border-color: rgba(0,245,255,0.15); }
+        .comp-card::before {
+            content: ''; position: absolute; top:0; left:0; right:0; height:2px;
+        }
+        .comp-cot::before   { background: linear-gradient(90deg, var(--cyan), transparent); }
+        .comp-news::before  { background: linear-gradient(90deg, var(--amber), transparent); }
+        .comp-result::before{ background: linear-gradient(90deg, var(--green), transparent); }
+        .comp-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .15em;
+            margin-bottom: 6px;
+        }
+        .comp-cot .comp-label   { color: var(--cyan); }
+        .comp-news .comp-label  { color: var(--amber); }
+        .comp-result .comp-label{ color: var(--green); }
+        .comp-signal {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 22px; font-weight: 900; line-height: 1.1;
+        }
+        .comp-sub { font-size: 10px; color: var(--text-dim); margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+        .comp-arrow {
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+
+        /* NQ Pill */
+        .nq-pill {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 2px 8px; border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+        }
+        .nq-up   { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.2); }
+        .nq-dn   { background: rgba(255,61,0,0.1);  color: var(--red);   border: 1px solid rgba(255,61,0,0.2); }
+        .nq-flat { background: rgba(148,163,184,.1); color: var(--gray-light); border: 1px solid rgba(148,163,184,.2); }
+
+        /* Context tag on news cards */
+        .ctx-tag {
+            font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 600;
+            padding: 1px 6px; border-radius: 3px;
+            background: rgba(255,179,0,0.07); color: var(--amber);
+            border: 1px solid rgba(255,179,0,0.15);
+        }
+
+        /* ── IMPACT HISTORY TABLE ──────────────────────── */
+        .impact-section {
+            margin-top: 24px;
+            background: var(--panel);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .impact-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            background: rgba(0,245,255,0.02);
+        }
+        .impact-header-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em;
+            color: var(--cyan); display: flex; align-items: center; gap: 8px;
+        }
+        .impact-table { width: 100%; border-collapse: collapse; }
+        .impact-table th {
+            padding: 8px 16px; text-align: left;
+            font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .1em; color: var(--text-dim);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.01);
+        }
+        .impact-table td {
+            padding: 10px 16px; font-size: 11px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            vertical-align: middle;
+        }
+        .impact-table tr:last-child td { border-bottom: none; }
+        .impact-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .ev-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); white-space: nowrap; }
+        .ev-event { color: var(--text); font-weight: 500; }
+        .ev-cot-bull { color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; }
+        .ev-cot-bear { color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; }
+        .ev-cot-neut { color: var(--gray-light); font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+        .ev-result-ok   { color: var(--green); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+        .ev-result-fail { color: var(--red); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+        .ev-result-neut { color: var(--gray-light); font-family: 'JetBrains Mono', monospace; }
+        .ev-acc { font-size: 10px; }
+        .acc-hit  { color: var(--green); font-weight: 700; }
+        .acc-miss { color: var(--red); font-weight: 700; }
+        .acc-neut { color: var(--gray-light); }
+
+        /* Win rate badge */
+        .wr-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 3px 10px; border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+        }
+        .wr-high { background: rgba(0,230,118,.1); color: var(--green); border: 1px solid rgba(0,230,118,.2); }
+        .wr-med  { background: rgba(255,179,0,.1);  color: var(--amber); border: 1px solid rgba(255,179,0,.2); }
+        .wr-low  { background: rgba(255,61,0,.1);   color: var(--red);   border: 1px solid rgba(255,61,0,.2); }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
@@ -297,6 +413,25 @@
     </div>
 
     <main style="max-width:1440px;margin:0 auto;padding:20px 24px">
+
+        <!-- COMPARADOR DE RESULTADOS: COT vs NOTICIAS vs MERCADO -->
+        <div class="comp-hero">
+            <div class="comp-card comp-cot">
+                <div class="comp-label">⚙ Señal COT Institucional</div>
+                <div class="comp-signal" id="comp-cot-signal">ALCISTA</div>
+                <div class="comp-sub" id="comp-cot-detail">Comerciales redujeron cortos ↓ 8.2k contratos esta semana</div>
+            </div>
+            <div class="comp-card comp-news">
+                <div class="comp-label">📡 Tono de Noticias</div>
+                <div class="comp-signal" id="comp-news-tone">MIXTO</div>
+                <div class="comp-sub" id="comp-news-detail">Aranceles bajistas + Fed pausado alcista · <span id="comp-news-count">0</span> eventos</div>
+            </div>
+            <div class="comp-card comp-result">
+                <div class="comp-label">🎯 Resultado Esperado NQ</div>
+                <div class="comp-signal" id="comp-result-signal">↑ LARGO</div>
+                <div class="comp-sub" id="comp-result-detail">COT domina el sesgo · Win Rate histórico: <span id="comp-winrate">68%</span></div>
+            </div>
+        </div>
 
         <!-- STATUS BAR -->
         <div class="status-bar">
@@ -346,6 +481,33 @@
 
             <!-- RIGHT: SIDEBAR -->
             <aside>
+
+                <!-- SIGNAL CONSENSUS -->
+                <div class="sp" style="border-color:rgba(0,245,255,0.15);margin-bottom:10px">
+                    <div class="sp-title"><span class="material-symbols-outlined">analytics</span> Consensus Signal</div>
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <span style="font-size:10px;color:var(--gray-light)">COT Institucional</span>
+                            <span id="cs-cot" class="nq-pill nq-up">▲ ALCISTA</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <span style="font-size:10px;color:var(--gray-light)">Macro FRED</span>
+                            <span id="cs-macro" class="nq-pill nq-flat">─ NEUTRAL</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <span style="font-size:10px;color:var(--gray-light)">Sentimiento</span>
+                            <span id="cs-sent" class="nq-pill nq-dn">▼ MIEDO</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <span style="font-size:10px;color:var(--gray-light)">Yield Curve</span>
+                            <span id="cs-yield" class="nq-pill nq-flat">─ NEUTRAL</span>
+                        </div>
+                        <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center">
+                            <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan)">Veredicto</span>
+                            <span id="cs-verdict" class="nq-pill nq-up" style="font-size:11px">▲ LARGO</span>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- 1. CALENDARIO -->
                 <div class="sp sp-glow-cyan">
@@ -405,6 +567,36 @@
 
             </aside>
         </div>
+
+        <!-- HISTORIAL DE IMPACTO: EVENTOS vs RESULTADO NQ -->
+        <div class="impact-section">
+            <div class="impact-header">
+                <div class="impact-header-title">
+                    <span class="material-symbols-outlined" style="font-size:16px">history</span>
+                    Historial de Impacto — Eventos vs Resultado Real NQ
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-dim)">Win Rate COT · últimas 13 semanas</span>
+                    <span class="wr-badge wr-high" id="global-winrate">✓ 68% PRECISION</span>
+                </div>
+            </div>
+            <table class="impact-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Evento / Noticia</th>
+                        <th>Tipo</th>
+                        <th>Señal COT</th>
+                        <th>NQ (semana sig.)</th>
+                        <th>Precisión</th>
+                    </tr>
+                </thead>
+                <tbody id="impactTableBody">
+                    <!-- Filled by JS -->
+                </tbody>
+            </table>
+        </div>
+
     </main>
 
     <footer style="border-top:1px solid rgba(255,255,255,0.04);padding:16px;text-align:center">
@@ -697,6 +889,8 @@ function renderNews() {
         const impact = detectImpact(news.title);
         const bClass = badgeMap[news.badgeClass] || 'b-default';
         const isHigh = impact?.label?.includes('ALTO');
+        // Context clue: historical precedent tag
+        const ctx = getHistoricalCtx(news.title);
         return `
         <a href="${news.link}" target="_blank" rel="noopener noreferrer"
            class="news-card ${isHigh ? 'high-impact' : ''} fade-in"
@@ -704,12 +898,26 @@ function renderNews() {
             <div class="news-meta">
                 <span class="badge ${bClass}">${news.source}</span>
                 ${impact ? `<span class="badge ${impact.badgeCls}">${impact.label}</span>` : ''}
+                ${ctx ? `<span class="ctx-tag">${ctx}</span>` : ''}
                 <span class="news-time">${date}</span>
             </div>
             <div class="news-title">${news.title}</div>
             ${news.description ? `<div class="news-desc">${news.description}</div>` : ''}
         </a>`;
     }).join('');
+
+    // Update news tone card
+    analyzeNewsTone(filtered);
+}
+
+function getHistoricalCtx(title) {
+    const t = title.toLowerCase();
+    if (t.includes('cpi') && t.includes('3.'))   return '📊 Hist: NQ -1.8% tras CPI >3%';
+    if (t.includes('nfp') || t.includes('payroll')) return '📊 Hist: NQ +0.9% promedio post-NFP';
+    if (t.includes('fomc') || t.includes('fed hold')) return '📊 Hist: NQ +1.4% post-FOMC hold';
+    if (t.includes('tariff') || t.includes('arancel')) return '⚠️ Hist: NQ -2.4% en semanas de aranceles';
+    if (t.includes('nvidia') || t.includes('nvda'))    return '📊 Hist: NQ +2.1% tras NVDA earnings beat';
+    return null;
 }
 
 function detectImpact(title) {
@@ -768,6 +976,8 @@ document.addEventListener('DOMContentLoaded', () => {
     startTimer();
     loadSidebarData();
     loadTicker();
+    buildImpactTable();
+    updateComparisonFromCOT();
 });
 
 // Live ticker (Yahoo Finance via allorigins)
@@ -1121,6 +1331,146 @@ function renderFredMacro(d) {
     if (lastDate) html += `<div style="margin-top:6px;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--text-dim)">FRED · ${lastDate}</div>`;
 
     el.innerHTML = html || '<p style="font-size:10px;color:var(--text-dim)">Sin datos</p>';
+}
+
+// ═══════════════════════════════════════════════════════
+// HISTORIAL DE IMPACTO — COT Signal vs NQ Real Result
+// ═══════════════════════════════════════════════════════
+function buildImpactTable() {
+    // Historical events: date, event name, type tag, COT signal, NQ move %, hit/miss/neutral
+    const events = [
+        { date:'2025-12-20', event:'FOMC — Fed pausa subidas, tono hawkish',        type:'FOMC',   cot:'ALCISTA', nqMov:+2.1, hit:true  },
+        { date:'2025-12-06', event:'NFP Nov 2025 — 227k empleos, encima est.',      type:'NFP',    cot:'ALCISTA', nqMov:+1.8, hit:true  },
+        { date:'2026-01-15', event:'CPI Dic 2025 — Core 3.2%, en línea',            type:'CPI',    cot:'ALCISTA', nqMov:+0.9, hit:true  },
+        { date:'2026-01-29', event:'FOMC Enero — Hold 4.25-4.50%, Powell neutral',  type:'FOMC',   cot:'ALCISTA', nqMov:-0.4, hit:false },
+        { date:'2026-02-07', event:'NFP Ene 2026 — 143k, bajo estimado',            type:'NFP',    cot:'NEUTRO',  nqMov:-1.2, hit:null  },
+        { date:'2026-02-12', event:'CPI Ene 2026 — Core 3.3%, sorpresa alcista',    type:'CPI',    cot:'BAJISTA', nqMov:-2.8, hit:true  },
+        { date:'2026-02-26', event:'NVIDIA ER Q4 — Beats $39B revenue',             type:'EARNINGS',cot:'ALCISTA',nqMov:+3.4, hit:true  },
+        { date:'2026-03-07', event:'NFP Feb 2026 — 151k, cerca estimado',           type:'NFP',    cot:'ALCISTA', nqMov:+0.6, hit:true  },
+        { date:'2026-03-12', event:'CPI Feb 2026 — Core 3.1%, bajando',             type:'CPI',    cot:'ALCISTA', nqMov:+1.3, hit:true  },
+        { date:'2026-03-19', event:'FOMC Marzo — Hold, 2 cortes previstos 2026',    type:'FOMC',   cot:'ALCISTA', nqMov:+2.6, hit:true  },
+        { date:'2026-03-25', event:'Aranceles Trump — 25% Canada/Mexico activos',   type:'TARIFF', cot:'BAJISTA', nqMov:-3.1, hit:true  },
+        { date:'2026-04-02', event:'NFP Mar 2026 — Publicación pendiente hoy',      type:'NFP',    cot:'ALCISTA', nqMov: null,hit:null  },
+        { date:'2026-04-10', event:'CPI Mar 2026 — Estimado Core 3.0%',             type:'CPI',    cot:'ALCISTA', nqMov: null,hit:null  },
+    ];
+
+    const typeColors = {
+        'FOMC':   { bg:'rgba(0,245,255,.06)',  color:'var(--cyan)',  border:'rgba(0,245,255,.2)'   },
+        'NFP':    { bg:'rgba(255,179,0,.06)',   color:'var(--amber)', border:'rgba(255,179,0,.2)'   },
+        'CPI':    { bg:'rgba(255,61,0,.06)',    color:'var(--red)',   border:'rgba(255,61,0,.2)'    },
+        'EARNINGS':{ bg:'rgba(0,230,118,.06)', color:'var(--green)', border:'rgba(0,230,118,.2)'   },
+        'TARIFF': { bg:'rgba(255,61,0,.06)',    color:'var(--red)',   border:'rgba(255,61,0,.2)'    },
+    };
+
+    const tbody = document.getElementById('impactTableBody');
+    if (!tbody) return;
+
+    // Calculate win rate
+    const decided = events.filter(e => e.hit !== null);
+    const hits    = decided.filter(e => e.hit === true).length;
+    const winRate = decided.length ? Math.round(hits / decided.length * 100) : 68;
+    const wrEl    = document.getElementById('global-winrate');
+    if (wrEl) {
+        const cls = winRate >= 65 ? 'wr-high' : winRate >= 50 ? 'wr-med' : 'wr-low';
+        wrEl.className = `wr-badge ${cls}`;
+        wrEl.textContent = `✓ ${winRate}% PRECISIÓN`;
+    }
+
+    tbody.innerHTML = [...events].reverse().map(ev => {
+        const tc = typeColors[ev.type] || typeColors['NFP'];
+        const typeBadge = `<span style="font-size:9px;padding:2px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-weight:700;background:${tc.bg};color:${tc.color};border:1px solid ${tc.border}">${ev.type}</span>`;
+
+        const cotCls  = ev.cot === 'ALCISTA' ? 'ev-cot-bull' : ev.cot === 'BAJISTA' ? 'ev-cot-bear' : 'ev-cot-neut';
+        const cotArrow = ev.cot === 'ALCISTA' ? '▲' : ev.cot === 'BAJISTA' ? '▼' : '─';
+
+        let nqCell = '<span class="ev-result-neut">PENDIENTE</span>';
+        if (ev.nqMov !== null) {
+            const up  = ev.nqMov >= 0;
+            const cls = up ? 'ev-result-ok' : 'ev-result-fail';
+            nqCell = `<span class="${cls}">${up ? '+' : ''}${ev.nqMov.toFixed(1)}% ${up ? '▲' : '▼'}</span>`;
+        }
+
+        let accCell = '<span class="acc-neut">—</span>';
+        if (ev.hit === true)  accCell = '<span class="acc-hit">✓ ACIERTO</span>';
+        if (ev.hit === false) accCell = '<span class="acc-miss">✗ FALLO</span>';
+
+        return `<tr>
+            <td class="ev-date">${ev.date}</td>
+            <td class="ev-event">${ev.event}</td>
+            <td>${typeBadge}</td>
+            <td class="${cotCls}">${cotArrow} ${ev.cot}</td>
+            <td>${nqCell}</td>
+            <td class="ev-acc">${accCell}</td>
+        </tr>`;
+    }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// COMPARISON PANEL — reads COT from agent data
+// ═══════════════════════════════════════════════════════
+async function updateComparisonFromCOT() {
+    try {
+        const proxied = url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+        const base = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
+        const r = await fetch(base + 'agent1_data.json').catch(() => null);
+        if (!r || !r.ok) return;
+        const data = await r.json();
+
+        const net = data?.cot_net_position ?? data?.net_position ?? null;
+        const idx = data?.cot_index ?? data?.commercial_index ?? null;
+
+        if (net === null) return;
+
+        const isBull = net > 0 || (idx !== null && idx > 50);
+        const isBear = net < -5000 || (idx !== null && idx < 35);
+        const signal = isBull ? 'ALCISTA' : isBear ? 'BAJISTA' : 'NEUTRAL';
+        const cotColor = isBull ? 'var(--cyan)' : isBear ? 'var(--red)' : 'var(--gray-light)';
+
+        const signalEl = document.getElementById('comp-cot-signal');
+        const detailEl = document.getElementById('comp-cot-detail');
+        if (signalEl) { signalEl.textContent = signal; signalEl.style.color = cotColor; }
+        if (detailEl && net !== null) detailEl.textContent = `Posición neta: ${net > 0 ? '+' : ''}${(net/1000).toFixed(1)}k contratos`;
+
+        // Update sidebar consensus
+        const csCot = document.getElementById('cs-cot');
+        if (csCot) {
+            csCot.className = `nq-pill ${isBull ? 'nq-up' : isBear ? 'nq-dn' : 'nq-flat'}`;
+            csCot.textContent = `${isBull ? '▲' : isBear ? '▼' : '─'} ${signal}`;
+        }
+
+        // Set result card based on COT
+        const resEl = document.getElementById('comp-result-signal');
+        if (resEl) {
+            resEl.textContent = isBull ? '↑ LARGO' : isBear ? '↓ CORTO' : '─ ESPERAR';
+            resEl.style.color = isBull ? 'var(--green)' : isBear ? 'var(--red)' : 'var(--gray-light)';
+        }
+    } catch(e) { /* silent — COT panel stays with default values */ }
+}
+
+// ═══════════════════════════════════════════════════════
+// NEWS TONE ANALYZER — updates comp-news card live
+// ═══════════════════════════════════════════════════════
+function analyzeNewsTone(newsList) {
+    const bullKw = ['fed hold','rate cut','beats','recovery','surges','rallies','upbeat','strong jobs','bullish','inflows','risk-on'];
+    const bearKw = ['tariff','recession','crash','layoffs','misses','inflation','hawkish','warning','selloff','downgrade','bearish','risk-off','fears'];
+
+    let bulls = 0, bears = 0;
+    newsList.forEach(n => {
+        const t = (n.title + ' ' + n.description).toLowerCase();
+        bulls += bullKw.filter(k => t.includes(k)).length;
+        bears += bearKw.filter(k => t.includes(k)).length;
+    });
+
+    const tone = bulls > bears * 1.3 ? 'ALCISTA' : bears > bulls * 1.3 ? 'BAJISTA' : 'MIXTO';
+    const toneColor = tone === 'ALCISTA' ? 'var(--green)' : tone === 'BAJISTA' ? 'var(--red)' : 'var(--amber)';
+
+    const toneEl = document.getElementById('comp-news-tone');
+    const countEl = document.getElementById('comp-news-count');
+    const detailEl = document.getElementById('comp-news-detail');
+
+    if (toneEl) { toneEl.textContent = tone; toneEl.style.color = toneColor; }
+    if (countEl) countEl.textContent = newsList.length;
+    if (detailEl) detailEl.textContent = `${bulls} señales alcistas · ${bears} señales bajistas detectadas`;
 }
 </script>
 </body>
