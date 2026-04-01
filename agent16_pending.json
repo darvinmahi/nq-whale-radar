@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-04-01T07:27:33.590230+00:00",
-  "prediction_price": 24142.5,
+  "timestamp": "2026-04-01T17:11:56.026903+00:00",
+  "prediction_price": 24320.75,
   "prediction_bias": "NEUTRAL",
-  "prediction_score": 49,
+  "prediction_score": 48,
   "agent_signals": {
     "COT": {
       "dir": -1,
       "raw": "BEARISH"
     },
     "VOLATILITY": {
-      "dir": -1,
-      "raw": "BEARISH"
+      "dir": 0,
+      "raw": "NEUTRAL"
     },
     "SMC": {
       "dir": 1,
@@ -25,8 +25,8 @@
       "raw": "ESTABLE"
     },
     "SILVER_BULLET": {
-      "dir": 0,
-      "raw": "ACTIVE"
+      "dir": -1,
+      "raw": "UPCOMING"
     },
     "ORDERFLOW": {
       "dir": 1,

@@ -1,36 +1,36 @@
 {
-  "generated_at": "2026-04-01T07:27:33.688264+00:00",
+  "generated_at": "2026-04-01T17:11:56.026903+00:00",
   "total_predictions": 500,
-  "validated": 108,
-  "win_rate_real": 50.0,
-  "wins": 54,
-  "losses": 54,
-  "neutrals": 392,
+  "validated": 56,
+  "win_rate_real": 48.2,
+  "wins": 27,
+  "losses": 29,
+  "neutrals": 444,
   "current_streak": {
     "type": "LOSS",
     "count": 1
   },
   "agent_accuracy": {
     "COT": {
-      "accuracy_pct": 51.5,
-      "wins": 67,
-      "losses": 63,
-      "neutrals": 370,
-      "total_calls": 130
+      "accuracy_pct": 50.2,
+      "wins": 103,
+      "losses": 102,
+      "neutrals": 295,
+      "total_calls": 205
     },
     "VOLATILITY": {
-      "accuracy_pct": 52.9,
-      "wins": 74,
-      "losses": 66,
-      "neutrals": 360,
-      "total_calls": 140
+      "accuracy_pct": 52.7,
+      "wins": 79,
+      "losses": 71,
+      "neutrals": 350,
+      "total_calls": 150
     },
     "SMC": {
-      "accuracy_pct": 47.1,
-      "wins": 66,
-      "losses": 74,
-      "neutrals": 360,
-      "total_calls": 140
+      "accuracy_pct": 48.8,
+      "wins": 106,
+      "losses": 111,
+      "neutrals": 283,
+      "total_calls": 217
     },
     "PROBABILITY": {
       "accuracy_pct": null,
@@ -40,90 +40,90 @@
       "total_calls": 0
     },
     "SENTIMENT": {
-      "accuracy_pct": 52.0,
-      "wins": 64,
-      "losses": 59,
-      "neutrals": 377,
-      "total_calls": 123
+      "accuracy_pct": 52.2,
+      "wins": 35,
+      "losses": 32,
+      "neutrals": 433,
+      "total_calls": 67
     },
     "SILVER_BULLET": {
-      "accuracy_pct": 50.8,
-      "wins": 61,
-      "losses": 59,
-      "neutrals": 380,
-      "total_calls": 120
+      "accuracy_pct": 48.0,
+      "wins": 36,
+      "losses": 39,
+      "neutrals": 425,
+      "total_calls": 75
     },
     "ORDERFLOW": {
-      "accuracy_pct": 47.1,
-      "wins": 66,
-      "losses": 74,
-      "neutrals": 360,
-      "total_calls": 140
+      "accuracy_pct": 48.8,
+      "wins": 106,
+      "losses": 111,
+      "neutrals": 283,
+      "total_calls": 217
     }
   },
-  "best_agent": "VOLATILITY (52.9%)",
-  "worst_agent": "ORDERFLOW (47.1%)",
+  "best_agent": "VOLATILITY (52.7%)",
+  "worst_agent": "SILVER_BULLET (48.0%)",
   "last_10_outcomes": [
     {
-      "time": "2026-04-01T07:18:36.848520+00:00",
+      "time": "2026-04-01T16:52:52.774940+00:00",
       "outcome": "NEUTRAL",
-      "delta": -11.0,
+      "delta": 2.75,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T07:22:25.183846+00:00",
+      "time": "2026-04-01T16:53:01.494473+00:00",
       "outcome": "NEUTRAL",
-      "delta": -2.75,
+      "delta": 2.5,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T07:26:40.434984+00:00",
+      "time": "2026-04-01T16:54:10.352778+00:00",
       "outcome": "NEUTRAL",
-      "delta": -5.0,
+      "delta": -3.25,
       "bias": "NEUTRAL"
     },
     {
-      "time": "2026-04-01T07:26:40.434984+00:00",
+      "time": "2026-04-01T17:03:29.991037+00:00",
       "outcome": "NEUTRAL",
-      "delta": -5.0,
-      "bias": "NEUTRAL"
+      "delta": -0.5,
+      "bias": "NEUTRAL-BULLISH"
     },
     {
-      "time": "2026-04-01T07:26:40.434984+00:00",
+      "time": "2026-04-01T17:03:59.941129+00:00",
       "outcome": "NEUTRAL",
-      "delta": -5.0,
-      "bias": "NEUTRAL"
+      "delta": -7.5,
+      "bias": "NEUTRAL-BEARISH"
     },
     {
-      "time": "2026-04-01T07:27:16.828013+00:00",
+      "time": "2026-04-01T17:05:59.246964+00:00",
       "outcome": "NEUTRAL",
-      "delta": 0.0,
-      "bias": "NEUTRAL"
+      "delta": 8.25,
+      "bias": "NEUTRAL-BULLISH"
     },
     {
-      "time": "2026-04-01T07:27:16.828013+00:00",
-      "outcome": "NEUTRAL",
-      "delta": 0.0,
-      "bias": "NEUTRAL"
-    },
-    {
-      "time": "2026-04-01T07:27:24.332494+00:00",
+      "time": "2026-04-01T17:07:47.444165+00:00",
       "outcome": "NEUTRAL",
       "delta": 0.0,
-      "bias": "NEUTRAL"
+      "bias": "NEUTRAL-BEARISH"
     },
     {
-      "time": "2026-04-01T07:27:27.017027+00:00",
+      "time": "2026-04-01T17:07:57.583718+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 0.0,
+      "bias": "NEUTRAL-BEARISH"
+    },
+    {
+      "time": "2026-04-01T17:08:06.998677+00:00",
+      "outcome": "NEUTRAL",
+      "delta": -4.25,
+      "bias": "NEUTRAL-BEARISH"
+    },
+    {
+      "time": "2026-04-01T17:09:15.287344+00:00",
       "outcome": "NEUTRAL",
       "delta": -1.0,
-      "bias": "NEUTRAL"
-    },
-    {
-      "time": "2026-04-01T07:27:27.017027+00:00",
-      "outcome": "NEUTRAL",
-      "delta": -1.0,
-      "bias": "NEUTRAL"
+      "bias": "NEUTRAL-BEARISH"
     }
   ],
-  "status": "NEUTRAL — WR 50.0% (target: 55%)"
+  "status": "EN AJUSTE — WR 48.2% (bajo target)"
 }
