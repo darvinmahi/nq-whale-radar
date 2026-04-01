@@ -300,7 +300,18 @@
                     </div>
                 </div>
 
-                <!-- 4. AGENT13 STRATEGY -->
+                <!-- 4. MACRO FRED + YIELD CURVE -->
+                <div class="sidebar-panel" style="border-color: rgba(0,245,255,0.12);">
+                    <h4><span class="material-symbols-outlined">monitoring</span> Macro FRED · Yield Curve</h4>
+                    <div id="fredMacroPanel">
+                        <div class="skeleton h-3 w-full" style="margin-bottom:6px"></div>
+                        <div class="skeleton h-3 w-5/6" style="margin-bottom:6px"></div>
+                        <div class="skeleton h-3 w-4/5" style="margin-bottom:6px"></div>
+                        <div class="skeleton h-3 w-3/4"></div>
+                    </div>
+                </div>
+
+                <!-- 5. AGENT13 STRATEGY -->
                 <div class="sidebar-panel" style="border-color: rgba(168,85,247,0.15);">
                     <h4 style="color: #a855f7;"><span class="material-symbols-outlined">smart_toy</span> Agent13 Estrategia</h4>
                     <div id="agent13Panel">
@@ -693,6 +704,7 @@ async function loadSidebarData() {
     loadCalendar();
     loadSentiment();
     loadFedWatch();
+    loadFredMacro();
     loadAgent13Local();
     loadSentinelLocal();
 }
@@ -904,6 +916,129 @@ function renderSentinel(verdict, stats) {
         </div>`;
     }
     el.innerHTML = `<p class="text-[11px] leading-relaxed" style="color:#FFA726">${verdict}</p>${statsHtml}`;
+}
+
+// ═══════════════════════════════════════════════════════
+// FASE 2+3 — FRED MACRO + YIELD CURVE (FRED API · CORS libre)
+// Key: pública de gobierno USA — sin datos privados ni costos
+// ═══════════════════════════════════════════════════════
+async function loadFredMacro() {
+    const el = document.getElementById('fredMacroPanel');
+    const KEY = '2bc91ee8b5ec802e9cba9b1f2d73bc0b';
+    const BASE = 'https://api.stlouisfed.org/fred/series/observations';
+    const params = (id, lim) => `?series_id=${id}&api_key=${KEY}&file_type=json&sort_order=desc&limit=${lim}`;
+
+    // Series a cargar: [id, límite de observaciones]
+    const targets = [
+        ['GS10',     2],   // Yield 10Y Treasury (diario, ya en %)
+        ['GS2',      2],   // Yield 2Y Treasury  (diario, ya en %)
+        ['FEDFUNDS', 2],   // FED Funds Rate
+        ['CPIAUCSL', 13],  // CPI (índice) — 13 obs para calcular YoY
+        ['CPILFESL', 13],  // Core CPI
+        ['UNRATE',   2],   // Desempleo %
+        ['M2SL',     2],   // M2 en miles de millones USD
+    ];
+
+    try {
+        const fetches = targets.map(([id, lim]) =>
+            fetch(BASE + params(id, lim)).then(r => r.ok ? r.json() : null).catch(() => null)
+        );
+        const results = await Promise.all(fetches);
+
+        // Construir mapa id → {current, previous, yoy, date}
+        const d = {};
+        targets.forEach(([id, lim], i) => {
+            const obs = results[i]?.observations?.filter(o => o.value !== '.');
+            if (!obs?.length) return;
+            const cur = parseFloat(obs[0].value);
+            const prev = parseFloat(obs[1]?.value ?? obs[0].value);
+            const yoy = lim === 13 && obs[12]
+                ? ((cur - parseFloat(obs[12].value)) / parseFloat(obs[12].value) * 100)
+                : null;
+            d[id] = { current: cur, previous: prev, yoy, date: obs[0].date };
+        });
+
+        renderFredMacro(d);
+    } catch (e) {
+        console.warn('[FRED]', e.message);
+        el.innerHTML = '<p class="text-[10px] font-mono" style="color:var(--data-gray)">FRED API no disponible</p>';
+    }
+}
+
+function renderFredMacro(d) {
+    const el = document.getElementById('fredMacroPanel');
+    const fmt = (v, dec) => isNaN(v) ? '--' : v.toFixed(dec);
+    const delta = (cur, prev, dec) => {
+        const ch = cur - prev;
+        const c = ch > 0 ? '#FF3D00' : ch < 0 ? '#4CAF50' : '#94A3B8';
+        const sym = ch > 0 ? '▲' : ch < 0 ? '▼' : '─';
+        return `<span style="font-size:9px;color:${c}">${sym}${Math.abs(ch).toFixed(dec)}</span>`;
+    };
+
+    // ── Yield Curve ──────────────────────────────────────────────
+    const gs10 = d['GS10']?.current;
+    const gs2  = d['GS2']?.current;
+    const spread = (gs10 != null && gs2 != null) ? gs10 - gs2 : null;
+    const inv = spread !== null && spread < 0;
+    const spreadColor = inv ? '#FF3D00' : '#4CAF50';
+    const yieldHTML = spread !== null ? `
+        <div style="padding:8px 10px;margin-bottom:10px;border-radius:6px;
+            background:${inv ? 'rgba(255,61,0,0.08)' : 'rgba(76,175,80,0.08)'};
+            border:1px solid ${inv ? 'rgba(255,61,0,0.25)' : 'rgba(76,175,80,0.25)'}">
+            <div style="font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+                color:${spreadColor};margin-bottom:4px">
+                ${inv ? '⚠️ CURVA INVERTIDA' : '✅ CURVA NORMAL'}
+            </div>
+            <div style="font-size:11px;font-family:'JetBrains Mono',monospace">
+                2Y <span style="color:#2196F3;font-weight:700">${fmt(gs2,2)}%</span>
+                &nbsp;·&nbsp;
+                10Y <span style="color:#4CAF50;font-weight:700">${fmt(gs10,2)}%</span>
+            </div>
+            <div style="font-size:10px;font-family:'JetBrains Mono',monospace;margin-top:2px">
+                Spread&nbsp;<span style="color:${spreadColor};font-weight:700">${spread >= 0 ? '+' : ''}${fmt(spread,2)}%</span>
+                <span style="font-size:9px;color:var(--data-gray)">&nbsp;(10Y-2Y)</span>
+            </div>
+        </div>` : '';
+
+    // ── Macro rows ───────────────────────────────────────────────
+    const rows = [
+        { label: 'FED Rate', id: 'FEDFUNDS', suffix: '%', dec: 2, invert: false },
+        { label: 'CPI YoY',  id: 'CPIAUCSL', suffix: '%', dec: 1, useYoy: true, invert: true },
+        { label: 'Core CPI YoY', id: 'CPILFESL', suffix: '%', dec: 1, useYoy: true, invert: true },
+        { label: 'Desempleo', id: 'UNRATE',  suffix: '%', dec: 1, invert: true },
+        { label: 'M2 Dinero', id: 'M2SL',   suffix: 'T',  dec: 1, scale: 1000, invert: false },
+    ];
+
+    const rowsHTML = rows.map(row => {
+        const entry = d[row.id];
+        if (!entry) return '';
+        const val = row.useYoy && entry.yoy != null
+            ? entry.yoy
+            : row.scale ? entry.current / row.scale : entry.current;
+        const prev = row.scale ? entry.previous / row.scale : entry.previous;
+        const dispVal = (row.id === 'M2SL')
+            ? '$' + fmt(val, row.dec) + row.suffix
+            : fmt(val, row.dec) + row.suffix;
+        // For YoY, delta = current yoy vs previous entry approx
+        const deltaHTML = (row.useYoy && entry.yoy != null)
+            ? '' // skip delta for YoY — not meaningful without more obs
+            : delta(val, prev, row.dec);
+        return `<div class="stat-row">
+            <span class="stat-label">${row.label}</span>
+            <span class="stat-value" style="color:#e2e8f0">${dispVal} ${deltaHTML}</span>
+        </div>`;
+    }).join('');
+
+    // ── Date stamp ───────────────────────────────────────────────
+    const lastDate = d['UNRATE']?.date || d['GS10']?.date || '';
+    const stampHTML = lastDate
+        ? `<div style="margin-top:7px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.05);
+            font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--data-gray)">
+            Fuente: FRED · ${lastDate}
+          </div>` : '';
+
+    el.innerHTML = yieldHTML + rowsHTML + stampHTML
+        || '<p class="text-[10px]" style="color:var(--data-gray)">Sin datos FRED</p>';
 }
 </script>
 </body>
