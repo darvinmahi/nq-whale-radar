@@ -3749,6 +3749,148 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <!-- COT_TABLE_END -->
+<!-- FLOW_GAUGE_START -->
+<section class="relative z-20 max-w-7xl mx-auto px-6 pb-2" id="comm-flow-gauge">
+<div style="font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif">
+
+  <!-- Header -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+    <div style="font-size:11px;color:#00f2ff;font-weight:800;letter-spacing:.06em;text-transform:uppercase">
+      Commercial Flow Index
+    </div>
+    <span style="font-size:8px;background:rgba(0,242,255,.08);border:1px solid rgba(0,242,255,.2);color:#00f2ff;padding:2px 9px;border-radius:10px;font-weight:700">COM SHORT Δ · CFTC</span>
+    <span style="font-size:8px;color:#334155;font-family:monospace">24 Mar 2026 · 156w window</span>
+  </div>
+
+  <!-- Card principal -->
+  <div style="background:rgba(0,0,0,.25);border:1px solid rgba(234,179,8,.2);border-radius:14px;padding:20px 22px;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+
+    <!-- Velocímetro -->
+    <div style="flex:0 0 auto;text-align:center;min-width:200px;max-width:300px;width:100%">
+      <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;display:block;margin:0 auto">
+  <defs>
+    <filter id="needle-glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="hub-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#eab308" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0a0f1a"/>
+    </radialGradient>
+  </defs>
+  <!-- Base track -->
+  <path d="M42.00,148.00 A108,108 0 1,1 258.00,148.00 L232.00,148.00 A82,82 0 1,0 68.00,148.00Z" fill="rgba(255,255,255,.05)"/>
+  <!-- Color zones -->
+  <path d="M42.00,148.00 A108,108 0 0,1 86.52,60.63 L101.80,81.66 A82,82 0 0,0 68.00,148.00Z" fill="rgba(239,68,68,.7)"/>
+  <path d="M86.52,60.63 A108,108 0 0,1 213.48,60.63 L198.20,81.66 A82,82 0 0,0 101.80,81.66Z" fill="rgba(234,179,8,.6)"/>
+  <path d="M213.48,60.63 A108,108 0 0,1 258.00,148.00 L232.00,148.00 A82,82 0 0,0 198.20,81.66Z" fill="rgba(34,197,94,.7)"/>
+  <!-- Highlight active zone -->
+  <path d="M183.05,45.18 A108,108 0 0,1 228.50,73.82 L209.60,91.68 A82,82 0 0,0 175.09,69.93Z" fill="rgba(255,255,255,.12)"/>
+  <!-- Tick marks -->
+  <line x1="38.0" y1="148.0" x2="30.0" y2="148.0" stroke="rgba(255,255,255,.25)" stroke-width="2"/> <line x1="84.2" y1="57.4" x2="79.5" y2="50.9" stroke="rgba(255,255,255,.25)" stroke-width="2"/> <line x1="150.0" y1="36.0" x2="150.0" y2="28.0" stroke="rgba(255,255,255,.25)" stroke-width="2"/> <line x1="215.8" y1="57.4" x2="220.5" y2="50.9" stroke="rgba(255,255,255,.25)" stroke-width="2"/> <line x1="262.0" y1="148.0" x2="270.0" y2="148.0" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+  <!-- Zone labels -->
+  <text x="22" y="172" fill="#ef4444" font-size="8" font-family="monospace" text-anchor="middle" opacity=".85">0</text>
+  <text x="75" y="48" fill="#ef4444" font-size="8" font-family="monospace" text-anchor="middle" opacity=".7">30</text>
+  <text x="150" y="28" fill="#eab308" font-size="8" font-family="monospace" text-anchor="middle" opacity=".7">50</text>
+  <text x="225" y="48" fill="#22c55e" font-size="8" font-family="monospace" text-anchor="middle" opacity=".7">70</text>
+  <text x="278" y="172" fill="#22c55e" font-size="8" font-family="monospace" text-anchor="middle" opacity=".85">100</text>
+  <!-- Needle shadow -->
+  <line x1="142.5" y1="159.8" x2="200.1" y2="68.5" stroke="rgba(0,0,0,.6)" stroke-width="5" stroke-linecap="round"/>
+  <!-- Needle (con glow) -->
+  <line x1="142.5" y1="159.8" x2="200.1" y2="68.5" stroke="#eab308" stroke-width="3" stroke-linecap="round" filter="url(#needle-glow)"/>
+  <!-- Hub -->
+  <circle cx="150" cy="148" r="13" fill="url(#hub-grad)" stroke="#eab308" stroke-width="1.5"/>
+  <circle cx="150" cy="148" r="5"  fill="#eab308"/>
+  <!-- Flow Index number central -->
+  <text x="150" y="188" fill="#eab308" font-size="36" font-weight="900" font-family="'JetBrains Mono',monospace" text-anchor="middle" letter-spacing="-1">68</text>
+  <text x="150" y="204" fill="rgba(255,255,255,.25)" font-size="10" font-family="monospace" text-anchor="middle">/100</text>
+</svg>
+      <div style="margin-top:6px;font-size:14px;font-weight:900;color:#eab308;letter-spacing:.03em">🟡 NEUTRAL</div>
+      <div style="margin-top:3px;font-size:9px;color:rgba(255,255,255,.35);font-family:monospace">Sin señal dominante — operar solo con precio</div>
+    </div>
+
+    <!-- Panel derecho -->
+    <div style="flex:1;min-width:240px;display:flex;flex-direction:column;gap:14px">
+
+      <!-- Cambio esta semana (grande) -->
+      <div style="background:rgba(234,179,8,.07);border:1px solid rgba(234,179,8,.2);border-radius:10px;padding:14px 16px">
+        <div style="font-size:8px;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Cambio COM Short esta semana</div>
+        <div style="font-size:26px;font-weight:900;color:#22c55e;font-family:'JetBrains Mono',monospace;letter-spacing:-1px">-9,770</div>
+        <div style="font-size:10px;color:#22c55e;margin-top:4px;font-weight:600">Compraron 9,770 contratos · redujeron cortos</div>
+        <div style="margin-top:8px;font-size:9px;color:rgba(255,255,255,.25);font-family:monospace">COM Short: 65,488 contratos totales</div>
+      </div>
+
+      <!-- Regla de lectura -->
+      <div style="background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:12px 14px">
+        <div style="font-size:8px;color:#334155;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Cómo leer el indicador</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="font-size:10px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;background:#22c55e;border-radius:50%;flex-shrink:0;display:inline-block"></span>
+            <span><strong style="color:#22c55e">&gt; 70</strong> · Comerciales comprando fuerte → sesgo <strong style="color:#22c55e">LARGO</strong></span>
+          </div>
+          <div style="font-size:10px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;background:#eab308;border-radius:50%;flex-shrink:0;display:inline-block"></span>
+            <span><strong style="color:#eab308">30–70</strong> · Neutral → operar solo con precio</span>
+          </div>
+          <div style="font-size:10px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;background:#ef4444;border-radius:50%;flex-shrink:0;display:inline-block"></span>
+            <span><strong style="color:#ef4444">&lt; 30</strong> · Comerciales vendiendo fuerte → sesgo <strong style="color:#ef4444">CORTO</strong></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tabla histórico 5 semanas -->
+    <div style="width:100%;border-top:1px solid rgba(255,255,255,.05);padding-top:12px;margin-top:2px">
+      <div style="font-size:8px;color:#334155;font-family:monospace;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Últimas 5 semanas — COM Short Δ</div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:10px;min-width:320px">
+          <thead>
+            <tr style="background:rgba(0,0,0,.2)">
+              <th style="padding:5px 8px;text-align:left;font-size:8px;color:#334155;font-weight:600;text-transform:uppercase">Semana</th>
+              <th style="padding:5px 8px;text-align:right;font-size:8px;color:#334155;font-weight:600;text-transform:uppercase">Cambio Δ</th>
+              <th style="padding:5px 8px;text-align:right;font-size:8px;color:#334155;font-weight:600;text-transform:uppercase">Acción</th>
+              <th style="padding:5px 8px;text-align:right;font-size:8px;color:#334155;font-weight:600;text-transform:uppercase">Flow</th>
+            </tr>
+          </thead>
+          <tbody><tr style="border-top:1px solid rgba(255,255,255,.04)">
+      <td style="padding:5px 8px;font-family:monospace;font-size:9px;color:#00f2ff;white-space:nowrap">24 Mar 2026<span style="font-size:7px;background:rgba(0,242,255,.15);color:#00f2ff;padding:1px 5px;border-radius:8px;margin-left:4px;border:1px solid rgba(0,242,255,.25)">LIVE</span></td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-weight:700">-9,770</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-size:8px">COMPRARON</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:10px;color:#eab308;font-weight:700">68</td>
+    </tr><tr style="border-top:1px solid rgba(255,255,255,.04)">
+      <td style="padding:5px 8px;font-family:monospace;font-size:9px;color:#94a3b8;white-space:nowrap">17 Mar 2026</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-weight:400">-4,733</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-size:8px">COMPRARON</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:10px;color:#eab308;font-weight:400">60</td>
+    </tr><tr style="border-top:1px solid rgba(255,255,255,.04)">
+      <td style="padding:5px 8px;font-family:monospace;font-size:9px;color:#94a3b8;white-space:nowrap">10 Mar 2026</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-weight:400">-8,231</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-size:8px">COMPRARON</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:10px;color:#eab308;font-weight:400">65</td>
+    </tr><tr style="border-top:1px solid rgba(255,255,255,.04)">
+      <td style="padding:5px 8px;font-family:monospace;font-size:9px;color:#94a3b8;white-space:nowrap">3 Mar 2026</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-weight:400">-13,947</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-size:8px">COMPRARON</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:10px;color:#22c55e;font-weight:400">75</td>
+    </tr><tr style="border-top:1px solid rgba(255,255,255,.04)">
+      <td style="padding:5px 8px;font-family:monospace;font-size:9px;color:#94a3b8;white-space:nowrap">24 Feb 2026</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-weight:400">-5,406</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:9px;color:#22c55e;font-size:8px">COMPRARON</td>
+      <td style="padding:5px 8px;text-align:right;font-family:monospace;font-size:10px;color:#eab308;font-weight:400">61</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <div style="text-align:right;margin-top:6px;font-size:8px;color:#1e3a5f;font-family:monospace">
+        Flow = (Max − Δ) / (Max − Min) × 100 · Rango 3 años · Auto-update viernes
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+<!-- FLOW_GAUGE_END -->
 </section>
 
 <script id="cot-live-engine">
