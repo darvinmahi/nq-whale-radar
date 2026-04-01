@@ -1588,54 +1588,102 @@ function buildImpactTable() {
     }).join('');
 }
 
-// ═══════════════════════════════════════════════════════
-// COMPARISON PANEL — reads COT from agent data
-// ═══════════════════════════════════════════════════════
 async function updateComparisonFromCOT() {
     try {
-        const proxied = url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
         const base = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
-        const r = await fetch(base + 'agent1_data.json').catch(() => null);
-        if (!r || !r.ok) return;
-        const data = await r.json();
 
-        const net = data?.cot_net_position ?? data?.net_position ?? null;
-        const idx = data?.cot_index ?? data?.commercial_index ?? null;
+        // Lee los 3 agentes en paralelo — ninguno bloquea a los demás
+        const [r1, r4, r6] = await Promise.all([
+            fetch(base + 'agent1_data.json').catch(() => null),
+            fetch(base + 'agent4_data.json').catch(() => null),
+            fetch(base + 'agent6_data.json').catch(() => null),
+        ]);
+        const d1 = r1?.ok ? await r1.json() : {};
+        const d4 = r4?.ok ? await r4.json() : {};
+        const d6 = r6?.ok ? await r6.json() : {};
 
-        if (net === null) return;
+        // ── agent4: veredicto IA ponderado (ya calculado — no reinventar) ──
+        //    global_score: 0-100  |  global_label: 'ALCISTA'|'BAJISTA'|'NEUTRAL'
+        const score  = d4.global_score ?? null;
+        const label  = d4.global_label ?? null;
+        const layers = d4.layers ?? {};
 
-        const isBull = net > 0 || (idx !== null && idx > 50);
-        const isBear = net < -5000 || (idx !== null && idx < 35);
-        const signal = isBull ? 'ALCISTA' : isBear ? 'BAJISTA' : 'NEUTRAL';
-        const cotColor = isBull ? 'var(--cyan)' : isBear ? 'var(--red)' : 'var(--gray-light)';
+        // ── agent6: sesgo ICT/SMC institucional ──
+        //    signal: 'BULLISH'|'BEARISH'  |  confidence: 0-100
+        const ictSignal = d6.signal     ?? null;
+        const ictConf   = d6.confidence ?? null;
 
+        // ── agent1: datos brutos para el panel de detalle ──
+        //    cftc_cot.cot_net  |  yahoo.VXN.price  |  squeezemetrics.DIX
+        const vxn     = d1?.yahoo?.VXN?.price ?? null;
+        const dix     = d1?.squeezemetrics?.DIX ?? null;
+        const net     = d1?.cftc_cot?.cot_net ?? null;
+        const cotDate = d1?.cftc_cot?.cot_date ?? '';
+
+        if (score === null && label === null) {
+            console.warn('[COT] agent4_data.json no disponible'); return;
+        }
+
+        // Colores y clases según label del sistema
+        const col     = label === 'ALCISTA' ? 'var(--green)' : label === 'BAJISTA' ? 'var(--red)' : 'var(--amber)';
+        const arrow   = label === 'ALCISTA' ? '▲' : label === 'BAJISTA' ? '▼' : '─';
+        const pillCls = label === 'ALCISTA' ? 'nq-up' : label === 'BAJISTA' ? 'nq-dn' : 'nq-flat';
+
+        // ── Comparador hero ──────────────────────────────────────────────
         const signalEl = document.getElementById('comp-cot-signal');
         const detailEl = document.getElementById('comp-cot-detail');
-        if (signalEl) { signalEl.textContent = signal; signalEl.style.color = cotColor; }
-        if (detailEl && net !== null) detailEl.textContent = `Posición neta: ${net > 0 ? '+' : ''}${(net/1000).toFixed(1)}k contratos`;
-
-        // Update sidebar consensus
-        const csCot = document.getElementById('cs-cot');
-        if (csCot) {
-            csCot.className = `nq-pill ${isBull ? 'nq-up' : isBear ? 'nq-dn' : 'nq-flat'}`;
-            csCot.textContent = `${isBull ? '▲' : isBear ? '▼' : '─'} ${signal}`;
+        if (signalEl) { signalEl.textContent = `${label} (${score}/100)`; signalEl.style.color = col; }
+        if (detailEl) {
+            const netStr = net !== null ? `COT Net: ${(net/1000).toFixed(0)}k · ` : '';
+            detailEl.textContent = `${netStr}VXN: ${vxn?.toFixed(1) ?? '?'} · DIX: ${dix?.toFixed(1) ?? '?'} · ${cotDate}`;
         }
 
-        // Set result card based on COT
+        // ── Resultado esperado ───────────────────────────────────────────
         const resEl = document.getElementById('comp-result-signal');
         if (resEl) {
-            resEl.textContent = isBull ? '↑ LARGO' : isBear ? '↓ CORTO' : '─ ESPERAR';
-            resEl.style.color = isBull ? 'var(--green)' : isBear ? 'var(--red)' : 'var(--gray-light)';
+            resEl.textContent = label === 'ALCISTA' ? '↑ LARGO' : label === 'BAJISTA' ? '↓ CORTO' : '─ ESPERAR';
+            resEl.style.color = col;
         }
-    } catch(e) { /* silent — COT panel stays with default values */ }
+        const resDetail = document.getElementById('comp-result-detail');
+        if (resDetail) {
+            const ictColor = ictSignal === 'BULLISH' ? 'var(--green)' : ictSignal === 'BEARISH' ? 'var(--red)' : 'var(--amber)';
+            const ictStr   = ictSignal ? ` · ICT: <span style="color:${ictColor}">${ictSignal} ${ictConf}%</span>` : '';
+            resDetail.innerHTML = `Score IA: <b style="color:${col}">${score}/100</b>${ictStr}`;
+        }
+
+        // ── Sidebar Consensus ────────────────────────────────────────────
+        const csCot = document.getElementById('cs-cot');
+        if (csCot) { csCot.className = `nq-pill ${pillCls}`; csCot.textContent = `${arrow} ${label} ${score}/100`; }
+
+        // VXN (volatilidad)
+        const csSent = document.getElementById('cs-sent');
+        if (csSent && vxn !== null) {
+            csSent.className = `nq-pill ${vxn > 25 ? 'nq-dn' : 'nq-flat'}`;
+            csSent.textContent = `${vxn > 25 ? '▼' : '─'} VXN ${vxn.toFixed(1)}`;
+        }
+        // DIX (Dark Pools — presion real de compra institucional)
+        const csMacro = document.getElementById('cs-macro');
+        if (csMacro && dix !== null) {
+            csMacro.className = `nq-pill ${dix > 48 ? 'nq-up' : 'nq-flat'}`;
+            csMacro.textContent = `${dix > 48 ? '▲' : '─'} DIX ${dix.toFixed(1)}`;
+        }
+        // ICT/SMC bias
+        const csYield = document.getElementById('cs-yield');
+        if (csYield && ictSignal) {
+            csYield.className = `nq-pill ${ictSignal === 'BULLISH' ? 'nq-up' : 'nq-dn'}`;
+            csYield.textContent = `${ictSignal === 'BULLISH' ? '▲' : '▼'} ICT ${ictConf}%`;
+        }
+
+        console.log('[COT OK] agent4:', label, score, '| VXN:', vxn, '| DIX:', dix, '| ICT:', ictSignal, ictConf);
+    } catch(e) { console.warn('[COT Error]', e.message); }
 }
 
 // ═══════════════════════════════════════════════════════
 // NEWS TONE ANALYZER — updates comp-news card live
 // ═══════════════════════════════════════════════════════
 function analyzeNewsTone(newsList) {
-    const bullKw = ['fed hold','rate cut','beats','recovery','surges','rallies','upbeat','strong jobs','bullish','inflows','risk-on'];
-    const bearKw = ['tariff','recession','crash','layoffs','misses','inflation','hawkish','warning','selloff','downgrade','bearish','risk-off','fears'];
+    const bullKw = ['fed hold','rate cut','beats','recovery','surges','rallies','upbeat','strong jobs','bullish','inflows','risk-on','cut rates','higher earnings','upgrade','breakout'];
+    const bearKw = ['tariff','recession','crash','layoffs','misses','inflation','hawkish','warning','selloff','downgrade','bearish','risk-off','fears','contraction','slowdown','default'];
 
     let bulls = 0, bears = 0;
     newsList.forEach(n => {
@@ -1644,16 +1692,27 @@ function analyzeNewsTone(newsList) {
         bears += bearKw.filter(k => t.includes(k)).length;
     });
 
-    const tone = bulls > bears * 1.3 ? 'ALCISTA' : bears > bulls * 1.3 ? 'BAJISTA' : 'MIXTO';
+    const tone      = bulls > bears * 1.3 ? 'ALCISTA' : bears > bulls * 1.3 ? 'BAJISTA' : 'MIXTO';
     const toneColor = tone === 'ALCISTA' ? 'var(--green)' : tone === 'BAJISTA' ? 'var(--red)' : 'var(--amber)';
 
-    const toneEl = document.getElementById('comp-news-tone');
-    const countEl = document.getElementById('comp-news-count');
+    const toneEl   = document.getElementById('comp-news-tone');
+    const countEl  = document.getElementById('comp-news-count');
     const detailEl = document.getElementById('comp-news-detail');
 
-    if (toneEl) { toneEl.textContent = tone; toneEl.style.color = toneColor; }
-    if (countEl) countEl.textContent = newsList.length;
+    if (toneEl)   { toneEl.textContent = tone; toneEl.style.color = toneColor; }
+    if (countEl)  countEl.textContent = newsList.length;
     if (detailEl) detailEl.textContent = `${bulls} señales alcistas · ${bears} señales bajistas detectadas`;
+
+    // Actualiza sidebar sentiment
+    const csSent = document.getElementById('cs-sent');
+    if (csSent && !document.getElementById('agent1_data.json')) {
+        // Solo si VXN no fue cargado por updateComparisonFromCOT
+        const sentPill = tone === 'ALCISTA' ? 'nq-up' : tone === 'BAJISTA' ? 'nq-dn' : 'nq-flat';
+        // No sobreescribir si ya tiene VXN live
+        if (csSent.textContent.includes('VXN')) return;
+        csSent.className = `nq-pill ${sentPill}`;
+        csSent.textContent = `${tone === 'ALCISTA' ? '▲' : tone === 'BAJISTA' ? '▼' : '─'} Noticias ${tone}`;
+    }
 }
 </script>
 </body>
