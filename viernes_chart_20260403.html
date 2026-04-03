@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NQ — VIERNES 2026-04-03 | Whale Radar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+  <style>
+    :root{--bg:#04020c;--card:#0c0a1e;--border:#1e1a3a;--purple:#7c3aed;--cyan:#06b6d4;
+          --green:#10b981;--red:#ef4444;--amber:#f59e0b;--muted:#94a3b8;--text:#e2e8f0}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+    .top-bar{background:linear-gradient(135deg,#0c0a1e,#110d2a);border-bottom:1px solid var(--border);
+              padding:14px 24px;display:flex;align-items:center;justify-content:space-between;
+              position:sticky;top:0;z-index:100}
+    .logo-badge{background:linear-gradient(135deg,var(--purple),#4f46e5);color:#fff;font-size:11px;
+                 font-weight:700;padding:4px 10px;border-radius:6px;letter-spacing:1px}
+    .live-badge{background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.5);
+                 color:#fca5a5;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px}
+    .page{max-width:1500px;margin:0 auto;padding:20px 18px}
+    .dh{background:linear-gradient(135deg,#0c0a1e,#130f2a);border:1px solid var(--border);border-radius:16px;
+         padding:18px 24px;position:relative;overflow:hidden;margin-bottom:16px;display:flex;
+         align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .dh::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+                 background:linear-gradient(90deg,var(--amber),var(--green),var(--cyan),var(--purple))}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px}
+    .sc{background:#0c0a1e;border:1px solid var(--border);border-radius:12px;padding:12px 14px;text-align:center}
+    .sl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+    .sv{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700}
+    .cg{color:#10b981}.cr{color:#ef4444}.cc{color:#06b6d4}.ca{color:#f59e0b}.cp{color:#a78bfa}.cm{color:var(--muted)}
+    .macro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:18px}
+    .macro-card{background:#0c0a1e;border:1px solid var(--border);border-radius:14px;padding:16px 18px;position:relative;overflow:hidden}
+    .macro-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:2px 2px 0 0}
+    .mc-cot::before{background:linear-gradient(90deg,#7c3aed,#06b6d4)}
+    .mc-vol::before{background:linear-gradient(90deg,#f59e0b,#ef4444)}
+    .mc-gex::before{background:linear-gradient(90deg,#10b981,#06b6d4)}
+    .mc-ai::before{background:linear-gradient(90deg,#f59e0b,#f59e0b80)}
+    .mc-label{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px}
+    .mc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .mc-sig{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px}
+    .mc-main{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;margin-bottom:8px}
+    .mc-bar-w{background:rgba(255,255,255,.06);border-radius:4px;height:5px;margin-bottom:10px}
+    .mc-bar{height:100%;border-radius:4px}
+    .mc-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:10px}
+    .mc-meta-k{color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-size:8px}
+    .mc-meta-v{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600}
+    .chart-wrap{background:#09071a;border:2px solid rgba(124,58,237,.3);border-radius:20px;overflow:hidden;margin-bottom:16px}
+    .chart-hdr{padding:14px 20px;border-bottom:1px solid var(--border);background:#0c0a1e;
+                display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .rl-btn{background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.35);color:#67e8f9;
+             font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:6px 14px;
+             border-radius:20px;cursor:pointer}
+    #chart{width:100%;height:680px}
+    #rb{max-height:0;overflow:hidden;opacity:0;transition:max-height .35s,opacity .3s;
+         background:rgba(6,182,212,.06);border-top:1px solid rgba(6,182,212,.18)}
+    #rb.v{max-height:200px;opacity:1}
+    .rr{display:flex;align-items:center;gap:10px;padding:10px 14px;flex-wrap:wrap}
+    .rb2{background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);color:#67e8f9;
+          font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:6px 14px;
+          border-radius:8px;cursor:pointer}
+    .rb2.pause{background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.4);color:#fcd34d}
+    .spg{display:flex;gap:3px}
+    .sp{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted);
+         font-size:10px;padding:4px 8px;border-radius:6px;cursor:pointer;font-family:'JetBrains Mono',monospace}
+    .sp.a{background:rgba(6,182,212,.25);border-color:#06b6d4;color:#e0f2fe;font-weight:700}
+    .rt{font-family:'JetBrains Mono',monospace;font-size:11px;color:#67e8f9;min-width:140px;font-weight:600}
+    .rpw{flex:1;min-width:120px}
+    .rtr{position:relative;height:6px;background:rgba(255,255,255,.08);border-radius:3px}
+    .rf{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,#06b6d4,#7c3aed);border-radius:3px}
+    .rs{position:absolute;left:0;top:-5px;width:100%;height:16px;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none}
+    .foot{text-align:center;padding:20px;color:var(--muted);font-size:11px}
+  </style>
+</head>
+<body>
+<div class="top-bar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="logo-badge">NQ RADAR</div>
+    <span style="color:var(--muted);font-size:13px;font-family:'JetBrains Mono',monospace">2026-04-03 · VIERNES · 5 MIN</span>
+    <div class="live-badge">🏁 SESIÓN CERRADA</div>
+  </div>
+  <a href="daily_dashboard.html" style="background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.35);color:#a78bfa;font-size:13px;font-weight:600;padding:7px 16px;border-radius:8px;text-decoration:none">← Daily Dashboard</a>
+</div>
+
+<div class="page">
+  <div class="dh">
+    <div>
+      <div style="font-size:18px;font-weight:900;margin-bottom:4px">📅 Viernes 2026-04-03 · NQ Futures Real</div>
+      <div style="color:var(--muted);font-size:12px">🌏 Asia → 🇬🇧 London 2AM ET → 🗽 NY Open 9:30AM → 🏁 4PM ET</div>
+    </div>
+    <span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#ef4444;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700">BEARISH -46.75 pts</span>
+  </div>
+
+  <div class="stats">
+    <div class="sc"><div class="sl">Day High</div><div class="sv cc">24,255.00</div></div>
+    <div class="sc"><div class="sl">Day Low</div><div class="sv cr">24,150.50</div></div>
+    <div class="sc"><div class="sl">POC pre-NY</div><div class="sv cp">24,213.00</div></div>
+    <div class="sc"><div class="sl">VAH</div><div class="sv cc">24,225.50</div></div>
+    <div class="sc"><div class="sl">VAL</div><div class="sv cg">24,150.50</div></div>
+    <div class="sc"><div class="sl">NY Open</div><div class="sv ca">24,214.75</div></div>
+    <div class="sc"><div class="sl">NY High</div><div class="sv cg">24,255.00</div></div>
+    <div class="sc"><div class="sl">NY Low</div><div class="sv cr">24,150.50</div></div>
+    <div class="sc"><div class="sl">NY Range</div><div class="sv ca">104 pts</div></div>
+    <div class="sc"><div class="sl">Move O→C</div><div class="sv cr">-46.75</div></div>
+    <div class="sc"><div class="sl">Velas</div><div class="sv cm">48</div></div>
+    <div class="sc"><div class="sl">AI Score</div><div class="sv" style="color:#f59e0b">52/100</div></div>
+  </div>
+
+  <div class="macro-grid">
+    <div class="macro-card mc-cot">
+      <div class="mc-hdr"><span class="mc-label">🐳 COT Non-Commercial</span>
+        <span class="mc-sig" style="background:rgba(148,163,184,.10);border:1px solid rgba(148,163,184,.3);color:#94a3b8">● NEUTRAL</span>
+      </div>
+      <div class="mc-main" style="color:#94a3b8">+2,386</div>
+      <div style="font-size:9px;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace">COT Index: 27.3/100 · Data: 03 Mar 2026</div>
+      <div class="mc-bar-w"><div class="mc-bar" style="width:27.3%;background:linear-gradient(90deg,#ef4444,#94a3b8)"></div></div>
+      <div class="mc-meta">
+        <div><div class="mc-meta-k">Momentum</div><div class="mc-meta-v" style="color:#ef4444">BAJANDO</div></div>
+        <div><div class="mc-meta-k">Semanas</div><div class="mc-meta-v cp">2 consec.</div></div>
+        <div><div class="mc-meta-k">Velocidad</div><div class="mc-meta-v" style="color:#ef4444">-3,658/sem</div></div>
+      </div>
+      
+    </div>
+    <div class="macro-card mc-vol">
+      <div class="mc-hdr"><span class="mc-label">🌡️ VXN — Volatilidad NQ</span>
+        <span class="mc-sig" style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);color:#10b981">▲ BULLISH</span>
+      </div>
+      <div class="mc-main" style="color:#ef4444">27.04</div>
+      <div style="font-size:9px;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace">Score: 47/100 · Nivel: ELEVADA</div>
+      <div class="mc-bar-w"><div class="mc-bar" style="width:54.1%;background:linear-gradient(90deg,#10b981,#ef4444)"></div></div>
+    </div>
+    <div class="macro-card mc-gex">
+      <div class="mc-hdr"><span class="mc-label">⚙️ GEX / DIX — Dealers</span>
+        <span class="mc-sig" style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);color:#10b981">▲ POSITIVO</span>
+      </div>
+      <div class="mc-main" style="color:#10b981">+2.75B</div>
+      <div style="font-size:9px;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace">GEX positivo → mercado amortiguado</div>
+      <div class="mc-meta">
+        <div><div class="mc-meta-k">DIX Dark Pool</div><div class="mc-meta-v" style="color:#10b981">50.3%</div></div>
+        <div><div class="mc-meta-k">Interpretación</div><div class="mc-meta-v cc">Compra inst. ↑</div></div>
+      </div>
+    </div>
+    <div class="macro-card mc-ai">
+      <div class="mc-hdr"><span class="mc-label">🤖 AI Score — Antigravity</span>
+        <span class="mc-sig" style="background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);color:#a78bfa">NEUTRAL-BULLISH</span>
+      </div>
+      <div class="mc-main" style="color:#f59e0b">52/100</div>
+      <div style="font-size:9px;color:var(--muted);margin-bottom:8px">COT+VXN+DIX+GEX · 11 agentes IA</div>
+      <div class="mc-bar-w"><div class="mc-bar" style="width:52%;background:linear-gradient(90deg,#f59e0b80,#f59e0b)"></div></div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-hdr">
+      <span style="font-size:12px;font-weight:700;color:var(--muted)">NQ FUTURES — 5 MIN — 2026-04-03 · 48 VELAS</span>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace">
+        <span style="color:rgba(255,255,255,.8)">VAH 24,225.50</span>
+        <span style="color:#ef4444">POC 24,213.00</span>
+        <span style="color:rgba(255,255,255,.8)">VAL 24,150.50</span>
+        <span style="color:#f59e0b">NY OPEN 24,214.75</span>
+      </div>
+      <button class="rl-btn" id="rlb" onclick="toggleRB()">⏪ REPLAY</button>
+    </div>
+    <div id="chart"></div>
+    <div id="rb">
+      <div class="rr">
+        <button class="rb2" id="rpb" onclick="rpToggle()">▶ PLAY</button>
+        <button class="rb2" style="background:rgba(255,0,85,.1);border-color:rgba(255,0,85,.3);color:#ff0055" onclick="rpReset()">⟲ Reset</button>
+        <div class="spg">
+          <button class="sp a" onclick="setSp(1,this)">1×</button>
+          <button class="sp"   onclick="setSp(3,this)">3×</button>
+          <button class="sp"   onclick="setSp(8,this)">8×</button>
+          <button class="sp"   onclick="setSp(20,this)">20×</button>
+          <button class="sp"   onclick="setSp(50,this)">50×</button>
+        </div>
+        <div class="rt" id="rtime">-- : --</div>
+        <div class="rpw"><div class="rtr"><div class="rf" id="rfl" style="width:0%"></div><input type="range" class="rs" id="rscr" min="0" max="100" value="0" oninput="rpScrub(this.value)"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="foot">NQ Whale Radar © 2026 · viernes_chart_20260403.html · 48 barras 5min · yfinance</div>
+
+<script>
+const POC=24213.0,VAH=24225.5,VAL=24150.5,NY_OPEN_P=24214.75;
+const ASIA_START=1775167200,LONDON=1775196000,NY_OPEN=1775223000,NY_CLOSE=1775246400;
+const candles=[{"time":1775174400,"open":24214.75,"high":24255.0,"low":24214.75,"close":24246.25},{"time":1775174700,"open":24244.0,"high":24247.5,"low":24230.75,"close":24232.5},{"time":1775175000,"open":24231.0,"high":24243.0,"low":24228.75,"close":24240.25},{"time":1775175300,"open":24239.0,"high":24239.0,"low":24222.0,"close":24225.25},{"time":1775175600,"open":24223.5,"high":24231.25,"low":24219.75,"close":24228.0},{"time":1775175900,"open":24228.25,"high":24240.25,"low":24224.5,"close":24236.5},{"time":1775176200,"open":24237.0,"high":24240.0,"low":24227.75,"close":24236.0},{"time":1775176500,"open":24235.25,"high":24237.75,"low":24214.75,"close":24217.75},{"time":1775176800,"open":24218.5,"high":24223.75,"low":24213.25,"close":24219.0},{"time":1775177100,"open":24218.0,"high":24221.75,"low":24212.5,"close":24218.5},{"time":1775177400,"open":24219.25,"high":24223.75,"low":24215.5,"close":24216.5},{"time":1775177700,"open":24216.5,"high":24227.5,"low":24216.5,"close":24225.25},{"time":1775178000,"open":24226.0,"high":24226.5,"low":24219.25,"close":24224.75},{"time":1775178300,"open":24224.0,"high":24231.75,"low":24221.75,"close":24226.0},{"time":1775178600,"open":24226.25,"high":24226.25,"low":24206.75,"close":24211.0},{"time":1775178900,"open":24211.25,"high":24222.5,"low":24208.75,"close":24216.25},{"time":1775179200,"open":24217.5,"high":24221.25,"low":24212.25,"close":24214.25},{"time":1775179500,"open":24214.75,"high":24220.0,"low":24213.0,"close":24217.5},{"time":1775179800,"open":24217.5,"high":24220.0,"low":24206.0,"close":24206.5},{"time":1775180100,"open":24207.25,"high":24216.0,"low":24207.25,"close":24210.75},{"time":1775180400,"open":24211.0,"high":24211.75,"low":24205.5,"close":24207.5},{"time":1775180700,"open":24208.0,"high":24208.25,"low":24201.25,"close":24204.75},{"time":1775181000,"open":24206.25,"high":24208.5,"low":24202.75,"close":24206.0},{"time":1775181300,"open":24205.75,"high":24207.5,"low":24195.75,"close":24196.75},{"time":1775181600,"open":24196.0,"high":24199.5,"low":24195.5,"close":24198.0},{"time":1775181900,"open":24197.75,"high":24198.0,"low":24191.25,"close":24195.5},{"time":1775182200,"open":24197.0,"high":24201.25,"low":24196.25,"close":24200.0},{"time":1775182500,"open":24199.75,"high":24205.5,"low":24197.25,"close":24204.0},{"time":1775182800,"open":24204.5,"high":24205.0,"low":24182.0,"close":24187.5},{"time":1775183100,"open":24187.5,"high":24187.5,"low":24162.25,"close":24169.0},{"time":1775183400,"open":24169.0,"high":24172.0,"low":24157.25,"close":24164.5},{"time":1775183700,"open":24165.0,"high":24171.75,"low":24161.25,"close":24163.0},{"time":1775184000,"open":24163.75,"high":24170.75,"low":24155.0,"close":24168.5},{"time":1775184300,"open":24168.75,"high":24170.0,"low":24154.0,"close":24158.0},{"time":1775184600,"open":24159.5,"high":24197.75,"low":24150.5,"close":24182.0},{"time":1775184900,"open":24180.25,"high":24189.0,"low":24176.75,"close":24181.25},{"time":1775185200,"open":24180.25,"high":24185.75,"low":24178.0,"close":24184.0},{"time":1775185500,"open":24184.0,"high":24192.5,"low":24182.25,"close":24185.5},{"time":1775185800,"open":24185.0,"high":24188.25,"low":24176.5,"close":24179.25},{"time":1775186100,"open":24180.0,"high":24187.5,"low":24178.0,"close":24182.25},{"time":1775186400,"open":24183.0,"high":24186.75,"low":24178.25,"close":24179.5},{"time":1775186700,"open":24179.25,"high":24180.25,"low":24170.25,"close":24172.75},{"time":1775187000,"open":24172.5,"high":24179.75,"low":24171.75,"close":24172.25},{"time":1775187300,"open":24174.0,"high":24176.5,"low":24165.5,"close":24170.5},{"time":1775187600,"open":24169.5,"high":24169.75,"low":24161.0,"close":24164.25},{"time":1775187900,"open":24163.5,"high":24168.75,"low":24163.25,"close":24168.25},{"time":1775188200,"open":24167.25,"high":24173.75,"low":24166.5,"close":24172.0},{"time":1775188500,"open":24168.5,"high":24171.75,"low":24165.75,"close":24168.0}];
+
+const el=document.getElementById('chart');
+const chart=LightweightCharts.createChart(el,{
+  width:el.offsetWidth,height:680,
+  layout:{background:{color:'#08061a'},textColor:'#64748b',fontSize:11,fontFamily:'JetBrains Mono,monospace'},
+  grid:{vertLines:{color:'rgba(124,58,237,0.06)'},horzLines:{color:'rgba(124,58,237,0.06)'}},
+  crosshair:{mode:LightweightCharts.CrosshairMode.Normal},
+  rightPriceScale:{borderColor:'rgba(30,26,58,0.8)',scaleMargins:{top:0.05,bottom:0.05}},
+  timeScale:{borderColor:'rgba(30,26,58,0.8)',timeVisible:true,secondsVisible:false,
+    tickMarkFormatter:(t)=>{const d=new Date(t*1000);const h=((d.getUTCHours()-4+24)%24);const m=d.getUTCMinutes();return m===0?h+':00':h+':'+(m+'').padStart(2,'0');}},
+  handleScroll:{mouseWheel:true},handleScale:{mouseWheel:true}
+});
+const ser=chart.addCandlestickSeries({
+  upColor:'rgba(16,185,129,0.08)',downColor:'rgba(139,92,246,0.08)',
+  borderUpColor:'#10b981',borderDownColor:'#8b5cf6',wickUpColor:'#10b981',wickDownColor:'#8b5cf6',
+  priceFormat:{type:'price',precision:2,minMove:0.25}
+});
+ser.setData(candles);
+ser.createPriceLine({price:VAH,color:'rgba(255,255,255,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'VAH '+VAH.toLocaleString()});
+ser.createPriceLine({price:POC,color:'#ef4444',lineWidth:2,lineStyle:0,axisLabelVisible:true,title:'POC '+POC.toLocaleString()});
+ser.createPriceLine({price:VAL,color:'rgba(255,255,255,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'VAL '+VAL.toLocaleString()});
+ser.createPriceLine({price:NY_OPEN_P,color:'rgba(245,158,11,0.85)',lineWidth:1,lineStyle:3,axisLabelVisible:true,title:'NY OPEN '+NY_OPEN_P.toLocaleString()});
+function sHL(from,to){const s=candles.filter(c=>c.time>=from&&c.time<=to);return s.length?{h:Math.max(...s.map(c=>c.high)),l:Math.min(...s.map(c=>c.low))}:null}
+const aHL=sHL(ASIA_START,LONDON-1);
+if(aHL){ser.createPriceLine({price:aHL.h,color:'rgba(6,182,212,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'ASIA H'});ser.createPriceLine({price:aHL.l,color:'rgba(6,182,212,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'ASIA L'});}
+const lHL=sHL(LONDON,NY_OPEN-1);
+if(lHL){ser.createPriceLine({price:lHL.h,color:'rgba(245,158,11,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'LON H'});ser.createPriceLine({price:lHL.l,color:'rgba(245,158,11,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'LON L'});}
+function near(t){return candles.reduce((b,c)=>Math.abs(c.time-t)<Math.abs(b.time-t)?c:b)}
+const mks=[{time:candles[0].time,position:'belowBar',color:'#06b6d4',shape:'circle',text:'🌏 Asia'}];
+if(candles.some(c=>c.time>=LONDON))mks.push({time:near(LONDON).time,position:'aboveBar',color:'#f59e0b',shape:'circle',text:'🇬🇧 London'});
+if(candles.some(c=>c.time>=NY_OPEN))mks.push({time:near(NY_OPEN).time,position:'aboveBar',color:'#f59e0b',shape:'circle',text:'🔔 NY Open '+NY_OPEN_P.toLocaleString()});
+ser.setMarkers(mks);
+chart.timeScale().fitContent();
+window.addEventListener('resize',()=>chart.applyOptions({width:el.offsetWidth}));
+let ri=0,rt=null,rs=1,rr=false;
+function stg(t){if(t<LONDON)return['🌏 ASIA','rgba(6,182,212,.15)','1px solid rgba(6,182,212,.3)','#67e8f9'];if(t<NY_OPEN)return['🇬🇧 LONDON','rgba(245,158,11,.15)','1px solid rgba(245,158,11,.3)','#fcd34d'];return['🗽 NY','rgba(16,185,129,.15)','1px solid rgba(16,185,129,.4)','#6ee7b7'];}
+function rpUI(i){const pct=candles.length>1?(i/(candles.length-1)*100).toFixed(1):0;document.getElementById('rfl').style.width=pct+'%';document.getElementById('rscr').value=pct;const c=candles[i],d=new Date(c.time*1000);const h=((d.getUTCHours()-4+24)%24).toString().padStart(2,'0'),m=d.getUTCMinutes().toString().padStart(2,'0');document.getElementById('rtime').textContent='Viernes  '+h+':'+m+' ET  C='+c.close.toLocaleString();}
+function rpTick(){if(ri>=candles.length){rpStop();return}ser.setData(candles.slice(0,ri+1));rpUI(ri);chart.timeScale().scrollToRealTime();ri++;rt=setTimeout(rpTick,300/rs);}
+function rpToggle(){if(rr)rpStop();else rpStart()}
+function rpStart(){if(ri>=candles.length)rpReset();rr=true;document.getElementById('rpb').textContent='⏸ PAUSE';document.getElementById('rpb').classList.add('pause');rpTick()}
+function rpStop(){rr=false;clearTimeout(rt);document.getElementById('rpb').textContent='▶ PLAY';document.getElementById('rpb').classList.remove('pause');if(ri>=candles.length)ser.setData(candles);}
+function rpReset(){rpStop();ri=0;ser.setData(candles);document.getElementById('rfl').style.width='0%';document.getElementById('rscr').value=0;document.getElementById('rtime').textContent='-- : --';chart.timeScale().fitContent();}
+function rpScrub(v){rpStop();ri=Math.round((v/100)*(candles.length-1));ser.setData(candles.slice(0,ri+1));rpUI(ri);}
+function setSp(s,b){rs=s;document.querySelectorAll('.sp').forEach(x=>x.classList.remove('a'));b.classList.add('a');}
+function toggleRB(){document.getElementById('rb').classList.toggle('v');document.getElementById('rlb').classList.toggle('a');}
+</script>
+</body></html>
