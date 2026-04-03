@@ -1,27 +1,27 @@
 {
-    "timestamp": "2026-04-01T18:11:56.785983",
+    "timestamp": "2026-04-03T21:05:01.258373",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-            "size": 353243
+            "size": 347785
         },
         "analisis_promax.html": {
             "exists": true,
-            "size": 53159
+            "size": 52341
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11033
+            "size": 10870
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 808
+            "size": 643
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 393
+            "size": 380
         }
     },
     "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL fuerte. Busca seguir el flujo de la EMA 200.",
