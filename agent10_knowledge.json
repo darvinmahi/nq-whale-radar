@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-03T22:10:26.097510+00:00",
+    "last_updated": "2026-04-03T23:10:44.384035+00:00",
     "total_cycles_analyzed": 200,
     "current_win_rate": 50.84,
     "current_bias": "ALCISTA",
@@ -7,38 +7,18 @@
     "insights": [
         {
             "type": "pattern",
-            "text": "'triple_confluence_bull' detectado 197 veces en 200 ciclos",
+            "text": "'triple_confluence_bull' detectado 194 veces en 200 ciclos",
             "confidence": 95,
-            "count": 197
+            "count": 194
         },
         {
             "type": "weight_evolution",
-            "text": "Posicionamiento (COT) (layer1) subió 1.0% desde el primer ciclo",
+            "text": "Posicionamiento (COT) (layer1) bajó 2.3% desde el primer ciclo",
             "confidence": 100
         },
         {
             "type": "weight_evolution",
-            "text": "Macro & Sentiment (layer2) subió 2.7% desde el primer ciclo",
-            "confidence": 100
-        },
-        {
-            "type": "weight_evolution",
-            "text": "Liquidez (layer3) bajó 3.4% desde el primer ciclo",
-            "confidence": 100
-        },
-        {
-            "type": "weight_evolution",
-            "text": "Timing & Session (layer4) bajó 0.0% desde el primer ciclo",
-            "confidence": 100
-        },
-        {
-            "type": "weight_evolution",
-            "text": "Algorítmico (SMC/Prob) (layer5) bajó 0.4% desde el primer ciclo",
-            "confidence": 100
-        },
-        {
-            "type": "weight_evolution",
-            "text": "Order Flow & Value Profile (layer6) bajó 0.0% desde el primer ciclo",
+            "text": "Macro & Sentiment (layer2) subió 2.3% desde el primer ciclo",
             "confidence": 100
         },
         {
@@ -50,7 +30,7 @@
     "agent_performance": {
         "COT": {
             "alignment_pct": null,
-            "samples": 2,
+            "samples": 1,
             "source": "COT"
         },
         "VOLATILITY": {
@@ -80,7 +60,7 @@
         },
         "ORDERFLOW": {
             "alignment_pct": 0.0,
-            "samples": 200,
+            "samples": 196,
             "source": "ORDERFLOW"
         }
     },
@@ -89,15 +69,11 @@
         "worst_predictor": "ORDERFLOW (0.0% alineación)"
     },
     "pattern_history": {
-        "triple_confluence_bull": 197
+        "triple_confluence_bull": 194
     },
     "weight_evolution": {
-        "layer1": 0.0104,
-        "layer2": 0.0271,
-        "layer3": -0.0335,
-        "layer4": -0.0002,
-        "layer5": -0.0036,
-        "layer6": -0.0002
+        "layer1": -0.0227,
+        "layer2": 0.0227
     },
     "system_health": {
         "data_quality": "100% — Todos los datos disponibles",
@@ -123,16 +99,16 @@
         },
         {
             "q": "¿Hay algún patrón recurrente?",
-            "a": "triple_confluence_bull (197x)"
+            "a": "triple_confluence_bull (194x)"
         },
         {
             "q": "¿Los pesos han cambiado?",
-            "a": "Sí: layer1 ↑1.0%, layer2 ↑2.7%, layer3 ↓3.4%, layer4 ↓0.0%, layer5 ↓0.4%, layer6 ↓0.0%"
+            "a": "Sí: layer1 ↓2.3%, layer2 ↑2.3%"
         }
     ],
     "weights": {
-        "layer1": 0.4207,
-        "layer2": 0.3865,
+        "layer1": 0.4,
+        "layer2": 0.4072,
         "layer3": 0.0482,
         "layer4": 0.0482,
         "layer5": 0.0482,

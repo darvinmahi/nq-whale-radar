@@ -1,7 +1,7 @@
 {
     "agent": 13,
     "name": "Explorador de Inteligencia Alpha",
-    "last_crawl": "2026-04-03T23:03:02.409232+00:00Z",
+    "last_crawl": "2026-04-03T23:10:44.380687+00:00Z",
     "insights": {
         "source": "Web Research & User DNA",
         "external_bias": "ESTUDIO DE BACKTESTING 3 AÑOS EN CURSO",
@@ -23,16 +23,16 @@
         ]
     },
     "estrategia_maestra": {
-        "nombre": "Aceptación de Apertura NY sobre POC Londres",
-        "tipo": "Session Profile / Trend",
-        "descripcion": "Si la apertura de las 9:30 AM ocurre por encima del POC de la sesión de Londres y se mantiene así por 15 minutos, la probabilidad de visitar el VAH semanal aumenta al 78%.",
+        "nombre": "Fallo de Sesión Asia (Asia Low Sweep)",
+        "tipo": "Liquidity Sweep",
+        "descripcion": "El precio rompe el mínimo de la sesión de Asia durante Londres o NY para capturar liquidez, seguido de una recuperación inmediata del POC Diario.",
         "reglas": [
-            "1. Definir POC de Londres antes de las 9:30 AM.",
-            "2. Apertura de NY (9:30) por encima del POC de Londres.",
-            "3. Primera vela de 15m cierra por encima con Delta positivo."
+            "1. Barrido (Sweep) del mínimo de Asia (Asia Low).",
+            "2. Rechazo violento con volumen en el Footprint.",
+            "3. Re-entrada al Value Area diaria."
         ],
-        "fuente": "Metodología de Usuario / Alpha Flow",
-        "score_alpha": "9.2/10"
+        "fuente": "Order Flow Masterclass",
+        "score_alpha": "8.7/10"
     },
     "backtest_config": {
         "period": "3 AÑOS",
