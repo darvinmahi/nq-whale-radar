@@ -1,8 +1,47 @@
 {
-  "title": "Backtest Viernes NQ — 6 Meses",
+  "title": "Backtest VIERNES NQ — 1 Año",
   "period": "2025-02-28 → 2026-03-27",
   "generated": "2026-04-03",
   "total_days": 56,
+  "total_fridays": 56,
+  "dominant_pattern": "NEUTRAL",
+  "dominant_pct": 33.9,
+  "avg_ny_range": 436.2,
+  "max_ny_range": 1325.5,
+  "min_ny_range": 101.0,
+  "directions": {
+    "BULLISH": 27,
+    "BEARISH": 29,
+    "NEUTRAL": 0
+  },
+  "directions_pct": {
+    "BULLISH": 48.2,
+    "BEARISH": 51.8,
+    "NEUTRAL": 0.0
+  },
+  "patterns": {
+    "NEUTRAL": "33.9%",
+    "ROTATION_POC": "28.6%",
+    "EXPANSION_L": "19.6%",
+    "EXPANSION_H": "17.9%"
+  },
+  "range_distribution": {
+    "0-100": 0,
+    "100-200": 8,
+    "200-300": 11,
+    "300+": 37
+  },
+  "level_touch_rates": {
+    "VAH": 89.3,
+    "POC": 94.6,
+    "VAL": 100.0
+  },
+  "conclusions": [
+    "48% de VIERNES son BULLISH — dirección dominante: BEARISH",
+    "Rango promedio NY: 436.2 pts (max: 1325.5, min: 101.0)",
+    "Patrón más frecuente: NEUTRAL (33.9%)",
+    "Tasa toque VAH: 89.3% · POC: 94.6% · VAL: 100.0%"
+  ],
   "all_fridays": [
     {
       "date": "2025-02-28",
