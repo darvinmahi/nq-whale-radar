@@ -1,26 +1,26 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-04-03T21:04:58.443373Z",
-  "vix_value": 26.57,
+  "timestamp": "2026-04-03T23:02:59.382936Z",
+  "vix_value": 27.04,
   "vix_status": "ELEVATED",
   "raw_inputs": {
-    "VXN": 26.57,
-    "GEX_B": 2.33,
-    "DIX": 44.55
+    "VXN": 27.04,
+    "GEX_B": 2.3,
+    "DIX": null
   },
   "vxn_analysis": {
     "level": "ELEVATED",
     "signal": "NEUTRAL",
     "score": 35,
-    "description": "VXN 26.57 — Volatilidad elevada. Reducir tamaño.",
+    "description": "VXN 27.04 — Volatilidad elevada. Reducir tamaño.",
     "risk": "Movimientos erráticos probables"
   },
   "gex_analysis": {
     "level": "STRONG_POSITIVE",
     "signal": "BULLISH",
     "score": 70,
-    "description": "GEX +2.33B — Dealers comprando en caídas. Mercado amortiguado.",
+    "description": "GEX +2.30B — Dealers comprando en caídas. Mercado amortiguado.",
     "impact": "Movimientos suaves. Dealers frenan volatilidad."
   },
   "signal": "BULLISH",
