@@ -534,7 +534,19 @@
   </div>
 </div>
 
-<script>
+<!-- ══════════════════════════════════════════════════════════════════
+     BACKTEST ENGINE — PANEL COMPLETO (toda la fila)
+══════════════════════════════════════════════════════════════════ -->
+<div style="max-width:1600px;margin:0 auto;padding:4px 16px 32px">
+  <div id="backtest-engine-panel"
+       style="display:none;background:linear-gradient(135deg,#0c0a1e,#0e0b24);border:1px solid rgba(124,58,237,.25);border-radius:18px;padding:24px 28px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ef4444,#7c3aed,#06b6d4)"></div>
+    <div style="color:#475569;font-size:12px;font-family:'JetBrains Mono',monospace;text-align:center;padding:20px">
+      ⏳ Cargando Backtest Engine...
+    </div>
+  </div>
+</div>
+
 // ═══════════════════════════════════════════════════════════════════
 //  CONFIGURACIÓN POR DÍA
 // ═══════════════════════════════════════════════════════════════════
@@ -1403,6 +1415,186 @@ async function loadMacroIndicators() {
   } catch(e) { console.warn('[macro] agent3 error', e); }
 }
 loadMacroIndicators();
+
+// ═══════════════════════════════════════════════════════════════════════
+//  BACKTEST ENGINE — DÍAS SIMILARES AL ACTUAL
+// ═══════════════════════════════════════════════════════════════════════
+async function loadBacktestEngine() {
+  try {
+    const res = await fetch(`data/research/today_analysis.json?t=${Date.now()}`);
+    if (!res.ok) return;
+    const data = await res.json();
+
+    const panel = document.getElementById('backtest-engine-panel');
+    if (!panel) return;
+
+    const today   = data.today || {};
+    const similar = data.similar || {};
+    const pred    = data.prediction || {};
+    const theories = data.theories || [];
+    const cases   = similar.cases || [];
+
+    const DOW_COLORS = {
+      monday:'#10b981', tuesday:'#06b6d4', wednesday:'#f59e0b',
+      thursday:'#f97316', friday:'#ef4444'
+    };
+    const dow = (today.dow || 'monday');
+    const dowColor = DOW_COLORS[dow] || '#7c3aed';
+    const predColor = pred.direction === 'BULLISH' ? '#10b981'
+                    : pred.direction === 'BEARISH' ? '#ef4444' : '#f59e0b';
+    const predEmoji = pred.direction === 'BULLISH' ? '📈' : pred.direction === 'BEARISH' ? '📉' : '➡️';
+
+    const matchLabel = {strict:'Criterio estricto ✅', moderate:'Criterio moderado ⚠️', relaxed:'Solo día de semana'}[data.match_level] || '';
+
+    // Bar width helpers
+    const bw = (v) => `${Math.min(100,Math.max(0,v))}%`;
+
+    // Theories HTML
+    const theoriesHTML = theories.map(t => {
+      const tBull = t.bull_pct > t.bear_pct;
+      const tColor = tBull ? '#10b981' : '#ef4444';
+      return `
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px 14px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px">${t.name}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:${tColor}">${tBull ? '▲' : '▼'} ${tBull ? t.bull_pct : t.bear_pct}%</span>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border-radius:3px;height:4px;margin-bottom:8px">
+            <div style="height:100%;border-radius:3px;background:${tColor};width:${bw(tBull?t.bull_pct:t.bear_pct)}"></div>
+          </div>
+          <div style="font-size:10px;color:#64748b;line-height:1.5">${t.conclusion}</div>
+          <div style="font-size:9px;color:rgba(148,163,184,.5);margin-top:4px">${t.n} casos · ${t.top_pattern}</div>
+        </div>`;
+    }).join('');
+
+    // Cases table HTML
+    const casesHTML = cases.slice(0,10).map(c => {
+      const dColor = c.direction==='BULLISH'?'#10b981':c.direction==='BEARISH'?'#ef4444':'#f59e0b';
+      const dEmoji = c.direction==='BULLISH'?'▲':'▼';
+      const moveSign = (c.ny_move_pct||0) >= 0 ? '+' : '';
+      return `
+      <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
+        <td style="padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#94a3b8">${c.date}</td>
+        <td style="padding:7px 10px;font-size:10px;color:#64748b;text-transform:capitalize">${c.dow||''}</td>
+        <td style="padding:7px 10px;text-align:center"><span style="color:${dColor};font-weight:700;font-size:11px">${dEmoji} ${c.direction}</span></td>
+        <td style="padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#f59e0b;text-align:right">${(c.ny_range||0).toFixed(0)} pts</td>
+        <td style="padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:${dColor};text-align:right">${moveSign}${((c.ny_move_pct||0)*100).toFixed(2)}%</td>
+        <td style="padding:7px 10px;font-size:10px;color:#64748b">${c.pattern||'?'}</td>
+        <td style="padding:7px 10px;font-size:10px;color:#7c3aed">${c.cot_index||0}/100</td>
+        <td style="padding:7px 10px;font-size:10px;color:#06b6d4">${(c.vxn||0).toFixed(1)}</td>
+        <td style="padding:7px 10px;font-size:10px;color:${c.noticia!=='ninguna'?'#f59e0b':'#475569'}">${c.noticia||'—'}</td>
+      </tr>`;
+    }).join('');
+
+    panel.innerHTML = `
+      <!-- ── HEADER ── -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:4px;height:28px;border-radius:2px;background:linear-gradient(180deg,${dowColor},#7c3aed)"></div>
+          <div>
+            <div style="font-size:14px;font-weight:900;color:#e2e8f0">🔍 BACKTEST ENGINE — Días Similares al Actual</div>
+            <div style="font-size:11px;color:#64748b;margin-top:2px">${today.date} · ${today.dow_es||''} · ${matchLabel}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);border-radius:8px;padding:6px 14px;font-size:11px;font-weight:700;color:#a78bfa">COT ${today.cot_index}/100</div>
+          <div style="background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);border-radius:8px;padding:6px 14px;font-size:11px;font-weight:700;color:#67e8f9">VXN ${today.vxn} ${today.vxn_level}</div>
+          <div style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);border-radius:8px;padding:6px 14px;font-size:11px;font-weight:700;color:#6ee7b7">AI ${today.ai_score}/100</div>
+        </div>
+      </div>
+
+      <!-- ── KPIs SIMILARES ── -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px">
+        <div style="background:#0c0a1e;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Días similares</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:900;color:#a78bfa">${similar.n||0}</div>
+          <div style="font-size:9px;color:#475569;margin-top:4px">en la base de datos</div>
+        </div>
+        <div style="background:#0c0a1e;border:1px solid rgba(16,185,129,.2);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Bull histórico</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:900;color:#10b981">${similar.bull_pct||0}%</div>
+          <div style="font-size:9px;color:#475569;margin-top:4px">${similar.bull||0} días</div>
+        </div>
+        <div style="background:#0c0a1e;border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Bear histórico</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:900;color:#ef4444">${similar.bear_pct||0}%</div>
+          <div style="font-size:9px;color:#475569;margin-top:4px">${similar.bear||0} días</div>
+        </div>
+        <div style="background:#0c0a1e;border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Rango promedio</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:900;color:#f59e0b">${similar.avg_range||0}</div>
+          <div style="font-size:9px;color:#475569;margin-top:4px">puntos NQ</div>
+        </div>
+        <div style="background:#0c0a1e;border:1px solid rgba(99,102,241,.2);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Patrón top</div>
+          <div style="font-size:12px;font-weight:800;color:#818cf8;margin-top:6px">${similar.top_pattern||'?'}</div>
+          <div style="font-size:9px;color:#475569;margin-top:4px">${similar.top_pattern_pct||0}% de los casos</div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(${predColor.replace('#','').match(/.{2}/g).map(x=>parseInt(x,16)).join(',')}, .15),transparent);border:1px solid ${predColor}40;border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Predicción</div>
+          <div style="font-size:13px;font-weight:900;color:${predColor}">${predEmoji} ${pred.direction||'?'}</div>
+          <div style="font-size:9px;color:#475569;margin-top:4px">${pred.confidence||0}% confianza</div>
+        </div>
+      </div>
+
+      <!-- ── BARRA BULL/BEAR ── -->
+      <div style="margin-bottom:20px">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b;margin-bottom:6px;font-family:'JetBrains Mono',monospace">
+          <span>▲ BULLISH ${similar.bull_pct||0}%</span>
+          <span>${similar.n||0} casos históricos similares</span>
+          <span>BEARISH ${similar.bear_pct||0}% ▼</span>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border-radius:4px;height:8px;overflow:hidden">
+          <div style="height:100%;background:linear-gradient(90deg,#10b981,#10b98180);border-radius:4px;width:${bw(similar.bull_pct||50)}"></div>
+        </div>
+      </div>
+
+      <!-- ── TEORÍAS ── -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+          <span style="display:block;width:3px;height:12px;background:#7c3aed;border-radius:2px"></span>
+          TEORÍAS ACTIVAS
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px">
+          ${theoriesHTML || '<div style="color:#475569;font-size:12px">Sin teorías activas para las condiciones actuales</div>'}
+        </div>
+      </div>
+
+      <!-- ── TABLA CASOS HISTÓRICOS ── -->
+      <div>
+        <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+          <span style="display:block;width:3px;height:12px;background:#06b6d4;border-radius:2px"></span>
+          CASOS HISTÓRICOS SIMILARES (últimos 10)
+        </div>
+        <div style="overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,.06)">
+          <table style="width:100%;border-collapse:collapse;font-size:11px">
+            <thead>
+              <tr style="background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08)">
+                <th style="padding:8px 10px;text-align:left;color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.8px">Fecha</th>
+                <th style="padding:8px 10px;text-align:left;color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.8px">Día</th>
+                <th style="padding:8px 10px;text-align:center;color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.8px">Dirección</th>
+                <th style="padding:8px 10px;text-align:right;color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.8px">Rango</th>
+                <th style="padding:8px 10px;text-align:right;color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.8px">Move%</th>
+                <th style="padding:8px 10px;color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.8px">Patrón</th>
+                <th style="padding:8px 10px;color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.8px">COT</th>
+                <th style="padding:8px 10px;color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.8px">VXN</th>
+                <th style="padding:8px 10px;color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.8px">Noticia</th>
+              </tr>
+            </thead>
+            <tbody>${casesHTML || '<tr><td colspan="9" style="padding:16px;text-align:center;color:#475569">Sin casos similares encontrados</td></tr>'}</tbody>
+          </table>
+        </div>
+        <div style="text-align:right;font-size:9px;color:#374151;margin-top:6px;font-family:'JetBrains Mono',monospace">
+          Base: daily_master_db.json · ${similar.n||0} días similares de ${data.db_stats ? Object.values(data.db_stats).reduce((a,b)=>a+(b.n||0),0) : 0} históricos
+        </div>
+      </div>
+    `;
+    panel.style.display = 'block';
+  } catch(e) {
+    console.warn('[backtest-engine] Error:', e);
+  }
+}
+loadBacktestEngine();
 
 </script>
 </body>
