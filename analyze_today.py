@@ -313,4 +313,91 @@ with open(OUT_FILE, "w", encoding="utf-8") as f:
 print(f"\n✅ {OUT_FILE} guardado")
 print(f"   Predicción: {pred_dir} | Confianza: {pred_score}%")
 print(f"   Teorías activas: {len(theories)}")
-print(f"\n🎯 Dashboard listo para mostrar el análisis")
+
+# ── GEMINI AI BRIEF ────────────────────────────────────────────────────
+print("\n🤖 Generando brief con Gemini AI...")
+ai_brief     = None
+ai_brief_ts  = None
+
+try:
+    # Cargar API key desde .env o variable de entorno
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        try:
+            with open(".env", encoding="utf-8") as ef:
+                for line in ef:
+                    if line.startswith("GEMINI_API_KEY="):
+                        api_key = line.strip().split("=", 1)[1].strip()
+                        break
+        except: pass
+
+    if not api_key:
+        print("   ⚠  GEMINI_API_KEY no encontrada en .env. Saltando brief IA.")
+    else:
+        import google.generativeai as genai
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel("gemini-1.5-flash")
+
+        # Construir contexto rico para el prompt
+        top_cases_text = ""
+        for i, c in enumerate(stats.get("cases", [])[:5], 1):
+            sign = "▲" if c["direction"]=="BULLISH" else "▼"
+            top_cases_text += f"  {i}. {c['date']} → {sign} {c['direction']} | Rango {c.get('ny_range',0):.0f} pts | {c.get('pattern','?')}\n"
+
+        prompt = f"""Eres un analista institucional experto en NQ Futures (E-Mini Nasdaq 100 en CME).
+Analiza las condiciones del mercado para el día de trading: {today_str} ({DOW_ES.get(dow_today,'?')}).
+
+═══ CONDICIONES ACTUALES ═══
+• Día de la semana: {DOW_ES.get(dow_today,'?')} (semana {semana_ciclo(today)})
+• COT Index: {cot_index}/100 — Señal: {cot_signal}
+• VXN (volatilidad): {round(vxn_val,2)} → Nivel: {vxn_lv_today}
+• DIX (dark pool): {round(dix_raw,1)}%
+• Score IA del sistema: {ai_score}/100 ({ai_label})
+• Posición respecto a EMA200: {'Por encima (tendencia alcista)' if gex_positive else 'Por debajo (tendencia bajista)'}
+
+═══ ESTADÍSTICA HISTÓRICA ═══
+• Días similares encontrados: {n} casos ({match_level})
+• Resultado histórico: {stats.get('bull_pct',0)}% BULLISH | {stats.get('bear_pct',0)}% BEARISH
+• Rango promedio: {stats.get('avg_range',0)} puntos NQ
+• Patrón más frecuente: {stats.get('top_pattern','?')} ({stats.get('top_pattern_pct',0)}% de los casos)
+• Últimos casos similares:
+{top_cases_text}
+
+═══ PREDICCIÓN DEL SISTEMA ═══
+• Dirección proyectada: {pred_dir}
+• Confianza estadística: {pred_score}%
+
+Escribe en ESPAÑOL un análisis profesional y accionable con tres secciones:
+
+**CONFIGURACIÓN INSTITUCIONAL**
+(2-3 oraciones sobre qué dicen el COT, VXN y DIX en conjunto hoy)
+
+**LO QUE DICE LA HISTORIA**
+(2-3 oraciones sobre los {n} días similares y qué pasó estadísticamente)
+
+**PUNTOS CLAVE A VIGILAR**
+(3 bullets concretos: niveles, horarios o señales que el trader debe observar durante la sesión)
+
+Tono: directo, analítico, sin palabras vacías. Total: máximo 200 palabras."""
+
+        response  = model.generate_content(prompt)
+        ai_brief  = response.text.strip()
+        ai_brief_ts = datetime.now().isoformat()
+        print(f"   ✅ Brief generado ({len(ai_brief)} caracteres)")
+        print(f"\n── BRIEF ──────────────────────────────────────")
+        print(ai_brief[:500] + ("..." if len(ai_brief) > 500 else ""))
+        print(f"────────────────────────────────────────────────")
+
+except ImportError:
+    print("   ⚠  google-generativeai no instalado. Ejecuta: pip install google-generativeai")
+except Exception as e:
+    print(f"   ⚠  Error Gemini: {e}")
+
+# ── RE-GUARDAR con AI brief ────────────────────────────────────────────
+output["ai_brief"]    = ai_brief
+output["ai_brief_ts"] = ai_brief_ts
+
+with open(OUT_FILE, "w", encoding="utf-8") as f:
+    json.dump(output, f, ensure_ascii=False, indent=2)
+
+print(f"\n🎯 Dashboard listo — {OUT_FILE} actualizado con IA")

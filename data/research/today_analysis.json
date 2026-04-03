@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-03T22:51:26.337619",
+  "generated": "2026-04-03T23:49:44.401582",
   "date": "2026-04-03",
   "today": {
     "date": "2026-04-03",
@@ -333,5 +333,7 @@
       "bear_pct": 35.5,
       "avg_range": 378.4
     }
-  }
+  },
+  "ai_brief": null,
+  "ai_brief_ts": null
 }
