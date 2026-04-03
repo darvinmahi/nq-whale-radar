@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📓 Diario de Mercado · NQ Whale Radar</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  /* ── MISMO DESIGN SYSTEM QUE daily_dashboard.html ── */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:      #0b0e1a;
+    --bg2:     #111420;
+    --bg3:     #181d2e;
+    --border:  rgba(99,130,255,0.18);
+    --accent:  #6382ff;
+    --accent2: #38c9e8;
+    --green:   #22d98a;
+    --red:     #f0485a;
+    --orange:  #f5a623;
+    --yellow:  #f5d623;
+    --text:    #e4e8ff;
+    --text2:   #8898bb;
+    --card-glow: 0 0 24px rgba(99,130,255,0.10);
+    --shadow:    0 4px 24px rgba(0,0,0,0.5);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg,#0e1228 0%,#131830 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 32px;
+    display: flex; align-items: center; gap: 16px;
+    position: sticky; top: 0; z-index: 200;
+    backdrop-filter: blur(12px);
+  }
+  .header-logo { font-size: 1.8rem; }
+  .header-title h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
+  .header-title p  { font-size: 0.75rem; color: var(--text2); margin-top: 1px; }
+  .header-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+  .btn-primary {
+    padding: 8px 20px; border-radius: 20px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border: none; color: #fff; font-weight: 700; font-size: 0.82rem;
+    cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    padding: 8px 16px; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--bg3);
+    color: var(--text2); font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif; transition: all .2s;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+
+  /* MAIN LAYOUT */
+  .page { display: grid; grid-template-columns: 42% 1fr; height: calc(100vh - 64px); overflow: hidden; }
+
+  /* LEFT: Lista de días */
+  .diary-list {
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .diary-list-header {
+    padding: 12px 16px; background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  }
+  .diary-list-header h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 700; }
+  #total-badge {
+    margin-left: auto; font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
+    background: rgba(99,130,255,0.15); color: var(--accent); padding: 2px 10px; border-radius: 20px;
+  }
+  .diary-entries { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .diary-entries::-webkit-scrollbar { width: 5px; }
+  .diary-entries::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* Entry Card */
+  .entry-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 14px;
+    padding: 14px 16px; cursor: pointer; transition: all .2s;
+    position: relative; overflow: hidden;
+  }
+  .entry-card:hover { border-color: var(--accent); transform: translateX(2px); }
+  .entry-card.active { border-color: var(--accent2); background: rgba(56,201,232,0.06); }
+  .entry-card .ec-bar {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    border-radius: 14px 0 0 14px;
+  }
+  .ec-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .ec-date { font-size: 0.82rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--accent2); }
+  .ec-dow  { font-size: 0.7rem; color: var(--text2); }
+  .ec-result { margin-left: auto; font-size: 0.78rem; font-weight: 700; }
+  .ec-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .ec-kv { }
+  .ec-kv .k { font-size: 0.6rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.7px; }
+  .ec-kv .v { font-size: 0.8rem; font-weight: 700; margin-top: 1px; }
+  .ec-molde { margin-top: 8px; font-size: 0.7rem; color: var(--text2); line-height: 1.4; }
+  .ec-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+
+  /* pill */
+  .pill { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 7px; font-size: 0.68rem; font-weight: 600; }
+  .pill-green  { background: rgba(34,217,138,0.15); color: var(--green); }
+  .pill-red    { background: rgba(240,72,90,0.15);  color: var(--red); }
+  .pill-yellow { background: rgba(245,214,35,0.15); color: var(--yellow); }
+  .pill-blue   { background: rgba(56,201,232,0.15); color: var(--accent2); }
+  .pill-orange { background: rgba(245,166,35,0.15); color: var(--orange); }
+  .pill-gray   { background: rgba(136,152,187,0.15);color: var(--text2); }
+
+  /* RIGHT: Detail / Form */
+  .diary-detail { display: flex; flex-direction: column; overflow: hidden; }
+  .detail-tabs {
+    display: flex; gap: 0; border-bottom: 1px solid var(--border);
+    background: var(--bg2); flex-shrink: 0;
+  }
+  .tab-btn {
+    padding: 12px 20px; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    border: none; background: transparent; color: var(--text2);
+    border-bottom: 2px solid transparent; transition: all .2s; font-family: 'Inter', sans-serif;
+  }
+  .tab-btn.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+  .tab-btn:hover { color: var(--text); }
+  .tab-content { flex: 1; overflow-y: auto; display: none; }
+  .tab-content.active { display: block; }
+  .tab-content::-webkit-scrollbar { width: 5px; }
+  .tab-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* CHART VIEW */
+  #tab-chart { padding: 0; }
+  #chart-frame-wrap { height: 100%; display: flex; flex-direction: column; }
+  #chart-iframe { flex: 1; width: 100%; border: none; background: var(--bg); }
+  .chart-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--text2); }
+  .chart-empty .big { font-size: 3rem; }
+
+  /* DETALLE VIEW */
+  #tab-detail { padding: 20px; }
+  .detail-header { margin-bottom: 20px; }
+  .detail-date { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
+  .detail-subtitle { font-size: 0.8rem; color: var(--text2); margin-top: 4px; }
+
+  .detail-block { margin-bottom: 18px; }
+  .detail-block-title {
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--accent); font-weight: 700; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .detail-stat { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+  .detail-stat .k { font-size: 0.62rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.8px; }
+  .detail-stat .v { font-size: 1.1rem; font-weight: 800; margin-top: 4px; }
+  .detail-text-box {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px; font-size: 0.8rem; line-height: 1.6; color: var(--text);
+    white-space: pre-wrap;
+  }
+
+  /* FORM VIEW */
+  #tab-form { padding: 20px; }
+  .form-title { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
+  .form-subtitle { font-size: 0.75rem; color: var(--text2); margin-bottom: 20px; }
+
+  .form-section { margin-bottom: 18px; }
+  .form-section-title {
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--accent); font-weight: 700; margin-bottom: 10px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .form-field { display: flex; flex-direction: column; gap: 4px; }
+  .form-field label { font-size: 0.68rem; color: var(--text2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.7px; }
+  .form-field input, .form-field select, .form-field textarea {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text); padding: 8px 12px; font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace; transition: border-color .2s;
+    outline: none;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+    border-color: var(--accent2);
+  }
+  .form-field select option { background: var(--bg3); }
+  .form-field textarea { resize: vertical; min-height: 72px; font-family: 'Inter', sans-serif; }
+  .form-full { grid-column: 1 / -1; }
+  .form-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+  /* STATS VIEW */
+  #tab-stats { padding: 20px; }
+  .stat-section { margin-bottom: 24px; }
+  .stat-section-title { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 700; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+
+  .stat-big-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+  .stat-big-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; text-align: center; }
+  .stat-big-card .num { font-size: 1.8rem; font-weight: 800; }
+  .stat-big-card .lbl { font-size: 0.65rem; color: var(--text2); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.8px; }
+
+  .pattern-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(99,130,255,0.07); }
+  .pattern-name { flex: 1; font-size: 0.8rem; font-weight: 600; }
+  .pattern-bar-w { width: 120px; background: rgba(99,130,255,0.1); border-radius: 5px; height: 8px; overflow: hidden; }
+  .pattern-bar-f { height: 100%; border-radius: 5px; }
+  .pattern-pct { width: 40px; text-align: right; font-size: 0.78rem; font-weight: 700; color: var(--accent); }
+  .pattern-n { width: 50px; text-align: right; font-size: 0.7rem; color: var(--text2); }
+
+  /* EMPTY STATE */
+  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; gap: 12px; color: var(--text2); text-align: center; }
+  .empty-state .icon { font-size: 3rem; }
+  .empty-state p { font-size: 0.85rem; max-width: 300px; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo">📓</div>
+  <div class="header-title">
+    <h1>DIARIO DE MERCADO · NQ NASDAQ</h1>
+    <p>Registro diario · COT · VXN · Moldes · Aprendizaje</p>
+  </div>
+  <div class="header-actions">
+    <span id="total-badge">0 días</span>
+    <button class="btn-ghost" onclick="exportData()">⬇ Exportar JSON</button>
+    <button class="btn-primary" onclick="openNewEntry()">+ Nuevo Día</button>
+  </div>
+</div>
+
+<!-- MAIN PAGE -->
+<div class="page">
+
+  <!-- LEFT: Lista -->
+  <div class="diary-list">
+    <div class="diary-list-header">
+      <h2>📋 Días Registrados</h2>
+      <span id="total-badge2">—</span>
+    </div>
+    <div class="diary-entries" id="entries-list">
+      <div class="empty-state">
+        <div class="icon">📈</div>
+        <p>Aún no hay días registrados. Haz click en <strong>+ Nuevo Día</strong> para empezar tu diario de mercado.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Detail -->
+  <div class="diary-detail">
+
+    <div class="detail-tabs">
+      <button class="tab-btn active" onclick="switchTab('chart')" id="tbtn-chart">📊 Chart</button>
+      <button class="tab-btn" onclick="switchTab('detail')" id="tbtn-detail">📝 Detalle</button>
+      <button class="tab-btn" onclick="switchTab('form')" id="tbtn-form">✏ Editar</button>
+      <button class="tab-btn" onclick="switchTab('stats')" id="tbtn-stats">📈 Estadísticas</button>
+    </div>
+
+    <!-- TAB: CHART -->
+    <div class="tab-content active" id="tab-chart">
+      <div id="chart-frame-wrap" style="height:100%;display:flex;flex-direction:column;">
+        <div class="chart-empty" id="chart-empty">
+          <div class="big">📈</div>
+          <p style="font-size:0.85rem;">Selecciona un día para ver el chart</p>
+        </div>
+        <iframe id="chart-iframe" style="flex:1;width:100%;border:none;display:none;" src=""></iframe>
+      </div>
+    </div>
+
+    <!-- TAB: DETALLE -->
+    <div class="tab-content" id="tab-detail">
+      <div id="detail-empty" class="empty-state"><div class="icon">📝</div><p>Selecciona un día de la lista</p></div>
+      <div id="detail-content" style="padding:20px;display:none;">
+        <div class="detail-header">
+          <div class="detail-date" id="d-date">—</div>
+          <div class="detail-subtitle" id="d-subtitle">—</div>
+        </div>
+
+        <div class="detail-block">
+          <div class="detail-block-title">📡 Condiciones del Día</div>
+          <div class="detail-grid">
+            <div class="detail-stat"><div class="k">COT Index</div><div class="v" id="d-cot">—</div></div>
+            <div class="detail-stat"><div class="k">VXN</div><div class="v" id="d-vxn">—</div></div>
+            <div class="detail-stat"><div class="k">VIX</div><div class="v" id="d-vix">—</div></div>
+            <div class="detail-stat"><div class="k">Semana</div><div class="v" id="d-week">—</div></div>
+            <div class="detail-stat"><div class="k">Noticia</div><div class="v" id="d-news" style="font-size:0.82rem;">—</div></div>
+            <div class="detail-stat"><div class="k">Sesgo Pre-NY</div><div class="v" id="d-bias">—</div></div>
+          </div>
+        </div>
+
+        <div class="detail-block">
+          <div class="detail-block-title">🗽 Resultado NY</div>
+          <div class="detail-grid">
+            <div class="detail-stat"><div class="k">Apertura NQ</div><div class="v" id="d-open">—</div></div>
+            <div class="detail-stat"><div class="k">Cierre NQ</div><div class="v" id="d-close">—</div></div>
+            <div class="detail-stat"><div class="k">Puntos</div><div class="v" id="d-pts">—</div></div>
+            <div class="detail-stat"><div class="k">VAH pre-NY</div><div class="v" id="d-vah" style="color:var(--red)">—</div></div>
+            <div class="detail-stat"><div class="k">POC pre-NY</div><div class="v" id="d-poc" style="color:var(--yellow)">—</div></div>
+            <div class="detail-stat"><div class="k">VAL pre-NY</div><div class="v" id="d-val" style="color:var(--green)">—</div></div>
+          </div>
+        </div>
+
+        <div class="detail-block">
+          <div class="detail-block-title">🔬 Molde Detectado</div>
+          <div class="detail-text-box" id="d-molde">—</div>
+        </div>
+
+        <div class="detail-block">
+          <div class="detail-block-title">🤖 Señal IA del Día</div>
+          <div class="detail-text-box" id="d-signal" style="color:var(--accent2)">—</div>
+        </div>
+
+        <div class="detail-block">
+          <div class="detail-block-title">📖 Lo que pasó</div>
+          <div class="detail-text-box" id="d-story">—</div>
+        </div>
+
+        <div class="detail-block">
+          <div class="detail-block-title">🎓 Aprendizaje</div>
+          <div class="detail-text-box" id="d-learning" style="color:var(--yellow)">—</div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <button class="btn-primary" onclick="switchTab('form')">✏ Editar</button>
+          <button class="btn-ghost" onclick="deleteEntry(currentId)" style="color:var(--red);border-color:rgba(240,72,90,0.3)">🗑 Eliminar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: FORM -->
+    <div class="tab-content" id="tab-form">
+      <div style="padding:20px;">
+        <div class="form-title">✏ Registrar / Editar Día</div>
+        <div class="form-subtitle">Registra las condiciones y resultado del mercado</div>
+
+        <!-- Identificación -->
+        <div class="form-section">
+          <div class="form-section-title">📅 Identificación</div>
+          <div class="form-grid">
+            <div class="form-field">
+              <label>Fecha</label>
+              <input type="date" id="f-date">
+            </div>
+            <div class="form-field">
+              <label>Semana tipo</label>
+              <select id="f-week">
+                <option value="">-- Seleccionar --</option>
+                <option>W1 — Inicio de mes</option>
+                <option>W2 — Normal</option>
+                <option>W3 — FOMC / Fed</option>
+                <option>W4 — Cierre mes</option>
+                <option>W5 — Datos NFP</option>
+                <option>OPEX — Vencimiento opciones</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Condiciones -->
+        <div class="form-section">
+          <div class="form-section-title">📡 Condiciones del Día</div>
+          <div class="form-grid-3">
+            <div class="form-field">
+              <label>COT Index %</label>
+              <input type="number" id="f-cot" placeholder="0-100" min="0" max="100" step="0.1">
+            </div>
+            <div class="form-field">
+              <label>VXN</label>
+              <input type="number" id="f-vxn" placeholder="Ej: 25.4" step="0.1">
+            </div>
+            <div class="form-field">
+              <label>VIX</label>
+              <input type="number" id="f-vix" placeholder="Ej: 20.1" step="0.1">
+            </div>
+            <div class="form-field">
+              <label>VA Position pre-NY</label>
+              <select id="f-vapos">
+                <option value="">-- --</option>
+                <option>ABOVE — Premium</option>
+                <option>BELOW — Discount</option>
+                <option>INSIDE — Neutral</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Sesgo Pre-NY</label>
+              <select id="f-bias">
+                <option value="">-- --</option>
+                <option>ALCISTA</option>
+                <option>BAJISTA</option>
+                <option>NEUTRAL</option>
+                <option>TRAMPA ALCISTA</option>
+                <option>TRAMPA BAJISTA</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Noticia del día</label>
+              <input type="text" id="f-news" placeholder="Ej: CPI, FOMC, NFP...">
+            </div>
+          </div>
+        </div>
+
+        <!-- VP Niveles -->
+        <div class="form-section">
+          <div class="form-section-title">📐 Value Profile pre-NY</div>
+          <div class="form-grid-3">
+            <div class="form-field"><label>VAH</label><input type="number" id="f-vah" placeholder="Ej: 19250" step="1"></div>
+            <div class="form-field"><label>POC</label><input type="number" id="f-poc" placeholder="Ej: 19180" step="1"></div>
+            <div class="form-field"><label>VAL</label><input type="number" id="f-val" placeholder="Ej: 19120" step="1"></div>
+          </div>
+        </div>
+
+        <!-- Resultado NY -->
+        <div class="form-section">
+          <div class="form-section-title">🗽 Resultado NY Session</div>
+          <div class="form-grid-3">
+            <div class="form-field"><label>Open NY</label><input type="number" id="f-open" placeholder="Ej: 19200" step="1"></div>
+            <div class="form-field"><label>Close NY</label><input type="number" id="f-close" placeholder="Ej: 19350" step="1"></div>
+            <div class="form-field"><label>High NY</label><input type="number" id="f-high" placeholder="Ej: 19400" step="1"></div>
+            <div class="form-field"><label>Low NY</label><input type="number" id="f-low" placeholder="Ej: 19150" step="1"></div>
+            <div class="form-field">
+              <label>Dirección NY</label>
+              <select id="f-dir">
+                <option value="">-- --</option>
+                <option>BULL</option>
+                <option>BEAR</option>
+                <option>FLAT</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Molde / Patrón</label>
+              <select id="f-molde">
+                <option value="">-- Seleccionar --</option>
+                <option>EXPANSIÓN ALCISTA</option>
+                <option>EXPANSIÓN BAJISTA</option>
+                <option>MEGÁFONO ALCISTA</option>
+                <option>MEGÁFONO BAJISTA</option>
+                <option>SWEEP HIGH → RETURN</option>
+                <option>SWEEP LOW → RETURN</option>
+                <option>ROTACIÓN AL POC</option>
+                <option>NEWS DRIVE</option>
+                <option>TRAMPA ALCISTA</option>
+                <option>TRAMPA BAJISTA</option>
+                <option>RANGO ESTRECHO</option>
+                <option>OTRO</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- IA y narrativa -->
+        <div class="form-section">
+          <div class="form-section-title">🤖 Señal IA y Narrativa</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="form-field">
+              <label>Señal IA del día</label>
+              <select id="f-signal">
+                <option value="">-- --</option>
+                <option>ALCISTA FUERTE</option>
+                <option>ALCISTA MODERADO</option>
+                <option>NEUTRAL-CAUTELOSO</option>
+                <option>BAJISTA MODERADO</option>
+                <option>BAJISTA FUERTE</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Lo que pasó (narrativa)</label>
+              <textarea id="f-story" placeholder="Ej: Price barrió 19,200 y rebotó — trampa bajista ejecutada. Londres fue alcista pero NY revirtió..."></textarea>
+            </div>
+            <div class="form-field">
+              <label>🎓 Aprendizaje del día</label>
+              <textarea id="f-learning" placeholder="Ej: COT desacelerando + W3 = trampa antes de expansión. Próxima vez esperar confirmación en 30min..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-primary" onclick="saveEntry()" id="save-btn">💾 Guardar Día</button>
+          <button class="btn-ghost" onclick="clearForm()">✖ Limpiar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: STATS -->
+    <div class="tab-content" id="tab-stats">
+      <div style="padding:20px;" id="stats-container">
+        <div class="empty-state"><div class="icon">📊</div><p>Registra días para ver estadísticas</p></div>
+      </div>
+    </div>
+
+  </div><!-- /.diary-detail -->
+</div><!-- /.page -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  STORAGE
+// ═══════════════════════════════════════════════════════════
+const STORAGE_KEY = 'nq_diary_v2';
+let entries = [];
+let currentId = null;
+
+function load() {
+  try { entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+  catch(e) { entries = []; }
+  entries.sort((a,b) => b.date.localeCompare(a.date));
+}
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); }
+
+// ═══════════════════════════════════════════════════════════
+//  COLORES / HELPERS
+// ═══════════════════════════════════════════════════════════
+const DIR_COLORS = { BULL:'#22d98a', BEAR:'#f0485a', FLAT:'#8898bb' };
+const MOLDE_COLORS = {
+  'EXPANSIÓN ALCISTA':'#22d98a', 'EXPANSIÓN BAJISTA':'#f0485a',
+  'SWEEP HIGH → RETURN':'#38c9e8', 'SWEEP LOW → RETURN':'#6382ff',
+  'MEGÁFONO ALCISTA':'#f5d623', 'MEGÁFONO BAJISTA':'#f5a623',
+  'ROTACIÓN AL POC':'#a855f7', 'NEWS DRIVE':'#f5d623',
+  'TRAMPA ALCISTA':'#f5a623', 'TRAMPA BAJISTA':'#f0485a', default:'#8898bb'
+};
+function moldeColor(m) { return MOLDE_COLORS[m] || MOLDE_COLORS.default; }
+function dirColor(d) { return DIR_COLORS[d] || '#8898bb'; }
+function cotZone(v) {
+  if (v < 20) return { z:'XBEAR', c:'#f0485a' };
+  if (v < 40) return { z:'BEAR',  c:'#f5a623' };
+  if (v < 60) return { z:'NEUT',  c:'#8898bb' };
+  if (v < 80) return { z:'BULL',  c:'#22d98a' };
+  return              { z:'XBULL', c:'#38c9e8' };
+}
+function vxnZone(v) {
+  if (v >= 33) return { z:'XFEAR', c:'#f0485a' };
+  if (v >= 25) return { z:'FEAR',  c:'#f5a623' };
+  if (v >= 18) return { z:'NEUT',  c:'#8898bb' };
+  return              { z:'GREED', c:'#22d98a' };
+}
+function fmtPts(open, close) {
+  if (!open || !close) return '—';
+  const d = Math.round(close - open);
+  return (d >= 0 ? '+' : '') + d + ' pts';
+}
+function pillHtml(txt, cls) { return `<span class="pill pill-${cls}">${txt}</span>`; }
+function dowName(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][d.getDay()];
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RENDER LISTA
+// ═══════════════════════════════════════════════════════════
+function renderList() {
+  const el = document.getElementById('entries-list');
+  const n = entries.length;
+  document.getElementById('total-badge').textContent = n + ' días';
+  document.getElementById('total-badge2').textContent = n + ' días';
+
+  if (!n) {
+    el.innerHTML = `<div class="empty-state"><div class="icon">📈</div><p>Aún no hay días registrados. Haz click en <strong>+ Nuevo Día</strong> para empezar.</p></div>`;
+    return;
+  }
+
+  el.innerHTML = entries.map(e => {
+    const pts = e.open && e.close ? Math.round(e.close - e.open) : null;
+    const ptsStr = pts !== null ? (pts >= 0 ? '+' + pts : '' + pts) + ' pts' : '—';
+    const ptsCol = pts > 0 ? 'var(--green)' : (pts < 0 ? 'var(--red)' : 'var(--text2)');
+    const dc = dirColor(e.dir);
+    const cz = e.cot !== undefined && e.cot !== '' ? cotZone(parseFloat(e.cot)) : null;
+    const vz = e.vxn ? vxnZone(parseFloat(e.vxn)) : null;
+    const active = e.id === currentId ? ' active' : '';
+
+    return `<div class="entry-card${active}" onclick="selectEntry('${e.id}')">
+      <div class="ec-bar" style="background:${dc}"></div>
+      <div style="padding-left:8px;">
+        <div class="ec-top">
+          <span class="ec-date">${e.date}</span>
+          <span class="ec-dow">${dowName(e.date)}</span>
+          <span class="ec-result" style="color:${ptsCol}">${ptsStr}</span>
+        </div>
+        <div class="ec-grid">
+          <div class="ec-kv"><div class="k">COT</div><div class="v" style="color:${cz?cz.c:'var(--text2)'}">${cz?cz.z+' '+(+e.cot).toFixed(0)+'%':'—'}</div></div>
+          <div class="ec-kv"><div class="k">VXN</div><div class="v" style="color:${vz?vz.c:'var(--text2)'}">${e.vxn||'—'}</div></div>
+          <div class="ec-kv"><div class="k">NY</div><div class="v" style="color:${dc}">${e.dir||'—'}</div></div>
+        </div>
+        <div class="ec-tags">
+          ${e.molde ? `<span class="pill" style="background:rgba(99,130,255,0.12);color:${moldeColor(e.molde)};font-size:0.65rem;">${e.molde}</span>` : ''}
+          ${e.vapos ? pillHtml(e.vapos.split('—')[0].trim(), e.vapos.includes('ABOVE')?'red':e.vapos.includes('BELOW')?'green':'gray') : ''}
+          ${e.news ? pillHtml(e.news, 'orange') : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SELECT ENTRY
+// ═══════════════════════════════════════════════════════════
+function selectEntry(id) {
+  currentId = id;
+  const e = entries.find(x => x.id === id);
+  if (!e) return;
+  renderList();
+  showDetail(e);
+  loadChartForEntry(e);
+  switchTab('chart');
+}
+
+function showDetail(e) {
+  document.getElementById('detail-empty').style.display = 'none';
+  const dc = document.getElementById('detail-content');
+  dc.style.display = 'block';
+
+  const pts = e.open && e.close ? Math.round(e.close - e.open) : null;
+  const ptsStr = pts !== null ? (pts >= 0 ? '+' + pts : '' + pts) + ' pts' : '—';
+  const cz = e.cot !== undefined ? cotZone(parseFloat(e.cot)) : null;
+  const vz = e.vxn ? vxnZone(parseFloat(e.vxn)) : null;
+
+  document.getElementById('d-date').textContent = e.date + ' — ' + dowName(e.date);
+  document.getElementById('d-subtitle').textContent = (e.week||'') + (e.news ? ' · ' + e.news : '') + (e.signal ? ' · Señal: ' + e.signal : '');
+  document.getElementById('d-cot').innerHTML = cz ? `<span style="color:${cz.c}">${(+e.cot).toFixed(1)}% — ${cz.z}</span>` : '—';
+  document.getElementById('d-vxn').innerHTML = vz ? `<span style="color:${vz.c}">${e.vxn} — ${vz.z}</span>` : '—';
+  document.getElementById('d-vix').textContent = e.vix || '—';
+  document.getElementById('d-week').textContent = e.week || '—';
+  document.getElementById('d-news').textContent = e.news || 'Ninguna';
+  document.getElementById('d-bias').innerHTML = e.bias ? `<span style="color:${e.bias.includes('BAJISTA')?'var(--red)':'var(--green)'}">${e.bias}</span>` : '—';
+  document.getElementById('d-open').textContent = e.open ? Number(e.open).toLocaleString() : '—';
+  document.getElementById('d-close').textContent = e.close ? Number(e.close).toLocaleString() : '—';
+  document.getElementById('d-pts').innerHTML = `<span style="color:${pts>0?'var(--green)':pts<0?'var(--red)':'var(--text2)'}">${ptsStr}</span>`;
+  document.getElementById('d-vah').textContent = e.vah ? Number(e.vah).toLocaleString() : '—';
+  document.getElementById('d-poc').textContent = e.poc ? Number(e.poc).toLocaleString() : '—';
+  document.getElementById('d-val').textContent = e.val ? Number(e.val).toLocaleString() : '—';
+  document.getElementById('d-molde').textContent = e.molde || '—';
+  document.getElementById('d-signal').textContent = e.signal || '—';
+  document.getElementById('d-story').textContent = e.story || '—';
+  document.getElementById('d-learning').textContent = e.learning || '—';
+}
+
+function loadChartForEntry(e) {
+  const iframe = document.getElementById('chart-iframe');
+  const empty  = document.getElementById('chart-empty');
+  // Formatear fecha para buscar chart: YYYYMMDD
+  const ds = e.date.replace(/-/g, '');
+  // Intentar cargar chart usando prefijos conocidos del proyecto
+  const dow = new Date(e.date + 'T12:00:00').getDay();
+  const prefixes = {1:'lunes_chart_',2:'martes_chart_',3:'miercoles_chart_',4:'jueves_chart_',5:'viernes_chart_'};
+  const prefix = prefixes[dow] || '';
+  const chartUrl = prefix ? `${prefix}${ds}.html` : null;
+
+  if (e.chartUrl) {
+    iframe.src = e.chartUrl;
+    iframe.style.display = 'block';
+    empty.style.display = 'none';
+  } else if (chartUrl) {
+    iframe.src = chartUrl;
+    iframe.style.display = 'block';
+    empty.style.display = 'none';
+    iframe.onerror = () => { iframe.style.display='none'; empty.style.display='flex'; };
+  } else {
+    iframe.src = '';
+    iframe.style.display = 'none';
+    empty.style.display = 'flex';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  FORM
+// ═══════════════════════════════════════════════════════════
+function openNewEntry() {
+  currentId = null;
+  clearForm();
+  // fecha de hoy
+  document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+  switchTab('form');
+  renderList();
+}
+
+function clearForm() {
+  ['f-date','f-week','f-cot','f-vxn','f-vix','f-vapos','f-bias','f-news',
+   'f-vah','f-poc','f-val','f-open','f-close','f-high','f-low','f-dir',
+   'f-molde','f-signal','f-story','f-learning'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
+
+function fillForm(e) {
+  document.getElementById('f-date').value    = e.date || '';
+  document.getElementById('f-week').value    = e.week || '';
+  document.getElementById('f-cot').value     = e.cot !== undefined ? e.cot : '';
+  document.getElementById('f-vxn').value     = e.vxn || '';
+  document.getElementById('f-vix').value     = e.vix || '';
+  document.getElementById('f-vapos').value   = e.vapos || '';
+  document.getElementById('f-bias').value    = e.bias || '';
+  document.getElementById('f-news').value    = e.news || '';
+  document.getElementById('f-vah').value     = e.vah || '';
+  document.getElementById('f-poc').value     = e.poc || '';
+  document.getElementById('f-val').value     = e.val || '';
+  document.getElementById('f-open').value    = e.open || '';
+  document.getElementById('f-close').value   = e.close || '';
+  document.getElementById('f-high').value    = e.high || '';
+  document.getElementById('f-low').value     = e.low || '';
+  document.getElementById('f-dir').value     = e.dir || '';
+  document.getElementById('f-molde').value   = e.molde || '';
+  document.getElementById('f-signal').value  = e.signal || '';
+  document.getElementById('f-story').value   = e.story || '';
+  document.getElementById('f-learning').value= e.learning || '';
+}
+
+function saveEntry() {
+  const date = document.getElementById('f-date').value;
+  if (!date) { alert('Selecciona una fecha'); return; }
+
+  const entry = {
+    id: currentId || ('e_' + Date.now()),
+    date,
+    week:     document.getElementById('f-week').value,
+    cot:      document.getElementById('f-cot').value,
+    vxn:      document.getElementById('f-vxn').value,
+    vix:      document.getElementById('f-vix').value,
+    vapos:    document.getElementById('f-vapos').value,
+    bias:     document.getElementById('f-bias').value,
+    news:     document.getElementById('f-news').value,
+    vah:      document.getElementById('f-vah').value,
+    poc:      document.getElementById('f-poc').value,
+    val:      document.getElementById('f-val').value,
+    open:     document.getElementById('f-open').value,
+    close:    document.getElementById('f-close').value,
+    high:     document.getElementById('f-high').value,
+    low:      document.getElementById('f-low').value,
+    dir:      document.getElementById('f-dir').value,
+    molde:    document.getElementById('f-molde').value,
+    signal:   document.getElementById('f-signal').value,
+    story:    document.getElementById('f-story').value,
+    learning: document.getElementById('f-learning').value,
+    savedAt:  new Date().toISOString(),
+  };
+
+  const idx = entries.findIndex(x => x.id === entry.id);
+  if (idx >= 0) entries[idx] = entry;
+  else entries.unshift(entry);
+  entries.sort((a,b) => b.date.localeCompare(a.date));
+  save();
+  currentId = entry.id;
+  renderList();
+  showDetail(entry);
+  loadChartForEntry(entry);
+  renderStats();
+  switchTab('detail');
+}
+
+function deleteEntry(id) {
+  if (!id || !confirm('¿Eliminar este día?')) return;
+  entries = entries.filter(x => x.id !== id);
+  save();
+  currentId = null;
+  document.getElementById('detail-content').style.display = 'none';
+  document.getElementById('detail-empty').style.display = 'flex';
+  document.getElementById('chart-iframe').style.display = 'none';
+  document.getElementById('chart-empty').style.display = 'flex';
+  renderList();
+  renderStats();
+  switchTab('chart');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  STATS
+// ═══════════════════════════════════════════════════════════
+function renderStats() {
+  const C = document.getElementById('stats-container');
+  if (!entries.length) {
+    C.innerHTML = `<div class="empty-state"><div class="icon">📊</div><p>Registra días para ver estadísticas</p></div>`;
+    return;
+  }
+
+  const n = entries.length;
+  const bulls  = entries.filter(e => e.dir === 'BULL').length;
+  const bears  = entries.filter(e => e.dir === 'BEAR').length;
+  const flats  = entries.filter(e => e.dir === 'FLAT').length;
+  const withPts = entries.filter(e => e.open && e.close);
+  const avgPts = withPts.length ? Math.round(withPts.reduce((s,e) => s + (e.close - e.open), 0) / withPts.length) : 0;
+
+  // Patrones
+  const moldes = {};
+  entries.forEach(e => { if (e.molde) moldes[e.molde] = (moldes[e.molde]||0) + 1; });
+  const moldeArr = Object.entries(moldes).sort((a,b) => b[1]-a[1]);
+
+  // COT zones
+  const cotBull = entries.filter(e => e.cot && parseFloat(e.cot) >= 60).length;
+  const cotBear = entries.filter(e => e.cot && parseFloat(e.cot) <  40).length;
+
+  // VP position stats
+  const above = entries.filter(e => e.vapos && e.vapos.includes('ABOVE'));
+  const below = entries.filter(e => e.vapos && e.vapos.includes('BELOW'));
+  const aboveBear = above.filter(e => e.dir === 'BEAR').length;
+  const belowBull = below.filter(e => e.dir === 'BULL').length;
+
+  // Semanas
+  const weekMap = {};
+  entries.forEach(e => { if (e.week) { if (!weekMap[e.week]) weekMap[e.week] = {n:0,bull:0,bear:0}; weekMap[e.week].n++; if (e.dir==='BULL') weekMap[e.week].bull++; if (e.dir==='BEAR') weekMap[e.week].bear++; } });
+
+  C.innerHTML = `
+    <div class="stat-section">
+      <div class="stat-section-title">📊 Resumen Global — ${n} días</div>
+      <div class="stat-big-grid">
+        <div class="stat-big-card"><div class="num" style="color:var(--green)">${bulls}</div><div class="lbl">BULL (${(bulls/n*100).toFixed(0)}%)</div></div>
+        <div class="stat-big-card"><div class="num" style="color:var(--red)">${bears}</div><div class="lbl">BEAR (${(bears/n*100).toFixed(0)}%)</div></div>
+        <div class="stat-big-card"><div class="num" style="color:var(--text2)">${flats}</div><div class="lbl">FLAT (${(flats/n*100).toFixed(0)}%)</div></div>
+        <div class="stat-big-card"><div class="num" style="color:${avgPts>=0?'var(--green)':'var(--red)'}">${avgPts>0?'+':''}${avgPts}</div><div class="lbl">Pts medio</div></div>
+      </div>
+    </div>
+
+    <div class="stat-section">
+      <div class="stat-section-title">🔬 Moldes más frecuentes</div>
+      ${moldeArr.map(([m, c]) => `
+        <div class="pattern-row">
+          <div class="pattern-name">${m}</div>
+          <div class="pattern-bar-w"><div class="pattern-bar-f" style="width:${(c/n*100).toFixed(0)}%;background:${moldeColor(m)}"></div></div>
+          <div class="pattern-pct">${(c/n*100).toFixed(0)}%</div>
+          <div class="pattern-n">${c}x</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="stat-section">
+      <div class="stat-section-title">📐 VP Position → NY Direction</div>
+      <div style="font-size:0.83rem; line-height:2;">
+        <div>⬆ ABOVE VA → NY BEAR: <strong style="color:var(--red)">${above.length ? (aboveBear/above.length*100).toFixed(0) : '—'}%</strong> (${aboveBear}/${above.length}) — <em style="color:var(--text2)">setup de venta</em></div>
+        <div>⬇ BELOW VA → NY BULL: <strong style="color:var(--green)">${below.length ? (belowBull/below.length*100).toFixed(0) : '—'}%</strong> (${belowBull}/${below.length}) — <em style="color:var(--text2)">setup de compra</em></div>
+      </div>
+    </div>
+
+    <div class="stat-section">
+      <div class="stat-section-title">📜 Por Tipo de Semana</div>
+      ${Object.entries(weekMap).map(([w,d]) => `
+        <div class="pattern-row">
+          <div class="pattern-name" style="font-size:0.75rem">${w}</div>
+          <span class="pill pill-green">${d.bull}B</span>
+          <span class="pill pill-red">${d.bear}Ba</span>
+          <div class="pattern-pct" style="color:var(--green)">${(d.bull/d.n*100).toFixed(0)}%↑</div>
+          <div class="pattern-n">${d.n} días</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="stat-section">
+      <div class="stat-section-title">🎓 Últimos Aprendizajes</div>
+      ${entries.filter(e=>e.learning).slice(0,5).map(e => `
+        <div style="padding:10px 0; border-bottom:1px solid rgba(99,130,255,0.07);">
+          <div style="font-size:0.68rem;color:var(--text2);margin-bottom:4px;">${e.date}</div>
+          <div style="font-size:0.8rem;color:var(--yellow);line-height:1.4;">${e.learning}</div>
+        </div>`).join('')}
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════════════════
+function switchTab(t) {
+  ['chart','detail','form','stats'].forEach(id => {
+    document.getElementById('tab-'+id).classList.toggle('active', id===t);
+    document.getElementById('tbtn-'+id).classList.toggle('active', id===t);
+  });
+  if (t === 'form' && currentId) {
+    const e = entries.find(x => x.id === currentId);
+    if (e) fillForm(e);
+  }
+  if (t === 'stats') renderStats();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  EXPORT
+// ═══════════════════════════════════════════════════════════
+function exportData() {
+  const blob = new Blob([JSON.stringify(entries, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'nq_diario_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
+load();
+renderList();
+renderStats();
+</script>
+</body>
+</html>
