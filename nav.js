@@ -10,7 +10,7 @@
     { label: 'COT Intel',     icon: 'radar',            href: 'cot_intel.html',         id: 'cot' },
     { label: 'Noticias',      icon: 'newspaper',        href: 'noticias_nasdaq.html',   id: 'noticias' },
     { label: 'Patterns',      icon: 'pattern',          href: 'pattern_intel.html',     id: 'patterns' },
-    { label: 'Backtest',      icon: 'history_edu',      href: 'weekly_backtest.html',   id: 'backtest' },
+    { label: 'Daily',         icon: 'calendar_view_day', href: 'daily_dashboard.html',   id: 'backtest' },
     { label: 'Cross',         icon: 'compare_arrows',   href: 'cross_analysis.html',    id: 'cross' },
     { label: 'Journal',       icon: 'book_2',           href: 'nasdaq_journal.html',    id: 'journal' },
   ];
