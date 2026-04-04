@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧪 Strategy Builder · NQ Whale Radar</title>
+<meta name="description" content="Crea y testea estrategias personalizadas sobre historial real del NQ Nasdaq. Sin Excel, sin esperar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #060814;
+    --bg2:     #0a0d1a;
+    --bg3:     #0f1221;
+    --border:  rgba(255,255,255,.07);
+    --text:    #e2e8f0;
+    --muted:   #64748b;
+    --green:   #10b981;
+    --red:     #ef4444;
+    --blue:    #3b82f6;
+    --purple:  #7c3aed;
+    --cyan:    #06b6d4;
+    --yellow:  #f59e0b;
+    --orange:  #f97316;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── TOP NAV ── */
+  .topnav {
+    position: sticky; top:0; z-index:100;
+    background: rgba(6,8,20,.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap:16px;
+    padding: 0 24px; height: 56px;
+  }
+  .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo-icon { font-size:22px; }
+  .logo-text { font-size:13px; font-weight:800; color:var(--text); line-height:1.2; }
+  .logo-sub  { font-size:10px; color:var(--muted); font-weight:400; }
+  .nav-sep   { flex:1; }
+  .btn-back {
+    display:flex; align-items:center; gap:6px;
+    background: rgba(124,58,237,.15);
+    border: 1px solid rgba(124,58,237,.3);
+    color: #a78bfa; border-radius:8px;
+    padding: 6px 14px; font-size:11px; font-weight:700;
+    text-decoration:none; cursor:pointer;
+    transition: all .2s;
+  }
+  .btn-back:hover { background:rgba(124,58,237,.3); color:#c4b5fd; }
+  .badge {
+    background: linear-gradient(135deg,var(--purple),var(--blue));
+    color:#fff; font-size:9px; font-weight:800;
+    padding:2px 8px; border-radius:99px; letter-spacing:.5px;
+  }
+
+  /* ── LAYOUT ── */
+  .page { display:grid; grid-template-columns: 380px 1fr; gap:0; min-height:calc(100vh - 56px); }
+
+  /* ── LEFT PANEL — Builder ── */
+  .builder-panel {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 24px;
+    overflow-y: auto;
+    max-height: calc(100vh - 56px);
+    position: sticky; top: 56px;
+  }
+  .section-title {
+    font-size:10px; font-weight:700; color:var(--muted);
+    text-transform:uppercase; letter-spacing:1.5px;
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:14px;
+  }
+  .section-title::before {
+    content:''; display:block; width:3px; height:12px;
+    border-radius:2px; background:var(--purple);
+  }
+  .field-group { margin-bottom:12px; }
+  .field-label {
+    font-size:10px; color:var(--muted); font-weight:600;
+    text-transform:uppercase; letter-spacing:.8px;
+    margin-bottom:5px; display:block;
+  }
+  .field-row { display:flex; gap:6px; }
+  select, input[type=number] {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius:8px; padding:8px 12px;
+    font-family:'Inter',sans-serif; font-size:12px;
+    width:100%; outline:none;
+    transition: border-color .2s;
+  }
+  select:focus, input[type=number]:focus {
+    border-color:rgba(124,58,237,.5);
+  }
+  select { cursor:pointer; }
+  input[type=number] { font-family:'JetBrains Mono',monospace; }
+
+  .divider {
+    border: none; border-top:1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  /* Target/Stop row */
+  .ts-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .ts-box {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:10px; padding:12px;
+  }
+  .ts-label { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px; }
+  .ts-input {
+    display:flex; align-items:center; gap:4px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px; font-weight:700;
+  }
+  .ts-input span { color:var(--muted); }
+  .ts-target { color:var(--green); }
+  .ts-stop   { color:var(--red); }
+  .ts-input input {
+    background:transparent; border:none;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700; width:100%; outline:none; padding:0;
+  }
+  .ts-target .ts-input input { color:var(--green); }
+  .ts-stop   .ts-input input { color:var(--red);   }
+
+  /* Run button */
+  .btn-run {
+    width:100%; padding:14px;
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+    border:none; border-radius:12px;
+    color:#fff; font-size:14px; font-weight:800;
+    cursor:pointer; transition:all .25s;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:20px; letter-spacing:.3px;
+  }
+  .btn-run:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(124,58,237,.4); }
+  .btn-run:active { transform:translateY(0); }
+  .btn-run.loading { opacity:.7; pointer-events:none; }
+
+  /* Strategy counter */
+  .db-info {
+    background:rgba(16,185,129,.06); border:1px solid rgba(16,185,129,.15);
+    border-radius:10px; padding:10px 14px;
+    font-size:11px; color:var(--muted); margin-bottom:20px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .db-info strong { color:var(--green); font-family:'JetBrains Mono',monospace; }
+
+  /* ── RIGHT PANEL — Results ── */
+  .results-panel {
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  /* Placeholder */
+  .placeholder {
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    min-height:400px; color:var(--muted); text-align:center; gap:16px;
+  }
+  .placeholder-icon { font-size:64px; opacity:.3; }
+  .placeholder h2 { font-size:18px; font-weight:800; color:rgba(226,232,240,.3); }
+  .placeholder p  { font-size:13px; max-width:340px; line-height:1.6; }
+
+  /* KPI grid */
+  .kpi-grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px; margin-bottom:24px;
+  }
+  .kpi-card {
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:14px; padding:16px; text-align:center;
+    transition:border-color .2s;
+  }
+  .kpi-card:hover { border-color:rgba(124,58,237,.3); }
+  .kpi-label { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+  .kpi-val {
+    font-family:'JetBrains Mono',monospace;
+    font-size:28px; font-weight:900;
+    line-height:1;
+  }
+  .kpi-sub { font-size:10px; color:var(--muted); margin-top:5px; }
+  .kpi-green  { color:var(--green); }
+  .kpi-red    { color:var(--red); }
+  .kpi-purple { color:#a78bfa; }
+  .kpi-yellow { color:var(--yellow); }
+  .kpi-cyan   { color:var(--cyan); }
+
+  /* Win rate bar */
+  .wr-bar-wrap {
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:14px; padding:18px 20px; margin-bottom:24px;
+  }
+  .wr-bar-header {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:10px;
+  }
+  .wr-bar-title { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+  .wr-bar-pct   { font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:900; color:var(--green); }
+  .wr-bar-track {
+    background:rgba(239,68,68,.2); border-radius:6px; height:10px; overflow:hidden;
+    position:relative;
+  }
+  .wr-bar-fill {
+    height:100%; border-radius:6px;
+    background:linear-gradient(90deg,var(--green),#34d399);
+    transition:width .6s cubic-bezier(.4,0,.2,1);
+  }
+  .wr-bar-labels {
+    display:flex; justify-content:space-between;
+    font-size:10px; color:var(--muted); margin-top:6px;
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  /* Monthly chart */
+  .monthly-wrap {
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:14px; padding:18px 20px; margin-bottom:24px;
+  }
+  .monthly-title { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:14px; }
+  .monthly-bars { display:flex; align-items:flex-end; gap:6px; height:80px; }
+  .monthly-bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .monthly-bar {
+    width:100%; border-radius:4px 4px 0 0;
+    transition:height .4s; min-height:2px;
+  }
+  .monthly-bar.pos { background:linear-gradient(180deg,var(--green),rgba(16,185,129,.4)); }
+  .monthly-bar.neg { background:linear-gradient(180deg,var(--red),rgba(239,68,68,.4)); }
+  .monthly-label { font-size:8px; color:var(--muted); font-family:'JetBrains Mono',monospace; }
+
+  /* Cases table */
+  .cases-wrap {
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:14px; overflow:hidden;
+  }
+  .cases-header {
+    padding:16px 20px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .cases-title { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+  .cases-count { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--purple); font-weight:700; }
+  table { width:100%; border-collapse:collapse; }
+  thead th {
+    background:rgba(255,255,255,.02);
+    padding:9px 14px; font-size:9px; font-weight:700;
+    color:var(--muted); text-transform:uppercase; letter-spacing:.8px;
+    text-align:left; border-bottom:1px solid var(--border);
+  }
+  tbody tr {
+    border-bottom:1px solid rgba(255,255,255,.03);
+    transition:background .15s;
+  }
+  tbody tr:hover { background:rgba(255,255,255,.02); }
+  tbody td {
+    padding:9px 14px; font-size:11px;
+  }
+  .pill {
+    display:inline-flex; align-items:center; gap:4px;
+    padding:2px 8px; border-radius:99px;
+    font-size:10px; font-weight:700;
+  }
+  .pill-win  { background:rgba(16,185,129,.15); color:var(--green); }
+  .pill-loss { background:rgba(239,68,68,.15);  color:var(--red); }
+  .pill-bull { background:rgba(16,185,129,.15); color:var(--green); }
+  .pill-bear { background:rgba(239,68,68,.15);  color:var(--red); }
+
+  /* No results */
+  .no-results {
+    padding:40px; text-align:center; color:var(--muted); font-size:13px;
+  }
+
+  /* Expectancy highlight */
+  .expect-box {
+    background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(79,70,229,.06));
+    border:1px solid rgba(124,58,237,.25);
+    border-radius:14px; padding:16px 20px; margin-bottom:24px;
+    display:flex; align-items:center; gap:16px;
+  }
+  .expect-label { font-size:11px; color:#a78bfa; font-weight:700; }
+  .expect-val { font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:900; }
+
+  @media(max-width:900px) {
+    .page { grid-template-columns:1fr; }
+    .builder-panel { position:static; max-height:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a href="index.html" class="nav-logo">
+    <span class="logo-icon">🐋</span>
+    <div>
+      <div class="logo-text">NQ Whale Radar</div>
+      <div class="logo-sub">Intelligence Platform</div>
+    </div>
+  </a>
+  <span class="badge">STRATEGY LAB</span>
+  <div class="nav-sep"></div>
+  <a href="daily_dashboard.html" class="btn-back">← Daily Dashboard</a>
+  <a href="index.html" class="btn-back" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:#67e8f9">⌂ Inicio</a>
+</nav>
+
+<!-- MAIN LAYOUT -->
+<div class="page">
+
+  <!-- ════════════════════════════════════
+       LEFT — BUILDER
+  ════════════════════════════════════ -->
+  <aside class="builder-panel">
+
+    <div class="db-info" id="db-info">
+      ⏳ Cargando base histórica...
+    </div>
+
+    <div class="section-title" style="color:#a78bfa">CONDICIONES DE MERCADO</div>
+
+    <!-- Día de semana -->
+    <div class="field-group">
+      <label class="field-label">📅 Día de semana</label>
+      <select id="c-dow">
+        <option value="">Todos los días</option>
+        <option value="monday">Lunes</option>
+        <option value="tuesday">Martes</option>
+        <option value="wednesday">Miércoles</option>
+        <option value="thursday">Jueves</option>
+        <option value="friday">Viernes</option>
+      </select>
+    </div>
+
+    <!-- Semana del ciclo -->
+    <div class="field-group">
+      <label class="field-label">🗓 Semana del ciclo</label>
+      <select id="c-week">
+        <option value="">Cualquier semana</option>
+        <option value="W1">W1 — Primera semana</option>
+        <option value="W2">W2 — Segunda semana</option>
+        <option value="W3">W3 — Tercera semana</option>
+        <option value="W4">W4 — Cuarta semana</option>
+      </select>
+    </div>
+
+    <!-- COT Index -->
+    <div class="field-group">
+      <label class="field-label">📊 COT Index</label>
+      <div class="field-row">
+        <select id="c-cot-op" style="width:100px;flex-shrink:0">
+          <option value="">Cualquiera</option>
+          <option value="gt">&gt; mayor</option>
+          <option value="lt">&lt; menor</option>
+          <option value="range">Entre</option>
+        </select>
+        <input type="number" id="c-cot-val" placeholder="50" min="0" max="100" style="flex:1">
+        <input type="number" id="c-cot-val2" placeholder="75" min="0" max="100" style="flex:1;display:none">
+      </div>
+    </div>
+
+    <!-- VXN nivel -->
+    <div class="field-group">
+      <label class="field-label">🌡 VXN nivel</label>
+      <select id="c-vxn">
+        <option value="">Cualquier nivel</option>
+        <option value="COMPLACENCY">Complacencia (&lt;16)</option>
+        <option value="NORMAL">Normal (16-22)</option>
+        <option value="ELEVATED">Elevado (22-30)</option>
+        <option value="PANIC">Pánico (30-40)</option>
+        <option value="EXTREME_PANIC">Pánico extremo (&gt;40)</option>
+      </select>
+    </div>
+
+    <!-- GEX -->
+    <div class="field-group">
+      <label class="field-label">⚡ GEX (presión dealers)</label>
+      <select id="c-gex">
+        <option value="">Cualquiera</option>
+        <option value="true">GEX Positivo (dealers amortiguan)</option>
+        <option value="false">GEX Negativo (dealers amplifican)</option>
+      </select>
+    </div>
+
+    <!-- Noticia -->
+    <div class="field-group">
+      <label class="field-label">📰 Noticia del día</label>
+      <select id="c-noticia">
+        <option value="">Cualquiera</option>
+        <option value="ninguna">Sin noticias</option>
+        <option value="NFP">NFP (empleos)</option>
+        <option value="CPI">CPI (inflación)</option>
+        <option value="FOMC">FOMC</option>
+        <option value="JOBLESS_CLAIMS">Jobless Claims</option>
+      </select>
+    </div>
+
+    <!-- NQ vs EMA200 -->
+    <div class="field-group">
+      <label class="field-label">📈 NQ vs EMA 200</label>
+      <select id="c-ema">
+        <option value="">Cualquiera</option>
+        <option value="above">Por encima de EMA 200</option>
+        <option value="below">Por debajo de EMA 200</option>
+      </select>
+    </div>
+
+    <!-- Dirección día anterior -->
+    <div class="field-group">
+      <label class="field-label">↩️ Dirección día anterior</label>
+      <select id="c-prevdir">
+        <option value="">Cualquiera</option>
+        <option value="BULLISH">Día anterior BULLISH</option>
+        <option value="BEARISH">Día anterior BEARISH</option>
+      </select>
+    </div>
+
+    <hr class="divider">
+    <div class="section-title" style="color:#f59e0b">OPERATIVA</div>
+
+    <!-- Entry -->
+    <div class="field-group">
+      <label class="field-label">🎯 Entry (referencia)</label>
+      <select id="o-entry">
+        <option value="ny_open">Apertura NY 9:30AM</option>
+        <option value="london">Sesión Londres 2AM ET</option>
+      </select>
+    </div>
+
+    <!-- Target / Stop -->
+    <div class="ts-row">
+      <div class="ts-box ts-target">
+        <div class="ts-label">🎯 Target (pts)</div>
+        <div class="ts-input">
+          <span>+</span>
+          <input type="number" id="o-target" value="150" min="10" max="1000">
+        </div>
+      </div>
+      <div class="ts-box ts-stop">
+        <div class="ts-label">🛑 Stop (pts)</div>
+        <div class="ts-input">
+          <span>−</span>
+          <input type="number" id="o-stop" value="80" min="5" max="500">
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-run" id="btn-run" onclick="runBacktest()">
+      ▶ CORRER BACKTEST
+    </button>
+
+    <div style="text-align:center;margin-top:10px;font-size:10px;color:var(--muted)">
+      Cálculo instantáneo · Fuente: daily_master_db.json
+    </div>
+  </aside>
+
+  <!-- ════════════════════════════════════
+       RIGHT — RESULTS
+  ════════════════════════════════════ -->
+  <main class="results-panel" id="results-panel">
+    <div class="placeholder" id="placeholder">
+      <div class="placeholder-icon">🧪</div>
+      <h2>Strategy Builder</h2>
+      <p>Define tus condiciones y haz clic en <strong>CORRER BACKTEST</strong>. El sistema testea tu estrategia contra el historial real del NQ.</p>
+      <div style="margin-top:16px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:16px;font-size:11px;color:var(--muted);line-height:1.8;text-align:left;max-width:360px">
+        <strong style="color:#a78bfa">Ejemplo:</strong><br>
+        Día: Lunes · COT &gt; 50 · VXN Normal · W1<br>
+        Target: +150 pts · Stop: -80 pts<br>
+        <em>→ Sistema busca todos los lunes con esas condiciones y calcula el resultado histórico</em>
+      </div>
+    </div>
+    <div id="results-container" style="display:none"></div>
+  </main>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  DATOS
+// ═══════════════════════════════════════════════════════════
+let DB = [];
+
+async function loadDB() {
+  try {
+    const r = await fetch(`data/research/daily_master_db.json?t=${Date.now()}`);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const raw = await r.json();
+    DB = Array.isArray(raw) ? raw : (raw.records || []);
+    // Solo días de semana
+    DB = DB.filter(d => !['saturday','sunday'].includes(d.dow));
+    document.getElementById('db-info').innerHTML =
+      `✅ Base cargada: <strong>${DB.length}</strong> días de historial (Ene 2024 → hoy)`;
+  } catch(e) {
+    document.getElementById('db-info').innerHTML =
+      `❌ Error cargando DB: ${e.message}`;
+  }
+}
+loadDB();
+
+// COT op toggle
+document.getElementById('c-cot-op').addEventListener('change', function() {
+  document.getElementById('c-cot-val2').style.display = this.value === 'range' ? '' : 'none';
+});
+
+// ═══════════════════════════════════════════════════════════
+//  BACKTEST ENGINE
+// ═══════════════════════════════════════════════════════════
+function runBacktest() {
+  if (!DB.length) { alert('Base de datos no cargada aún, espera un momento.'); return; }
+
+  const btn = document.getElementById('btn-run');
+  btn.classList.add('loading');
+  btn.textContent = '⏳ Calculando...';
+
+  setTimeout(() => {
+    try {
+      // Leer condiciones
+      const cDow     = document.getElementById('c-dow').value;
+      const cWeek    = document.getElementById('c-week').value;
+      const cCotOp   = document.getElementById('c-cot-op').value;
+      const cCotVal  = parseFloat(document.getElementById('c-cot-val').value) || null;
+      const cCotVal2 = parseFloat(document.getElementById('c-cot-val2').value) || null;
+      const cVxn     = document.getElementById('c-vxn').value;
+      const cGex     = document.getElementById('c-gex').value;
+      const cNoticia = document.getElementById('c-noticia').value;
+      const cEma     = document.getElementById('c-ema').value;
+      const cPrevDir = document.getElementById('c-prevdir').value;
+      const oTarget  = parseFloat(document.getElementById('o-target').value) || 150;
+      const oStop    = parseFloat(document.getElementById('o-stop').value) || 80;
+
+      // Filtrar
+      const matches = DB.filter(d => {
+        if (cDow     && d.dow !== cDow) return false;
+        if (cWeek    && d.semana_ciclo !== cWeek) return false;
+        if (cVxn     && d.vxn_level !== cVxn) return false;
+        if (cNoticia && (d.noticia||'').toLowerCase() !== cNoticia.toLowerCase()) return false;
+        if (cEma     && d.nq_vs_ema200 !== cEma) return false;
+        if (cPrevDir && d.prev_day_dir !== cPrevDir) return false;
+        if (cGex !== '') {
+          const gp = d.gex_positive;
+          if (cGex === 'true'  && !gp)  return false;
+          if (cGex === 'false' &&  gp)  return false;
+        }
+        if (cCotOp && cCotVal !== null) {
+          const ci = parseFloat(d.cot_index) || 0;
+          if (cCotOp === 'gt' && ci <= cCotVal) return false;
+          if (cCotOp === 'lt' && ci >= cCotVal) return false;
+          if (cCotOp === 'range' && cCotVal2 !== null) {
+            if (ci < cCotVal || ci > cCotVal2) return false;
+          }
+        }
+        return true;
+      });
+
+      // Calcular resultados con target/stop
+      const results = matches.map(d => {
+        const range = d.ny_range || 0;
+        const dir   = d.direction;
+        // Simulación simplificada: si el rango supero el target, consideramos WIN
+        // Win = el rango del dia fue >= target (mercado se movió lo suficiente)
+        const win = range >= oTarget;
+        const pts = win ? oTarget : -(Math.min(oStop, range));
+        return { ...d, _win: win, _pts: pts };
+      });
+
+      renderResults(results, oTarget, oStop, { cDow, cWeek, cCotOp, cCotVal, cVxn, cNoticia });
+
+    } catch(e) {
+      alert('Error: ' + e.message);
+    } finally {
+      btn.classList.remove('loading');
+      btn.textContent = '▶ CORRER BACKTEST';
+    }
+  }, 50);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RENDER RESULTS
+// ═══════════════════════════════════════════════════════════
+function renderResults(results, target, stop, conditions) {
+  document.getElementById('placeholder').style.display = 'none';
+  const container = document.getElementById('results-container');
+  container.style.display = '';
+
+  const n        = results.length;
+  const wins     = results.filter(r => r._win).length;
+  const losses   = n - wins;
+  const winRate  = n ? (wins/n*100) : 0;
+  const totalPts = results.reduce((a,r) => a + r._pts, 0);
+  const avgWin   = wins   ? results.filter(r=>r._win) .reduce((a,r)=>a+r._pts,0)/wins   : 0;
+  const avgLoss  = losses ? results.filter(r=>!r._win).reduce((a,r)=>a+r._pts,0)/losses : 0;
+  const pf       = (losses && avgLoss) ? (wins*avgWin) / (-losses*avgLoss) : (wins ? 999 : 0);
+  const expect   = n ? totalPts/n : 0;
+
+  // Monthly breakdown
+  const monthly = {};
+  results.forEach(r => {
+    const mo = r.date ? r.date.slice(0,7) : '?';
+    if (!monthly[mo]) monthly[mo] = 0;
+    monthly[mo] += r._pts;
+  });
+  const months    = Object.keys(monthly).sort();
+  const monthVals = months.map(m => monthly[m]);
+  const maxAbs    = Math.max(...monthVals.map(Math.abs), 1);
+
+  // Best/worst month
+  const bestMo  = months[monthVals.indexOf(Math.max(...monthVals))];
+  const worstMo = months[monthVals.indexOf(Math.min(...monthVals))];
+
+  // DOW label map
+  const DOW_ES = {monday:'Lunes',tuesday:'Martes',wednesday:'Miércoles',thursday:'Jueves',friday:'Viernes'};
+
+  // Cases table
+  const caseRows = results.slice().reverse().map(r => {
+    const w = r._win;
+    const ptsStr = (r._pts >= 0 ? '+' : '') + r._pts.toFixed(0);
+    return `<tr>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#94a3b8">${r.date||'—'}</td>
+      <td style="font-size:11px;color:#64748b">${DOW_ES[r.dow]||r.dow||'—'}</td>
+      <td><span class="pill ${r.direction==='BULLISH'?'pill-bull':'pill-bear'}">${r.direction==='BULLISH'?'▲ UP':'▼ DN'}</span></td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#f59e0b">${(r.ny_range||0).toFixed(0)} pts</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7c3aed">${(r.cot_index||0).toFixed(0)}/100</td>
+      <td style="font-size:10px;color:#06b6d4">${r.vxn_level||'—'}</td>
+      <td style="font-size:10px;color:${r.noticia!=='ninguna'?'#f59e0b':'#475569'}">${r.noticia||'—'}</td>
+      <td><span class="pill ${w?'pill-win':'pill-loss'}">${w?'✅ WIN':'❌ LOSS'}</span></td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:${r._pts>=0?'#10b981':'#ef4444'};text-align:right">${ptsStr} pts</td>
+    </tr>`;
+  }).join('');
+
+  // Monthly bars HTML
+  const barHTML = months.map((m, i) => {
+    const v     = monthVals[i];
+    const h     = Math.round(Math.abs(v)/maxAbs*72);
+    const cls   = v >= 0 ? 'pos' : 'neg';
+    const label = m.slice(5); // MM
+    const title = (v>=0?'+':'')+v.toFixed(0)+'pts';
+    return `<div class="monthly-bar-col">
+      <div class="monthly-bar ${cls}" style="height:${h}px" title="${m}: ${title}"></div>
+      <div class="monthly-label">${label}</div>
+    </div>`;
+  }).join('');
+
+  // No results case
+  if (n === 0) {
+    container.innerHTML = `
+      <div class="no-results">
+        <div style="font-size:48px;margin-bottom:12px">🔍</div>
+        <h2 style="color:var(--muted);font-size:18px;margin-bottom:8px">Sin resultados</h2>
+        <p style="color:#475569;font-size:13px">No hay días en el historial que cumplan todas las condiciones seleccionadas.<br>
+        Intenta reducir los filtros.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <!-- HEADER -->
+    <div style="margin-bottom:20px">
+      <div style="font-size:20px;font-weight:900;color:var(--text);margin-bottom:4px">
+        📊 ${n} casos encontrados
+      </div>
+      <div style="font-size:12px;color:var(--muted)">
+        Historial real desde Enero 2024 · Target +${target}pts / Stop -${stop}pts
+      </div>
+    </div>
+
+    <!-- EXPECTATIVA -->
+    <div class="expect-box">
+      <div style="font-size:32px">🎯</div>
+      <div>
+        <div class="expect-label">EXPECTATIVA MATEMÁTICA POR TRADE</div>
+        <div class="expect-val" style="color:${expect>=0?'#10b981':'#ef4444'}">${expect>=0?'+':''}${expect.toFixed(1)} pts</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:3px">
+          ${expect>=0?'✅ Estrategia con EDGE positivo':'❌ Estrategia sin edge — revisar condiciones'}
+        </div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:4px">Total acumulado</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:900;color:${totalPts>=0?'#10b981':'#ef4444'}">${totalPts>=0?'+':''}${totalPts.toFixed(0)} pts</div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Win Rate</div>
+        <div class="kpi-val kpi-green">${winRate.toFixed(1)}%</div>
+        <div class="kpi-sub">${wins}W / ${losses}L</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Profit Factor</div>
+        <div class="kpi-val ${pf>=1.5?'kpi-green':pf>=1?'kpi-yellow':'kpi-red'}">${pf===999?'∞':pf.toFixed(2)}</div>
+        <div class="kpi-sub">${pf>=1.5?'Excelente':pf>=1?'Rentable':'Negativo'}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Ganancia prom</div>
+        <div class="kpi-val kpi-green">+${avgWin.toFixed(0)}</div>
+        <div class="kpi-sub">pts por win</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Pérdida prom</div>
+        <div class="kpi-val kpi-red">${avgLoss.toFixed(0)}</div>
+        <div class="kpi-sub">pts por loss</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Mejor mes</div>
+        <div class="kpi-val kpi-cyan" style="font-size:16px">${bestMo||'—'}</div>
+        <div class="kpi-sub">+${(monthly[bestMo]||0).toFixed(0)} pts</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Peor mes</div>
+        <div class="kpi-val kpi-red" style="font-size:16px">${worstMo||'—'}</div>
+        <div class="kpi-sub">${(monthly[worstMo]||0).toFixed(0)} pts</div>
+      </div>
+    </div>
+
+    <!-- WIN RATE BAR -->
+    <div class="wr-bar-wrap">
+      <div class="wr-bar-header">
+        <span class="wr-bar-title">Win Rate Visual</span>
+        <span class="wr-bar-pct">${winRate.toFixed(1)}%</span>
+      </div>
+      <div class="wr-bar-track">
+        <div class="wr-bar-fill" style="width:${winRate}%"></div>
+      </div>
+      <div class="wr-bar-labels">
+        <span>▲ WINS: ${wins}</span>
+        <span>50%</span>
+        <span>LOSSES: ${losses} ▼</span>
+      </div>
+    </div>
+
+    <!-- MONTHLY CHART -->
+    ${months.length ? `
+    <div class="monthly-wrap">
+      <div class="monthly-title">📅 Resultado mensual (pts acumulados)</div>
+      <div class="monthly-bars">${barHTML}</div>
+    </div>` : ''}
+
+    <!-- CASES TABLE -->
+    <div class="cases-wrap">
+      <div class="cases-header">
+        <span class="cases-title">📋 Todos los casos históricos</span>
+        <span class="cases-count">${n} registros</span>
+      </div>
+      ${n > 0 ? `
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th><th>Día</th><th>Dir</th><th>Rango</th>
+              <th>COT</th><th>VXN</th><th>Noticia</th><th>Resultado</th><th>Pts</th>
+            </tr>
+          </thead>
+          <tbody>${caseRows}</tbody>
+        </table>
+      </div>` : '<div class="no-results">Sin casos</div>'}
+    </div>
+  `;
+
+  container.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+</script>
+</body>
+</html>
