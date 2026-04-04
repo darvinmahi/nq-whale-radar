@@ -22,7 +22,12 @@ def run():
                 d  = r['Report_Date_as_MM_DD_YYYY'].strip()
                 ll = int(r['Lev_Money_Positions_Long_All'])
                 ls = int(r['Lev_Money_Positions_Short_All'])
-                rows.append({'date': d, 'long': ll, 'short': ls, 'net': ll - ls})
+                dl = int(r.get('Dealer_Positions_Long_All', 0) or 0)
+                ds = int(r.get('Dealer_Positions_Short_All', 0) or 0)
+                rows.append({
+                    'date': d, 'long': ll, 'short': ls, 'net': ll - ls,
+                    'co_long': dl, 'co_short': ds
+                })
             except: pass
 
     rows.sort(key=lambda x: x['date'])
@@ -142,8 +147,19 @@ def run():
 
     # ── 4. Generar agent2_cot_analyst.js para la web ─────────────────
     recent_6 = rows[-6:]
+
+    # Commercial Index: cuanto mas short estan los dealers, mas bearish es la señal
+    # Tomamos dealer short como % del max historico (ventana 3 años)
+    co_shorts_history = [r.get('co_short', 0) for r in rows[-156:]]
+    co_mn = min(co_shorts_history) if co_shorts_history else 0
+    co_mx = max(co_shorts_history) if co_shorts_history else 1
+    co_short_last = last.get('co_short', 0)
+    co_long_last  = last.get('co_long', 0)
+    commercial_idx = round((co_short_last - co_mn) / (co_mx - co_mn) * 100, 1) if co_mx > co_mn else 50.0
+
     js_recent = ',\n    '.join([
-        f'{{"date":"{r["date"]}","net":{r["net"]},"ci":{r["ci"]}}}'
+        f'{{"date":"{r["date"]}","net":{r["net"]},"ci":{r["ci"]},'
+        f'"co_long":{r.get("co_long",0)},"co_short":{r.get("co_short",0)}}}'
         for r in reversed(recent_6)
     ])
     js_content = f'''// agent2_cot_analyst.js
@@ -157,6 +173,9 @@ window.NQ_COT = {{
   "current_long": {last["long"]},
   "current_short": {last["short"]},
   "delta_week": {delta},
+  "co_long": {co_long_last},
+  "co_short": {co_short_last},
+  "commercial_index": {commercial_idx},
   "signal": "{signal}",
   "strength": {strength},
   "momentum": "{momentum_dir}",
@@ -169,7 +188,7 @@ if (typeof window._cotLoaded === "function") window._cotLoaded(window.NQ_COT);
 '''
     with open('agent2_cot_analyst.js', 'w', encoding='utf-8') as f:
         f.write(js_content)
-    print(f'   [OK] agent2_cot_analyst.js generado con COT {ci}/100 {signal}')
+    print(f'   [OK] agent2_cot_analyst.js generado con COT {ci}/100 {signal} | Co.Short: {co_short_last:,}')
 
 if __name__ == '__main__':
     run()

@@ -3826,14 +3826,43 @@ document.addEventListener('DOMContentLoaded', () => {
       <!-- RIGHT: Stats -->
       <div style="min-width:220px">
 
-        <!-- Net position -->
+        <!-- Net position Lev Funds -->
         <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
                     border-radius:12px;padding:16px;margin-bottom:10px">
           <div style="font-size:9px;color:#64748b;text-transform:uppercase;
-                      letter-spacing:1px;margin-bottom:6px">Net Position (Lev. Funds)</div>
+                      letter-spacing:1px;margin-bottom:6px">📊 Posición Neta — Lev. Funds</div>
           <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900"
                id="cfi-net">—</div>
           <div style="font-size:10px;color:#64748b;margin-top:3px" id="cfi-delta">—</div>
+        </div>
+
+        <!-- COMMERCIAL SHORTS — clave -->
+        <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);
+                    border-radius:12px;padding:14px;margin-bottom:10px">
+          <div style="font-size:9px;color:#f87171;text-transform:uppercase;
+                      letter-spacing:1px;margin-bottom:8px;font-weight:800">
+            🏦 Dealers (Comerciales)
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div>
+              <div style="font-size:8px;color:#64748b;margin-bottom:2px">LONG</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+                          color:#10b981" id="cfi-co-long">—</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:8px;color:#64748b;margin-bottom:2px">SHORT ⚠</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+                          color:#ef4444" id="cfi-co-short">—</div>
+            </div>
+          </div>
+          <!-- Commercial Index bar -->
+          <div style="font-size:8px;color:#64748b;margin-bottom:4px">
+            Presión vendedora (3 años): <span id="cfi-comm-idx-val" style="color:#f87171;font-weight:700">—</span>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border-radius:4px;height:6px;overflow:hidden">
+            <div id="cfi-comm-idx-bar"
+                 style="height:100%;width:0%;background:#ef4444;border-radius:4px;transition:width .8s"></div>
+          </div>
         </div>
 
         <!-- Momentum -->
@@ -3942,6 +3971,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const momentum= data.momentum    || '—';
     const date    = data.report_date || '—';
     const recent  = data.recent_weeks || [];
+    const coLong  = data.co_long      || 0;
+    const coShort = data.co_short     || 0;
+    const commIdx = data.commercial_index != null ? data.commercial_index : 50;
 
     // Colors by signal
     const sigColor = {
@@ -3980,6 +4012,12 @@ document.addEventListener('DOMContentLoaded', () => {
       $id('cfi-delta').textContent = 'Cambio semanal: ' + (delta >= 0 ? '+' : '') + delta.toLocaleString();
     if ($id('cfi-momentum'))
       $id('cfi-momentum').textContent = momentum === 'SUBIENDO' ? '📈 Subiendo' : '📉 Bajando';
+
+    // Commercial shorts (Dealers)
+    if ($id('cfi-co-long'))  $id('cfi-co-long').textContent  = coLong  ? coLong.toLocaleString()  : '—';
+    if ($id('cfi-co-short')) $id('cfi-co-short').textContent = coShort ? coShort.toLocaleString() : '—';
+    if ($id('cfi-comm-idx-val')) $id('cfi-comm-idx-val').textContent = commIdx.toFixed(1) + '/100';
+    if ($id('cfi-comm-idx-bar')) $id('cfi-comm-idx-bar').style.width = commIdx + '%';
 
     // Mini history bars
     if ($id('cfi-history-bars') && recent.length) {

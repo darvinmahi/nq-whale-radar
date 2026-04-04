@@ -26,6 +26,8 @@ FIELDS_NEEDED = [
     'Market_and_Exchange_Names',
     'Lev_Money_Positions_Long_All',
     'Lev_Money_Positions_Short_All',
+    'Dealer_Positions_Long_All',
+    'Dealer_Positions_Short_All',
 ]
 
 def download_cot(url):
@@ -52,11 +54,15 @@ def parse_nq_rows(file_obj):
                 d_str = r['Report_Date_as_MM_DD_YYYY'].strip()
                 ll    = int(r['Lev_Money_Positions_Long_All'])
                 ls    = int(r['Lev_Money_Positions_Short_All'])
+                dl    = int(r.get('Dealer_Positions_Long_All', 0) or 0)
+                ds    = int(r.get('Dealer_Positions_Short_All', 0) or 0)
                 rows.append({
-                    'Report_Date_as_MM_DD_YYYY': d_str,
-                    'Market_and_Exchange_Names':  mkt.strip(),
-                    'Lev_Money_Positions_Long_All':  ll,
-                    'Lev_Money_Positions_Short_All': ls,
+                    'Report_Date_as_MM_DD_YYYY':     d_str,
+                    'Market_and_Exchange_Names':      mkt.strip(),
+                    'Lev_Money_Positions_Long_All':   ll,
+                    'Lev_Money_Positions_Short_All':  ls,
+                    'Dealer_Positions_Long_All':      dl,
+                    'Dealer_Positions_Short_All':     ds,
                 })
             except (KeyError, ValueError):
                 continue
