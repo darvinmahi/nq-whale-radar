@@ -1,0 +1,52 @@
+# ────────────────────────────────────────────────────────
+#  WORKFLOW 2: Registro diario — 4:30 PM ET (Lun-Vie)
+#  Registra el día completo en daily_master_db.json
+# ────────────────────────────────────────────────────────
+name: 📊 Daily Auto Record (4:30 PM ET)
+
+on:
+  schedule:
+    # 21:30 UTC = 4:30 PM ET (verano/EDT)
+    - cron: '30 21 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  auto-record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: 📝 Registrar día completo
+        run: python auto_record.py
+
+      - name: 🧠 Regenerar análisis con datos del día
+        run: python analyze_today.py || true
+
+      - name: 📤 Commit y push
+        run: |
+          git config user.name  "NQ Whale Radar Bot"
+          git config user.email "bot@nq-whale-radar.com"
+          git add data/research/daily_master_db.json \
+                  data/research/today_analysis.json \
+                  data/research/backtest_monday_1year.json \
+                  data/research/backtest_tuesday_1year.json \
+                  data/research/backtest_wednesday_1year.json \
+                  data/research/backtest_thursday_1year.json \
+                  data/research/backtest_friday_1year.json \
+                  agent3_data.json || true
+          git diff --cached --quiet || git commit -m "📊 Auto-record: $(date -u '+%Y-%m-%d') $(TZ=America/New_York date '+%H:%M ET')"
+          git push || echo "Nada que pushear"

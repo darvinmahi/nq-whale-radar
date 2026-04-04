@@ -1,0 +1,47 @@
+# ────────────────────────────────────────────────────────
+#  WORKFLOW 3: Health Check semanal — Lunes 8 AM ET
+#  Verifica que todo esté OK antes de empezar la semana
+# ────────────────────────────────────────────────────────
+name: 🏥 Health Check Semanal
+
+on:
+  schedule:
+    # Lunes 13:00 UTC = 8:00 AM ET (solo lunes)
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: 🏥 Ejecutar Health Check completo
+        run: python health_check.py
+
+      - name: 📋 Mostrar estado de archivos JSON
+        run: |
+          echo "=== Tamaños de archivos críticos ==="
+          ls -lah data/research/*.json agent3_data.json 2>/dev/null || true
+          echo "=== Último registro en daily_master_db ==="
+          python -c "
+          import json
+          with open('data/research/daily_master_db.json') as f:
+              db = json.load(f)
+          records = db.get('records', [])
+          latest = sorted(records, key=lambda x: x.get('date',''))[-1] if records else {}
+          print(f'Total: {len(records)} registros')
+          print(f'Ultimo: {latest.get(\"date\")} | {latest.get(\"direction\")} | range={latest.get(\"ny_range\")} | vxn={latest.get(\"vxn\")}')
+          " 2>/dev/null || echo "No se pudo leer DB"

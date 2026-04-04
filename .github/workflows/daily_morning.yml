@@ -1,0 +1,50 @@
+# ────────────────────────────────────────────────────────
+#  WORKFLOW 1: Análisis matutino — Lunes a Viernes 9 AM ET
+#  (14:00 UTC en verano / 15:00 UTC en invierno)
+# ────────────────────────────────────────────────────────
+name: 🌅 Daily Morning Analysis
+
+on:
+  schedule:
+    # 14:00 UTC = 9:00 AM ET (verano/EDT)
+    - cron: '0 14 * * 1-5'
+  workflow_dispatch:   # permite correr manualmente desde GitHub
+
+jobs:
+  morning-analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: 🔍 Health Check
+        run: python health_check.py || true   # No para el workflow aunque falle
+
+      - name: ⚡ Calcular GEX (opciones QQQ)
+        run: python calc_gex_qqq.py
+
+      - name: 🧠 Analizar el día actual
+        run: python analyze_today.py
+
+      - name: 📤 Commit y push datos actualizados
+        run: |
+          git config user.name  "NQ Whale Radar Bot"
+          git config user.email "bot@nq-whale-radar.com"
+          git add data/research/today_analysis.json \
+                  data/research/gex_today.json \
+                  agent3_data.json || true
+          git diff --cached --quiet || git commit -m "🤖 Auto: análisis matutino $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push || echo "Nada que pushear"
