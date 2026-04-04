@@ -3750,8 +3750,296 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 <!-- COT_TABLE_END -->
 </section>
+
+<!-- ═══ COMMERCIAL FLOW INDEX GAUGE ══════════════════════════════ -->
+<section class="relative z-20 max-w-7xl mx-auto px-6 py-8" id="commercial-flow-gauge">
+  <div style="
+    background: linear-gradient(135deg, rgba(124,58,237,.08), rgba(15,18,33,.95));
+    border: 1px solid rgba(124,58,237,.25);
+    border-radius: 20px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  ">
+    <!-- Glow bg -->
+    <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;
+                background:radial-gradient(circle,rgba(124,58,237,.15),transparent 70%);
+                pointer-events:none"></div>
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:28px">
+      <div>
+        <div style="font-size:10px;font-weight:800;color:#7c3aed;text-transform:uppercase;
+                    letter-spacing:2px;font-family:'JetBrains Mono',monospace;margin-bottom:6px">
+          COMMERCIAL FLOW INDEX
+        </div>
+        <div style="font-size:18px;font-weight:900;color:#e2e8f0">
+          Flujo Institucional — Posición Neta NQ
+        </div>
+        <div style="font-size:11px;color:#475569;margin-top:4px;font-family:'JetBrains Mono',monospace"
+             id="cfi-subtitle">
+          Fuente: CFTC · Leveraged Funds · Auto-update cada viernes
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div id="cfi-badge-signal"
+             style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);
+                    color:#f87171;border-radius:99px;padding:6px 16px;
+                    font-size:11px;font-weight:800;font-family:'JetBrains Mono',monospace">
+          ⏳ CARGANDO
+        </div>
+        <div id="cfi-badge-date"
+             style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+                    color:#64748b;border-radius:99px;padding:6px 16px;
+                    font-size:10px;font-family:'JetBrains Mono',monospace">
+          —
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;flex-wrap:wrap">
+
+      <!-- LEFT: Gauge semicircle -->
+      <div style="text-align:center">
+        <div style="position:relative;display:inline-block">
+          <canvas id="cfi-gauge-canvas" width="280" height="160"
+                  style="display:block;margin:0 auto"></canvas>
+          <!-- Center value display -->
+          <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);text-align:center">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:900;
+                        line-height:1" id="cfi-gauge-val">—</div>
+            <div style="font-size:9px;color:#64748b;text-transform:uppercase;
+                        letter-spacing:1px;margin-top:3px">COT Index</div>
+          </div>
+        </div>
+
+        <!-- Zone labels -->
+        <div style="display:flex;justify-content:space-between;margin-top:8px;
+                    font-size:9px;font-family:'JetBrains Mono',monospace;color:#475569;
+                    max-width:280px;margin-left:auto;margin-right:auto">
+          <span style="color:#ef4444">MUY BEAR</span>
+          <span style="color:#f59e0b">NEUTRAL</span>
+          <span style="color:#10b981">MUY BULL</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Stats -->
+      <div style="min-width:220px">
+
+        <!-- Net position -->
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+                    border-radius:12px;padding:16px;margin-bottom:10px">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;
+                      letter-spacing:1px;margin-bottom:6px">Net Position (Lev. Funds)</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900"
+               id="cfi-net">—</div>
+          <div style="font-size:10px;color:#64748b;margin-top:3px" id="cfi-delta">—</div>
+        </div>
+
+        <!-- Momentum -->
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+                    border-radius:12px;padding:14px;margin-bottom:10px">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;
+                      letter-spacing:1px;margin-bottom:6px">Momentum semanal</div>
+          <div style="font-size:13px;font-weight:800" id="cfi-momentum">—</div>
+        </div>
+
+        <!-- Mini historial 6w -->
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+                    border-radius:12px;padding:14px">
+          <div style="font-size:9px;color:#64748b;text-transform:uppercase;
+                      letter-spacing:1px;margin-bottom:10px">Historial 6 semanas</div>
+          <div id="cfi-history-bars" style="display:flex;align-items:flex-end;gap:5px;height:50px"></div>
+          <div id="cfi-history-dates" style="display:flex;gap:5px;margin-top:4px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom interpretation -->
+    <div id="cfi-interpretation"
+         style="margin-top:20px;background:rgba(124,58,237,.06);
+                border:1px solid rgba(124,58,237,.2);border-radius:12px;
+                padding:14px 18px;font-size:12px;color:#94a3b8;line-height:1.6">
+      Cargando análisis institucional...
+    </div>
+  </div>
+</section>
 <!-- FLOW_GAUGE_END -->
 </section>
+
+<script>
+// ── COMMERCIAL FLOW INDEX GAUGE ENGINE ────────────────────────────
+(function() {
+  function drawGauge(canvas, pct, color) {
+    const ctx  = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const cx = W/2, cy = H - 20;
+    const r  = Math.min(W, H*1.6) * 0.46;
+    ctx.clearRect(0, 0, W, H);
+
+    // Background arc
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, Math.PI, 0, false);
+    ctx.strokeStyle = 'rgba(255,255,255,.06)';
+    ctx.lineWidth   = 18;
+    ctx.lineCap     = 'round';
+    ctx.stroke();
+
+    // Color zones (5 segments)
+    const zones = [
+      { from: 0,  to: 20,  color: '#ef4444' },
+      { from: 20, to: 40,  color: '#f97316' },
+      { from: 40, to: 60,  color: '#f59e0b' },
+      { from: 60, to: 80,  color: '#84cc16' },
+      { from: 80, to: 100, color: '#10b981' },
+    ];
+    zones.forEach(z => {
+      const aStart = Math.PI + (z.from/100)*Math.PI;
+      const aEnd   = Math.PI + (z.to/100)*Math.PI;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, aStart, aEnd, false);
+      ctx.strokeStyle = z.color + '40';
+      ctx.lineWidth   = 18;
+      ctx.stroke();
+    });
+
+    // Value arc
+    const angle = Math.PI + (Math.min(100,Math.max(0,pct))/100)*Math.PI;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, Math.PI, angle, false);
+    ctx.strokeStyle = color;
+    ctx.lineWidth   = 18;
+    ctx.lineCap     = 'round';
+    ctx.shadowColor = color;
+    ctx.shadowBlur  = 12;
+    ctx.stroke();
+    ctx.shadowBlur  = 0;
+
+    // Needle
+    const needleAngle = Math.PI + (Math.min(100,Math.max(0,pct))/100)*Math.PI;
+    const nx = cx + (r) * Math.cos(needleAngle);
+    const ny = cy + (r) * Math.sin(needleAngle);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(nx, ny);
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth   = 2.5;
+    ctx.lineCap     = 'round';
+    ctx.stroke();
+
+    // Center dot
+    ctx.beginPath();
+    ctx.arc(cx, cy, 6, 0, Math.PI*2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+  }
+
+  function renderCFI(data) {
+    const ci      = data.cot_index || 0;
+    const net     = data.current_net || 0;
+    const delta   = data.delta_week  || 0;
+    const signal  = data.signal      || 'NEUTRAL';
+    const momentum= data.momentum    || '—';
+    const date    = data.report_date || '—';
+    const recent  = data.recent_weeks || [];
+
+    // Colors by signal
+    const sigColor = {
+      'VERY_BEARISH':'#ef4444','BEARISH':'#f97316',
+      'NEUTRAL':'#f59e0b','BULLISH':'#84cc16','VERY_BULLISH':'#10b981'
+    }[signal] || '#f59e0b';
+
+    const sigLabel = {
+      'VERY_BEARISH':'MUY BEARISH 🔴','BEARISH':'BEARISH 🟠',
+      'NEUTRAL':'NEUTRAL 🟡','BULLISH':'BULLISH 🟢','VERY_BULLISH':'MUY BULLISH 💚'
+    }[signal] || signal;
+
+    // Draw gauge
+    const canvas = document.getElementById('cfi-gauge-canvas');
+    if (canvas) drawGauge(canvas, ci, sigColor);
+
+    // Values
+    const $id = id => document.getElementById(id);
+    if ($id('cfi-gauge-val')) {
+      $id('cfi-gauge-val').textContent  = ci.toFixed(1);
+      $id('cfi-gauge-val').style.color  = sigColor;
+    }
+    if ($id('cfi-badge-signal')) {
+      $id('cfi-badge-signal').textContent   = sigLabel;
+      $id('cfi-badge-signal').style.color   = sigColor;
+      $id('cfi-badge-signal').style.borderColor = sigColor + '50';
+      $id('cfi-badge-signal').style.background  = sigColor + '18';
+    }
+    if ($id('cfi-badge-date'))
+      $id('cfi-badge-date').textContent = 'CFTC · ' + date;
+    if ($id('cfi-net')) {
+      $id('cfi-net').textContent = (net >= 0 ? '+' : '') + net.toLocaleString() + ' contratos';
+      $id('cfi-net').style.color = net >= 0 ? '#10b981' : '#ef4444';
+    }
+    if ($id('cfi-delta'))
+      $id('cfi-delta').textContent = 'Cambio semanal: ' + (delta >= 0 ? '+' : '') + delta.toLocaleString();
+    if ($id('cfi-momentum'))
+      $id('cfi-momentum').textContent = momentum === 'SUBIENDO' ? '📈 Subiendo' : '📉 Bajando';
+
+    // Mini history bars
+    if ($id('cfi-history-bars') && recent.length) {
+      const maxCi = Math.max(...recent.map(r => Math.abs(r.ci - 50)));
+      $id('cfi-history-bars').innerHTML = recent.map(r => {
+        const h  = Math.max(4, Math.round(Math.abs(r.ci - 50) / Math.max(maxCi,1) * 46));
+        const bc = r.ci >= 60 ? '#10b981' : r.ci >= 40 ? '#f59e0b' : '#ef4444';
+        return `<div style="flex:1;background:${bc};height:${h}px;border-radius:3px 3px 0 0;
+                         min-height:4px;opacity:.85" title="${r.date}: ${r.ci}/100"></div>`;
+      }).join('');
+      $id('cfi-history-dates').innerHTML = recent.map(r => {
+        const parts = (r.date||'').split(' ');
+        const lbl   = parts.length >= 2 ? parts[0] + ' ' + parts[1].slice(0,3) : r.date;
+        return `<div style="flex:1;font-size:7px;color:#334155;font-family:monospace;
+                            text-align:center;overflow:hidden">${lbl}</div>`;
+      }).join('');
+    }
+
+    // Interpretation
+    if ($id('cfi-interpretation')) {
+      let txt = '';
+      if (ci < 20)      txt = `🔴 ZONA EXTREMO BEARISH (${ci}/100) — Los fondos apalancados están en su posición más baja de 3 años. Señal de capitulación institucional. Mercado vulnerable a rebotes violentos pero el sesgo de fondo es corto.`;
+      else if (ci < 40) txt = `🟠 ZONA BEARISH (${ci}/100) — Flujo institucional negativo. Los fondos apalancados tienen más posiciones SHORT que LONG. El dinero inteligente no está comprando todavía. Esperar confirmación antes de ir largo.`;
+      else if (ci < 60) txt = `🟡 ZONA NEUTRAL (${ci}/100) — Flujo institucional equilibrado. Sin convicción clara de dirección. Mercado propenso a rangos y trampas. Usar otros indicadores (VXN, GEX) para confirmar sesgo.`;
+      else if (ci < 80) txt = `🟢 ZONA BULLISH (${ci}/100) — Flujo institucional positivo. Los fondos apalancados acumulan posiciones LONG. El dinero inteligente está comprando. Sesgo favorable para trades alcistas.`;
+      else               txt = `💚 ZONA MUY BULLISH (${ci}/100) — Máxima acumulación institucional en 3 años. Los fondos apalancados están en posición LONG extrema. Momentum favorable pero vigilar posible reversión de tendencia.`;
+      $id('cfi-interpretation').textContent = txt;
+    }
+  }
+
+  // Load from window.NQ_COT (set by agent2_cot_analyst.js)
+  function tryLoad() {
+    if (window.NQ_COT) {
+      renderCFI(window.NQ_COT);
+    } else {
+      // Fallback: datos del último COT sincronizado
+      renderCFI({
+        cot_index: 33.7, current_net: -41577, delta_week: 1049,
+        signal: 'BEARISH', momentum: 'BAJANDO', report_date: '31 Mar 2026',
+        recent_weeks: [
+          {date:'31 Mar 2026', ci:33.7},{date:'24 Mar 2026', ci:32.5},
+          {date:'17 Mar 2026', ci:34.3},{date:'10 Mar 2026', ci:42.5},
+          {date:'03 Mar 2026', ci:44.1},{date:'24 Feb 2026', ci:53.7}
+        ]
+      });
+    }
+  }
+
+  // agent2_cot_analyst.js notifica cuando carga
+  window._cotLoaded = function(data) { renderCFI(data); };
+
+  // Intenta cargar al DOM listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryLoad);
+  } else {
+    tryLoad();
+  }
+})();
+</script>
+
 
 <script id="cot-live-engine">
 (function () {
