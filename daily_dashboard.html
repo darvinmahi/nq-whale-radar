@@ -1427,17 +1427,34 @@ async function loadBacktestEngine() {
     const panel = document.getElementById('backtest-engine-panel');
     if (!panel) return;
 
-    const today   = data.today || {};
+    const todayRaw = data.today || {};
     const similar = data.similar || {};
     const pred    = data.prediction || {};
     const theories = data.theories || [];
     const cases   = similar.cases || [];
 
+    // ── Si es fin de semana, overridear el dow al día seleccionado en el tab ──
+    const tabDay = currentDay; // currentDay = 'monday'|'tuesday' etc. del tab activo
+    const jsToday = new Date();
+    const jsWd    = jsToday.getDay(); // 0=Sun, 6=Sat
+    const isWeekend = jsWd === 0 || jsWd === 6;
+
+    // Usar siempre el tab activo como referencia del día
+    const today = {
+      ...todayRaw,
+      dow:    tabDay,
+      dow_es: {'monday':'Lunes','tuesday':'Martes','wednesday':'Miércoles',
+                'thursday':'Jueves','friday':'Viernes'}[tabDay] || tabDay,
+      date:   isWeekend
+        ? `Próximo ${{'monday':'Lunes','tuesday':'Martes','wednesday':'Miércoles','thursday':'Jueves','friday':'Viernes'}[tabDay]||tabDay}`
+        : (todayRaw.date || new Date().toISOString().slice(0,10)),
+    };
+
     const DOW_COLORS = {
       monday:'#10b981', tuesday:'#06b6d4', wednesday:'#f59e0b',
       thursday:'#f97316', friday:'#ef4444'
     };
-    const dow = (today.dow || 'monday');
+    const dow = today.dow || 'monday';
     const dowColor = DOW_COLORS[dow] || '#7c3aed';
     const predColor = pred.direction === 'BULLISH' ? '#10b981'
                     : pred.direction === 'BEARISH' ? '#ef4444' : '#f59e0b';
