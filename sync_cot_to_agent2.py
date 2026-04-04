@@ -50,7 +50,7 @@ def run():
 
     momentum_dir = 'SUBIENDO' if delta > 0 else 'BAJANDO'
 
-    print(f'✅ COT actualizado:')
+    print('[OK] COT actualizado:')
     print(f'   Fecha:     {last["date"]}')
     print(f'   Net:       {last["net"]:,}')
     print(f'   COT Index: {ci}/100')
@@ -90,7 +90,7 @@ def run():
 
     with open(A2, 'w', encoding='utf-8') as f:
         json.dump(a2, f, indent=2, ensure_ascii=False)
-    print(f'   ✅ agent2_data.json actualizado')
+    print('   [OK] agent2_data.json actualizado')
 
     # ── 3. Actualizar daily_master_db con COT correcto ────────────────
     # Para cada registro de la DB, cruzar con la semana COT más cercana
@@ -138,7 +138,38 @@ def run():
     db['meta']['cot_synced'] = datetime.now(timezone.utc).isoformat()
     with open(DB, 'w', encoding='utf-8') as f:
         json.dump(db, f, ensure_ascii=False, separators=(',', ':'))
-    print(f'   ✅ daily_master_db: {updated} registros con COT index corregido')
+    print(f'   [OK] daily_master_db: {updated} registros con COT index corregido')
+
+    # ── 4. Generar agent2_cot_analyst.js para la web ─────────────────
+    recent_6 = rows[-6:]
+    js_recent = ',\n    '.join([
+        f'{{"date":"{r["date"]}","net":{r["net"]},"ci":{r["ci"]}}}'
+        for r in reversed(recent_6)
+    ])
+    js_content = f'''// agent2_cot_analyst.js
+// Generado automaticamente por sync_cot_to_agent2.py
+// NO editar manualmente — se regenera cada viernes
+window.NQ_COT = {{
+  "generated": "{datetime.now(timezone.utc).isoformat()}",
+  "report_date": "{last["date"]}",
+  "cot_index": {ci},
+  "current_net": {last["net"]},
+  "current_long": {last["long"]},
+  "current_short": {last["short"]},
+  "delta_week": {delta},
+  "signal": "{signal}",
+  "strength": {strength},
+  "momentum": "{momentum_dir}",
+  "weeks_in_db": {len(rows)},
+  "recent_weeks": [
+    {js_recent}
+  ]
+}};
+if (typeof window._cotLoaded === "function") window._cotLoaded(window.NQ_COT);
+'''
+    with open('agent2_cot_analyst.js', 'w', encoding='utf-8') as f:
+        f.write(js_content)
+    print(f'   [OK] agent2_cot_analyst.js generado con COT {ci}/100 {signal}')
 
 if __name__ == '__main__':
     run()
