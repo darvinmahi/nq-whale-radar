@@ -1,0 +1,65 @@
+# ────────────────────────────────────────────────────────────────
+#  WORKFLOW: COT Update — Viernes 4:30 PM ET (después del reporte)
+#  El CFTC publica el COT cada viernes ~3:30 PM ET
+#  Este workflow lo descarga, actualiza la DB y lo pushea
+# ────────────────────────────────────────────────────────────────
+name: 📊 COT Friday Update
+
+on:
+  schedule:
+    # Viernes 21:30 UTC = 4:30 PM ET (espera 1h para que lo publiquen)
+    - cron: '30 21 * * 5'
+  workflow_dispatch:   # También se puede correr manualmente
+
+jobs:
+  cot-update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: 📥 Descargar COT más reciente del CFTC
+        run: python update_cot.py
+
+      - name: 🔄 Sincronizar COT a agent2_data y daily_master_db
+        run: python sync_cot_to_agent2.py
+
+      - name: 🧠 Recalcular análisis con nuevo COT
+        run: python analyze_today.py || true
+
+      - name: 📤 Commit y push COT actualizado
+        run: |
+          git config user.name  "NQ Whale Radar Bot"
+          git config user.email "bot@nq-whale-radar.com"
+          git add data/cot/nasdaq_cot_historical.csv \
+                  data/research/daily_master_db.json \
+                  data/research/today_analysis.json \
+                  agent2_data.json || true
+          git diff --cached --quiet || git commit -m "📊 COT viernes: $(date -u '+%Y-%m-%d') | actualizado desde CFTC"
+          git push || echo "Nada que pushear"
+
+      - name: ✅ Resumen del COT
+        run: |
+          python -c "
+          import json
+          a2 = json.load(open('agent2_data.json'))
+          cot = a2.get('cot', {})
+          print('=== COT REPORT VIERNES ===')
+          print(f'Fecha:     {cot.get(\"report_date\", \"N/A\")}')
+          print(f'Net:       {cot.get(\"current_net\", 0):,}')
+          print(f'COT Index: {cot.get(\"cot_index\", 0)}/100')
+          print(f'Señal:     {a2.get(\"signal\", \"N/A\")}')
+          "

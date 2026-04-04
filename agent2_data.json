@@ -1,24 +1,26 @@
 {
   "agent": 2,
   "name": "COT Analyst",
-  "timestamp": "2026-04-03T23:10:41.390591Z",
+  "timestamp": "2026-04-04T03:41:14.062048Z",
   "input_source": "agent1_data.json",
   "cot": {
-    "current_net": 2386,
-    "current_oi": 273307,
-    "date": "03 Mar 2026",
-    "cot_index": 27.3,
-    "history_min": -50000,
-    "history_max": 142000,
-    "history_mean": 95000
+    "report_date": "2026-03-31",
+    "date": "2026-03-31",
+    "current_net": -41577,
+    "current_long": 44716,
+    "current_short": 86293,
+    "cot_index": 33.7,
+    "delta": 1049,
+    "history_min": -70624,
+    "history_max": 15648
   },
   "momentum": {
-    "direction": "BAJANDO",
-    "consecutive_weeks": 2,
-    "weekly_velocity": -3658
+    "direction": "SUBIENDO",
+    "consecutive_weeks": 1,
+    "weekly_velocity": 1049
   },
-  "signal": "NEUTRAL",
-  "strength": 50,
+  "signal": "BEARISH",
+  "strength": 60,
   "insight": {
     "level_description": "🔵 ZONA NEUTRAL",
     "weekly_velocity": -3658,
@@ -26,24 +28,89 @@
   },
   "recent_weeks": [
     {
-      "date": "03 Mar 2026",
-      "nc_long": 76598,
-      "nc_short": 74212
+      "date": "2026-01-13",
+      "net": -20552,
+      "long": 59282,
+      "short": 79834,
+      "ci": 58.0
     },
     {
-      "date": "24 Feb 2026",
-      "nc_long": 80310,
-      "nc_short": 69523
+      "date": "2026-01-20",
+      "net": -28520,
+      "long": 54607,
+      "short": 83127,
+      "ci": 48.8
     },
     {
-      "date": "17 Feb 2026",
-      "nc_long": 89273,
-      "nc_short": 64863
+      "date": "2026-01-27",
+      "net": -16079,
+      "long": 56625,
+      "short": 72704,
+      "ci": 63.2
     },
     {
-      "date": "10 Feb 2026",
-      "nc_long": 82196,
-      "nc_short": 68836
+      "date": "2026-02-03",
+      "net": -15925,
+      "long": 55910,
+      "short": 71835,
+      "ci": 63.4
+    },
+    {
+      "date": "2026-02-10",
+      "net": -13245,
+      "long": 52653,
+      "short": 65898,
+      "ci": 66.5
+    },
+    {
+      "date": "2026-02-17",
+      "net": -16655,
+      "long": 60606,
+      "short": 77261,
+      "ci": 62.6
+    },
+    {
+      "date": "2026-02-24",
+      "net": -24257,
+      "long": 52817,
+      "short": 77074,
+      "ci": 53.7
+    },
+    {
+      "date": "2026-03-03",
+      "net": -32581,
+      "long": 51162,
+      "short": 83743,
+      "ci": 44.1
+    },
+    {
+      "date": "2026-03-10",
+      "net": -33944,
+      "long": 47241,
+      "short": 81185,
+      "ci": 42.5
+    },
+    {
+      "date": "2026-03-17",
+      "net": -41041,
+      "long": 44996,
+      "short": 86037,
+      "ci": 34.3
+    },
+    {
+      "date": "2026-03-24",
+      "net": -42626,
+      "long": 45072,
+      "short": 87698,
+      "ci": 32.5
+    },
+    {
+      "date": "2026-03-31",
+      "net": -41577,
+      "long": 44716,
+      "short": 86293,
+      "ci": 33.7
     }
-  ]
+  ],
+  "updated_at": "2026-04-04T03:42:40.886806+00:00"
 }
