@@ -59,5 +59,13 @@
     }
   },
   "ai_brief": null,
-  "ai_brief_ts": null
+  "ai_brief_ts": null,
+  "casos": 0,
+  "casos_similares": 0,
+  "bearish_pct": 0,
+  "bullish_pct": 0,
+  "rango_promedio": 0,
+  "patron_dominante": "N/A",
+  "casos_detalle": [],
+  "dow": "saturday"
 }

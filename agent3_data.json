@@ -1,7 +1,7 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-04-04T01:36:06.571539Z",
+  "timestamp": "2026-04-04T02:32:47.275900Z",
   "input_source": "agent1_data.json",
   "raw_inputs": {
     "VXN": 27.04,
@@ -25,6 +25,5 @@
     "put_call": 1.28
   },
   "signal": "BULLISH",
-  "score": 47,
-  "last_gex_update": "2026-04-03T21:56:16.762067-04:00"
+  "score": 47
 }
