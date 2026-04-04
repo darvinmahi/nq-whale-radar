@@ -45,6 +45,14 @@ today     = date.today()
 today_str = today.strftime("%Y-%m-%d")
 dow_today = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"][today.weekday()]
 
+# ── GUARDIA: No ejecutar en fin de semana ──────────────────────────────
+if today.weekday() >= 5:
+    day_name = "Sábado" if today.weekday() == 5 else "Domingo"
+    print(f"⏸  {day_name} — analyze_today no se ejecuta en fin de semana.")
+    print(f"   Próxima ejecución: Lunes {(today + __import__('datetime').timedelta(days=(7-today.weekday()))).strftime('%Y-%m-%d')} 9:00 AM ET")
+    exit(0)
+
+
 def semana_ciclo(d):
     day = d.day
     if day <= 7:  return "W1"

@@ -124,21 +124,28 @@ def main():
             now  = now_et()
             hhmm = (now.hour, now.minute)
             today_key = now.strftime("%Y-%m-%d")
+            weekday = now.weekday()  # 0=Lunes ... 4=Viernes, 5=Sab, 6=Dom
 
-            for hour, minute, script, desc in TASKS:
-                task_key = (today_key, hour, minute)
-                if hhmm == (hour, minute) and task_key not in executed_today:
-                    log(f"🕐 TAREA PROGRAMADA: {desc}")
-                    success = run_script(script)
-                    executed_today.add(task_key)
+            # ── Solo ejecutar tareas de Lunes a Viernes ──────────────
+            if weekday >= 5:
+                # Fin de semana — no ejecutar, solo health log cada hora
+                if now.minute == 0:
+                    log(f"💤 [{['Lun','Mar','Mie','Jue','Vie','SAB','DOM'][weekday]}] Fin de semana — sin tareas")
+            else:
+                for hour, minute, script, desc in TASKS:
+                    task_key = (today_key, hour, minute)
+                    if hhmm == (hour, minute) and task_key not in executed_today:
+                        log(f"🕐 TAREA PROGRAMADA: {desc}")
+                        success = run_script(script)
+                        executed_today.add(task_key)
 
-                    # Después de auto_record → push todo a GitHub
-                    if script == "auto_record.py" and success:
-                        push_to_github()
+                        # Después de auto_record → push todo a GitHub
+                        if script == "auto_record.py" and success:
+                            push_to_github()
 
-                    # Después de analyze_today o GEX → también push
-                    if script in ("analyze_today.py", "calc_gex_qqq.py") and success:
-                        push_to_github()
+                        # Después de analyze_today o GEX → también push
+                        if script in ("analyze_today.py", "calc_gex_qqq.py") and success:
+                            push_to_github()
 
             # Limpiar ejecutados de días anteriores
             executed_today = {k for k in executed_today if k[0] == today_key}
@@ -149,13 +156,14 @@ def main():
                 save_scheduler_health(
                     now.isoformat(),
                     str(next_tasks),
-                    "RUNNING"
+                    "RUNNING" if weekday < 5 else "WEEKEND"
                 )
 
         except Exception as e:
             log(f"⚠️ Error en loop principal: {e}")
 
         time.sleep(60)  # Checar cada minuto
+
 
 if __name__ == "__main__":
     main()

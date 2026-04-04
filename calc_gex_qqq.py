@@ -24,6 +24,13 @@ ET_TZ     = pytz.timezone("US/Eastern")
 
 os.makedirs(os.path.join(BASE_DIR, "data", "research"), exist_ok=True)
 
+# ── GUARDIA: No ejecutar en fin de semana (mercado cerrado) ─────────────
+if date.today().weekday() >= 5:
+    day = "Sábado" if date.today().weekday() == 5 else "Domingo"
+    print(f"⏸  {day} — calc_gex_qqq no se ejecuta en fin de semana (mercado cerrado).")
+    exit(0)
+
+
 def fetch_gex():
     print("=" * 55)
     print("  CALC GEX — Gamma Exposure (QQQ proxy for NQ)")
