@@ -959,15 +959,13 @@ function hideLoading() {
 // ═══════════════════════════════════════════════════════════════════
 function renderStats(d, day) {
   const cfg = DAY_CONFIG[day];
-  const dirs  = d.directions || {BULLISH:0,BEARISH:0,NEUTRAL:0};
-  const total  = d.total_sessions
-    || d['total_'+day+'s']
-    || d.total_mondays
-    || ((dirs.BULLISH||0) + (dirs.BEARISH||0) + (dirs.NEUTRAL||0))
-    || 0;
-  const bullPct = total ? (dirs.BULLISH||0)/total*100 : 0;
-  const bearPct = total ? (dirs.BEARISH||0)/total*100 : 0;
-  const neutPct = total ? (dirs.NEUTRAL||0)/total*100 : 0;
+
+  // ── Leer estadísticas del formato REAL del JSON (d.stats) ──
+  const st = d.stats || {};
+  const bullPct = parseFloat(st.bull_pct || d.bull_pct || 0);
+  const bearPct = parseFloat(st.bear_pct || d.bear_pct || 0);
+  const neutPct = Math.max(0, 100 - bullPct - bearPct);
+  const total   = parseInt(st.n || d.total_sessions || d['total_'+day+'s'] || 0);
 
   // DIRECTION display
   document.getElementById('dir-bull').textContent = bullPct.toFixed(0)+'%';
@@ -997,8 +995,8 @@ function renderStats(d, day) {
     }
   });
 
-  // PATRONES donut
-  const pats = d.patterns || {};
+  // PATRONES donut — leer de d.stats.patterns o d.patterns
+  const pats = st.patterns || d.patterns || {};
   const pLabels = Object.keys(pats);
   const pValues = pLabels.map(k => parseFloat(pats[k]));
   const pColors = pLabels.map(k => PATTERN_COLORS[k]||C.gray);
@@ -1058,8 +1056,8 @@ function renderStats(d, day) {
   });
 
   // CONCLUSIONES
-  const dp     = d.dominant_pattern || 'N/A';
-  const dpPct  = d.dominant_pct     || 0;
+  const dp     = st.top_pattern || d.dominant_pattern || 'N/A';
+  const dpPct  = st.patterns ? Math.round((st.patterns[dp]||0)/Math.max(total,1)*100) : (d.dominant_pct||0);
   const bestLv = levels.reduce((a,b)=>b.rate>a.rate?b:a, levels[0]);
   const bias   = bullPct>=bearPct ? 'ALCISTA 🟢' : 'BAJISTA 🔴';
   const biasT  = bullPct>=bearPct
@@ -1080,7 +1078,7 @@ function renderStats(d, day) {
       <h3>Nivel key: ${bestLv.name} (${bestLv.rate.toFixed(1)}%)</h3>
       <p>Reacción prom. ${bestLv.react} pts.</p></div></div>
     <div class="con-item"><div class="con-icon">📏</div><div class="con-text">
-      <h3>Rango esperado: ${(d.avg_ny_range||0).toLocaleString('en-US',{maximumFractionDigits:0})} pts</h3>
+      <h3>Rango esperado: ${(st.avg_range||d.avg_ny_range||0).toLocaleString('en-US',{maximumFractionDigits:0})} pts</h3>
       <p>${Math.round((rd['300+']||0)/rdTotal*100)}% de los días superan 300 pts.</p></div></div>`;
 
   // TABLA SESIONES
