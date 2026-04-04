@@ -1,0 +1,21 @@
+{
+  "date": "2026-04-04",
+  "timestamp": "2026-04-03T21:56:16.762067-04:00",
+  "qqq_spot": 584.98,
+  "gex_raw": 0.0,
+  "gex_billions": 0.0,
+  "gex_regime": "NEGATIVE_WEAK",
+  "gex_description": "Dealers levemente SHORT gamma → Algo de amplificación",
+  "gex_signal": "⚡ Volatilidad moderada-alta",
+  "gex_positive": false,
+  "calls_oi_total": 199172,
+  "puts_oi_total": 254990,
+  "put_call_ratio": 1.28,
+  "strikes_analyzed": 581,
+  "expirations_used": [
+    "2026-04-06",
+    "2026-04-07",
+    "2026-04-08",
+    "2026-04-09"
+  ]
+}

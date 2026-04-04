@@ -67,12 +67,14 @@ def push_to_github():
             ["git", "add",
              "data/research/daily_master_db.json",
              "data/research/today_analysis.json",
+             "data/research/gex_today.json",
              "data/research/backtest_monday_1year.json",
              "data/research/backtest_tuesday_1year.json",
              "data/research/backtest_wednesday_1year.json",
              "data/research/backtest_thursday_1year.json",
              "data/research/backtest_friday_1year.json",
-             "data/research/auto_record.log"],
+             "data/research/auto_record.log",
+             "agent3_data.json"],
             cwd=BASE_DIR, timeout=30, check=False
         )
         dt = now_et().strftime("%Y-%m-%d %H:%M ET")
@@ -103,8 +105,10 @@ def save_scheduler_health(last_run, next_run, status):
 # Formato: (hora, minuto, script, descripcion)
 TASKS = [
     (6,  0,  "rebuild_from_master_db.py",  "Rebuild backtest JSONs (pre-market)"),
-    (9,  0,  "analyze_today.py",            "Análisis IA del día (9AM ET)"),
-    (16, 30, "auto_record.py",              "Registrar día completo (4:30PM ET)"),
+    (6,  15, "calc_gex_qqq.py",            "Calcular GEX real via QQQ options"),
+    (6,  30, "fetch_dix.py",               "Actualizar DIX proxy"),
+    (9,  0,  "analyze_today.py",           "Análisis IA del día (9AM ET)"),
+    (16, 30, "auto_record.py",             "Registrar día completo (4:30PM ET)"),
 ]
 
 def main():
@@ -132,8 +136,8 @@ def main():
                     if script == "auto_record.py" and success:
                         push_to_github()
 
-                    # Después de analyze_today → también push
-                    if script == "analyze_today.py" and success:
+                    # Después de analyze_today o GEX → también push
+                    if script in ("analyze_today.py", "calc_gex_qqq.py") and success:
                         push_to_github()
 
             # Limpiar ejecutados de días anteriores
