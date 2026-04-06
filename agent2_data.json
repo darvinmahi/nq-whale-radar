@@ -1,116 +1,86 @@
 {
   "agent": 2,
-  "name": "COT Analyst",
-  "timestamp": "2026-04-04T04:03:21.608903Z",
-  "input_source": "agent1_data.json",
+  "timestamp": "2026-04-06T15:33:56.549930+00:00Z",
+  "razonamiento": "Posicionamiento deteriorando (-9,867 semanal).",
+  "signal": "NEUTRAL-BAJISTA",
+  "strength": 55,
+  "net_position": 36037,
   "cot": {
-    "report_date": "2026-03-31",
-    "date": "2026-03-31",
-    "current_net": -41577,
-    "current_long": 44716,
-    "current_short": 86293,
-    "cot_index": 33.7,
-    "delta": 1049,
-    "history_min": -70624,
-    "history_max": 15648
-  },
-  "momentum": {
-    "direction": "SUBIENDO",
-    "consecutive_weeks": 1,
-    "weekly_velocity": 1049
-  },
-  "signal": "BEARISH",
-  "strength": 60,
-  "insight": {
-    "level_description": "🔵 ZONA NEUTRAL",
-    "weekly_velocity": -3658,
-    "alert": null
+    "current_net": 36037,
+    "cot_index": 49.5,
+    "date": "03 Mar 2026",
+    "week_change": -9867
   },
   "recent_weeks": [
     {
-      "date": "2026-01-13",
-      "net": -20552,
-      "long": 59282,
-      "short": 79834,
-      "ci": 58.0
+      "date": "03 Mar 2026",
+      "nc_long": 155076,
+      "nc_short": 119039,
+      "c_long": 51588,
+      "c_short": 88222,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 36037,
+      "comm_net": -36634,
+      "retail_net": 0,
+      "change": -9867
     },
     {
-      "date": "2026-01-20",
-      "net": -28520,
-      "long": 54607,
-      "short": 83127,
-      "ci": 48.8
+      "date": "24 Feb 2026",
+      "nc_long": 159920,
+      "nc_short": 114016,
+      "c_long": 48621,
+      "c_short": 102169,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 45904,
+      "comm_net": -53548,
+      "retail_net": 0,
+      "change": -11806
     },
     {
-      "date": "2026-01-27",
-      "net": -16079,
-      "long": 56625,
-      "short": 72704,
-      "ci": 63.2
+      "date": "17 Feb 2026",
+      "nc_long": 170033,
+      "nc_short": 112323,
+      "c_long": 39724,
+      "c_short": 107575,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 57710,
+      "comm_net": -67851,
+      "retail_net": 0,
+      "change": -1778
     },
     {
-      "date": "2026-02-03",
-      "net": -15925,
-      "long": 55910,
-      "short": 71835,
-      "ci": 63.4
+      "date": "10 Feb 2026",
+      "nc_long": 159647,
+      "nc_short": 100159,
+      "c_long": 41959,
+      "c_short": 114173,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 59488,
+      "comm_net": -72214,
+      "retail_net": 0,
+      "change": 2381
     },
     {
-      "date": "2026-02-10",
-      "net": -13245,
-      "long": 52653,
-      "short": 65898,
-      "ci": 66.5
-    },
-    {
-      "date": "2026-02-17",
-      "net": -16655,
-      "long": 60606,
-      "short": 77261,
-      "ci": 62.6
-    },
-    {
-      "date": "2026-02-24",
-      "net": -24257,
-      "long": 52817,
-      "short": 77074,
-      "ci": 53.7
-    },
-    {
-      "date": "2026-03-03",
-      "net": -32581,
-      "long": 51162,
-      "short": 83743,
-      "ci": 44.1
-    },
-    {
-      "date": "2026-03-10",
-      "net": -33944,
-      "long": 47241,
-      "short": 81185,
-      "ci": 42.5
-    },
-    {
-      "date": "2026-03-17",
-      "net": -41041,
-      "long": 44996,
-      "short": 86037,
-      "ci": 34.3
-    },
-    {
-      "date": "2026-03-24",
-      "net": -42626,
-      "long": 45072,
-      "short": 87698,
-      "ci": 32.5
-    },
-    {
-      "date": "2026-03-31",
-      "net": -41577,
-      "long": 44716,
-      "short": 86293,
-      "ci": 33.7
+      "date": "03 Feb 2026",
+      "nc_long": 164558,
+      "nc_short": 107451,
+      "c_long": 38879,
+      "c_short": 115328,
+      "r_long": 0,
+      "r_short": 0,
+      "oi": 273307,
+      "net_position": 57107,
+      "comm_net": -76449,
+      "retail_net": 0,
+      "change": -6748
     }
-  ],
-  "updated_at": "2026-04-04T04:09:18.383512+00:00"
+  ]
 }
