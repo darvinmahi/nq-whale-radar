@@ -1,30 +1,30 @@
 {
-    "timestamp": "2026-04-06T18:37:01.519093",
+    "timestamp": "2026-04-06T21:37:59.189671",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-            "size": 350186
+            "size": 355824
         },
         "analisis_promax.html": {
             "exists": true,
-            "size": 52341
+            "size": 53159
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11034
+            "size": 11162
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 637
+            "size": 797
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 380
+            "size": 407
         }
     },
-    "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL fuerte. Busca seguir el flujo de la EMA 200.",
+    "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL-BULLISH fuerte. Busca seguir el flujo de la EMA 200.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,

@@ -89,6 +89,36 @@ def vxn_zone(v):
     if v >= 18: return "NEUT(18-25)"
     return              "GREED(<18)"
 
+# ── CALCULAR COT INDEX REAL PARA CADA SEMANA ─────────────────────────
+# LEV 52w percentile — mismo método del dashboard
+print("Cargando COT histórico...")
+cot_rows = []
+with open("data/cot/nasdaq_cot_historical.csv", encoding="utf-8") as f:
+    for r in csv.DictReader(f):
+        try:
+            cd = datetime.strptime(r["Report_Date_as_MM_DD_YYYY"], "%Y-%m-%d").date()
+            ll = int(r.get("Lev_Money_Positions_Long_All", 0) or 0)
+            ls = int(r.get("Lev_Money_Positions_Short_All", 0) or 0)
+            al = int(r.get("Asset_Mgr_Positions_Long_All", 0) or 0)
+            as_ = int(r.get("Asset_Mgr_Positions_Short_All", 0) or 0)
+            cot_rows.append({"date": cd, "lev_net": ll-ls, "am_net": al-as_})
+        except: pass
+cot_rows.sort(key=lambda x: x["date"])
+COT_WIN = 52
+for i, cr in enumerate(cot_rows):
+    # LEV percentile 52w
+    w_lev = [x["lev_net"] for x in cot_rows[max(0,i-COT_WIN+1):i+1]]
+    w_am  = [x["am_net"]  for x in cot_rows[max(0,i-COT_WIN+1):i+1]]
+    lev_idx = round((cr["lev_net"]-min(w_lev))/(max(w_lev)-min(w_lev))*100) if max(w_lev)!=min(w_lev) else 50
+    am_idx  = round((cr["am_net"] -min(w_am)) /(max(w_am) -min(w_am)) *100) if max(w_am)!=min(w_am) else 50
+    # Mismo score triple que el dashboard (pero con los pesos actuales)
+    cr["cot_idx"] = round(am_idx * 0.50 + lev_idx * 0.35 + 50 * 0.15)
+
+def get_cot_idx(d):
+    """Devuelve el COT index vigente para una fecha (reporte de esa semana o anterior)."""
+    prev = [cr for cr in cot_rows if cr["date"] <= d]
+    return prev[-1]["cot_idx"] if prev else 50
+
 # ── CALCULAR TODAS LAS SESIONES NY ───────────────────────────────────
 print("Calculando sesiones NY históricas...")
 sessions = []
@@ -119,6 +149,7 @@ for idx, d in enumerate(all_dates):
     va_p = "ABOVE" if ny_o > vah else ("BELOW" if ny_o < val else "INSIDE")
     vxn_v = get_vxn(d)
     vz    = vxn_zone(vxn_v)
+    cot_v = get_cot_idx(d)       # ← COT real de esa semana
     patern = f"{va_p} VA + {vz.split('(')[0]}"
     sessions.append({
         "date": str(d), "dow": d.weekday(),
@@ -127,8 +158,8 @@ for idx, d in enumerate(all_dates):
         "ny_range": ny_rng, "ny_move_pct": ny_pct,
         "vah": vah, "poc": poc, "val": val,
         "vxn": round(vxn_v,2) if vxn_v else 0,
+        "cot_index": cot_v,      # ← valor real 0-100
         "pattern": patern,
-        "cot_index": 50,  # placeholder — COT index histórico no calculado aquí
     })
 
 DOW_NAM = {0:"monday",1:"tuesday",2:"wednesday",3:"thursday",4:"friday"}
