@@ -1,71 +1,229 @@
 {
-  "generated": "2026-04-04T00:46:25.947916",
-  "date": "2026-04-04",
+  "generated": "2026-04-06T21:33:41.592118",
+  "date": "2026-04-07",
   "today": {
-    "date": "2026-04-04",
-    "dow": "saturday",
-    "dow_es": "saturday",
-    "semana_ciclo": "W1",
+    "date": "2026-04-07",
+    "dow": "monday",
+    "dow_es": "Lunes",
+    "semana_ciclo": "W2",
     "cot_index": 27.3,
-    "cot_signal": "NEUTRAL",
-    "cot_net": 2386,
+    "cot_signal": "BEAR (LEV 35%)",
+    "cot_net": -41577,
     "vxn": 27.04,
-    "vxn_level": "ELEVATED",
-    "dix": 50.3,
-    "gex_positive": true,
+    "vxn_level": "FEAR",
     "ai_score": 52,
-    "ai_label": "NEUTRAL-BULLISH"
+    "ai_label": "CAUTELOSO"
   },
-  "match_level": "relaxed",
-  "similar": {},
-  "theories": [],
+  "match_level": "strict",
+  "similar": {
+    "n": 31,
+    "bull_pct": 35,
+    "bear_pct": 52,
+    "bull": 11,
+    "bear": 16,
+    "avg_range": 195,
+    "top_pattern": "ABOVE VA",
+    "top_pattern_pct": 35,
+    "cases": [
+      {
+        "date": "2026-03-23",
+        "dow": "monday",
+        "direction": "BEARISH",
+        "ny_range": 204.0,
+        "ny_move_pct": -0.5802,
+        "pattern": "INSIDE VA + FEAR",
+        "cot_index": 50,
+        "vxn": 27.98,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2026-03-16",
+        "dow": "monday",
+        "direction": "BEARISH",
+        "ny_range": 345.0,
+        "ny_move_pct": -1.3463,
+        "pattern": "ABOVE VA + FEAR",
+        "cot_index": 50,
+        "vxn": 26.32,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2026-03-09",
+        "dow": "monday",
+        "direction": "BULLISH",
+        "ny_range": 582.0,
+        "ny_move_pct": 1.1324,
+        "pattern": "ABOVE VA + FEAR",
+        "cot_index": 50,
+        "vxn": 27.69,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2026-03-02",
+        "dow": "monday",
+        "direction": "BEARISH",
+        "ny_range": 438.0,
+        "ny_move_pct": -0.884,
+        "pattern": "ABOVE VA + FEAR",
+        "cot_index": 50,
+        "vxn": 25.4,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2026-02-23",
+        "dow": "monday",
+        "direction": "BULLISH",
+        "ny_range": 347.0,
+        "ny_move_pct": 0.3822,
+        "pattern": "BELOW VA + FEAR",
+        "cot_index": 50,
+        "vxn": 26.36,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2026-02-16",
+        "dow": "monday",
+        "direction": "BEARISH",
+        "ny_range": 157.0,
+        "ny_move_pct": -0.434,
+        "pattern": "BELOW VA + FEAR",
+        "cot_index": 50,
+        "vxn": 26.37,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2025-11-24",
+        "dow": "monday",
+        "direction": "NEUTRAL",
+        "ny_range": 320.0,
+        "ny_move_pct": -0.0521,
+        "pattern": "ABOVE VA + FEAR",
+        "cot_index": 50,
+        "vxn": 25.57,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2025-11-17",
+        "dow": "monday",
+        "direction": "BULLISH",
+        "ny_range": 201.0,
+        "ny_move_pct": 0.211,
+        "pattern": "BELOW VA + FEAR",
+        "cot_index": 50,
+        "vxn": 28.16,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2025-05-26",
+        "dow": "monday",
+        "direction": "BEARISH",
+        "ny_range": 286.0,
+        "ny_move_pct": -0.2607,
+        "pattern": "INSIDE VA + FEAR",
+        "cot_index": 50,
+        "vxn": 25.29,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2025-05-05",
+        "dow": "monday",
+        "direction": "BEARISH",
+        "ny_range": 204.0,
+        "ny_move_pct": -0.8813,
+        "pattern": "ABOVE VA + FEAR",
+        "cot_index": 50,
+        "vxn": 26.54,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2025-04-28",
+        "dow": "monday",
+        "direction": "BULLISH",
+        "ny_range": 157.0,
+        "ny_move_pct": 0.7573,
+        "pattern": "INSIDE VA + FEAR",
+        "cot_index": 50,
+        "vxn": 28.54,
+        "noticia": "ninguna"
+      },
+      {
+        "date": "2025-04-14",
+        "dow": "monday",
+        "direction": "BEARISH",
+        "ny_range": 256.0,
+        "ny_move_pct": -0.4631,
+        "pattern": "INSIDE VA + FEAR",
+        "cot_index": 50,
+        "vxn": 34.33,
+        "noticia": "ninguna"
+      }
+    ]
+  },
+  "theories": [
+    {
+      "name": "⬆️ ABOVE VA — precio sobre el área",
+      "bull_pct": 18,
+      "bear_pct": 73,
+      "conclusion": "Si NY abre ABOVE VA → BEAR 73% (avg 254pts rango)",
+      "n": 11,
+      "top_pattern": "avg rango 254pt"
+    },
+    {
+      "name": "➡️ INSIDE VA — precio en rango",
+      "bull_pct": 36,
+      "bear_pct": 55,
+      "conclusion": "Si NY abre INSIDE VA → BEAR 55% (avg 149pts rango)",
+      "n": 11,
+      "top_pattern": "avg rango 149pt"
+    },
+    {
+      "name": "⬇️ BELOW VA — precio bajo el área",
+      "bull_pct": 56,
+      "bear_pct": 22,
+      "conclusion": "Si NY abre BELOW VA → BULL 56% (avg 178pts rango)",
+      "n": 9,
+      "top_pattern": "avg rango 178pt"
+    },
+    {
+      "name": "😰 VXN FEAR en Lunes",
+      "bull_pct": 38,
+      "bear_pct": 51,
+      "conclusion": "Lunes con VXN>25 → BEAR 51% de las veces, avg rango 201pts",
+      "n": 37,
+      "top_pattern": "avg rango 201pt"
+    }
+  ],
   "prediction": {
     "direction": "NEUTRAL",
-    "confidence": 50,
-    "bull_signals": 0,
-    "bear_signals": 0,
-    "basis": "0 días similares (criterio amplio)"
+    "confidence": 50
   },
   "db_stats": {
+    "monday": {
+      "n": 195,
+      "bull_pct": 36,
+      "bear_pct": 35
+    },
     "tuesday": {
-      "n": 118,
-      "bull_pct": 52.5,
-      "bear_pct": 47.5,
-      "avg_range": 348.3
+      "n": 195,
+      "bull_pct": 42,
+      "bear_pct": 32
     },
     "wednesday": {
-      "n": 115,
-      "bull_pct": 60.0,
-      "bear_pct": 40.0,
-      "avg_range": 393.9
+      "n": 225,
+      "bull_pct": 39,
+      "bear_pct": 39
     },
     "thursday": {
-      "n": 112,
-      "bull_pct": 45.5,
-      "bear_pct": 54.5,
-      "avg_range": 393.1
+      "n": 225,
+      "bull_pct": 32,
+      "bear_pct": 42
     },
     "friday": {
-      "n": 115,
-      "bull_pct": 53.0,
-      "bear_pct": 47.0,
-      "avg_range": 368.8
-    },
-    "monday": {
-      "n": 107,
-      "bull_pct": 64.5,
-      "bear_pct": 35.5,
-      "avg_range": 378.4
+      "n": 185,
+      "bull_pct": 34,
+      "bear_pct": 32
     }
   },
-  "ai_brief": null,
-  "ai_brief_ts": null,
-  "casos": 0,
-  "casos_similares": 0,
-  "bearish_pct": 0,
-  "bullish_pct": 0,
-  "rango_promedio": 0,
-  "patron_dominante": "N/A",
-  "casos_detalle": [],
-  "dow": "saturday"
+  "ai_brief": "**LUNES 7 ABRIL 2026 — ANÁLISIS DE RIESGO ELEVADO**\n\nVXN en 27.04 (zona FEAR). Basado en 31 sesiones históricas similares (Lunes + VXN FEAR):\n• BEAR: 52% de los casos\n• BULL: 35% de los casos\n• Rango promedio: 195 pts NQ\n\n**Setup de alta probabilidad confirmado:** Si NY abre ABOVE VA → 73% BEAR histórico, avg -136pts (11 casos exactos: Lunes+FEAR+ABOVE).\n\nCOT LEV Money en zona BEAR (35%). Contexto macro bajista, precaución máxima en compras.",
+  "ai_brief_ts": "2026-04-06T21:33:41.592118"
 }
