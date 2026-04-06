@@ -3,7 +3,7 @@ gen_today_analysis.py
 Genera data/research/today_analysis.json con datos reales
 usando la base de sesiones NY: VA Position × VXN × Día de semana
 """
-import csv, json, math
+import csv, json, math, os
 from datetime import datetime, date, timedelta
 from collections import defaultdict
 import yfinance as yf, pandas as pd
@@ -89,35 +89,29 @@ def vxn_zone(v):
     if v >= 18: return "NEUT(18-25)"
     return              "GREED(<18)"
 
-# ── CALCULAR COT INDEX REAL PARA CADA SEMANA ─────────────────────────
-# LEV 52w percentile — mismo método del dashboard
-print("Cargando COT histórico...")
-cot_rows = []
-with open("data/cot/nasdaq_cot_historical.csv", encoding="utf-8") as f:
-    for r in csv.DictReader(f):
-        try:
-            cd = datetime.strptime(r["Report_Date_as_MM_DD_YYYY"], "%Y-%m-%d").date()
-            ll = int(r.get("Lev_Money_Positions_Long_All", 0) or 0)
-            ls = int(r.get("Lev_Money_Positions_Short_All", 0) or 0)
-            al = int(r.get("Asset_Mgr_Positions_Long_All", 0) or 0)
-            as_ = int(r.get("Asset_Mgr_Positions_Short_All", 0) or 0)
-            cot_rows.append({"date": cd, "lev_net": ll-ls, "am_net": al-as_})
-        except: pass
-cot_rows.sort(key=lambda x: x["date"])
-COT_WIN = 52
-for i, cr in enumerate(cot_rows):
-    # LEV percentile 52w
-    w_lev = [x["lev_net"] for x in cot_rows[max(0,i-COT_WIN+1):i+1]]
-    w_am  = [x["am_net"]  for x in cot_rows[max(0,i-COT_WIN+1):i+1]]
-    lev_idx = round((cr["lev_net"]-min(w_lev))/(max(w_lev)-min(w_lev))*100) if max(w_lev)!=min(w_lev) else 50
-    am_idx  = round((cr["am_net"] -min(w_am)) /(max(w_am) -min(w_am)) *100) if max(w_am)!=min(w_am) else 50
-    # Mismo score triple que el dashboard (pero con los pesos actuales)
-    cr["cot_idx"] = round(am_idx * 0.50 + lev_idx * 0.35 + 50 * 0.15)
+# ── COT INDEX DESDE DAILY_MASTER_DB (fuente de verdad) ───────────────
+# daily_master_db.json ya tiene cot_index calculado por fecha
+# con la fórmula de 3 años min/max. Ejemplo: semana 31-Mar = 33.7
+print("Leyendo COT index desde daily_master_db.json...")
+_cot_by_date = {}
+_db_path = "data/research/daily_master_db.json"
+if os.path.exists(_db_path):
+    _db = json.load(open(_db_path, encoding="utf-8"))
+    for rec in _db.get("records", []):
+        d_str = rec.get("date","")
+        ci    = rec.get("cot_index")
+        if d_str and ci is not None:
+            _cot_by_date[d_str] = round(float(ci), 1)
+print(f"  → {len(_cot_by_date)} fechas con cot_index en DB")
 
 def get_cot_idx(d):
-    """Devuelve el COT index vigente para una fecha (reporte de esa semana o anterior)."""
-    prev = [cr for cr in cot_rows if cr["date"] <= d]
-    return prev[-1]["cot_idx"] if prev else 50
+    """Devuelve el COT index de daily_master_db para una fecha (o la más cercana anterior)."""
+    key = str(d)
+    if key in _cot_by_date:
+        return _cot_by_date[key]
+    # Buscar fecha más reciente anterior
+    past = [k for k in sorted(_cot_by_date.keys()) if k <= key]
+    return _cot_by_date[past[-1]] if past else 50
 
 # ── CALCULAR TODAS LAS SESIONES NY ───────────────────────────────────
 print("Calculando sesiones NY históricas...")
