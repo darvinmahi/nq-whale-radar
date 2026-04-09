@@ -2439,45 +2439,45 @@ const DAY_RESEARCH = {
   },
   wednesday: {
     ready: true,
-    sessions: 223,
+    sessions: 227,
     rules: [
-      'PM direction NO predice NY de forma confiable (47%/42%) — sin edge direccional claro',
-      'Leve sesgo ALCISTA global: BULL 34% · BEAR 27% · FLAT 39%',
-      'LOW FIRST 55%: Miércoles tiende a hacer mínimo primero → buscar longs en el low de apertura',
-      'VXN >25 → rango NY ~300pts+ · VXN <20 → ~110pts · Correlación r=0.50',
-      'PM range → NY range: r=0.71 (rango del PM predice tamaño del movimiento NY)',
-      'Rango NY mediana: 102pts · Avg: 164pts · Mayor rango de los 3 días (Mie/Jue/Vie)'
+      'PM direction NO predice NY de forma individual (47%) — necesita combinación',
+      '✅ COMBO: PM_SIZE=medio + PM alcista → NY BULL <b style="color:#22d98a">65.5%</b> (19/29 sess)',
+      'LOW FIRST 55%: Miércoles tiende a hacer mínimo primero en NY',
+      'VXN → rango: r=0.50 — VXN >25 dobla el rango esperado',
+      'PM range → NY range: r=0.71 — PM grande = NY grande',
+      'Base rate: BULL 34% / BEAR 28% / FLAT 38% — leve sesgo alcista'
     ],
-    topPredictor: '🥇 VXN (rango) + Low First 55% + PM Range (r=0.71)',
-    special: '223 sesiones · Sin edge PM→dirección · VXN es el mejor indicador de rango'
+    topPredictor: '🥇 PM tamaño MEDIO + PM BULL → NY BULL 65.5%',
+    special: '227 sesiones · Sin predictor único >60% · Combo mejora edge'
   },
   thursday: {
     ready: true,
-    sessions: 224,
+    sessions: 227,
     rules: [
-      'PM direction NO predice NY (28%/37%) — JUEVES es impredecible por PM solo',
-      'PM FLAT → NY FLAT 68% ← si PM plano, NY probablemente lateral',
-      'PM RANGE → NY RANGE: r=<b style="color:#22d98a">0.843</b> ← REGLA CLAVE: PM range grande = NY range grande',
-      'Jobless Claims 8:30 ET: spike alcista → NY BEAR 40% (trampa moderada)',
-      'VXN >25 → rango NY ~350pts · VXN <20 → ~183pts · r=0.41',
-      'Sin patrón High/Low first claro (52/48)'
+      '⚠️ JUEVES: Ningún predictor individual supera 60% — día más difícil de predecir',
+      'PM FLAT → NY FLAT 68% ← si PM plano, NY probablemente lateral (único edge)',
+      'PM RANGE → NY RANGE: r=<b style="color:#22d98a">0.843</b> ← PM range grande = NY range grande',
+      'Spike 8:30 DOWN → BEAR 50% (moderado) | Claims sorpresa es la clave',
+      'VXN >25 → rango NY ~350pts · VXN <20 → ~183pts',
+      'Base: BULL 26% / BEAR 30% / FLAT 45% — mayoritariamente lateral'
     ],
-    topPredictor: '🥇 PM RANGE (r=0.843) + VXN + Claims sorpresa 8:30',
-    special: '224 sesiones · PM range predice tamaño NY · Claims impacta dirección'
+    topPredictor: '🥇 PM RANGE (r=0.843) + PM FLAT → esperar lateralidad',
+    special: '227 sesiones · Sin edge direccional claro · Jobless Claims es el catalizador'
   },
   friday: {
     ready: true,
     sessions: 185,
     rules: [
-      'PM direction NO predice NY (37%/41%) — Viernes sin edge PM claro',
-      'Rango NY más pequeño de la semana: mediana 69pts · Avg menor',
-      'VXN >25 → rango eleva significativamente · r=0.41',
-      'HIGH FIRST 50%/LOW FIRST 50%: sin patrón de apertura dominante',
-      'NFP Fridays (primer viernes del mes): volatilidad extrema — reduce tamaño o no operes',
-      'Viernes = cierre de posiciones institucionales → reversiones frecuentes tarde'
+      '🔥 VXN ALTO (>25) → NY BEAR <b style="color:#f0485a">70.6%</b> (12/17 sess) ← predictor #1',
+      '🔥 VXN ALTO + PM range GRANDE → NY BEAR <b style="color:#f0485a">83.3%</b> (10/12) ← combo potente',
+      '✅ Spike 8:30 SUBE >25pts → NY BULL <b style="color:#22d98a">63.2%</b> (12/19 sess)',
+      'NFP Viernes (1er viernes del mes): volatilidad extrema — ajustar tamaño',
+      'Rango NY más pequeño de la semana cuando VXN bajo: mediana ~69pts',
+      'Base: BULL 28% / BEAR 26% / FLAT 46% — sin sesgo direccional base'
     ],
-    topPredictor: '🥇 VXN nivel + ¿Es NFP Friday? + COT semanal',
-    special: '185 sesiones · Día más difícil · Rango más pequeño · Reversiones frecuentes'
+    topPredictor: '🥇 VXN nivel (70.6% BEAR si HIGH) + Spike 8:30 (63.2% BULL si UP)',
+    special: '185 sesiones · VXN es el predictor #1 · Combo VXN+PM_LARGE = 83.3% BEAR'
   }
 };
 

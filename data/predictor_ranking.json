@@ -1,0 +1,29 @@
+{
+  "MIÉRCOLES": {
+    "sessions": 227,
+    "base_bull": 33.5,
+    "base_bear": 27.8,
+    "top_predictor": "6. PM range (pequeño/grande)",
+    "top_pct": 50.9,
+    "validated_rules": []
+  },
+  "JUEVES": {
+    "sessions": 227,
+    "base_bull": 25.6,
+    "base_bear": 29.5,
+    "top_predictor": "9. Spike 8:30",
+    "top_pct": 50.0,
+    "validated_rules": []
+  },
+  "VIERNES": {
+    "sessions": 185,
+    "base_bull": 27.6,
+    "base_bear": 26.5,
+    "top_predictor": "8. VXN nivel",
+    "top_pct": 70.6,
+    "validated_rules": [
+      "8. VXN nivel [HIGH] → NY BEAR: 70.6%",
+      "9. Spike 8:30 [UP] → NY BULL: 63.2%"
+    ]
+  }
+}
