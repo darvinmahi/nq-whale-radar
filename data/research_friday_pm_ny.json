@@ -1,0 +1,77 @@
+{
+  "day": "Friday",
+  "sessions": 185,
+  "pm_to_ny": {
+    "BULL": {
+      "n": 63,
+      "bull": 23,
+      "bear": 14,
+      "pct_match": 36.5
+    },
+    "BEAR": {
+      "n": 66,
+      "bull": 16,
+      "bear": 27,
+      "pct_match": 40.9
+    },
+    "FLAT": {
+      "n": 56,
+      "bull": 12,
+      "bear": 8,
+      "pct_match": 64.3
+    }
+  },
+  "va_open": {
+    "ABOVE_VA": {
+      "n": 67,
+      "bull": 20,
+      "bear": 18,
+      "avg_move": -26
+    },
+    "INSIDE_VA": {
+      "n": 53,
+      "bull": 19,
+      "bear": 13,
+      "avg_move": 24
+    },
+    "BELOW_VA": {
+      "n": 65,
+      "bull": 12,
+      "bear": 18,
+      "avg_move": -12
+    }
+  },
+  "vxn_range": {
+    "<20 Calma": {
+      "n": 33,
+      "median_range": 73,
+      "avg_range": 144
+    },
+    "20-25 Normal": {
+      "n": 25,
+      "median_range": 156,
+      "avg_range": 197
+    },
+    "25-30 Elevado": {
+      "n": 14,
+      "median_range": 204,
+      "avg_range": 252
+    },
+    ">30 P\u00e1nico": {
+      "n": 3,
+      "median_range": 422,
+      "avg_range": 376
+    }
+  },
+  "vxn_r": 0.412,
+  "hi_first_pct": 49.7,
+  "bias": {
+    "bull": 51,
+    "bear": 49,
+    "flat": 85
+  },
+  "ny_range_median": 69,
+  "ny_range_avg": 121,
+  "pm_ny_range_corr": 0.871,
+  "rules": []
+}
