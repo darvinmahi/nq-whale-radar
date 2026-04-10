@@ -2425,17 +2425,17 @@ const DAY_RESEARCH = {
   },
   tuesday: {
     ready: true,
-    sessions: 27,
+    sessions: 195,
     rules: [
-      'PM BULL → NY alcista <b style="color:#22d98a">92%</b> (predictor #1)',
-      'PM BEAR → NY bajista <b style="color:#f0485a">73%</b>',
-      'PM >150pts → solo 44% alcista ⚠️ (agota move antes de NY)',
-      'VXN <20 → rango ~154pts · VXN 20-25 → ~185pts · VXN >25 → ~349pts',
-      'COT es bias semanal, no señal de dirección diaria',
-      'Correlación PM→NY dirección: r=<b style="color:#6382ff">0.70</b>'
+      '⚠️ CORRECCIÓN: 92% era sesgo de muestra chica (27 sess). Con 195 sesiones: PM→NY solo 38% — NO es predictor.',
+      '🕐 HALLAZGO REAL: Martes hace su movimiento TARDE — HIGH/LOW forman 14:00-16:00 ET en 60%+ de días',
+      'VXN >25 → BEAR 71% en Martes (r=0.53 con rango)  |  VXN <20 → ligero sesgo BULL',
+      'Sesgo global: BULL 33% · BEAR 23% · FLAT 44% — mayoritariamente lateral hasta la tarde',
+      'Expectancy: Move NY med ~80-95pts con solo 20pts drawdown → R:R 3.0-3.2x',
+      'PM RANGE >200pts → literalmente aleatorio (44% BULL / 44% BEAR) — no operar señal PM extrema'
     ],
-    topPredictor: '🥇 Pre-Market Direction (92%/73%)',
-    special: '27 sesiones validadas · ÚNICO DÍA con PM predictivo'
+    topPredictor: '🥇 TIMING (14-16h ET) + VXN >25 → BEAR  |  No usar PM direction como predictor',
+    special: '195 sesiones 9 años · Corrección importante vs estudio anterior de 27 sess'
   },
   wednesday: {
     ready: true,
