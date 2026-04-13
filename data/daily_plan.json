@@ -1,0 +1,69 @@
+{
+  "timestamp": "2026-04-13T22:34:09.331564+00:00Z",
+  "date": "2026-04-13",
+  "day": "LUNES",
+  "dow": 0,
+  "protocol": {
+    "step1": "9:30 ET - Observar apertura, NO entrar",
+    "step2": "9:30-10:00 ET - Dejar que se forme el Opening Range (30min)",
+    "step3": "10:00 ET - Verificar si OR cerro BULL",
+    "step4": "10:01 ET - Si OR = BULL -> entrar LONG",
+    "step5": "Stop = otro lado del OR (16.6 pts max)",
+    "step6": "Target = +33.3 pts ($200/cuenta)",
+    "step7": "Si no toco target a las 2:00 PM -> evaluar salida parcial",
+    "step8": "4:00 PM ET - Cerrar todo"
+  },
+  "action": "LONG",
+  "or_expected": "BULL",
+  "historical_wr": 71,
+  "historical_avg_pts": 100,
+  "confidence": {
+    "score": 70,
+    "level": "MEDIA",
+    "color": "#f5a623",
+    "reasons": [
+      "Hist WR 71% (bueno)",
+      "Prev day = BULLISH (booster activo, +10% WR)"
+    ],
+    "warnings": [
+      "6 noticias de alto impacto (precaucion)"
+    ]
+  },
+  "trade_params": {
+    "contracts": 3,
+    "contract_type": "MNQ",
+    "value_per_point": 6.0,
+    "target_pts": 33.3,
+    "stop_pts": 16.6,
+    "target_dollars": 200,
+    "risk_dollars": 99.6,
+    "risk_reward": "1:2",
+    "alt_conservative": {
+      "contracts": 2,
+      "stop_pts": 25.0,
+      "target_pts": 50.0,
+      "note": "Opcion conservadora: 2 MNQ, risk $100, target $200"
+    },
+    "for_20_accounts": {
+      "total_target": 4000,
+      "total_risk": 1992.0,
+      "if_all_win": 4000,
+      "if_all_lose": 1992.0
+    }
+  },
+  "apex_config": {
+    "accounts": 20,
+    "account_size": 50000,
+    "daily_target_per_account": 200,
+    "trailing_drawdown": 2500,
+    "max_daily_loss_per_account": 500
+  },
+  "rules": {
+    "ENTRAR": "Solo si OR 30min confirma BULL",
+    "NO_ENTRAR_1": "Si OR es FLAT (<10pts movimiento)",
+    "NO_ENTRAR_2": "Si OR contradice la direccion esperada",
+    "NO_ENTRAR_3": "Miercoles: si OR es BULL, evitar (solo 66%)",
+    "SALIR": "Al tocar target O al cierre NY 4PM",
+    "STOP": "Al otro lado del Opening Range"
+  }
+}
