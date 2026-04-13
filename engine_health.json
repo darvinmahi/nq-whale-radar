@@ -1,10 +1,10 @@
 {
-  "cycle": 146,
-  "timestamp": "2026-04-13T00:34:42.016455+00:00Z",
-  "last_update_human": "2026-04-13 00:34:42 UTC",
+  "cycle": 1,
+  "timestamp": "2026-04-13T14:27:52.576146+00:00Z",
+  "last_update_human": "2026-04-13 14:27:52 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 13.1,
+  "total_time_sec": 3.7,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -18,55 +18,55 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 3.0
+      "time": 0.3
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 7.3
+      "time": 1.6
     },
-    "Agent 6 · SMC Detective": {
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
-      "time": 0.1
-    },
-    "Agent 7 · Probability Analyst": {
-      "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
     "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
-    "Agent 4 · Bias Engine": {
+    "Agent 6 · SMC Detective": {
       "status": "✅ OK",
-      "time": 0.1
-    },
-    "Agent 13 · Research Scout": {
-      "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
     "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
+    },
+    "Agent 13 · Research Scout": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
-    "Agent 12 · Backtest Engine": {
+    "Agent 4 · Bias Engine": {
       "status": "✅ OK",
-      "time": 0.2
+      "time": 0.0
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 3.4
+      "time": 1.8
+    },
+    "Agent 12 · Backtest Engine": {
+      "status": "✅ OK",
+      "time": 1.8
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 5.6
+      "time": 2.1
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",

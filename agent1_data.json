@@ -1,40 +1,37 @@
 {
   "agent": 1,
   "name": "Data Collector",
-  "timestamp": "2026-04-06T20:37:54.100217+00:00Z",
+  "timestamp": "2026-04-13T14:27:50.466248+00:00Z",
+  "price": 25256.75,
+  "volume": 249605,
   "yahoo": {
     "NDX": {
-      "price": 24192.17,
-      "prev_close": 24045.53,
-      "change_pct": 0.61
+      "price": 25123.12,
+      "change_pct": 0.03,
+      "stale": false
     },
     "VXN": {
-      "price": 27.39,
-      "prev_close": 27.04,
-      "change_pct": 1.29
+      "price": 23.76,
+      "change_pct": 2.9,
+      "stale": false
     },
     "NQ_futures": {
-      "price": 24345.25,
-      "prev_close": 24345.25,
-      "change_pct": 0.0
+      "price": 25256.75,
+      "change_pct": 0.0,
+      "stale": false
+    },
+    "DXY": {
+      "price": 98.79,
+      "change_pct": 0.0,
+      "stale": false
     }
   },
   "squeezemetrics": {
-    "DIX": 50.27,
-    "GEX_raw": 2745627207.1699977,
-    "GEX_B": 2.746,
-    "date": "2026-04-02"
+    "DIX": null,
+    "GEX_B": null
   },
-  "cftc_cot": {
-    "cot_nc_long": null,
-    "cot_nc_short": null,
-    "cot_net": null,
-    "cot_oi": null,
-    "cot_date": null
-  },
-  "sentiment": {
-    "NQ1_OI": 240518,
-    "NQ1_volume": 431788,
-    "pcr": 0.65
+  "cftc_cot": {},
+  "cme": {
+    "NQ1_OI": 249605
   }
 }
