@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Simulator — OR 30min Strategy · NQ</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --bg:#0b0e1a; --bg2:#111420; --bg3:#181d2e; --border:rgba(99,130,255,0.18);
+    --accent:#6382ff; --accent2:#38c9e8; --green:#22d98a; --red:#f0485a;
+    --orange:#f5a623; --yellow:#f5d623; --text:#e4e8ff; --text2:#8898bb;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; padding:20px; }
+  .container { max-width:1200px; margin:0 auto; }
+  h1 { font-size:1.6rem; font-weight:800; margin-bottom:8px; }
+  .subtitle { color:var(--text2); font-size:0.85rem; margin-bottom:24px; }
+  .card { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:16px; }
+  .card-title { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--accent); margin-bottom:14px; }
+  .stat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:16px; }
+  .stat-box { background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:12px; text-align:center; }
+  .stat-val { font-size:1.4rem; font-weight:800; }
+  .stat-label { font-size:0.6rem; color:var(--text2); text-transform:uppercase; letter-spacing:0.8px; margin-top:3px; }
+  .day-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+  table { width:100%; border-collapse:collapse; font-size:0.72rem; font-family:'JetBrains Mono',monospace; }
+  th { text-align:left; padding:8px; background:var(--bg3); color:var(--text2); font-size:0.62rem; text-transform:uppercase; }
+  td { padding:8px; border-bottom:1px solid rgba(99,130,255,0.07); }
+  .chart-wrap { height:250px; position:relative; }
+  a.back { display:inline-flex; align-items:center; gap:5px; color:var(--accent2); text-decoration:none; font-size:0.8rem; margin-bottom:16px; }
+  a.back:hover { color:var(--accent); }
+  .pill { display:inline-flex; padding:3px 8px; border-radius:6px; font-size:0.68rem; font-weight:600; }
+  @media(max-width:768px) { .day-grid { grid-template-columns:1fr 1fr; } .stat-grid { grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="daily_dashboard.html" class="back">&#9664; Daily Dashboard</a>
+  <h1>&#128202; Trade Simulator — OR 30min Strategy</h1>
+  <p class="subtitle">Simulacion sobre 498 trades reales · 2024-01-02 a 2026-04-02 · NQ NASDAQ</p>
+
+  <!-- RESUMEN P&L -->
+  <div class="card">
+    <div class="card-title">&#128176; Performance Summary</div>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--green)">+7,711</div>
+        <div class="stat-label">Total P&L (pts)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--orange)">27.3%</div>
+        <div class="stat-label">Win Rate</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--accent2)">498</div>
+        <div class="stat-label">Total Trades</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--green)">1.25</div>
+        <div class="stat-label">Profit Factor</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--green)">+286</div>
+        <div class="stat-label">Avg Win (pts)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--red)">-86</div>
+        <div class="stat-label">Avg Loss (pts)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--red)">-2,692</div>
+        <div class="stat-label">Max Drawdown</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--text2)">+15.5</div>
+        <div class="stat-label">Avg P&L / Trade</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EQUITY CURVE -->
+  <div class="card">
+    <div class="card-title">&#128200; Equity Curve</div>
+    <div class="chart-wrap"><canvas id="eqChart"></canvas></div>
+  </div>
+
+  <!-- POR DIA -->
+  <div class="card">
+    <div class="card-title">&#128197; Performance por Dia de la Semana</div>
+    <div class="day-grid"><div style="background:rgba(34,217,138,0.08);border:1px solid #22d98a33;border-radius:12px;padding:14px;text-align:center;">
+              <div style="font-size:0.7rem;font-weight:700;color:#22d98a;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">LUN</div>
+              <div style="font-size:1.5rem;font-weight:800;color:#f0485a">34.6%</div>
+              <div style="font-size:0.65rem;color:#8898bb;margin-top:2px;">107 trades</div>
+              <div style="font-size:0.85rem;font-weight:700;color:#22d98a;margin-top:4px;">+2,292 pts</div>
+            </div><div style="background:rgba(99,130,255,0.08);border:1px solid #6382ff33;border-radius:12px;padding:14px;text-align:center;">
+              <div style="font-size:0.7rem;font-weight:700;color:#6382ff;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">MAR</div>
+              <div style="font-size:1.5rem;font-weight:800;color:#f0485a">13.6%</div>
+              <div style="font-size:0.65rem;color:#8898bb;margin-top:2px;">118 trades</div>
+              <div style="font-size:0.85rem;font-weight:700;color:#f0485a;margin-top:4px;">-3,932 pts</div>
+            </div><div style="background:rgba(245,214,35,0.08);border:1px solid #f5d62333;border-radius:12px;padding:14px;text-align:center;">
+              <div style="font-size:0.7rem;font-weight:700;color:#f5d623;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">MIE</div>
+              <div style="font-size:1.5rem;font-weight:800;color:#f0485a">52.2%</div>
+              <div style="font-size:0.65rem;color:#8898bb;margin-top:2px;">46 trades</div>
+              <div style="font-size:0.85rem;font-weight:700;color:#22d98a;margin-top:4px;">+4,327 pts</div>
+            </div><div style="background:rgba(245,166,35,0.08);border:1px solid #f5a62333;border-radius:12px;padding:14px;text-align:center;">
+              <div style="font-size:0.7rem;font-weight:700;color:#f5a623;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">JUE</div>
+              <div style="font-size:1.5rem;font-weight:800;color:#f0485a">25.9%</div>
+              <div style="font-size:0.65rem;color:#8898bb;margin-top:2px;">112 trades</div>
+              <div style="font-size:0.85rem;font-weight:700;color:#22d98a;margin-top:4px;">+1,535 pts</div>
+            </div><div style="background:rgba(240,72,90,0.08);border:1px solid #f0485a33;border-radius:12px;padding:14px;text-align:center;">
+              <div style="font-size:0.7rem;font-weight:700;color:#f0485a;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">VIE</div>
+              <div style="font-size:1.5rem;font-weight:800;color:#f0485a">26.1%</div>
+              <div style="font-size:0.65rem;color:#8898bb;margin-top:2px;">115 trades</div>
+              <div style="font-size:0.85rem;font-weight:700;color:#22d98a;margin-top:4px;">+3,488 pts</div>
+            </div></div>
+  </div>
+
+  <!-- BOOSTERS -->
+  <div class="card">
+    <div class="card-title">&#9889; Filtros de Mejora (Boosters)</div>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--green)">27.6%</div>
+        <div class="stat-label">Prev Day = Same Dir (246 trades)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--orange)">32.9%</div>
+        <div class="stat-label">VXN &gt; 25 (79 trades)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--accent2)">25.9%</div>
+        <div class="stat-label">VXN &lt;= 25 (417 trades)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--yellow)">3</div>
+        <div class="stat-label">Max Consec Wins</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRADES TABLE -->
+  <div class="card" style="overflow-x:auto;">
+    <div class="card-title">&#128203; Ultimos 50 Trades</div>
+    <table>
+      <thead><tr>
+        <th>Fecha</th><th>Dia</th><th>Accion</th><th>Entry</th><th>Exit</th>
+        <th>Rango</th><th>P&L</th><th>Equity</th><th>Pattern</th>
+      </tr></thead>
+      <tbody><tr>
+          <td>2026-04-02</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,180</td>
+          <td>24,218</td>
+          <td>601</td>
+          <td style="color:#f0485a;font-weight:700">-38.0</td>
+          <td style="color:var(--accent2)">7,711.7</td>
+          <td>SWEEP_L_RETURN *</td>
+        </tr><tr>
+          <td>2026-03-31</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>23,120</td>
+          <td>23,915</td>
+          <td>1,014</td>
+          <td style="color:#22d98a;font-weight:700">+795.5</td>
+          <td style="color:var(--accent2)">7,749.7</td>
+          <td>SWEEP_L_RETURN</td>
+        </tr><tr>
+          <td>2026-03-30</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>23,190</td>
+          <td>23,140</td>
+          <td>550</td>
+          <td style="color:#f0485a;font-weight:700">-137.4</td>
+          <td style="color:var(--accent2)">6,954.2</td>
+          <td>ROTATION_POC *</td>
+        </tr><tr>
+          <td>2026-03-27</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>23,824</td>
+          <td>23,328</td>
+          <td>744</td>
+          <td style="color:#22d98a;font-weight:700">+495.5</td>
+          <td style="color:var(--accent2)">7,091.5</td>
+          <td>EXPANSION_L *</td>
+        </tr><tr>
+          <td>2026-03-26</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,374</td>
+          <td>23,794</td>
+          <td>658</td>
+          <td style="color:#22d98a;font-weight:700">+579.2</td>
+          <td style="color:var(--accent2)">6,596.0</td>
+          <td>EXPANSION_L *</td>
+        </tr><tr>
+          <td>2026-03-25</td>
+          <td>WED</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,420</td>
+          <td>24,368</td>
+          <td>253</td>
+          <td style="color:#f0485a;font-weight:700">-63.3</td>
+          <td style="color:var(--accent2)">6,016.8</td>
+          <td>ROTATION_POC *</td>
+        </tr><tr>
+          <td>2026-03-24</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>24,417</td>
+          <td>24,214</td>
+          <td>416</td>
+          <td style="color:#f0485a;font-weight:700">-104.0</td>
+          <td style="color:var(--accent2)">6,080.1</td>
+          <td>NEUTRAL</td>
+        </tr><tr>
+          <td>2026-03-23</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>23,902</td>
+          <td>24,408</td>
+          <td>990</td>
+          <td style="color:#22d98a;font-weight:700">+506.2</td>
+          <td style="color:var(--accent2)">6,184.1</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-03-20</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,417</td>
+          <td>24,292</td>
+          <td>335</td>
+          <td style="color:#22d98a;font-weight:700">+125.5</td>
+          <td style="color:var(--accent2)">5,677.9</td>
+          <td>SWEEP_L_RETURN *</td>
+        </tr><tr>
+          <td>2026-03-19</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,400</td>
+          <td>24,364</td>
+          <td>390</td>
+          <td style="color:#f0485a;font-weight:700">-97.6</td>
+          <td style="color:var(--accent2)">5,552.4</td>
+          <td>SWEEP_L_RETURN *</td>
+        </tr><tr>
+          <td>2026-03-18</td>
+          <td>WED</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,796</td>
+          <td>24,434</td>
+          <td>639</td>
+          <td style="color:#f0485a;font-weight:700">-159.8</td>
+          <td style="color:var(--accent2)">5,650.0</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-03-17</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>24,669</td>
+          <td>24,796</td>
+          <td>379</td>
+          <td style="color:#f0485a;font-weight:700">-94.8</td>
+          <td style="color:var(--accent2)">5,809.7</td>
+          <td>SWEEP_H_RETURN *</td>
+        </tr><tr>
+          <td>2026-03-16</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>24,285</td>
+          <td>24,676</td>
+          <td>538</td>
+          <td style="color:#22d98a;font-weight:700">+390.8</td>
+          <td style="color:var(--accent2)">5,904.5</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-03-13</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,567</td>
+          <td>24,394</td>
+          <td>472</td>
+          <td style="color:#f0485a;font-weight:700">-117.9</td>
+          <td style="color:var(--accent2)">5,513.7</td>
+          <td>NEUTRAL *</td>
+        </tr><tr>
+          <td>2026-03-12</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,934</td>
+          <td>24,560</td>
+          <td>432</td>
+          <td style="color:#22d98a;font-weight:700">+374.5</td>
+          <td style="color:var(--accent2)">5,631.6</td>
+          <td>EXPANSION_L *</td>
+        </tr><tr>
+          <td>2026-03-11</td>
+          <td>WED</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,010</td>
+          <td>24,984</td>
+          <td>306</td>
+          <td style="color:#f0485a;font-weight:700">-76.6</td>
+          <td style="color:var(--accent2)">5,257.1</td>
+          <td>ROTATION_POC</td>
+        </tr><tr>
+          <td>2026-03-10</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>24,982</td>
+          <td>24,982</td>
+          <td>388</td>
+          <td style="color:#f0485a;font-weight:700">-96.9</td>
+          <td style="color:var(--accent2)">5,333.7</td>
+          <td>SWEEP_H_RETURN *</td>
+        </tr><tr>
+          <td>2026-03-09</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>24,435</td>
+          <td>24,991</td>
+          <td>1,058</td>
+          <td style="color:#f0485a;font-weight:700">-264.5</td>
+          <td style="color:var(--accent2)">5,430.6</td>
+          <td>SWEEP_L_RETURN</td>
+        </tr><tr>
+          <td>2026-03-06</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,020</td>
+          <td>24,670</td>
+          <td>540</td>
+          <td style="color:#22d98a;font-weight:700">+349.5</td>
+          <td style="color:var(--accent2)">5,695.1</td>
+          <td>EXPANSION_L *</td>
+        </tr><tr>
+          <td>2026-03-05</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,156</td>
+          <td>25,050</td>
+          <td>478</td>
+          <td style="color:#22d98a;font-weight:700">+107.0</td>
+          <td style="color:var(--accent2)">5,345.6</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-03-03</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,003</td>
+          <td>24,756</td>
+          <td>659</td>
+          <td style="color:#f0485a;font-weight:700">-164.8</td>
+          <td style="color:var(--accent2)">5,238.6</td>
+          <td>SWEEP_L_RETURN</td>
+        </tr><tr>
+          <td>2026-03-02</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>24,682</td>
+          <td>25,025</td>
+          <td>624</td>
+          <td style="color:#f0485a;font-weight:700">-156.0</td>
+          <td style="color:var(--accent2)">5,403.3</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-02-27</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,024</td>
+          <td>25,005</td>
+          <td>317</td>
+          <td style="color:#22d98a;font-weight:700">+19.5</td>
+          <td style="color:var(--accent2)">5,559.3</td>
+          <td>SWEEP_L_RETURN *</td>
+        </tr><tr>
+          <td>2026-02-26</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,388</td>
+          <td>25,081</td>
+          <td>556</td>
+          <td style="color:#22d98a;font-weight:700">+307.2</td>
+          <td style="color:var(--accent2)">5,539.8</td>
+          <td>SWEEP_L_RETURN</td>
+        </tr><tr>
+          <td>2026-02-24</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>24,788</td>
+          <td>25,029</td>
+          <td>384</td>
+          <td style="color:#22d98a;font-weight:700">+240.8</td>
+          <td style="color:var(--accent2)">5,232.6</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-02-23</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,034</td>
+          <td>24,763</td>
+          <td>392</td>
+          <td style="color:#f0485a;font-weight:700">-97.9</td>
+          <td style="color:var(--accent2)">4,991.8</td>
+          <td>SWEEP_L_RETURN</td>
+        </tr><tr>
+          <td>2026-02-20</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,838</td>
+          <td>25,068</td>
+          <td>461</td>
+          <td style="color:#f0485a;font-weight:700">-115.2</td>
+          <td style="color:var(--accent2)">5,089.8</td>
+          <td>SWEEP_L_RETURN</td>
+        </tr><tr>
+          <td>2026-02-19</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,944</td>
+          <td>24,859</td>
+          <td>305</td>
+          <td style="color:#f0485a;font-weight:700">-76.2</td>
+          <td style="color:var(--accent2)">5,205.0</td>
+          <td>NEUTRAL</td>
+        </tr><tr>
+          <td>2026-02-17</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>24,790</td>
+          <td>24,768</td>
+          <td>473</td>
+          <td style="color:#f0485a;font-weight:700">-118.2</td>
+          <td style="color:var(--accent2)">5,281.3</td>
+          <td>SWEEP_L_RETURN *</td>
+        </tr><tr>
+          <td>2026-02-13</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,842</td>
+          <td>24,803</td>
+          <td>417</td>
+          <td style="color:#f0485a;font-weight:700">-104.2</td>
+          <td style="color:var(--accent2)">5,399.5</td>
+          <td>SWEEP_L_RETURN *</td>
+        </tr><tr>
+          <td>2026-02-12</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,289</td>
+          <td>24,768</td>
+          <td>698</td>
+          <td style="color:#22d98a;font-weight:700">+521.0</td>
+          <td style="color:var(--accent2)">5,503.7</td>
+          <td>EXPANSION_L</td>
+        </tr><tr>
+          <td>2026-02-10</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,363</td>
+          <td>25,218</td>
+          <td>249</td>
+          <td style="color:#f0485a;font-weight:700">-62.2</td>
+          <td style="color:var(--accent2)">4,982.7</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-02-09</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,154</td>
+          <td>25,354</td>
+          <td>473</td>
+          <td style="color:#f0485a;font-weight:700">-118.3</td>
+          <td style="color:var(--accent2)">5,045.0</td>
+          <td>NEUTRAL *</td>
+        </tr><tr>
+          <td>2026-02-06</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>24,416</td>
+          <td>25,163</td>
+          <td>982</td>
+          <td style="color:#f0485a;font-weight:700">-245.6</td>
+          <td style="color:var(--accent2)">5,163.3</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-02-05</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,062</td>
+          <td>24,651</td>
+          <td>762</td>
+          <td style="color:#22d98a;font-weight:700">+410.8</td>
+          <td style="color:var(--accent2)">5,408.8</td>
+          <td>NEUTRAL *</td>
+        </tr><tr>
+          <td>2026-02-04</td>
+          <td>WED</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,388</td>
+          <td>24,999</td>
+          <td>731</td>
+          <td style="color:#22d98a;font-weight:700">+388.2</td>
+          <td style="color:var(--accent2)">4,998.1</td>
+          <td>NEUTRAL *</td>
+        </tr><tr>
+          <td>2026-02-03</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,876</td>
+          <td>25,452</td>
+          <td>809</td>
+          <td style="color:#f0485a;font-weight:700">-202.2</td>
+          <td style="color:var(--accent2)">4,609.8</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-02-02</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,530</td>
+          <td>25,850</td>
+          <td>769</td>
+          <td style="color:#f0485a;font-weight:700">-192.3</td>
+          <td style="color:var(--accent2)">4,812.0</td>
+          <td>SWEEP_L_RETURN</td>
+        </tr><tr>
+          <td>2026-01-30</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,998</td>
+          <td>25,670</td>
+          <td>451</td>
+          <td style="color:#22d98a;font-weight:700">+328.5</td>
+          <td style="color:var(--accent2)">5,004.3</td>
+          <td>EXPANSION_L *</td>
+        </tr><tr>
+          <td>2026-01-29</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>26,282</td>
+          <td>25,999</td>
+          <td>760</td>
+          <td style="color:#22d98a;font-weight:700">+283.2</td>
+          <td style="color:var(--accent2)">4,675.8</td>
+          <td>SWEEP_L_RETURN</td>
+        </tr><tr>
+          <td>2026-01-27</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,861</td>
+          <td>26,073</td>
+          <td>280</td>
+          <td style="color:#22d98a;font-weight:700">+211.8</td>
+          <td style="color:var(--accent2)">4,392.6</td>
+          <td>EXPANSION_H *</td>
+        </tr><tr>
+          <td>2026-01-26</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,586</td>
+          <td>25,848</td>
+          <td>571</td>
+          <td style="color:#f0485a;font-weight:700">-142.8</td>
+          <td style="color:var(--accent2)">4,180.8</td>
+          <td>SWEEP_L_RETURN *</td>
+        </tr><tr>
+          <td>2026-01-23</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,605</td>
+          <td>25,738</td>
+          <td>306</td>
+          <td style="color:#f0485a;font-weight:700">-76.4</td>
+          <td style="color:var(--accent2)">4,323.6</td>
+          <td>SWEEP_H_RETURN *</td>
+        </tr><tr>
+          <td>2026-01-22</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,530</td>
+          <td>25,658</td>
+          <td>256</td>
+          <td style="color:#f0485a;font-weight:700">-64.0</td>
+          <td style="color:var(--accent2)">4,400.0</td>
+          <td>NEUTRAL *</td>
+        </tr><tr>
+          <td>2026-01-20</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,471</td>
+          <td>25,129</td>
+          <td>377</td>
+          <td style="color:#f0485a;font-weight:700">-94.2</td>
+          <td style="color:var(--accent2)">4,464.0</td>
+          <td>EXPANSION_L *</td>
+        </tr><tr>
+          <td>2026-01-16</td>
+          <td>FRI</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,720</td>
+          <td>25,689</td>
+          <td>300</td>
+          <td style="color:#f0485a;font-weight:700">-74.9</td>
+          <td style="color:var(--accent2)">4,558.2</td>
+          <td>ROTATION_POC</td>
+        </tr><tr>
+          <td>2026-01-15</td>
+          <td>THU</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,593</td>
+          <td>25,706</td>
+          <td>390</td>
+          <td style="color:#f0485a;font-weight:700">-97.6</td>
+          <td style="color:var(--accent2)">4,633.1</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-01-14</td>
+          <td>WED</td>
+          <td style="color:#f0485a">&#9660; SHORT</td>
+          <td>25,901</td>
+          <td>25,631</td>
+          <td>505</td>
+          <td style="color:#22d98a;font-weight:700">+269.8</td>
+          <td style="color:var(--accent2)">4,730.6</td>
+          <td>NEUTRAL *</td>
+        </tr><tr>
+          <td>2026-01-13</td>
+          <td>TUE</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,954</td>
+          <td>25,906</td>
+          <td>242</td>
+          <td style="color:#f0485a;font-weight:700">-60.6</td>
+          <td style="color:var(--accent2)">4,460.9</td>
+          <td>SWEEP_H_RETURN</td>
+        </tr><tr>
+          <td>2026-01-12</td>
+          <td>MON</td>
+          <td style="color:#22d98a">&#9650; LONG</td>
+          <td>25,949</td>
+          <td>25,957</td>
+          <td>388</td>
+          <td style="color:#f0485a;font-weight:700">-96.9</td>
+          <td style="color:var(--accent2)">4,521.5</td>
+          <td>SWEEP_H_RETURN *</td>
+        </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const eqData = [{"x": "2025-10-17", "y": 3796.4}, {"x": "2025-10-20", "y": 3696.7}, {"x": "2025-10-21", "y": 3655.5}, {"x": "2025-10-22", "y": 3900.0}, {"x": "2025-10-23", "y": 3810.3}, {"x": "2025-10-24", "y": 3736.6}, {"x": "2025-10-27", "y": 3976.8}, {"x": "2025-10-28", "y": 4137.8}, {"x": "2025-10-30", "y": 4001.3}, {"x": "2025-10-31", "y": 3905.0}, {"x": "2025-11-03", "y": 3980.0}, {"x": "2025-11-04", "y": 3834.6}, {"x": "2025-11-06", "y": 4328.8}, {"x": "2025-11-07", "y": 4477.3}, {"x": "2025-11-10", "y": 4871.1}, {"x": "2025-11-11", "y": 4798.5}, {"x": "2025-11-12", "y": 4713.2}, {"x": "2025-11-13", "y": 5242.5}, {"x": "2025-11-14", "y": 5075.6}, {"x": "2025-11-17", "y": 4918.3}, {"x": "2025-11-18", "y": 4772.5}, {"x": "2025-11-20", "y": 4463.3}, {"x": "2025-11-21", "y": 4290.3}, {"x": "2025-11-24", "y": 4782.8}, {"x": "2025-11-25", "y": 4649.5}, {"x": "2025-11-28", "y": 4596.0}, {"x": "2025-12-01", "y": 4507.8}, {"x": "2025-12-02", "y": 4421.5}, {"x": "2025-12-04", "y": 4360.6}, {"x": "2025-12-05", "y": 4288.5}, {"x": "2025-12-08", "y": 4214.5}, {"x": "2025-12-09", "y": 4170.6}, {"x": "2025-12-11", "y": 4226.6}, {"x": "2025-12-12", "y": 4714.1}, {"x": "2025-12-15", "y": 4619.9}, {"x": "2025-12-16", "y": 4526.3}, {"x": "2025-12-17", "y": 4373.4}, {"x": "2025-12-18", "y": 4247.8}, {"x": "2025-12-19", "y": 4202.1}, {"x": "2025-12-22", "y": 4259.1}, {"x": "2025-12-23", "y": 4205.6}, {"x": "2025-12-26", "y": 4175.6}, {"x": "2025-12-29", "y": 4114.1}, {"x": "2025-12-30", "y": 4082.8}, {"x": "2025-12-31", "y": 4309.3}, {"x": "2026-01-02", "y": 4174.6}, {"x": "2026-01-05", "y": 4320.6}, {"x": "2026-01-06", "y": 4559.6}, {"x": "2026-01-08", "y": 4710.9}, {"x": "2026-01-09", "y": 4618.4}, {"x": "2026-01-12", "y": 4521.5}, {"x": "2026-01-13", "y": 4460.9}, {"x": "2026-01-14", "y": 4730.6}, {"x": "2026-01-15", "y": 4633.1}, {"x": "2026-01-16", "y": 4558.2}, {"x": "2026-01-20", "y": 4464.0}, {"x": "2026-01-22", "y": 4400.0}, {"x": "2026-01-23", "y": 4323.6}, {"x": "2026-01-26", "y": 4180.8}, {"x": "2026-01-27", "y": 4392.6}, {"x": "2026-01-29", "y": 4675.8}, {"x": "2026-01-30", "y": 5004.3}, {"x": "2026-02-02", "y": 4812.0}, {"x": "2026-02-03", "y": 4609.8}, {"x": "2026-02-04", "y": 4998.1}, {"x": "2026-02-05", "y": 5408.8}, {"x": "2026-02-06", "y": 5163.3}, {"x": "2026-02-09", "y": 5045.0}, {"x": "2026-02-10", "y": 4982.7}, {"x": "2026-02-12", "y": 5503.7}, {"x": "2026-02-13", "y": 5399.5}, {"x": "2026-02-17", "y": 5281.3}, {"x": "2026-02-19", "y": 5205.0}, {"x": "2026-02-20", "y": 5089.8}, {"x": "2026-02-23", "y": 4991.8}, {"x": "2026-02-24", "y": 5232.6}, {"x": "2026-02-26", "y": 5539.8}, {"x": "2026-02-27", "y": 5559.3}, {"x": "2026-03-02", "y": 5403.3}, {"x": "2026-03-03", "y": 5238.6}, {"x": "2026-03-05", "y": 5345.6}, {"x": "2026-03-06", "y": 5695.1}, {"x": "2026-03-09", "y": 5430.6}, {"x": "2026-03-10", "y": 5333.7}, {"x": "2026-03-11", "y": 5257.1}, {"x": "2026-03-12", "y": 5631.6}, {"x": "2026-03-13", "y": 5513.7}, {"x": "2026-03-16", "y": 5904.5}, {"x": "2026-03-17", "y": 5809.7}, {"x": "2026-03-18", "y": 5650.0}, {"x": "2026-03-19", "y": 5552.4}, {"x": "2026-03-20", "y": 5677.9}, {"x": "2026-03-23", "y": 6184.1}, {"x": "2026-03-24", "y": 6080.1}, {"x": "2026-03-25", "y": 6016.8}, {"x": "2026-03-26", "y": 6596.0}, {"x": "2026-03-27", "y": 7091.5}, {"x": "2026-03-30", "y": 6954.2}, {"x": "2026-03-31", "y": 7749.7}, {"x": "2026-04-02", "y": 7711.7}];
+new Chart(document.getElementById('eqChart'), {
+  type: 'line',
+  data: {
+    labels: eqData.map(d => d.x),
+    datasets: [{
+      label: 'Equity (pts)',
+      data: eqData.map(d => d.y),
+      borderColor: '#38c9e8',
+      backgroundColor: 'rgba(56,201,232,0.1)',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 0,
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { display: true, grid: { color: 'rgba(99,130,255,0.08)' }, ticks: { maxTicksLimit: 10, font: { size: 9 } } },
+      y: { grid: { color: 'rgba(99,130,255,0.08)' } }
+    }
+  }
+});
+</script>
+</body>
+</html>
