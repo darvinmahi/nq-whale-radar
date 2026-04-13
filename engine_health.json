@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-04-13T14:27:52.576146+00:00Z",
-  "last_update_human": "2026-04-13 14:27:52 UTC",
+  "timestamp": "2026-04-13T15:55:23.070180+00:00Z",
+  "last_update_human": "2026-04-13 15:55:23 UTC",
   "next_update_in_min": 15,
   "engine_state": "OPTIMAL",
-  "total_time_sec": 3.7,
+  "total_time_sec": 4.8,
   "agents_ok": 19,
   "agents_failed": 0,
   "details": {
@@ -22,11 +22,7 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 1.6
-    },
-    "Agent 7 · Probability Analyst": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 2.6
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -36,11 +32,11 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 6 · SMC Detective": {
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 14 · Order Flow Expert": {
+    "Agent 6 · SMC Detective": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -48,7 +44,7 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 15 · Journal Writer": {
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -56,17 +52,21 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 16 · Outcome Tracker": {
+    "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 1.8
+      "time": 0.0
     },
     "Agent 12 · Backtest Engine": {
+      "status": "✅ OK",
+      "time": 1.3
+    },
+    "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
       "time": 1.8
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.1
+      "time": 2.2
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
