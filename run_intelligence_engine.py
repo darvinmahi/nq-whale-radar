@@ -142,6 +142,16 @@ def run_pipeline(cycle_num):
     ]
     run_parallel(grupo2, results, "2 (Análisis)")
 
+    # ── GRUPO 2.5: Research Sources (nuevos investigadores) ───────
+    grupo_research = [
+        ("source_news",                 "Source · News Live"),
+        ("source_sentiment",            "Source · Reddit Sentiment"),
+        ("source_polygon",              "Source · Polygon Sessions"),
+        ("agent_daily_plan",            "Agent · Daily Trade Plan"),
+        ("researcher_trade_simulator",  "Researcher · Trade Simulator"),
+    ]
+    run_parallel(grupo_research, results, "2.5 (Research)")
+
     # ── GRUPO 3: Síntesis (dependen de A1-A9) ─────────────────────
     grupo3 = [
         ("agent4_bias_engine",          "Agent 4 · Bias Engine"),
