@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NQ — VIERNES LIVE | Whale Radar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+  <style>
+    :root{--bg:#04020c;--card:#0c0a1e;--border:#1e1a3a;--purple:#7c3aed;--cyan:#06b6d4;
+          --green:#10b981;--red:#ef4444;--amber:#f59e0b;--muted:#94a3b8;--text:#e2e8f0}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow:hidden}
+    .top-bar{background:linear-gradient(135deg,#0c0a1e,#110d2a);border-bottom:1px solid var(--border);
+             padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .logo-badge{background:linear-gradient(135deg,var(--purple),#4f46e5);color:#fff;font-size:10px;
+                font-weight:700;padding:3px 9px;border-radius:6px;letter-spacing:1px;flex-shrink:0}
+    .live-badge{background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.5);
+                color:#6ee7b7;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;
+                display:flex;align-items:center;gap:5px;flex-shrink:0}
+    .dot-live{width:7px;height:7px;border-radius:50%;background:#10b981;
+              animation:blink 1.5s ease-in-out infinite;flex-shrink:0}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+    .stats-bar{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;align-items:center}
+    .stats-bar::-webkit-scrollbar{display:none}
+    .stat{text-align:center;flex-shrink:0}
+    .stat-lbl{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px}
+    .stat-val{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;margin-top:1px}
+    #chart-wrap{width:100%;height:calc(100vh - 52px);background:#09071a;position:relative}
+    #chart{width:100%;height:100%}
+    .loading-overlay{position:absolute;inset:0;background:rgba(4,2,12,0.85);display:flex;
+                     flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:100}
+    .spinner{width:36px;height:36px;border:3px solid rgba(124,58,237,0.2);
+             border-top-color:#7c3aed;border-radius:50%;animation:spin 0.8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-overlay p{color:var(--muted);font-size:12px}
+    #refresh-badge{position:absolute;top:10px;right:10px;background:rgba(6,182,212,.15);
+                   border:1px solid rgba(6,182,212,.3);color:#67e8f9;font-size:10px;font-weight:600;
+                   padding:4px 10px;border-radius:8px;font-family:'JetBrains Mono',monospace;
+                   z-index:50;cursor:pointer}
+    #refresh-badge:hover{background:rgba(6,182,212,.25)}
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <div class="logo-badge">NQ RADAR</div>
+    <span style="color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace" id="date-lbl">—</span>
+    <div class="live-badge"><div class="dot-live"></div><span id="live-txt">EN VIVO</span></div>
+  </div>
+
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat"><div class="stat-lbl">NY Open</div><div class="stat-val" style="color:var(--amber)" id="s-open">—</div></div>
+    <div class="stat"><div class="stat-lbl">Actual</div><div class="stat-val" id="s-last">—</div></div>
+    <div class="stat"><div class="stat-lbl">Move</div><div class="stat-val" id="s-move">—</div></div>
+    <div class="stat"><div class="stat-lbl">Range NY</div><div class="stat-val" style="color:var(--amber)" id="s-range">—</div></div>
+    <div class="stat"><div class="stat-lbl">OR High</div><div class="stat-val" style="color:var(--green)" id="s-orh">—</div></div>
+    <div class="stat"><div class="stat-lbl">OR Low</div><div class="stat-val" style="color:var(--red)" id="s-orl">—</div></div>
+    <div class="stat"><div class="stat-lbl">POC</div><div class="stat-val" style="color:#a78bfa" id="s-poc">—</div></div>
+    <div class="stat"><div class="stat-lbl">Actualiz.</div><div class="stat-val" style="color:var(--cyan);font-size:10px" id="s-upd">—</div></div>
+  </div>
+
+  <a href="daily_dashboard.html"
+     style="background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.35);color:#a78bfa;
+            font-size:11px;font-weight:600;padding:5px 12px;border-radius:8px;text-decoration:none;flex-shrink:0">
+    ← Dashboard
+  </a>
+</div>
+
+<div id="chart-wrap">
+  <div class="loading-overlay" id="loading">
+    <div class="spinner"></div>
+    <p id="load-msg">Cargando datos NQ en vivo…</p>
+  </div>
+  <div id="chart"></div>
+  <div id="refresh-badge" onclick="fetchAndRender(true)">🔄 Actualizar</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════════════════
+const REFRESH_MS   = 5 * 60 * 1000;   // auto-refresh cada 5 minutos
+const ET_OFFSET    = -4;               // ET = UTC-4 (ajustar a -5 en invierno)
+const NY_OPEN_H    = 9;  const NY_OPEN_M  = 30;
+const NY_CLOSE_H   = 16; const NY_CLOSE_M = 0;
+
+// Proxy local → evita CORS de Yahoo Finance
+// El server.py en el mismo directorio lo sirve en /api/nq5m
+const YAHOO = '/api/nq5m';
+
+// Nombre del día en español para el label
+const DAY_ES = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+
+
+// ── Chart ──────────────────────────────────────────────────────────
+const el = document.getElementById('chart');
+const chart = LightweightCharts.createChart(el, {
+  width: el.offsetWidth, height: el.offsetHeight,
+  layout: { background: { color: '#08061a' }, textColor: '#64748b', fontSize: 11,
+             fontFamily: 'JetBrains Mono,monospace' },
+  grid: { vertLines: { color: 'rgba(124,58,237,0.05)' }, horzLines: { color: 'rgba(124,58,237,0.05)' } },
+  crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+  rightPriceScale: { borderColor: 'rgba(30,26,58,0.8)', scaleMargins: { top: 0.05, bottom: 0.05 } },
+  timeScale: {
+    borderColor: 'rgba(30,26,58,0.8)', timeVisible: true, secondsVisible: false,
+    tickMarkFormatter: (t) => {
+      const d = new Date(t * 1000);
+      const h = ((d.getUTCHours() + ET_OFFSET + 24) % 24);
+      const m = d.getUTCMinutes();
+      return m === 0 ? h + ':00' : h + ':' + (m + '').padStart(2, '0');
+    }
+  },
+  handleScroll: { mouseWheel: true }, handleScale: { mouseWheel: true }
+});
+
+const ser = chart.addCandlestickSeries({
+  upColor: 'rgba(16,185,129,0.08)', downColor: 'rgba(139,92,246,0.08)',
+  borderUpColor: '#10b981', borderDownColor: '#8b5cf6',
+  wickUpColor: '#10b981', wickDownColor: '#8b5cf6',
+  priceFormat: { type: 'price', precision: 2, minMove: 0.25 }
+});
+
+window.addEventListener('resize', () => {
+  chart.applyOptions({ width: el.offsetWidth, height: el.offsetHeight });
+});
+
+// Lines (persistent)
+let pocLine = null, vahLine = null, valLine = null;
+let nyOpenLine = null, orHighLine = null, orLowLine = null;
+let prevHiLine = null, prevLoLine = null;
+
+function setLine(ref, price, color, title, style = 2, width = 1) {
+  if (ref) { try { ser.removePriceLine(ref); } catch(e) {} }
+  return ser.createPriceLine({ price, color, lineWidth: width, lineStyle: style,
+                               axisLabelVisible: true, title });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  FETCH + RENDER
+// ═══════════════════════════════════════════════════════════════════
+let refreshTimer = null;
+
+async function fetchAndRender(manual = false) {
+  document.getElementById('load-msg').textContent = manual ? 'Actualizando…' : 'Cargando datos NQ en vivo…';
+  if (!manual) document.getElementById('loading').style.display = 'flex';
+
+  try {
+    const res  = await fetch(YAHOO);
+    const json = await res.json();
+    const result = json.chart?.result?.[0];
+    if (!result) throw new Error('Sin datos de Yahoo');
+
+    const timestamps = result.timestamp;
+    const q = result.indicators.quote[0];
+    const opens = q.open, highs = q.high, lows = q.low, closes = q.close;
+
+    // ── Filtrar solo HOY (ET) ────────────────────────────────────
+    const nowEt = new Date(Date.now() + ET_OFFSET * 3600000);
+    const todayStr = nowEt.toISOString().slice(0, 10); // "2026-04-10"
+
+    const candles = [];
+    for (let i = 0; i < timestamps.length; i++) {
+      if (!closes[i] || !opens[i]) continue;
+      const dt = new Date((timestamps[i] + ET_OFFSET * 3600) * 1000);
+      const d  = dt.toISOString().slice(0, 10);
+      if (d !== todayStr) continue;
+      candles.push({
+        time:  timestamps[i],
+        open:  Math.round(opens[i]  * 100) / 100,
+        high:  Math.round(highs[i]  * 100) / 100,
+        low:   Math.round(lows[i]   * 100) / 100,
+        close: Math.round(closes[i] * 100) / 100,
+      });
+    }
+
+    if (!candles.length) throw new Error('Sin velas para hoy');
+
+    // ── Sesiones ─────────────────────────────────────────────────
+    const todayDate  = new Date(todayStr + 'T00:00:00Z');
+    const NY_OPEN_TS = Math.floor(todayDate.getTime() / 1000) + (NY_OPEN_H - ET_OFFSET) * 3600 + NY_OPEN_M * 60;
+    const NY_CL_TS   = Math.floor(todayDate.getTime() / 1000) + (NY_CLOSE_H - ET_OFFSET) * 3600 + NY_CLOSE_M * 60;
+    const OR_END_TS  = NY_OPEN_TS + 30 * 60;  // 10:00 ET
+    const OR45_END   = NY_OPEN_TS + 45 * 60;  // 10:15 ET
+
+    const nyCandles  = candles.filter(c => c.time >= NY_OPEN_TS && c.time <= NY_CL_TS);
+    const preCandles = candles.filter(c => c.time < NY_OPEN_TS);
+    const orCandles  = candles.filter(c => c.time >= NY_OPEN_TS && c.time < OR_END_TS);
+
+    const NY_OPEN_P  = nyCandles.length ? nyCandles[0].open  : candles[0].open;
+    const NY_CUR_P   = nyCandles.length ? nyCandles[nyCandles.length - 1].close : candles[candles.length - 1].close;
+    const NY_HIGH    = nyCandles.length ? Math.max(...nyCandles.map(c => c.high)) : 0;
+    const NY_LOW     = nyCandles.length ? Math.min(...nyCandles.map(c => c.low))  : 0;
+    const NY_RANGE   = Math.round(NY_HIGH - NY_LOW);
+    const NY_MOVE    = Math.round(NY_CUR_P - NY_OPEN_P);
+
+    const OR_HIGH    = orCandles.length ? Math.max(...orCandles.map(c => c.high)) : 0;
+    const OR_LOW     = orCandles.length ? Math.min(...orCandles.map(c => c.low))  : 0;
+    const OR_MOVE    = orCandles.length ? (orCandles[orCandles.length-1].close - orCandles[0].open) : 0;
+    const OR_DIR     = OR_MOVE > 10 ? 'BULL' : OR_MOVE < -10 ? 'BEAR' : 'FLAT';
+
+    // Volume Profile pre-NY (POC/VAH/VAL)
+    let POC = 0, VAH = 0, VAL = 0;
+    const src = preCandles.length ? preCandles : candles;
+    if (src.length) {
+      const pmin = Math.min(...src.map(c => c.low));
+      const pmax = Math.max(...src.map(c => c.high));
+      const B = 25; const nb = Math.max(1, Math.ceil((pmax - pmin) / B));
+      const vp = new Array(nb).fill(0);
+      src.forEach(c => {
+        for (let j = Math.floor((c.low - pmin) / B); j <= Math.min(Math.floor((c.high - pmin) / B), nb - 1); j++) vp[j]++;
+      });
+      const pi = vp.indexOf(Math.max(...vp));
+      POC = Math.round((pmin + pi * B + B / 2) * 100) / 100;
+      const tv = vp.reduce((a, b) => a + b, 0) * 0.70;
+      let li = pi, hi = pi, acc = vp[pi];
+      while (acc < tv) {
+        const el2 = li > 0, eh = hi < nb - 1;
+        if (el2 && eh)      { vp[li-1] >= vp[hi+1] ? (li--, acc += vp[li]) : (hi++, acc += vp[hi]); }
+        else if (el2)       { li--; acc += vp[li]; }
+        else if (eh)        { hi++; acc += vp[hi]; }
+        else break;
+      }
+      VAH = Math.round((pmin + hi * B + B) * 100) / 100;
+      VAL = Math.round((pmin + li * B) * 100) / 100;
+    }
+
+    // ── Render ───────────────────────────────────────────────────
+    ser.setData(candles);
+
+    // Lines
+    if (POC > 0) pocLine  = setLine(pocLine,  POC,  'rgba(167,139,250,0.9)',  'POC',  0, 2);
+    if (VAH > 0) vahLine  = setLine(vahLine,  VAH,  'rgba(255,255,255,0.6)',  'VAH',  2);
+    if (VAL > 0) valLine  = setLine(valLine,  VAL,  'rgba(255,255,255,0.6)',  'VAL',  2);
+    if (NY_OPEN_P > 0) nyOpenLine = setLine(nyOpenLine, NY_OPEN_P, 'rgba(245,158,11,0.85)', 'NY Open', 3);
+    if (OR_HIGH > 0)   orHighLine = setLine(orHighLine, OR_HIGH, '#ef4444', 'OR High', 2);
+    if (OR_LOW > 0)    orLowLine  = setLine(orLowLine,  OR_LOW,  '#10b981', 'OR Low',  2);
+
+    // Markers
+    const markers = [];
+    if (preCandles.length) markers.push({ time: candles[0].time, position: 'belowBar', color: '#06b6d4', shape: 'circle', text: '🌏 Pre-market' });
+    if (nyCandles.length)  markers.push({ time: nyCandles[0].time, position: 'aboveBar', color: '#f59e0b', shape: 'circle', text: `🔔 NY ${NY_OPEN_P.toLocaleString()}` });
+    if (orCandles.length && OR_DIR !== 'FLAT') {
+      const orIcon = OR_DIR === 'BEAR' ? '🔴' : '🟢';
+      markers.push({ time: orCandles[orCandles.length-1].time, position: OR_DIR === 'BEAR' ? 'aboveBar' : 'belowBar',
+                     color: OR_DIR === 'BEAR' ? '#ef4444' : '#10b981', shape: 'arrowDown',
+                     text: `${orIcon} OR ${OR_DIR} (${OR_MOVE > 0 ? '+' : ''}${Math.round(OR_MOVE)}pts)` });
+    }
+    ser.setMarkers(markers);
+    chart.timeScale().scrollToRealTime();
+
+    // ── Stats bar ─────────────────────────────────────────────────
+    const moveColor = NY_MOVE >= 0 ? '#10b981' : '#ef4444';
+    document.getElementById('s-open').textContent  = NY_OPEN_P.toLocaleString('en-US');
+    document.getElementById('s-last').textContent  = NY_CUR_P.toLocaleString('en-US');
+    document.getElementById('s-last').style.color  = moveColor;
+    document.getElementById('s-move').textContent  = (NY_MOVE >= 0 ? '+' : '') + NY_MOVE + ' pts';
+    document.getElementById('s-move').style.color  = moveColor;
+    document.getElementById('s-range').textContent = NY_RANGE + ' pts';
+    document.getElementById('s-orh').textContent   = OR_HIGH ? OR_HIGH.toLocaleString('en-US') : '—';
+    document.getElementById('s-orl').textContent   = OR_LOW  ? OR_LOW.toLocaleString('en-US')  : '—';
+    document.getElementById('s-poc').textContent   = POC ? POC.toLocaleString('en-US') : '—';
+
+    const now2 = new Date();
+    const hh = now2.getHours().toString().padStart(2,'0');
+    const mm = now2.getMinutes().toString().padStart(2,'0');
+    document.getElementById('s-upd').textContent = hh + ':' + mm;
+
+    // Date label
+    document.getElementById('date-lbl').textContent = `${todayStr} · VIERNES · 5MIN`;
+
+    // OR direction color in live-txt
+    const orColors = { BEAR: '#fca5a5', BULL: '#6ee7b7', FLAT: '#fcd34d' };
+    document.getElementById('live-txt').textContent = `EN VIVO — OR ${OR_DIR}`;
+    document.getElementById('live-txt').style.color = orColors[OR_DIR] || '#6ee7b7';
+
+    // ── Update Friday score in parent dashboard ────────────────
+    try {
+      if (window.parent && window.parent.updateFriScoreLive) {
+        window.parent.updateFriScoreLive({
+          or_dir: OR_DIR, or_range: Math.round(OR_HIGH - OR_LOW),
+          ny_move: NY_MOVE, or_high: OR_HIGH, or_low: OR_LOW
+        });
+      }
+    } catch(e) {}
+
+  } catch (err) {
+    console.error('Error fetching NQ:', err);
+    document.getElementById('load-msg').textContent = `Error: ${err.message}. Reintentando en 2min…`;
+    document.getElementById('loading').style.display = manual ? 'none' : 'flex';
+    setTimeout(() => fetchAndRender(false), 120000);
+    return;
+  }
+
+  document.getElementById('loading').style.display = 'none';
+
+  // Schedule next refresh
+  clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(() => fetchAndRender(false), REFRESH_MS);
+  document.getElementById('refresh-badge').textContent = `🔄 +${REFRESH_MS/60000}min`;
+}
+
+// ── Init ──────────────────────────────────────────────────────────
+fetchAndRender(false);
+</script>
+</body></html>

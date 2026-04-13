@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-04-10 02:23:05.514151",
+  "rulebook": {
+    "LUNES": [
+      "w0930_0959_dir=BEAR → BEAR: 79% (n=14)"
+    ],
+    "MARTES": [
+      "w0930_1029_dir=BULL → BULL: 61% (n=70)",
+      "w1000_1059_dir=BULL → BULL: 62% (n=61)"
+    ],
+    "MIÉRCOLES": [
+      "w0930_0959_dir=BEAR → BEAR: 65% (n=17)",
+      "w1200_1259_dir=BULL → BULL: 74% (n=27)"
+    ],
+    "JUEVES": [
+      "w0930_0959_dir=BEAR → BEAR: 62% (n=13)",
+      "w1200_1259_dir=BEAR → BEAR: 63% (n=19)"
+    ],
+    "VIERNES": [
+      "w0930_0959_dir=BEAR → BEAR: 88% (n=17)",
+      "w0930_1029_dir=BEAR → BEAR: 64% (n=52)",
+      "w1000_1059_dir=BEAR → BEAR: 64% (n=45)",
+      "w1100_1159_dir=BEAR → BEAR: 62% (n=39)",
+      "w1200_1259_dir=BEAR → BEAR: 60% (n=10)",
+      "vxn_lvl=HIGH → BEAR: 71% (n=14)",
+      "spike=UP → BULL: 63% (n=19)"
+    ]
+  }
+}

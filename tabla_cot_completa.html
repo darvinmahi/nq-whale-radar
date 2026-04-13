@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>COT Completo — NQ Whale Radar</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { background:#0d0d1a; color:#e2e8f0; font-family:'Segoe UI',Arial,sans-serif; 
+         font-size:13px; padding:20px; }
+  h1 { color:#f59e0b; font-size:20px; margin-bottom:6px; text-align:center; }
+  .subtitle { color:#64748b; font-size:11px; text-align:center; margin-bottom:16px; }
+  .legend { display:flex; gap:20px; justify-content:center; margin-bottom:18px; 
+             flex-wrap:wrap; }
+  .leg-item { display:flex; align-items:center; gap:8px; font-size:11px; color:#94a3b8; }
+  .leg-box { width:18px; height:14px; border-radius:3px; }
+
+  table { width:100%; border-collapse:collapse; }
+  thead th { background:#1e1b4b; color:#94a3b8; font-size:11px; font-weight:600;
+              padding:8px 6px; text-align:center; border-bottom:2px solid #312e81;
+              position:sticky; top:0; z-index:10; }
+  thead th.section-am  { background:#1a0f0f; color:#fca5a5; }
+  thead th.section-lev { background:#0a1f1a; color:#6ee7b7; }
+  thead th.section-div { background:#1e1b2e; color:#c4b5fd; }
+  
+  tr:nth-child(even) { background:#0f172a; }
+  tr:nth-child(odd)  { background:#131325; }
+  tr.div-row         { background:#1a0a0a !important; border-left:4px solid #ef4444; }
+  tr.div-bull-row    { background:#0a1a10 !important; border-left:4px solid #10b981; }
+  
+  td { padding:6px 8px; text-align:right; border-bottom:1px solid #1e293b; 
+       white-space:nowrap; }
+  td.date-col { text-align:left; color:#94a3b8; font-size:12px; }
+  td.lbl-col  { text-align:left; color:#64748b; font-size:11px; }
+  
+  .num-pos  { color:#10b981; }
+  .num-neg  { color:#ef4444; }
+  .num-neut { color:#64748b; }
+  .delta-strong-neg { color:#ef4444; font-weight:700; }
+  .delta-strong-pos { color:#10b981; font-weight:700; }
+  
+  .bar-cell { position:relative; min-width:90px; }
+  .pct-bar  { display:inline-block; height:12px; border-radius:2px; 
+               margin-right:5px; vertical-align:middle; }
+  
+  .sig-badge { display:inline-block; padding:3px 10px; border-radius:4px; 
+                font-size:12px; font-weight:700; text-align:center; }
+  .sig-bear  { background:#7f1d1d; color:#fca5a5; }
+  .sig-bull  { background:#064e3b; color:#6ee7b7; }
+  .sig-none  { color:#334155; }
+
+  .nq-pos { color:#10b981; font-weight:600; }
+  .nq-neg { color:#ef4444; font-weight:600; }
+  
+  .ok-yes { color:#10b981; font-weight:700; font-size:15px; }
+  .ok-no  { color:#ef4444; font-weight:700; font-size:15px; }
+  
+  .explain { padding:16px 20px; background:#131325; border:1px solid #2d2d4e;
+              border-radius:8px; margin-bottom:20px; max-width:900px; margin-left:auto;
+              margin-right:auto; }
+  .explain h2 { color:#f59e0b; font-size:14px; margin-bottom:10px; }
+  .explain p  { color:#94a3b8; font-size:12px; line-height:1.8; margin-bottom:8px; }
+  .explain b  { color:#e2e8f0; }
+  
+  .week-num { background:#1e293b; color:#64748b; font-size:10px; 
+               padding:1px 5px; border-radius:10px; margin-left:4px; }
+  
+  .section-header { background:#1e2340 !important; }
+  .section-header td { color:#818cf8; font-size:10px; font-weight:700; 
+                        text-align:center; padding:4px; letter-spacing:1px; }
+</style>
+</head>
+<body>
+<h1>📊 COT SEMANAL COMPLETO — Asset Manager & Leveraged Money</h1>
+<p class="subtitle">NQ Futures · Último año · Datos CFTC reales · Divergencias resaltadas</p>
+
+<div class="explain">
+  <h2>🧠 Cómo leer esta tabla</h2>
+  <p><b>AM Longs / AM Shorts:</b> Contratos que tiene BlackRock y fondos de pensión en posición compradora vs vendedora.</p>
+  <p><b>AM Net:</b> Longs − Shorts. <span style="color:#10b981">Positivo = netos alcistas</span> | <span style="color:#ef4444">Negativo = netos bajistas</span></p>
+  <p><b>AM Delta (🔑 CLAVE):</b> Cuánto cambió el AM Net esta semana vs la anterior. 
+     <span style="color:#ef4444;font-weight:700">AM Delta &lt; −5,000</span> = BlackRock REDUJO posición → señal bajista de dinero inteligente.</p>
+  <p><b>LEV %:</b> Percentil 52 semanas del posicionamiento neto de Hedge Funds. 
+     <span style="color:#10b981">100% = máximo alcista histórico</span> | <span style="color:#ef4444">0% = máximo bajista histórico</span></p>
+  <p><b>DIVERGENCIA 🔴 BEAR:</b> <b>AM Delta &lt; −5k</b> (BlackRock vende) + <b>LEV % &gt; 60%</b> (Hedge funds siguen comprando). 
+     Los grandes salen en silencio. Muy bajista para las próximas semanas.</p>
+  <p><b>DIVERGENCIA 🟢 BULL:</b> <b>AM Delta &gt; +5k</b> (BlackRock compra) + <b>LEV % &lt; 40%</b> (Hedge funds siguen cortos). 
+     Los grandes acumulan mientras los hedge funds aún no lo saben. Muy alcista.</p>
+</div>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-box" style="background:#7f1d1d;border:1px solid #ef4444"></div>BEAR STRONG (AM &lt; -10k + LEV &gt; 60%)</div>
+  <div class="leg-item"><div class="leg-box" style="background:#ef444444;border:1px solid #ef4444"></div>BEAR (AM &lt; -5k + LEV &gt; 60%)</div>
+  <div class="leg-item"><div class="leg-box" style="background:#10b98144;border:1px solid #10b981"></div>BULL (AM &gt; +5k + LEV &lt; 40%)</div>
+  <div class="leg-item"><div class="leg-box" style="background:#064e3b;border:1px solid #10b981"></div>BULL STRONG (AM &gt; +10k + LEV &lt; 40%)</div>
+  <div class="leg-item"><div class="leg-box" style="background:#1e293b;border:1px solid #475569"></div>NEUTRAL</div>
+</div>
+
+<table>
+<thead>
+  <tr>
+    <th rowspan="2" style="min-width:100px">Fecha COT</th>
+    <th colspan="4" class="section-am">💼 ASSET MANAGER<br><span style="font-size:9px">(BlackRock, Vanguard, fondos pensión)</span></th>
+    <th colspan="5" class="section-lev">⚡ LEVERAGED MONEY<br><span style="font-size:9px">(Hedge Funds, CTAs)</span></th>
+    <th colspan="2" class="section-div">🔔 DIVERGENCIA</th>
+    <th rowspan="2" style="min-width:80px; background:#162032; color:#60a5fa">NQ<br>Semana</th>
+    <th rowspan="2" style="min-width:60px; background:#162032; color:#60a5fa">OK?</th>
+  </tr>
+  <tr>
+    <th class="section-am">Longs</th>
+    <th class="section-am">Shorts</th>
+    <th class="section-am">Net</th>
+    <th class="section-am">Delta 🔑</th>
+    <th class="section-lev">Longs</th>
+    <th class="section-lev">Shorts</th>
+    <th class="section-lev">Net</th>
+    <th class="section-lev">Delta</th>
+    <th class="section-lev">LEV % 52w</th>
+    <th class="section-div">Señal</th>
+    <th class="section-div">¿Qué sig?</th>
+  </tr>
+</thead>
+<tbody>
+  <tr >
+    <td class="date-col" style="color:#64748b">07 Apr 2026</td>
+    <td class="num-pos">+95,595</td>
+    <td class="delta-strong-neg">▼ -37,060</td>
+    <td class="num-pos">+58,535</td>
+    <td class="num-neg">-56</td>
+    <td class="num-pos">+44,348</td>
+    <td class="delta-strong-neg">▼ -89,382</td>
+    <td class="num-neg">-45,034</td>
+    <td class="delta-strong-neg">▼ -3,457</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:0px;background:#ef4444;opacity:0.6"></span><span class="delta-strong-neg" style="font-weight:700">0%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td style="color:#334155">—</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr class="div-bull-row">
+    <td class="date-col" style="color:#6ee7b7">31 Mar 2026</td>
+    <td class="num-pos">+97,734</td>
+    <td class="delta-strong-neg">▼ -39,143</td>
+    <td class="num-pos">+58,591</td>
+    <td class="delta-strong-pos">▲ +7,133</td>
+    <td class="num-pos">+44,716</td>
+    <td class="delta-strong-neg">▼ -86,293</td>
+    <td class="num-neg">-41,577</td>
+    <td class="num-pos">+1,049</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:2px;background:#ef4444;opacity:0.6"></span><span class="delta-strong-neg" style="font-weight:700">4%</span></td>
+    <td style="text-align:center"><span class="sig-badge sig-bull">BULL 🟢</span></td>
+    <td style="color:#6ee7b7;font-size:11px">LONG bias</td>
+    <td style="color:#334155">—</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">24 Mar 2026</td>
+    <td class="num-pos">+92,538</td>
+    <td class="delta-strong-neg">▼ -41,080</td>
+    <td class="num-pos">+51,458</td>
+    <td class="delta-strong-neg">▼ -9,933</td>
+    <td class="num-pos">+45,072</td>
+    <td class="delta-strong-neg">▼ -87,698</td>
+    <td class="num-neg">-42,626</td>
+    <td class="num-neg">-1,585</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:0px;background:#ef4444;opacity:0.6"></span><span class="delta-strong-neg" style="font-weight:700">0%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td style="color:#334155">—</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">17 Mar 2026</td>
+    <td class="num-pos">+97,885</td>
+    <td class="delta-strong-neg">▼ -36,494</td>
+    <td class="num-pos">+61,391</td>
+    <td class="num-neg">-4,127</td>
+    <td class="num-pos">+44,996</td>
+    <td class="delta-strong-neg">▼ -86,037</td>
+    <td class="num-neg">-41,041</td>
+    <td class="delta-strong-neg">▼ -7,097</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:0px;background:#ef4444;opacity:0.6"></span><span class="delta-strong-neg" style="font-weight:700">0%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-neg">-118pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">10 Mar 2026</td>
+    <td class="num-pos">+101,567</td>
+    <td class="delta-strong-neg">▼ -36,049</td>
+    <td class="num-pos">+65,518</td>
+    <td class="num-neg">-3,100</td>
+    <td class="num-pos">+47,241</td>
+    <td class="delta-strong-neg">▼ -81,185</td>
+    <td class="num-neg">-33,944</td>
+    <td class="num-neg">-1,363</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:0px;background:#ef4444;opacity:0.6"></span><span class="delta-strong-neg" style="font-weight:700">0%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-neg">-341pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">03 Mar 2026</td>
+    <td class="num-pos">+103,914</td>
+    <td class="delta-strong-neg">▼ -35,296</td>
+    <td class="num-pos">+68,618</td>
+    <td class="num-neg">-1,543</td>
+    <td class="num-pos">+51,162</td>
+    <td class="delta-strong-neg">▼ -83,743</td>
+    <td class="num-neg">-32,581</td>
+    <td class="delta-strong-neg">▼ -8,324</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:0px;background:#ef4444;opacity:0.6"></span><span class="delta-strong-neg" style="font-weight:700">0%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-neg">-38pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">24 Feb 2026</td>
+    <td class="num-pos">+107,103</td>
+    <td class="delta-strong-neg">▼ -36,942</td>
+    <td class="num-pos">+70,161</td>
+    <td class="num-neg">-4,204</td>
+    <td class="num-pos">+52,817</td>
+    <td class="delta-strong-neg">▼ -77,074</td>
+    <td class="num-neg">-24,257</td>
+    <td class="delta-strong-neg">▼ -7,602</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:19px;background:#ef4444;opacity:0.6"></span><span class="delta-strong-neg" style="font-weight:700">28%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-neg">-234pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">17 Feb 2026</td>
+    <td class="num-pos">+109,427</td>
+    <td class="delta-strong-neg">▼ -35,062</td>
+    <td class="num-pos">+74,365</td>
+    <td class="num-pos">+1,632</td>
+    <td class="num-pos">+60,606</td>
+    <td class="delta-strong-neg">▼ -77,261</td>
+    <td class="num-neg">-16,655</td>
+    <td class="delta-strong-neg">▼ -3,410</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:54px;background:#10b981;opacity:0.6"></span><span class="delta-strong-pos" style="font-weight:700">78%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-pos">+264pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">10 Feb 2026</td>
+    <td class="num-pos">+106,994</td>
+    <td class="delta-strong-neg">▼ -34,261</td>
+    <td class="num-pos">+72,733</td>
+    <td class="num-neg">-299</td>
+    <td class="num-pos">+52,653</td>
+    <td class="delta-strong-neg">▼ -65,898</td>
+    <td class="num-neg">-13,245</td>
+    <td class="num-pos">+2,680</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:70px;background:#10b981;opacity:0.6"></span><span class="delta-strong-pos" style="font-weight:700">100%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-pos">+68pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr class="div-row">
+    <td class="date-col" style="color:#fca5a5">03 Feb 2026</td>
+    <td class="num-pos">+108,648</td>
+    <td class="delta-strong-neg">▼ -35,616</td>
+    <td class="num-pos">+73,032</td>
+    <td class="delta-strong-neg">▼ -6,902</td>
+    <td class="num-pos">+55,910</td>
+    <td class="delta-strong-neg">▼ -71,835</td>
+    <td class="num-neg">-15,925</td>
+    <td class="num-pos">+154</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:65px;background:#10b981;opacity:0.6"></span><span class="delta-strong-pos" style="font-weight:700">93%</span></td>
+    <td style="text-align:center"><span class="sig-badge sig-bear">BEAR 🔴</span></td>
+    <td style="color:#fca5a5;font-size:11px">SHORT bias</td>
+    <td class="nq-neg">-647pt</td>
+    <td class="ok-yes">✓</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">27 Jan 2026</td>
+    <td class="num-pos">+109,603</td>
+    <td class="delta-strong-neg">▼ -29,669</td>
+    <td class="num-pos">+79,934</td>
+    <td class="num-neg">-525</td>
+    <td class="num-pos">+56,625</td>
+    <td class="delta-strong-neg">▼ -72,704</td>
+    <td class="num-neg">-16,079</td>
+    <td class="delta-strong-pos">▲ +12,441</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:64px;background:#10b981;opacity:0.6"></span><span class="delta-strong-pos" style="font-weight:700">92%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-neg">-1,395pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">20 Jan 2026</td>
+    <td class="num-pos">+110,040</td>
+    <td class="delta-strong-neg">▼ -29,581</td>
+    <td class="num-pos">+80,459</td>
+    <td class="num-neg">-4,480</td>
+    <td class="num-pos">+54,607</td>
+    <td class="delta-strong-neg">▼ -83,127</td>
+    <td class="num-neg">-28,520</td>
+    <td class="delta-strong-neg">▼ -7,968</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:0px;background:#ef4444;opacity:0.6"></span><span class="delta-strong-neg" style="font-weight:700">0%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-neg">-57pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">13 Jan 2026</td>
+    <td class="num-pos">+113,587</td>
+    <td class="delta-strong-neg">▼ -28,648</td>
+    <td class="num-pos">+84,939</td>
+    <td class="num-pos">+3,185</td>
+    <td class="num-pos">+59,282</td>
+    <td class="delta-strong-neg">▼ -79,834</td>
+    <td class="num-neg">-20,552</td>
+    <td class="delta-strong-neg">▼ -5,581</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:0px;background:#ef4444;opacity:0.6"></span><span class="delta-strong-neg" style="font-weight:700">0%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-pos">+518pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+  <tr >
+    <td class="date-col" style="color:#64748b">06 Jan 2026</td>
+    <td class="num-pos">+112,999</td>
+    <td class="delta-strong-neg">▼ -31,245</td>
+    <td class="num-pos">+81,754</td>
+    <td class="num-neut">0</td>
+    <td class="num-pos">+61,422</td>
+    <td class="delta-strong-neg">▼ -76,393</td>
+    <td class="num-neg">-14,971</td>
+    <td class="num-neut">0</td>
+    <td class="bar-cell"><span class="pct-bar" style="width:35px;background:#f59e0b;opacity:0.6"></span><span class="num-neut" style="font-weight:700">50%</span></td>
+    <td style="text-align:center;color:#334155">—</td>
+    <td style="color:#334155;font-size:11px">Sin señal</td>
+    <td class="nq-neg">-227pt</td>
+    <td style="color:#334155">—</td>
+  </tr>
+</tbody></table>
+<p style="color:#334155;font-size:11px;text-align:center;margin-top:12px">
+Fuente: CFTC COT Disaggregated | NQ Futures 15min | WR Backtested: 77% (últimos 6 meses)
+</p>
+</body></html>

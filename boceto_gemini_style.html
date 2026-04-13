@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOCETO — IA Financial Terminal · Gemini Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Google+Sans+Display:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ── RESET & ROOT ─────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:        #060310;
+    --surface:   #0d0820;
+    --surface2:  #150d2e;
+    --accent:    #a855f7;
+    --accent2:   #d946ef;
+    --gold:      #f59e0b;
+    --green:     #34d399;
+    --red:       #ef4444;
+    --text:      #f0eaff;
+    --muted:     #9a87b5;
+    --border:    rgba(168,85,247,0.18);
+  }
+  body {
+    font-family: 'Google Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  a { text-decoration: none; color: inherit; }
+
+  /* ── NAV ──────────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 64px;
+    background: rgba(6,3,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Google Sans Display', sans-serif;
+    font-size: 18px; font-weight: 700; letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+    font-size: 13px; color: var(--muted); letter-spacing: 0.02em;
+  }
+  .nav-links li:hover { color: var(--text); cursor: pointer; }
+  .nav-cta {
+    display: flex; gap: 12px; align-items: center;
+  }
+  .btn-outline {
+    padding: 8px 20px; border-radius: 100px;
+    border: 1px solid var(--border); font-size: 13px; color: var(--text);
+    background: transparent; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-primary {
+    padding: 8px 20px; border-radius: 100px;
+    border: none; font-size: 13px; color: #060310; font-weight: 700;
+    background: var(--accent); cursor: pointer; transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  /* ── HERO ─────────────────────────────────────────────────── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 24px 80px;
+    overflow: hidden;
+  }
+  /* Animated gradient background */
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(168,85,247,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(217,70,239,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 30% at 80% 70%, rgba(124,58,237,0.12) 0%, transparent 50%);
+    animation: bgPulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes bgPulse {
+    0%   { opacity: 0.8; }
+    100% { opacity: 1; }
+  }
+  /* Grid overlay */
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.07;
+    background-image:
+      linear-gradient(rgba(168,85,247,1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168,85,247,1) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px; border-radius: 100px;
+    border: 1px solid rgba(168,85,247,0.4);
+    background: rgba(168,85,247,0.08);
+    font-size: 11px; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 32px; position: relative; z-index: 1;
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .hero h1 {
+    font-family: 'Google Sans Display', sans-serif;
+    font-size: clamp(42px, 7vw, 88px);
+    font-weight: 700; line-height: 1.05; letter-spacing: -2px;
+    margin-bottom: 24px; position: relative; z-index: 1;
+    animation: fadeUp 0.6s 0.1s ease-out both;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #a855f7, #d946ef, #f59e0b);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px); color: var(--muted);
+    max-width: 600px; margin-bottom: 48px;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.6s 0.2s ease-out both;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.6s 0.3s ease-out both;
+  }
+  .hero-ctas .btn-primary { padding: 14px 32px; font-size: 15px; }
+  .hero-ctas .btn-outline  { padding: 14px 32px; font-size: 15px; }
+
+  /* Stats row */
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 72px; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.6s 0.4s ease-out both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px; font-weight: 700;
+    background: linear-gradient(135deg, #a855f7, #d946ef);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-stat-lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+
+  /* Scroll fade indicator */
+  .scroll-hint {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--muted); font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; z-index: 1;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+  .scroll-hint-arrow { width: 20px; height: 20px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg) translateY(-4px); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION WRAPPER ──────────────────────────────────────── */
+  section {
+    max-width: 1280px; margin: 0 auto; padding: 96px 48px;
+  }
+  .section-label {
+    font-size: 10px; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+  .section-title {
+    font-family: 'Google Sans Display', sans-serif;
+    font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .section-sub { font-size: 15px; color: var(--muted); max-width: 560px; }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ── AGENT CARDS (Gemini model cards style) ───────────────── */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; margin-top: 48px;
+  }
+  .agent-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .agent-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(168,85,247,0.2);
+  }
+  .agent-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .agent-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 12px; opacity: 0.7;
+  }
+  .agent-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 16px;
+  }
+  .agent-name { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .agent-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+  .agent-tag {
+    display: inline-block; padding: 3px 10px; border-radius: 100px;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    border: 1px solid; font-family: 'JetBrains Mono', monospace;
+  }
+  .tag-live  { color: var(--green); border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.06); }
+  .tag-macro { color: var(--gold);  border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.06); }
+  .tag-algo  { color: var(--accent);border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.06); }
+  .tag-risk  { color: var(--red);   border-color: rgba(239,68,68,0.3);  background: rgba(239,68,68,0.06); }
+
+  /* ── CAPABILITIES STRIP (Gemini capabilities section) ─────── */
+  .capabilities {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+    border-radius: 24px; overflow: hidden; margin-top: 48px;
+  }
+  .cap-item {
+    background: var(--bg); padding: 36px 28px;
+    transition: background 0.2s;
+  }
+  .cap-item:hover { background: var(--surface); }
+  .cap-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+  .cap-name { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .cap-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ── LIVE DATA STRIP ─────────────────────────────────────── */
+  .live-strip {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+    margin-top: 48px;
+  }
+  .live-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px; text-align: center;
+    transition: border-color 0.2s;
+  }
+  .live-item:hover { border-color: var(--accent); }
+  .live-item-lbl { font-size: 9px; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .live-item-val { font-size: 22px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .live-item-chg { font-size: 10px; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+  .up   { color: var(--green); }
+  .down { color: var(--red); }
+  .neu  { color: var(--gold); }
+
+  /* ── BENCHMARK TABLE (Gemini benchmark section) ─────────── */
+  .bench-wrap { overflow-x: auto; margin-top: 48px; }
+  .bench-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .bench-table th {
+    text-align: left; padding: 12px 20px; font-size: 9px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  .bench-table td {
+    padding: 14px 20px; border-bottom: 1px solid rgba(168,85,247,0.05);
+    color: var(--muted);
+  }
+  .bench-table tr:hover td { background: var(--surface); color: var(--text); }
+  .bench-table td:first-child { font-weight: 600; color: var(--text); }
+  .bench-win { color: var(--green); font-weight: 700; }
+  .bench-bar-cell { width: 120px; }
+  .bench-bar { height: 4px; border-radius: 2px; background: rgba(168,85,247,0.1); overflow: hidden; }
+  .bench-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+  /* ── PARTNER LOGOS STRIP ─────────────────────────────────── */
+  .partners {
+    display: flex; gap: 0; flex-wrap: wrap; justify-content: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; overflow: hidden; margin-top: 48px;
+  }
+  .partner {
+    padding: 24px 32px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    border-right: 1px solid var(--border); transition: all 0.2s;
+    cursor: default;
+  }
+  .partner:last-child { border-right: none; }
+  .partner:hover { color: var(--text); background: rgba(168,85,247,0.06); }
+
+  /* ── CTA FINAL ───────────────────────────────────────────── */
+  .final-cta {
+    text-align: center; padding: 120px 48px;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(168,85,247,0.12) 0%, transparent 70%);
+    border-top: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .final-cta h2 {
+    font-family: 'Google Sans Display', sans-serif;
+    font-size: clamp(32px, 5vw, 64px); font-weight: 700;
+    letter-spacing: -1.5px; margin-bottom: 20px;
+  }
+  .final-cta p { font-size: 16px; color: var(--muted); margin-bottom: 40px; }
+  .final-cards {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px; max-width: 900px; margin: 0 auto; text-align: left;
+  }
+  .final-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 24px;
+    transition: all 0.2s; cursor: pointer;
+  }
+  .final-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .final-card-icon { font-size: 24px; margin-bottom: 12px; display: block; }
+  .final-card-name { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .final-card-desc { font-size: 11px; color: var(--muted); }
+
+  /* ── FOOTER ──────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border); padding: 32px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: var(--muted); flex-wrap: wrap; gap: 16px;
+  }
+  footer a { color: var(--muted); margin-left: 20px; }
+  footer a:hover { color: var(--text); }
+
+  /* ── BOCETO BANNER ───────────────────────────────────────── */
+  .boceto-banner {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: rgba(20,5,40,0.95); border: 1px solid var(--accent);
+    border-radius: 100px; padding: 8px 20px; z-index: 9999;
+    font-size: 10px; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em; color: var(--accent); backdrop-filter: blur(12px);
+    box-shadow: 0 0 20px rgba(168,85,247,0.3);
+  }
+</style>
+</head>
+<body>
+
+<!-- ── BOCETO INDICATOR ──────────────────────────────────────── -->
+<div class="boceto-banner">⚡ BOCETO — GEMINI STYLE · No modifica la web original</div>
+
+<!-- ── NAVIGATION ─────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-logo">NASDAQ<span>.</span>AI</div>
+  <ul class="nav-links">
+    <li>Agentes</li>
+    <li>COT Intel</li>
+    <li>Order Flow</li>
+    <li>Backtests</li>
+    <li>Noticias</li>
+    <li>Daily</li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn-outline">Ver Demo</button>
+    <button class="btn-primary">Ingresar al Terminal →</button>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Sistema activo · 19 agentes en tiempo real
+  </div>
+
+  <h1>El motor de IA más inteligente<br>para el <em>NASDAQ-100</em></h1>
+
+  <p class="hero-sub">
+    Análisis institucional en tiempo real — COT · VXN · SMC · ICT · Order Flow.
+    El dinero inteligente, descifrado.
+  </p>
+
+  <div class="hero-ctas">
+    <button class="btn-primary">Ingresar al Terminal</button>
+    <button class="btn-outline">Ver Biblia de Datos</button>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-val">19</div>
+      <div class="hero-stat-lbl">Agentes IA activos</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">84%</div>
+      <div class="hero-stat-lbl">Accuracy COT semana 4</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">3Y</div>
+      <div class="hero-stat-lbl">Backtest histórico</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">15m</div>
+      <div class="hero-stat-lbl">Ciclo de actualización</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Explorar</span>
+    <div class="scroll-hint-arrow"></div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ── LIVE DATA STRIP ─────────────────────────────────────────── -->
+<section>
+  <div class="section-label">Datos en vivo</div>
+  <div class="section-title">Mercado ahora mismo</div>
+  <p class="section-sub">Todos los indicadores sincronizados con el motor central cada 15 minutos.</p>
+
+  <div class="live-strip">
+    <div class="live-item">
+      <div class="live-item-lbl">NDX</div>
+      <div class="live-item-val up">25,082</div>
+      <div class="live-item-chg up">▲ +0.72%</div>
+    </div>
+    <div class="live-item">
+      <div class="live-item-lbl">VXN</div>
+      <div class="live-item-val neu">23.5</div>
+      <div class="live-item-chg down">▼ -6.89%</div>
+    </div>
+    <div class="live-item">
+      <div class="live-item-lbl">COT Index</div>
+      <div class="live-item-val down">27/100</div>
+      <div class="live-item-chg neu">NEUTRAL</div>
+    </div>
+    <div class="live-item">
+      <div class="live-item-lbl">DIX</div>
+      <div class="live-item-val up">48.4%</div>
+      <div class="live-item-chg up">Acumulación</div>
+    </div>
+    <div class="live-item">
+      <div class="live-item-lbl">Bias Global</div>
+      <div class="live-item-val neu">51/100</div>
+      <div class="live-item-chg neu">NEUTRAL-BULL</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ── AGENT CARDS ─────────────────────────────────────────────── -->
+<section>
+  <div class="section-label">Sistema de agentes</div>
+  <div class="section-title">19 expertos trabajando en paralelo</div>
+  <p class="section-sub">Cada agente es un especialista — desde el COT hasta el Order Flow. Todos colaboran para generar el bias final.</p>
+
+  <div class="agents-grid">
+    <div class="agent-card">
+      <div class="agent-num">Agent 01</div>
+      <div class="agent-icon">📡</div>
+      <div class="agent-name">Data Collector</div>
+      <div class="agent-desc">Recolecta precios, VXN, DIX, GEX, COT y futuros en tiempo real desde múltiples fuentes.</div>
+      <span class="agent-tag tag-live">Live Feed</span>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 02</div>
+      <div class="agent-icon">📊</div>
+      <div class="agent-name">COT Analyst</div>
+      <div class="agent-desc">Analiza posicionamiento de Hedge Funds vs Dealers. COT Index sobre 3 años de historia.</div>
+      <span class="agent-tag tag-macro">Macro</span>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 03</div>
+      <div class="agent-icon">⚡</div>
+      <div class="agent-name">Volatility Analyst</div>
+      <div class="agent-desc">Monitorea VXN/VIX, detecta regímenes de volatilidad y genera alertas de expansión.</div>
+      <span class="agent-tag tag-risk">Riesgo</span>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 04</div>
+      <div class="agent-icon">🧭</div>
+      <div class="agent-name">Bias Engine</div>
+      <div class="agent-desc">Pondera todas las señales con pesos adaptativos para generar el bias institucional global.</div>
+      <span class="agent-tag tag-algo">Algorítmico</span>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 06</div>
+      <div class="agent-icon">🔍</div>
+      <div class="agent-name">SMC Detective</div>
+      <div class="agent-desc">Detecta Order Blocks, FVGs, BOS y barridas de liquidez en tiempo real con ICT concepts.</div>
+      <span class="agent-tag tag-algo">ICT / SMC</span>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 09</div>
+      <div class="agent-icon">🎯</div>
+      <div class="agent-name">Silver Bullet</div>
+      <div class="agent-desc">Trackea las ventanas de alta probabilidad ICT: London SB, NY AM y PM sessions.</div>
+      <span class="agent-tag tag-live">Timing</span>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 10</div>
+      <div class="agent-icon">🧠</div>
+      <div class="agent-name">Learning Engine</div>
+      <div class="agent-desc">Aprende de los outcomes reales para ajustar pesos y mejorar la precisión del sistema.</div>
+      <span class="agent-tag tag-algo">IA Adaptativa</span>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 14</div>
+      <div class="agent-icon">🌊</div>
+      <div class="agent-name">Order Flow Expert</div>
+      <div class="agent-desc">Analiza POC, VAH, VAL de sesiones Asia/Londres. Detecta acumulación institucional en dark pools.</div>
+      <span class="agent-tag tag-macro">Volume Profile</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ── CAPABILITIES ────────────────────────────────────────────── -->
+<section>
+  <div class="section-label">Capacidades</div>
+  <div class="section-title">Todo lo que el sistema analiza</div>
+
+  <div class="capabilities">
+    <div class="cap-item">
+      <span class="cap-icon">📈</span>
+      <div class="cap-name">COT Institucional</div>
+      <div class="cap-desc">Posicionamiento real de Hedge Funds y Asset Managers con 3 años de historia. 84% accuracy en extremos.</div>
+    </div>
+    <div class="cap-item">
+      <span class="cap-icon">🌑</span>
+      <div class="cap-name">Dark Pools (DIX)</div>
+      <div class="cap-desc">Acumulación oculta de grandes instituciones que no aparece en el tape público.</div>
+    </div>
+    <div class="cap-item">
+      <span class="cap-icon">⚙️</span>
+      <div class="cap-name">GEX & Gamma</div>
+      <div class="cap-desc">Presión de market makers en opciones. Predice zonas de absorción y pinning de precio.</div>
+    </div>
+    <div class="cap-item">
+      <span class="cap-icon">🏛️</span>
+      <div class="cap-name">ICT / SMC</div>
+      <div class="cap-desc">Order Blocks, FVGs, barridas de liquidez y Silver Bullet windows detectadas automáticamente.</div>
+    </div>
+    <div class="cap-item">
+      <span class="cap-icon">📰</span>
+      <div class="cap-name">Ciclos de Noticias</div>
+      <div class="cap-desc">NFP · CPI · FOMC · PPI. Perfiles de comportamiento histórico por semana del mes.</div>
+    </div>
+    <div class="cap-item">
+      <span class="cap-icon">🔁</span>
+      <div class="cap-name">Backtest 3 años</div>
+      <div class="cap-desc">Cada setup respaldado por datos reales 2022-2026 para medir edge real vs teórico.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ── BACKTEST BENCHMARKS ─────────────────────────────────────── -->
+<section>
+  <div class="section-label">Rendimiento histórico</div>
+  <div class="section-title">Backtest COT — NQ 2022→2026</div>
+  <p class="section-sub">Resultados reales sobre 196 semanas de datos CFTC. Sin curva-fitting.</p>
+
+  <div class="bench-wrap">
+    <table class="bench-table">
+      <thead>
+        <tr>
+          <th>Setup</th>
+          <th>Semana 1</th>
+          <th>Semana 2</th>
+          <th>Semana 3</th>
+          <th>Semana 4</th>
+          <th>Retorno promedio S4</th>
+          <th>Muestras</th>
+          <th>Fiabilidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>COT Extreme LOW (<15) → Bullish</td>
+          <td>60%</td>
+          <td>64%</td>
+          <td>72%</td>
+          <td class="bench-win">84% ✓</td>
+          <td class="bench-win">+2.27%</td>
+          <td>25</td>
+          <td>
+            <div class="bench-bar-cell">
+              <div class="bench-bar"><div class="bench-bar-fill" style="width:84%"></div></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>COT Streak Bullish (3+ semanas)</td>
+          <td>53%</td>
+          <td class="bench-win">71% ✓</td>
+          <td>53%</td>
+          <td>59%</td>
+          <td>+1.14%</td>
+          <td>17</td>
+          <td>
+            <div class="bench-bar-cell">
+              <div class="bench-bar"><div class="bench-bar-fill" style="width:71%"></div></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Zero Cross Bullish</td>
+          <td>25%</td>
+          <td>62%</td>
+          <td>62%</td>
+          <td>50%</td>
+          <td>+1.35%</td>
+          <td>8</td>
+          <td>
+            <div class="bench-bar-cell">
+              <div class="bench-bar"><div class="bench-bar-fill" style="width:62%"></div></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>COT Extreme HIGH (>85) → Bearish</td>
+          <td>40%</td>
+          <td>40%</td>
+          <td>47%</td>
+          <td>47%</td>
+          <td class="down">-0.23%</td>
+          <td>15</td>
+          <td>
+            <div class="bench-bar-cell">
+              <div class="bench-bar"><div class="bench-bar-fill" style="width:40%;background:#ef4444"></div></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ── PARTNERS ────────────────────────────────────────────────── -->
+<section>
+  <div class="section-label">Fuentes de datos</div>
+  <div class="section-title">Inteligencia de múltiples fuentes</div>
+
+  <div class="partners">
+    <div class="partner">CFTC</div>
+    <div class="partner">SqueezeMetrics</div>
+    <div class="partner">Stooq</div>
+    <div class="partner">TradingView</div>
+    <div class="partner">CBOE</div>
+    <div class="partner">CME Group</div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ───────────────────────────────────────────────── -->
+<div class="final-cta">
+  <h2>Empieza a operar con<br><em style="background:linear-gradient(135deg,#a855f7,#d946ef,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal">inteligencia institucional</em></h2>
+  <p>Accede al terminal, la biblia de datos, el COT Intel y el daily en un solo lugar.</p>
+
+  <div class="final-cards">
+    <div class="final-card">
+      <span class="final-card-icon">🖥️</span>
+      <div class="final-card-name">Dashboard Principal</div>
+      <div class="final-card-desc">Todos los agentes en una pantalla. Bias, COT, VXN, SMC en tiempo real.</div>
+    </div>
+    <div class="final-card">
+      <span class="final-card-icon">📖</span>
+      <div class="final-card-name">Biblia de Datos</div>
+      <div class="final-card-desc">Análisis profundo con todos los indicadores y backtests históricos.</div>
+    </div>
+    <div class="final-card">
+      <span class="final-card-icon">🌊</span>
+      <div class="final-card-name">Order Flow</div>
+      <div class="final-card-desc">Volume profile en vivo de sesiones Asia, Londres y New York.</div>
+    </div>
+    <div class="final-card">
+      <span class="final-card-icon">🧠</span>
+      <div class="final-card-name">COT Intel</div>
+      <div class="final-card-desc">Posicionamiento institucional completo con trifecta de contratos.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer>
+  <span>© 2026 IA Financial Terminal · ANTIGRAVITY CORE v4.2.1</span>
+  <div>
+    <a href="#">Dashboard</a>
+    <a href="#">COT Intel</a>
+    <a href="#">Order Flow</a>
+    <a href="#">Daily</a>
+  </div>
+</footer>
+
+</body>
+</html>

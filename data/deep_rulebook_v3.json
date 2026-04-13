@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-04-10 01:21:50.610618",
+  "rulebook": {
+    "JUEVES": {
+      "sessions": 227,
+      "recent": 81,
+      "rules": [
+        "or_dir=BEAR → BEAR: 62%"
+      ]
+    }
+  }
+}

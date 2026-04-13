@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-04-06T21:37:59.189671",
+    "timestamp": "2026-04-13T01:34:41.915938",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -24,7 +24,7 @@
             "size": 407
         }
     },
-    "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL-BULLISH fuerte. Busca seguir el flujo de la EMA 200.",
+    "verdict": "ATENCIÓN: Ciclo CPI (W2). Históricamente (3 años), el MEGÁFONO ocurre el 34.5% de las veces en este ciclo. Sesgo macro: NEUTRAL-BULLISH (52/100).",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
