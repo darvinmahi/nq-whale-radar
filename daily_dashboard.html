@@ -507,6 +507,65 @@
       <div id="conclusions"></div>
     </div>
 
+    <!-- ══ POLYGON LIVE SESSIONS (Always visible) ══ -->
+    <div class="mini-card" id="polygon-sessions-panel" style="border-top:2px solid #38c9e8;">
+      <div class="mini-card-title" style="color:#38c9e8;">
+        <span>📡</span> Sesiones Live — Polygon.io
+        <span id="poly-status" style="margin-left:auto;font-size:0.6rem;font-weight:500;color:var(--text2);">Cargando...</span>
+      </div>
+
+      <!-- Session cards grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;" id="poly-sessions-grid">
+        <!-- ASIA -->
+        <div id="poly-asia" style="background:rgba(245,214,35,0.06);border:1px solid rgba(245,214,35,0.2);border-radius:10px;padding:10px;">
+          <div style="font-size:0.65rem;font-weight:700;color:#f5d623;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">🌏 Asia</div>
+          <div id="poly-asia-dir" style="font-size:1.1rem;font-weight:800;color:var(--text2);">—</div>
+          <div id="poly-asia-range" style="font-size:0.7rem;color:var(--text2);margin-top:2px;">Rango: —</div>
+          <div id="poly-asia-prices" style="font-size:0.62rem;color:var(--text2);margin-top:3px;font-family:'JetBrains Mono',monospace;">— → —</div>
+        </div>
+        <!-- LONDON -->
+        <div id="poly-london" style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.2);border-radius:10px;padding:10px;">
+          <div style="font-size:0.65rem;font-weight:700;color:#6382ff;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">🇬🇧 London</div>
+          <div id="poly-london-dir" style="font-size:1.1rem;font-weight:800;color:var(--text2);">—</div>
+          <div id="poly-london-range" style="font-size:0.7rem;color:var(--text2);margin-top:2px;">Rango: —</div>
+          <div id="poly-london-prices" style="font-size:0.62rem;color:var(--text2);margin-top:3px;font-family:'JetBrains Mono',monospace;">— → —</div>
+        </div>
+        <!-- NY -->
+        <div id="poly-ny" style="background:rgba(34,217,138,0.06);border:1px solid rgba(34,217,138,0.2);border-radius:10px;padding:10px;">
+          <div style="font-size:0.65rem;font-weight:700;color:#22d98a;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">🇺🇸 New York</div>
+          <div id="poly-ny-dir" style="font-size:1.1rem;font-weight:800;color:var(--text2);">—</div>
+          <div id="poly-ny-range" style="font-size:0.7rem;color:var(--text2);margin-top:2px;">Rango: —</div>
+          <div id="poly-ny-prices" style="font-size:0.62rem;color:var(--text2);margin-top:3px;font-family:'JetBrains Mono',monospace;">— → —</div>
+        </div>
+      </div>
+
+      <!-- Volume Profile from Polygon -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+        <div style="background:rgba(56,201,232,0.08);border:1px solid rgba(56,201,232,0.15);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">POC</div>
+          <div id="poly-vp-poc" style="font-size:1rem;font-weight:800;color:#38c9e8;margin-top:2px;">—</div>
+        </div>
+        <div style="background:rgba(34,217,138,0.08);border:1px solid rgba(34,217,138,0.15);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">VAH</div>
+          <div id="poly-vp-vah" style="font-size:1rem;font-weight:800;color:#22d98a;margin-top:2px;">—</div>
+        </div>
+        <div style="background:rgba(240,72,90,0.08);border:1px solid rgba(240,72,90,0.15);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">VAL</div>
+          <div id="poly-vp-val" style="font-size:1rem;font-weight:800;color:#f0485a;margin-top:2px;">—</div>
+        </div>
+      </div>
+
+      <!-- Day summary -->
+      <div id="poly-day-summary" style="background:rgba(99,130,255,0.05);border:1px solid rgba(99,130,255,0.12);border-radius:8px;padding:10px;font-size:0.72rem;color:var(--text2);line-height:1.7;">
+        Esperando datos de Polygon...
+      </div>
+
+      <!-- Refresh button -->
+      <button onclick="loadPolygonSessions()" style="width:100%;margin-top:8px;padding:8px 16px;background:linear-gradient(135deg,rgba(56,201,232,0.12),rgba(99,130,255,0.12));border:1px solid rgba(56,201,232,0.35);border-radius:10px;color:#38c9e8;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;" onmouseover="this.style.background='rgba(56,201,232,0.2)'" onmouseout="this.style.background='linear-gradient(135deg,rgba(56,201,232,0.12),rgba(99,130,255,0.12))'">
+        🔄 Actualizar Sesiones Polygon
+      </button>
+    </div>
+
     <!-- ══ JOBLESS CLAIMS PANEL (Thursday only) ══ -->
     <div class="mini-card" id="claims-panel" style="display:none;border-top:2px solid var(--orange);">
       <!-- Banner -->
@@ -557,6 +616,84 @@
           </table>
         </div>
       </div>
+    </div>
+
+
+    <!-- ══ VIERNES RESEARCH PANEL (Friday only) ══ -->
+    <div class="mini-card" id="friday-research-panel" style="display:none;border-top:2px solid #f0485a;">
+      <div class="mini-card-title" style="color:#f0485a;"><span>🔴</span> Estrategia Estadística — Viernes NQ</div>
+
+      <!-- Score de convicción live -->
+      <div id="fri-score-bar" style="background:rgba(240,72,90,0.08);border:1px solid rgba(240,72,90,0.2);border-radius:10px;padding:10px 14px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:0.7rem;font-weight:700;color:#f0485a;text-transform:uppercase;letter-spacing:1px;">⚡ SCORE CONVICCIÓN HOY</span>
+          <span id="fri-score-val" style="font-size:1.4rem;font-weight:800;color:#f0485a;">—/10</span>
+        </div>
+        <div style="background:rgba(99,130,255,0.1);border-radius:6px;height:8px;overflow:hidden;">
+          <div id="fri-score-fill" style="height:100%;border-radius:6px;background:linear-gradient(90deg,#f0485a,#f5a623);transition:width 0.8s ease;width:0%;"></div>
+        </div>
+        <div id="fri-score-label" style="font-size:0.68rem;color:var(--text2);margin-top:5px;text-align:center;">Verifica OR 9:30–10:00 ET para calcular</div>
+      </div>
+
+      <!-- Factores del score -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;" id="fri-factors">
+        <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:8px;padding:7px 10px;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">OR (9:30-10:00)</div>
+          <div id="fri-f-or" style="font-size:0.88rem;font-weight:700;color:var(--text2);margin-top:2px;">— pts</div>
+        </div>
+        <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:8px;padding:7px 10px;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">OR45 confirm</div>
+          <div id="fri-f-or45" style="font-size:0.88rem;font-weight:700;color:var(--text2);margin-top:2px;">— pts</div>
+        </div>
+        <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:8px;padding:7px 10px;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">Pre-market</div>
+          <div id="fri-f-pm" style="font-size:0.88rem;font-weight:700;color:var(--text2);margin-top:2px;">— pts</div>
+        </div>
+        <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:8px;padding:7px 10px;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">VXN tendencia</div>
+          <div id="fri-f-vxn" style="font-size:0.88rem;font-weight:700;color:var(--text2);margin-top:2px;">— pts</div>
+        </div>
+        <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:8px;padding:7px 10px;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">COT AM Delta</div>
+          <div id="fri-f-cot" style="font-size:0.88rem;font-weight:700;color:var(--text2);margin-top:2px;">— pts</div>
+        </div>
+        <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:8px;padding:7px 10px;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">OR rango</div>
+          <div id="fri-f-rng" style="font-size:0.88rem;font-weight:700;color:var(--text2);margin-top:2px;">— pts</div>
+        </div>
+      </div>
+
+      <!-- Stats clave -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+        <div style="background:rgba(240,72,90,0.08);border:1px solid rgba(240,72,90,0.2);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:1.25rem;font-weight:800;color:#f0485a;">100%</div>
+          <div style="font-size:0.6rem;color:var(--text2);">OR BEAR → BEAR</div>
+        </div>
+        <div style="background:rgba(240,72,90,0.08);border:1px solid rgba(240,72,90,0.2);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:1.25rem;font-weight:800;color:#f0485a;">82%</div>
+          <div style="font-size:0.6rem;color:var(--text2);">Viernes cierran BEAR (3m)</div>
+        </div>
+        <div style="background:rgba(34,217,138,0.08);border:1px solid rgba(34,217,138,0.2);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:1.25rem;font-weight:800;color:#22d98a;">0%</div>
+          <div style="font-size:0.6rem;color:var(--text2);">OR BULL → BULL (3m)</div>
+        </div>
+      </div>
+
+      <!-- Reglas clave -->
+      <div style="font-size:0.7rem;color:var(--text2);line-height:1.75;margin-bottom:10px;">
+        <div>🔴 <b style="color:#f0485a;">SOLO SHORT en viernes</b> — nunca LONG (OR BULL falla 100%)</div>
+        <div>✅ <b style="color:#22d98a;">OR BEAR</b> = entrada SHORT al break del LOW del OR (10:00 ET)</div>
+        <div>⚠️ <b style="color:#f5a623;">OR FLAT</b> = esperar OR45 (hasta 10:15) para confirmar</div>
+        <div>🔥 <b style="color:#f0485a;">OR range &gt;100pts</b> = señal de alta volatilidad, SHORT fuerte</div>
+        <div>💡 <b style="color:#38c9e8;">LEV% 41-60%</b> = viernes 78% BEAR (máximo sesgo bajista)</div>
+        <div>🛡️ <b style="color:#8898bb;">Stop Loss:</b> sobre el HIGH del OR +20pts | TP: 1-2x rango OR</div>
+        <div>⏰ <b style="color:#f5d623;">Cerrar antes de las 13:00 ET</b> — la tarde puede revertir</div>
+      </div>
+
+      <!-- Botón investigación completa -->
+      <button onclick="openFriResearch()" style="width:100%;padding:9px 16px;background:linear-gradient(135deg,rgba(240,72,90,0.15),rgba(245,166,35,0.1));border:1px solid rgba(240,72,90,0.5);border-radius:10px;color:#f0485a;font-family:'Inter',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+        📊 Ver Estudio Completo Viernes (47 sesiones · COT + OR + LEV)
+      </button>
     </div>
 
 
@@ -690,6 +827,11 @@ function switchDay(day) {
   const tuesPanel = document.getElementById('tuesday-research-panel');
   if (tuesPanel) tuesPanel.style.display = (day === 'tuesday') ? '' : 'none';
 
+  // Mostrar panel investigación Viernes
+  const friPanel = document.getElementById('friday-research-panel');
+  if (friPanel) friPanel.style.display = (day === 'friday') ? '' : 'none';
+  if (day === 'friday') setTimeout(updateFriScore, 500);
+
   // Re-calcular fecha más reciente para este día si no coincide
   currentDate = getLastOccurrence(currentDay);
   updateDateLabel();
@@ -742,7 +884,12 @@ function dateToISO8(d) {
 function loadChartForDate(date) {
   const cfg = DAY_CONFIG[currentDay];
   const iso = dateToISO8(date);
-  const url = `${cfg.chartPrefix}${iso}.html`;
+
+  // ── ¿Es hoy? Si sí → usar chart LIVE permanente ────────────────
+  const todayIso = dateToISO8(new Date());
+  const isToday  = iso === todayIso;
+  const liveUrl  = `${cfg.chartPrefix}live.html`;   // e.g. viernes_chart_live.html
+  const staticUrl= `${cfg.chartPrefix}${iso}.html`; // e.g. viernes_chart_20260417.html
 
   const iframe = document.getElementById('chart-iframe');
   const placeholder = document.getElementById('chart-placeholder');
@@ -750,36 +897,71 @@ function loadChartForDate(date) {
   const genBtn = document.getElementById('gen-btn');
   const placeholderMsg = document.getElementById('placeholder-msg');
 
-  // Intentar cargar el iframe
   iframe.style.display = 'none';
   placeholder.style.display = 'flex';
-  placeholderMsg.textContent = `Verificando chart: ${url}…`;
   genBtn.style.display = 'none';
 
-  // Verificar si existe el archivo
-  fetch(url, {method:'HEAD'})
-    .then(r => {
-      if (r.ok) {
-        // Existe → mostrar iframe
-        iframe.src = url;
-        iframe.style.display = 'block';
-        placeholder.style.display = 'none';
-        status.textContent = `✅ ${url}`;
-        document.getElementById('chart-panel-title').textContent = `📊 ${cfg.label} ${date.toLocaleDateString('es-MX', {day:'2-digit',month:'short',year:'numeric'})} · NQ 5min`;
-        // Actualizar data del "hoy" desde el JSON de sesiones
-        updateTodayCard(iso);
-      } else {
-        throw new Error('not found');
-      }
-    })
-    .catch(() => {
-      placeholder.style.display = 'flex';
-      iframe.style.display = 'none';
-      placeholderMsg.textContent = `No hay chart para ${date.toLocaleDateString('es-MX')}. Genera uno:`;
-      genBtn.style.display = 'inline-flex';
-      genBtn.dataset.iso = iso;
-      genBtn.dataset.day = currentDay;
-      status.textContent = `⚠ Sin archivo (${url})`;
+  if (isToday) {
+    // Hoy → intentar primero el live chart
+    placeholderMsg.textContent = '📡 Cargando chart en vivo…';
+    fetch(liveUrl, { method: 'HEAD' })
+      .then(r => {
+        if (r.ok) {
+          // ✅ Live chart existe
+          iframe.src = liveUrl + '?t=' + Date.now(); // cache-bust
+          iframe.style.display = 'block';
+          placeholder.style.display = 'none';
+          status.textContent = `🟢 EN VIVO — ${liveUrl}`;
+          document.getElementById('chart-panel-title').textContent =
+            `📡 ${cfg.label} HOY — EN VIVO · NQ 5min`;
+          updateTodayCard(iso);
+        } else throw new Error('no live');
+      })
+      .catch(() => {
+        // No hay live chart → intentar estático del día
+        fetch(staticUrl, { method: 'HEAD' })
+          .then(r2 => {
+            if (r2.ok) {
+              iframe.src = staticUrl;
+              iframe.style.display = 'block';
+              placeholder.style.display = 'none';
+              status.textContent = `✅ ${staticUrl}`;
+              document.getElementById('chart-panel-title').textContent =
+                `📊 ${cfg.label} ${date.toLocaleDateString('es-MX', {day:'2-digit',month:'short',year:'numeric'})} · NQ 5min`;
+              updateTodayCard(iso);
+            } else throw new Error('no static');
+          })
+          .catch(() => {
+            placeholder.style.display = 'flex';
+            placeholderMsg.textContent = `No hay chart para hoy. Genera uno:`;
+            genBtn.style.display = 'inline-flex';
+            genBtn.dataset.iso = iso; genBtn.dataset.day = currentDay;
+            status.textContent = `⚠ Sin chart (${liveUrl})`;
+          });
+      });
+  } else {
+    // Día histórico → cargar estático
+    placeholderMsg.textContent = `Verificando chart: ${staticUrl}…`;
+    fetch(staticUrl, { method: 'HEAD' })
+      .then(r => {
+        if (r.ok) {
+          iframe.src = staticUrl;
+          iframe.style.display = 'block';
+          placeholder.style.display = 'none';
+          status.textContent = `✅ ${staticUrl}`;
+          document.getElementById('chart-panel-title').textContent =
+            `📊 ${cfg.label} ${date.toLocaleDateString('es-MX', {day:'2-digit',month:'short',year:'numeric'})} · NQ 5min`;
+          updateTodayCard(iso);
+        } else throw new Error('not found');
+      })
+      .catch(() => {
+        placeholder.style.display = 'flex';
+        iframe.style.display = 'none';
+        placeholderMsg.textContent = `No hay chart para ${date.toLocaleDateString('es-MX')}. Genera uno:`;
+        genBtn.style.display = 'inline-flex';
+        genBtn.dataset.iso = iso; genBtn.dataset.day = currentDay;
+        status.textContent = `⚠ Sin archivo (${staticUrl})`;
+
     });
 }
 
@@ -2425,59 +2607,59 @@ const DAY_RESEARCH = {
   },
   tuesday: {
     ready: true,
-    sessions: 195,
+    sessions: 227,
     rules: [
-      '⚠️ CORRECCIÓN: 92% era sesgo de muestra chica (27 sess). Con 195 sesiones: PM→NY solo 38% — NO es predictor.',
-      '🕐 HALLAZGO REAL: Martes hace su movimiento TARDE — HIGH/LOW forman 14:00-16:00 ET en 60%+ de días',
-      'VXN >25 → BEAR 71% en Martes (r=0.53 con rango)  |  VXN <20 → ligero sesgo BULL',
-      'Sesgo global: BULL 33% · BEAR 23% · FLAT 44% — mayoritariamente lateral hasta la tarde',
-      'Expectancy: Move NY med ~80-95pts con solo 20pts drawdown → R:R 3.0-3.2x',
-      'PM RANGE >200pts → literalmente aleatorio (44% BULL / 44% BEAR) — no operar señal PM extrema'
+      '⚠️ Ninguna regla individual supera 60% — Martes es el día más difícil de 9Y de datos',
+      '🕐 MOVE TARDE: 65% de los extremos forman entre 14:00-16:00 ET — paciencia, no operar open',
+      'VXN LOW + FALLING → likely BULL 60% | VXN RISING → likely BEAR (43%)',
+      'OR+PM ambos BULL → NY BULL 64% ⚠️ | OR BEAR → sin edge (42/42 split)',
+      '2Y RECIENTE: BULL 41% / BEAR 32% — sesgo alcista fuerte en últimos 2 años',
+      'FADE del día BEAR grande: jueves/viernes bear large → 57% el martes hace FADE'
     ],
-    topPredictor: '🥇 TIMING (14-16h ET) + VXN >25 → BEAR  |  No usar PM direction como predictor',
-    special: '195 sesiones 9 años · Corrección importante vs estudio anterior de 27 sess'
+    topPredictor: '🥇 Timing (esperar 14h ET) + VXN trend + OR+PM agreement',
+    special: '227 sesiones 9Y | Sin predictor único >60% | Move ocurre en tarde ET'
   },
   wednesday: {
     ready: true,
     sessions: 227,
     rules: [
-      'PM direction NO predice NY de forma individual (47%) — necesita combinación',
-      '✅ COMBO: PM_SIZE=medio + PM alcista → NY BULL <b style="color:#22d98a">65.5%</b> (19/29 sess)',
-      'LOW FIRST 55%: Miércoles tiende a hacer mínimo primero en NY',
-      'VXN → rango: r=0.50 — VXN >25 dobla el rango esperado',
-      'PM range → NY range: r=0.71 — PM grande = NY grande',
-      'Base rate: BULL 34% / BEAR 28% / FLAT 38% — leve sesgo alcista'
+      '✅ OR BEAR → NY BEAR: <b style="color:#f0485a">65%</b> (11/17) — Opening Range es el predictor',
+      'OR BULL → NY BULL: 59% (moderado) | OR+PM BULL: 65% | OR+PM BEAR: 67%',
+      'VXN RISING → BEAR 53% (moderado) | VXN FLAT → BULL 52%',
+      'FADE fuerte: día anterior range >200pts → opposite direction 60% el miércoles',
+      '2Y RECIENTE: BULL 44% / BEAR 35% — mercado reciente bias alcista',
+      'FOMC semana: rango mayor (189pts vs 80pts) — más volatilidad pero sin dirección clara'
     ],
-    topPredictor: '🥇 PM tamaño MEDIO + PM BULL → NY BULL 65.5%',
-    special: '227 sesiones · Sin predictor único >60% · Combo mejora edge'
+    topPredictor: '🥇 Opening Range direction 9:30-10:00 (65% BEAR / 59% BULL)',
+    special: '227 sesiones | OR es el predictor | FOMC semana eleva rango 2x'
   },
   thursday: {
     ready: true,
     sessions: 227,
     rules: [
-      '⚠️ JUEVES: Ningún predictor individual supera 60% — día más difícil de predecir',
-      'PM FLAT → NY FLAT 68% ← si PM plano, NY probablemente lateral (único edge)',
-      'PM RANGE → NY RANGE: r=<b style="color:#22d98a">0.843</b> ← PM range grande = NY range grande',
-      'Spike 8:30 DOWN → BEAR 50% (moderado) | Claims sorpresa es la clave',
-      'VXN >25 → rango NY ~350pts · VXN <20 → ~183pts',
-      'Base: BULL 26% / BEAR 30% / FLAT 45% — mayoritariamente lateral'
+      '✅ OR BEAR → NY BEAR: <b style="color:#f0485a">62%</b> (8/13) | En 2Y reciente: 75%',
+      'OR BULL → NY BULL: solo 38% — apertura alcista NO es señal en Jueves',
+      'MID VXN + FALLING → BEAR 64% (11 sess) — interesante combo',
+      'HIGH VXN + FALLING → BULL 75% (4 sess — pequeño, precaución)',
+      'Jobless Claims 8:30 ET sigue siendo el wildcard — puede romper cualquier sesgo',
+      '2Y RECIENTE: BULL 38% / BEAR 40% — mercado más equilibrado que la media histórica'
     ],
-    topPredictor: '🥇 PM RANGE (r=0.843) + PM FLAT → esperar lateralidad',
-    special: '227 sesiones · Sin edge direccional claro · Jobless Claims es el catalizador'
+    topPredictor: '🥇 OR direction (OR BEAR=62%/75%) + Claims 8:30 como catalizador',
+    special: '227 sesiones | OR BEAR es la única señal validada | Claims rompe el mercado'
   },
   friday: {
     ready: true,
     sessions: 185,
     rules: [
-      '🔥 VXN ALTO (>25) → NY BEAR <b style="color:#f0485a">70.6%</b> (12/17 sess) ← predictor #1',
-      '🔥 VXN ALTO + PM range GRANDE → NY BEAR <b style="color:#f0485a">83.3%</b> (10/12) ← combo potente',
-      '✅ Spike 8:30 SUBE >25pts → NY BULL <b style="color:#22d98a">63.2%</b> (12/19 sess)',
-      'NFP Viernes (1er viernes del mes): volatilidad extrema — ajustar tamaño',
-      'Rango NY más pequeño de la semana cuando VXN bajo: mediana ~69pts',
-      'Base: BULL 28% / BEAR 26% / FLAT 46% — sin sesgo direccional base'
+      '🔥 OR BEAR → NY BEAR: <b style="color:#f0485a">88.2%</b> (15/17) | En 2Y reciente: <b style="color:#f0485a">100%</b>',
+      '🔥 OR BEAR + VXN MID → BEAR 100% (6/6) | OR+PM BEAR → BEAR 83% (10/12)',
+      '✅ OR BULL + Spike 8:30 UP → BULL 78% (7/9)',
+      'VXN HIGH → BEAR 71% | VXN RISING (cualquier nivel) → BEAR 59%',
+      'NFP Friday: rango más PEQUEÑO (70pts) — NO es día de volatilidad, es lateral',
+      '2Y RECIENTE base: BEAR 47% (vs 26% histórico) — mercado reciente mucho más bajista'
     ],
-    topPredictor: '🥇 VXN nivel (70.6% BEAR si HIGH) + Spike 8:30 (63.2% BULL si UP)',
-    special: '185 sesiones · VXN es el predictor #1 · Combo VXN+PM_LARGE = 83.3% BEAR'
+    topPredictor: '🥇 OR direction 9:30-10:00 (BEAR=88%, BULL+Spike=78%) + VXN nivel',
+    special: '185 sesiones | OR BEAR en 2Y = 100% BEAR | Regla más sólida encontrada'
   }
 };
 
@@ -2581,6 +2763,253 @@ ${synthHtml}<br><br>
     return `❌ Error en reporte: ${e.message}<br>Selecciona un día y asegúrate de que los datos estén cargados.`;
   }
 }
+
+// ═══════════════════════════════════════════════════════════════════
+//  VIERNES — UPDATE LIVE desde iframe del chart
+// ═══════════════════════════════════════════════════════════════════
+function updateFriScoreLive(data) {
+  // Called by live chart iframe with real OR data
+  // data = { or_dir, or_range, ny_move, or_high, or_low }
+  if (currentDay !== 'friday') return;
+
+  let score = 0;
+  const { or_dir, or_range, ny_move } = data;
+
+  // Factor OR (+3)
+  const orEl = document.getElementById('fri-f-or');
+  if (or_dir === 'BEAR')      { score += 3; orEl.textContent = `BEAR +3pts 🔥`; orEl.style.color='#f0485a'; }
+  else if (or_dir === 'BULL') { orEl.textContent = 'BULL ❌ NO OPERAR'; orEl.style.color='#22d98a'; }
+  else                        { orEl.textContent = 'FLAT — esperar OR45'; orEl.style.color='#f5a623'; }
+
+  // Factor Rango OR (+1 si >100)
+  const rngEl = document.getElementById('fri-f-rng');
+  if (or_range >= 100) { score += 1; rngEl.textContent = `${or_range}pts 🔥 +1pt`; rngEl.style.color='#f0485a'; }
+  else { rngEl.textContent = `${or_range}pts`; rngEl.style.color='var(--text2)'; }
+
+  // COT (ya calculado en updateFriScore estático)
+  const isoToday = new Date().toISOString().slice(0,10);
+  const cotIdx = getCotIndex(isoToday);
+  const cotEl = document.getElementById('fri-f-cot');
+  if (cotIdx !== null) {
+    if (cotIdx < 40)      { score += 2; cotEl.textContent = `LEV ${Math.round(cotIdx)}% +2pts 🔥`; cotEl.style.color='#f0485a'; }
+    else if (cotIdx > 60) { cotEl.textContent = `LEV ${Math.round(cotIdx)}% — HF largos`; cotEl.style.color='#22d98a'; }
+    else                  { cotEl.textContent = `LEV ${Math.round(cotIdx)}% — neutro`; cotEl.style.color='var(--text2)'; }
+  }
+
+  // NY move direction as PM proxy
+  const pmEl = document.getElementById('fri-f-pm');
+  if (ny_move < -30) { score += 1; pmEl.textContent = `NY ${ny_move > 0 ? '+' : ''}${ny_move}pts BEAR +1pt`; pmEl.style.color='#f0485a'; }
+  else { pmEl.textContent = `NY ${ny_move > 0 ? '+' : ''}${ny_move}pts`; pmEl.style.color='var(--text2)'; }
+
+  // Render score
+  const pct = Math.min(score / 10 * 100, 100);
+  document.getElementById('fri-score-val').textContent = `${score}/10`;
+  document.getElementById('fri-score-fill').style.width = pct + '%';
+
+  let label, color;
+  if (or_dir === 'BULL') {
+    label = '❌ NO OPERAR — OR BULL en viernes = señal falsa (0% en 3 meses)';
+    color = '#22d98a';
+    document.getElementById('fri-score-fill').style.background = '#22d98a';
+  } else if (score >= 7) {
+    label = '🔥 CONVICCIÓN MÁXIMA — SHORT con tamaño completo';
+    color = '#f0485a';
+  } else if (score >= 4) {
+    label = '✅ CONVICCIÓN MEDIA — SHORT con tamaño normal';
+    color = '#f5a623';
+  } else if (or_dir === 'FLAT') {
+    label = '⏳ Esperar OR45 (10:15 ET) para confirmar dirección';
+    color = '#f5d623';
+  } else {
+    label = '⚠️ CONVICCIÓN BAJA — Reducir tamaño o no operar';
+    color = '#8898bb';
+  }
+  const lbl = document.getElementById('fri-score-label');
+  lbl.textContent = label; lbl.style.color = color;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  VIERNES — SCORE DE CONVICCIÓN (usa datos del NQ ticker live)
+// ═══════════════════════════════════════════════════════════════════
+function updateFriScore() {
+  if (currentDay !== 'friday') return;
+
+  let score = 0;
+  const factors = [];
+
+  // Factor 1: OR direction — leer desde la sesión de hoy si existe
+  const today = new Date();
+  const isoToday = today.toISOString().slice(0,10);
+  const todaySess = allSessions.find(s => s.date === isoToday);
+
+  // Intentar leer OR desde la sesión (si el JSON tiene or_direction o similar)
+  const orDir  = todaySess?.or_direction  || todaySess?.or_signal  || null;
+  const or45Dir= todaySess?.or45_direction|| null;
+  const pmDir  = todaySess?.pm_direction  || todaySess?.premarket_dir || null;
+  const orRng  = todaySess?.or_range      || 0;
+
+  // OR principal (+3 si BEAR)
+  let orLabel = '—';
+  if (orDir === 'BEAR') { score += 3; orLabel = 'BEAR +3pts 🔥'; document.getElementById('fri-f-or').style.color='#f0485a'; }
+  else if (orDir === 'BULL') { orLabel = 'BULL ❌ NO OPERAR'; document.getElementById('fri-f-or').style.color='#22d98a'; }
+  else if (orDir === 'FLAT') { orLabel = 'FLAT — esperar OR45'; document.getElementById('fri-f-or').style.color='#f5a623'; }
+  document.getElementById('fri-f-or').textContent = orLabel;
+
+  // OR45 confirmación (+2 si también BEAR)
+  let or45Label = '—';
+  if (or45Dir === 'BEAR' && orDir === 'BEAR') { score += 2; or45Label = 'BEAR +2pts ✅'; document.getElementById('fri-f-or45').style.color='#f0485a'; }
+  else if (or45Dir === 'BEAR') { score += 1; or45Label = 'BEAR +1pt'; document.getElementById('fri-f-or45').style.color='#f5a623'; }
+  else { or45Label = or45Dir || '—'; }
+  document.getElementById('fri-f-or45').textContent = or45Label;
+
+  // Pre-market (+1 si BEAR)
+  let pmLabel = '—';
+  if (pmDir === 'BEAR') { score += 1; pmLabel = 'BEAR +1pt ✅'; document.getElementById('fri-f-pm').style.color='#f0485a'; }
+  else { pmLabel = pmDir || '—'; document.getElementById('fri-f-pm').style.color='var(--text2)'; }
+  document.getElementById('fri-f-pm').textContent = pmLabel;
+
+  // VXN (+1 si subiendo — usar nqLiveChange como proxy de VXN trend)
+  let vxnLabel = '—';
+  try {
+    const todayVxn = cotVxnLookup[isoToday]?.vxn;
+    if (todayVxn) {
+      if (todayVxn > 25) { score += 1; vxnLabel = `${todayVxn.toFixed(1)} ↑ +1pt`; document.getElementById('fri-f-vxn').style.color='#f0485a'; }
+      else { vxnLabel = `${todayVxn.toFixed(1)} → neutro`; document.getElementById('fri-f-vxn').style.color='var(--text2)'; }
+    }
+  } catch(e) {}
+  document.getElementById('fri-f-vxn').textContent = vxnLabel;
+
+  // COT AM Delta (+2 si BEAR semana actual)
+  // El COT 31 Mar 2026 es BULL (AM +7133, LEV 35%) → esta semana podría ser BULL
+  // Para uso general, leer el cot_index de la semana
+  let cotLabel = '—';
+  const cotIdx = getCotIndex(isoToday);
+  if (cotIdx !== null) {
+    if (cotIdx > 60) { cotLabel = `LEV ${cotIdx.toFixed(0)}% — HF largos, sesgo BULL virn`; document.getElementById('fri-f-cot').style.color='#22d98a'; }
+    else if (cotIdx < 40) { score += 2; cotLabel = `LEV ${cotIdx.toFixed(0)}% +2pts 🔥`; document.getElementById('fri-f-cot').style.color='#f0485a'; }
+    else { cotLabel = `LEV ${cotIdx.toFixed(0)}% — neutro`; document.getElementById('fri-f-cot').style.color='var(--text2)'; }
+  }
+  document.getElementById('fri-f-cot').textContent = cotLabel;
+
+  // OR Range (+1 si >100pts)
+  let rngLabel = orRng ? `${Math.round(orRng)}pts` : '—';
+  if (orRng >= 100) { score += 1; rngLabel = `${Math.round(orRng)}pts 🔥 +1pt`; document.getElementById('fri-f-rng').style.color='#f0485a'; }
+  else { document.getElementById('fri-f-rng').style.color='var(--text2)'; }
+  document.getElementById('fri-f-rng').textContent = rngLabel;
+
+  // Mostrar score
+  const maxScore = 10;
+  const pct = Math.min(score / maxScore * 100, 100);
+  document.getElementById('fri-score-val').textContent = `${score}/${maxScore}`;
+  document.getElementById('fri-score-fill').style.width = pct + '%';
+
+  let label, color;
+  if (orDir === 'BULL') {
+    label = '❌ NO OPERAR — OR BULL en viernes = señal falsa (0% en 3 meses)';
+    color = '#22d98a';
+    document.getElementById('fri-score-fill').style.background = '#22d98a';
+  } else if (score >= 7) {
+    label = '🔥 CONVICCIÓN MÁXIMA — SHORT con tamaño completo';
+    color = '#f0485a';
+  } else if (score >= 4) {
+    label = '✅ CONVICCIÓN MEDIA — SHORT con tamaño normal';
+    color = '#f5a623';
+    document.getElementById('fri-score-fill').style.background = 'linear-gradient(90deg,#f5a623,#f0485a)';
+  } else if (orDir === 'FLAT') {
+    label = '⏳ Esperar OR45 (10:15 ET) para confirmar dirección';
+    color = '#f5d623';
+    document.getElementById('fri-score-fill').style.background = '#f5d623';
+  } else {
+    label = '⚠️ CONVICCIÓN BAJA — Reducir tamaño o no operar';
+    color = '#8898bb';
+  }
+  const lbl = document.getElementById('fri-score-label');
+  lbl.textContent = label;
+  lbl.style.color = color;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  VIERNES — MODAL DE INVESTIGACIÓN COMPLETA
+// ═══════════════════════════════════════════════════════════════════
+function openFriResearch() {
+  const existing = document.getElementById('fri-research-modal');
+  if (existing) { existing.remove(); return; }
+
+  const modal = document.createElement('div');
+  modal.id = 'fri-research-modal';
+  modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;`;
+
+  modal.innerHTML = `
+  <div style="background:#0d0d1a;border:1px solid #f0485a;border-radius:18px;padding:24px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;position:relative;">
+    <button onclick="document.getElementById('fri-research-modal').remove()" style="position:absolute;top:14px;right:14px;background:rgba(240,72,90,0.15);border:1px solid rgba(240,72,90,0.4);border-radius:8px;color:#f0485a;padding:4px 10px;cursor:pointer;font-size:0.8rem;">✕ Cerrar</button>
+    <h2 style="color:#f0485a;font-size:1rem;margin-bottom:4px;">🔴 Estudio Completo VIERNES — NQ Futures</h2>
+    <p style="color:#64748b;font-size:0.68rem;margin-bottom:16px;">47 sesiones · Abr 2025 – Abr 2026 · COT + OR + LEV%</p>
+
+    <!-- Stats resumidas -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;">
+      <div style="background:rgba(240,72,90,0.08);border:1px solid rgba(240,72,90,0.2);border-radius:10px;padding:10px;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:800;color:#f0485a;">100%</div>
+        <div style="font-size:0.6rem;color:#94a3b8;">OR BEAR → NY BEAR<br>(2 años, 25/25)</div>
+      </div>
+      <div style="background:rgba(240,72,90,0.08);border:1px solid rgba(240,72,90,0.2);border-radius:10px;padding:10px;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:800;color:#f0485a;">82%</div>
+        <div style="font-size:0.6rem;color:#94a3b8;">Viernes BEAR<br>(últimos 3 meses)</div>
+      </div>
+      <div style="background:rgba(34,217,138,0.08);border:1px solid rgba(34,217,138,0.2);border-radius:10px;padding:10px;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:800;color:#22d98a;">0%</div>
+        <div style="font-size:0.6rem;color:#94a3b8;">OR BULL → BULL<br>(últimos 3 meses)</div>
+      </div>
+    </div>
+
+    <!-- Árbol de decisión -->
+    <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:12px;padding:14px;margin-bottom:14px;font-size:0.72rem;line-height:1.9;color:#cbd5e1;">
+      <div style="color:#f0485a;font-weight:700;margin-bottom:8px;font-size:0.75rem;">⚡ ÁRBOL DE DECISIÓN (a las 10:00 ET)</div>
+      <div style="color:#f0485a;">● OR BEAR (&gt;10pts baja) → <b style="color:#f0485a;">SHORT inmediato</b> al break del LOW</div>
+      <div style="padding-left:16px;color:#94a3b8;">↳ Rango &gt;100pts: SHORT tamaño máximo 🔥</div>
+      <div style="padding-left:16px;color:#94a3b8;">↳ OR45 también BEAR: +2pts convicción ✅</div>
+      <div style="color:#f5a623;margin-top:4px;">● OR FLAT (±10pts) → ESPERAR OR45 (10:15)</div>
+      <div style="padding-left:16px;color:#94a3b8;">↳ Si OR45 BEAR: SHORT pequeño (50% size)</div>
+      <div style="padding-left:16px;color:#94a3b8;">↳ Sin confirmación: NO OPERAR</div>
+      <div style="color:#22d98a;margin-top:4px;">● OR BULL (&gt;10pts sube) → ❌ NO OPERAR</div>
+      <div style="padding-left:16px;color:#94a3b8;">↳ En últimos 3 meses: 3/3 OR BULL terminaron BEAR</div>
+      <div style="padding-left:16px;color:#94a3b8;">↳ EXCEPCIÓN: LEV% &gt;80% + AM Delta &gt;+5000 → puede subir</div>
+    </div>
+
+    <!-- COT insight -->
+    <div style="background:rgba(56,201,232,0.06);border:1px solid rgba(56,201,232,0.15);border-radius:12px;padding:14px;margin-bottom:14px;font-size:0.72rem;line-height:1.8;color:#cbd5e1;">
+      <div style="color:#38c9e8;font-weight:700;margin-bottom:8px;">🐳 CLAVE DEL COT — Asset Manager Delta</div>
+      <div>• <b style="color:#f0485a;">LEV% 41-60%</b> = HF neutral → viernes <b style="color:#f0485a;">78% BEAR</b> (máximo sesgo)</div>
+      <div>• <b style="color:#94a3b8;">LEV% &gt;80%</b> = HF muy largos → viernes más BULL (45%)</div>
+      <div>• <b style="color:#f0485a;">AM Delta negativo</b> + OR BEAR = <b style="color:#f0485a;">100% BEAR</b> (4/4 casos)</div>
+      <div>• AM Delta positivo + OR BEAR = también <b style="color:#f0485a;">100% BEAR</b> (7/7 casos)</div>
+      <div style="margin-top:6px;color:#f5d623;">→ El OR es suficiente. El COT confirma pero no cambia la regla.</div>
+    </div>
+
+    <!-- Parámetros -->
+    <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:12px;padding:14px;margin-bottom:14px;">
+      <div style="color:#6382ff;font-weight:700;margin-bottom:8px;font-size:0.75rem;">📐 PARÁMETROS DE TRADE</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:0.7rem;">
+        <div><span style="color:#94a3b8;">Entrada:</span> <b style="color:#e2e8f0;">Break bajo LOW del OR a las 10:01 ET</b></div>
+        <div><span style="color:#94a3b8;">Stop Loss:</span> <b style="color:#f0485a;">HIGH del OR +20pts</b></div>
+        <div><span style="color:#94a3b8;">Target 1 (50%):</span> <b style="color:#22d98a;">1x rango OR proyectado</b></div>
+        <div><span style="color:#94a3b8;">Target 2 (50%):</span> <b style="color:#22d98a;">2x rango OR (alta conv.)</b></div>
+        <div><span style="color:#94a3b8;">Hora límite:</span> <b style="color:#f5d623;">Cerrar antes 13:00 ET</b></div>
+        <div><span style="color:#94a3b8;">Tamaño:</span> <b style="color:#38c9e8;">50% si rng&lt;50p / 100% si &gt;100p</b></div>
+      </div>
+    </div>
+
+    <!-- Scoring -->
+    <div style="background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.15);border-radius:12px;padding:14px;font-size:0.7rem;line-height:1.8;color:#cbd5e1;">
+      <div style="color:#f5a623;font-weight:700;margin-bottom:8px;">⚡ SISTEMA DE PUNTUACIÓN (max 10)</div>
+      <div>+3 OR BEAR confirmado | +2 OR45 también BEAR | +1 PM BEAR</div>
+      <div>+1 VXN subiendo | +2 COT LEV% &lt;40% | +1 Rango OR &gt;100pts</div>
+      <div style="margin-top:6px;color:#f5a623;">7-10 pts → SHORT máximo 🔥 | 4-6 → SHORT normal ✅ | 0-3 → no operas</div>
+    </div>
+  </div>`;
+
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
 </script>
 
 <!-- 📡 NQ LIVE PRICE ENGINE -->
@@ -2681,6 +3110,191 @@ Sesgo: <b style="color:${color}">${dir}</b><br>
 ${contextMsg}<br><br>
 <span style="color:#475569;font-size:10px;">POC: ${pocTxt} · VA: ${vaTxt}</span>`;
 }
+
+// ═══════════════════════════════════════════════════════════════════
+//  POLYGON.IO — SESIONES LIVE
+// ═══════════════════════════════════════════════════════════════════
+const POLYGON_KEY = 'piDZh82meEE9pepqoto5jqME8ViMhw9o';
+
+async function loadPolygonSessions() {
+  const statusEl = document.getElementById('poly-status');
+  statusEl.textContent = '⏳ Cargando...';
+  statusEl.style.color = '#f5a623';
+
+  try {
+    // Buscar último día de mercado (hoy o viernes si es fin de semana)
+    const now = new Date();
+    let targetDate = new Date(now);
+    const dow = targetDate.getDay();
+    if (dow === 0) targetDate.setDate(targetDate.getDate() - 2); // domingo → viernes
+    if (dow === 6) targetDate.setDate(targetDate.getDate() - 1); // sábado → viernes
+
+    const dateStr = targetDate.toISOString().split('T')[0];
+    const url = `https://api.polygon.io/v2/aggs/ticker/I:NDX/range/5/minute/${dateStr}/${dateStr}?apiKey=${POLYGON_KEY}&limit=5000&sort=asc`;
+
+    const resp = await fetch(url);
+    const data = await resp.json();
+
+    if (data.status !== 'OK' || !data.results || data.results.length === 0) {
+      // Intentar día anterior
+      targetDate.setDate(targetDate.getDate() - 1);
+      const dateStr2 = targetDate.toISOString().split('T')[0];
+      const url2 = `https://api.polygon.io/v2/aggs/ticker/I:NDX/range/5/minute/${dateStr2}/${dateStr2}?apiKey=${POLYGON_KEY}&limit=5000&sort=asc`;
+      const resp2 = await fetch(url2);
+      const data2 = await resp2.json();
+      if (data2.status === 'OK' && data2.results) {
+        renderPolygonSessions(data2.results, dateStr2);
+      } else {
+        statusEl.textContent = '❌ Sin datos disponibles';
+        statusEl.style.color = '#f0485a';
+      }
+      return;
+    }
+
+    renderPolygonSessions(data.results, dateStr);
+  } catch (err) {
+    console.error('Polygon error:', err);
+    const statusEl2 = document.getElementById('poly-status');
+    statusEl2.textContent = '❌ Error de conexión';
+    statusEl2.style.color = '#f0485a';
+  }
+}
+
+function renderPolygonSessions(results, dateStr) {
+  // Clasificar barras por sesión
+  const sessions = { asia: [], london: [], ny: [] };
+  let allBars = [];
+
+  for (const bar of results) {
+    const dt = new Date(bar.t);
+    const h = dt.getUTCHours() + dt.getUTCMinutes() / 60;
+    const b = { o: bar.o, h: bar.h, l: bar.l, c: bar.c, v: bar.v || 0, vw: bar.vw || 0, t: bar.t };
+    allBars.push(b);
+
+    if (h >= 22 || h < 7) sessions.asia.push(b);
+    else if (h >= 7 && h < 12.5) sessions.london.push(b);
+    else if (h >= 12.5 && h < 21) sessions.ny.push(b);
+  }
+
+  // Renderizar cada sesión
+  const sessNames = ['asia', 'london', 'ny'];
+  const sessColors = { asia: '#f5d623', london: '#6382ff', ny: '#22d98a' };
+
+  for (const s of sessNames) {
+    const bars = sessions[s];
+    const dirEl = document.getElementById(`poly-${s}-dir`);
+    const rangeEl = document.getElementById(`poly-${s}-range`);
+    const pricesEl = document.getElementById(`poly-${s}-prices`);
+
+    if (bars.length === 0) {
+      dirEl.textContent = '—';
+      dirEl.style.color = 'var(--text2)';
+      rangeEl.textContent = 'Sin datos';
+      pricesEl.textContent = '';
+      continue;
+    }
+
+    const openP = bars[0].o;
+    const closeP = bars[bars.length - 1].c;
+    const highP = Math.max(...bars.map(b => b.h));
+    const lowP = Math.min(...bars.map(b => b.l));
+    const rangePts = (highP - lowP).toFixed(0);
+    const changePts = (closeP - openP).toFixed(0);
+    const isBull = closeP >= openP;
+
+    dirEl.textContent = `${isBull ? '↗' : '↘'} ${changePts > 0 ? '+' : ''}${changePts} pts`;
+    dirEl.style.color = isBull ? '#22d98a' : '#f0485a';
+    rangeEl.textContent = `Rango: ${rangePts} pts`;
+    pricesEl.textContent = `${openP.toLocaleString('en-US', {maximumFractionDigits:0})} → ${closeP.toLocaleString('en-US', {maximumFractionDigits:0})}`;
+  }
+
+  // Volume Profile (simplificado)
+  if (allBars.length > 0) {
+    const allHigh = Math.max(...allBars.map(b => b.h));
+    const allLow = Math.min(...allBars.map(b => b.l));
+    const levels = 20;
+    const levelSize = (allHigh - allLow) / levels;
+    const volByLevel = {};
+
+    for (const bar of allBars) {
+      for (let i = 0; i < levels; i++) {
+        const lp = allLow + i * levelSize;
+        const lt = lp + levelSize;
+        if (bar.l <= lt && bar.h >= lp) {
+          const mid = Math.round(lp + levelSize / 2);
+          const overlap = Math.min(bar.h, lt) - Math.max(bar.l, lp);
+          const br = bar.h !== bar.l ? bar.h - bar.l : 1;
+          volByLevel[mid] = (volByLevel[mid] || 0) + bar.v * (overlap / br);
+        }
+      }
+    }
+
+    const pocPrice = Object.entries(volByLevel).sort((a, b) => b[1] - a[1])[0];
+    const totalVol = Object.values(volByLevel).reduce((a, b) => a + b, 0);
+    const sorted = Object.entries(volByLevel).sort((a, b) => b[1] - a[1]);
+    let vaVol = 0, vaPrices = [];
+    for (const [p, v] of sorted) {
+      vaPrices.push(Number(p));
+      vaVol += v;
+      if (vaVol >= totalVol * 0.7) break;
+    }
+
+    const poc = pocPrice ? Number(pocPrice[0]) : 0;
+    const vah = Math.max(...vaPrices);
+    const val = Math.min(...vaPrices);
+
+    document.getElementById('poly-vp-poc').textContent = poc.toLocaleString('en-US');
+    document.getElementById('poly-vp-vah').textContent = vah.toLocaleString('en-US');
+    document.getElementById('poly-vp-val').textContent = val.toLocaleString('en-US');
+  }
+
+  // Day summary
+  const summaryEl = document.getElementById('poly-day-summary');
+  const totalBars = allBars.length;
+  const dayHigh = Math.max(...allBars.map(b => b.h));
+  const dayLow = Math.min(...allBars.map(b => b.l));
+  const dayRange = (dayHigh - dayLow).toFixed(0);
+  const dayOpen = allBars[0].o;
+  const dayClose = allBars[allBars.length - 1].c;
+  const dayDir = dayClose >= dayOpen ? '↗ Alcista' : '↘ Bajista';
+  const dayColor = dayClose >= dayOpen ? '#22d98a' : '#f0485a';
+
+  // Determinar cuál sesión dominó
+  let maxRange = 0, dominant = 'NY';
+  for (const s of sessNames) {
+    const bars = sessions[s];
+    if (bars.length > 0) {
+      const r = Math.max(...bars.map(b => b.h)) - Math.min(...bars.map(b => b.l));
+      if (r > maxRange) { maxRange = r; dominant = s === 'asia' ? 'Asia' : s === 'london' ? 'London' : 'NY'; }
+    }
+  }
+
+  // High del día: ¿en qué sesión fue?
+  let highSession = '—';
+  for (const s of sessNames) {
+    if (sessions[s].some(b => b.h === dayHigh)) highSession = s === 'asia' ? '🌏 Asia' : s === 'london' ? '🇬🇧 London' : '🇺🇸 NY';
+  }
+  let lowSession = '—';
+  for (const s of sessNames) {
+    if (sessions[s].some(b => b.l === dayLow)) lowSession = s === 'asia' ? '🌏 Asia' : s === 'london' ? '🇬🇧 London' : '🇺🇸 NY';
+  }
+
+  summaryEl.innerHTML = `
+    <div style="font-weight:700;color:#38c9e8;margin-bottom:4px;">📅 ${dateStr} — Resumen del Día</div>
+    <div>📊 <b>${totalBars} barras</b> de 5min analizadas</div>
+    <div>📈 Día: <b style="color:${dayColor}">${dayDir}</b> — Rango total: <b>${dayRange} pts</b></div>
+    <div>🏆 Sesión dominante: <b style="color:#38c9e8">${dominant}</b> (mayor rango)</div>
+    <div>⬆️ High del día en: <b>${highSession}</b> | ⬇️ Low del día en: <b>${lowSession}</b></div>
+  `;
+
+  // Status
+  const statusEl = document.getElementById('poly-status');
+  statusEl.textContent = `✅ ${dateStr} · ${totalBars} barras`;
+  statusEl.style.color = '#22d98a';
+}
+
+// Cargar Polygon al iniciar
+setTimeout(loadPolygonSessions, 2000);
 </script>
 
 <!-- 🐋 BOTÓN FLOTANTE — fuera de main-layout para siempre visible -->
