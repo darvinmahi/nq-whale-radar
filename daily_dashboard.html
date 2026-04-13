@@ -371,6 +371,16 @@
 
   <!-- NAV LINKS -->
   <div style="display:flex;gap:8px;margin-left:8px">
+    <a href="infografia_protocolo_or.html" target="_blank"
+       style="display:flex;align-items:center;gap:5px;background:rgba(217,119,6,0.18);border:1px solid rgba(217,119,6,0.35);color:#fcd34d;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s; box-shadow: 0 0 10px rgba(217,119,6,0.2);"
+       onmouseover="this.style.background='rgba(217,119,6,0.3)'" onmouseout="this.style.background='rgba(217,119,6,0.18)'">
+      🎯 Protocolo OR (Infografía)
+    </a>
+    <a href="cuadro_lunes_vs_viernes.html" target="_blank"
+       style="display:flex;align-items:center;gap:5px;background:rgba(34,217,138,0.18);border:1px solid rgba(34,217,138,0.35);color:#22d98a;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s; box-shadow: 0 0 10px rgba(34,217,138,0.15);"
+       onmouseover="this.style.background='rgba(34,217,138,0.3)'" onmouseout="this.style.background='rgba(34,217,138,0.18)'">
+      📊 Estudio Lunes vs Viernes
+    </a>
     <a href="strategy_builder.html"
        style="display:flex;align-items:center;gap:5px;background:rgba(124,58,237,.18);border:1px solid rgba(124,58,237,.35);color:#a78bfa;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s"
        onmouseover="this.style.background='rgba(124,58,237,.3)'" onmouseout="this.style.background='rgba(124,58,237,.18)'">
@@ -440,6 +450,32 @@
           <div class="today-stat-val" id="stat-va" style="color:var(--green); font-size:0.9rem;">—</div>
         </div>
       </div>
+    </div>
+
+    <!-- ══ LUNES RESEARCH PANEL (Monday only) ══ -->
+    <div class="mini-card" id="monday-research-panel" style="display:none;border-top:2px solid #22d98a;">
+      <div class="mini-card-title" style="color:#22d98a;"><span>📈</span> Investigación Estadística — Lunes vs Viernes</div>
+      <div style="font-size:0.7rem;color:var(--text2);line-height:1.7;margin-bottom:10px;">
+        <div>✅ <b style="color:#22d98a;">Muestra masiva</b> — 232 lunes analizados</div>
+        <div>🚀 <b style="color:#f5a623;">Fuerte sesgo estructural</b> — Lunes alcista sin importar el viernes</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px;">
+        <div style="background:rgba(34,217,138,0.08);border:1px solid rgba(34,217,138,0.2);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:1.2rem;font-weight:800;color:#22d98a;">51%</div>
+          <div style="font-size:0.6rem;color:var(--text2);">Lunes BULL (vs 31% BEAR)</div>
+        </div>
+        <div style="background:rgba(99,130,255,0.08);border:1px solid rgba(99,130,255,0.2);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:1.2rem;font-weight:800;color:#6382ff;">61%</div>
+          <div style="font-size:0.6rem;color:var(--text2);">Viernes 🟢 → Lunes BULL</div>
+        </div>
+        <div style="background:rgba(34,217,138,0.12);border:1px solid #22d98a;border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:1.2rem;font-weight:800;color:#22d98a;">67%</div>
+          <div style="font-size:0.6rem;color:var(--text2);">Viernes 🔴 → Lunes BULL!!</div>
+        </div>
+      </div>
+      <button onclick="window.open('cuadro_lunes_vs_viernes.html','_blank')" style="width:100%;padding:9px 16px;background:linear-gradient(135deg,rgba(34,217,138,0.15),rgba(56,201,232,0.15));border:1px solid rgba(34,217,138,0.5);border-radius:10px;color:#22d98a;font-family:'Inter',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+        📉 Ver Estudio Detallado (Cuadro completo)
+      </button>
     </div>
 
     <!-- ══ MARTES RESEARCH PANEL (Tuesday only) ══ -->
@@ -904,6 +940,10 @@ function switchDay(day) {
   const claimsPanel = document.getElementById('claims-panel');
   if (claimsPanel) claimsPanel.style.display = (day === 'thursday') ? '' : 'none';
 
+  // Mostrar panel investigación Lunes
+  const monPanel = document.getElementById('monday-research-panel');
+  if (monPanel) monPanel.style.display = (day === 'monday') ? '' : 'none';
+
   // Mostrar panel investigación Martes
   const tuesPanel = document.getElementById('tuesday-research-panel');
   if (tuesPanel) tuesPanel.style.display = (day === 'tuesday') ? '' : 'none';
@@ -1097,6 +1137,7 @@ async function loadDayData(day) {
   setLoadingMsg('Cargando datos…');
   const cfg = DAY_CONFIG[day];
 
+  try {
   // Cargar VXN lookup una sola vez
   if (Object.keys(cotVxnLookup).length === 0) {
     try {
@@ -1128,6 +1169,7 @@ async function loadDayData(day) {
   allSessions  = data[cfg2.sessKey] || data.all_mondays || data.all_sessions || data.sessions || [];
   renderStats(data, day);
   if (day === 'thursday') loadClaimsData();
+  } catch(e) { console.error('[loadDayData] Error:', e); }
   hideLoading();
 }
 
@@ -1650,7 +1692,17 @@ function buildDemoData(day) {
 }
 
 // ─── ARRANCAR ────────────────────────────────────────────────────
-init();
+// Safety: siempre ocultar loading después de 5s (por si algo falla)
+setTimeout(function() {
+  const ld = document.getElementById('loading');
+  if (ld && ld.style.display !== 'none') {
+    console.warn('[Dashboard] Force-hiding loader after timeout');
+    ld.style.display = 'none';
+    document.getElementById('main-layout').style.display = 'grid';
+  }
+}, 5000);
+
+try { init(); } catch(e) { console.error('[Dashboard] init error:', e); hideLoading(); }
 
 // ─── MACRO INDICATORS (datos reales de agent2/agent3) ────────────
 async function loadMacroIndicators() {
