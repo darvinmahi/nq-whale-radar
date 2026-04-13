@@ -1,0 +1,159 @@
+{
+  "timestamp": "2026-04-13T01:32:26.028740+00:00Z",
+  "total_posts": 100,
+  "nq_relevant_posts": 12,
+  "sentiment": {
+    "bullish": 19,
+    "bearish": 26,
+    "neutral": 55,
+    "bull_pct": 19.0,
+    "bear_pct": 26.0
+  },
+  "fear_greed": {
+    "score": -6.8,
+    "label": "NEUTRAL",
+    "interpretation": "No clear contrarian signal"
+  },
+  "trending_tickers": {
+    "MSFT": 3,
+    "QQQ": 2,
+    "TSLA": 1,
+    "META": 1,
+    "AMZN": 1,
+    "GOOG": 1
+  },
+  "top_posts": [
+    {
+      "title": "Can't make this shit up he even included the stock ticker",
+      "score": 51013,
+      "comments": 2054,
+      "sub": "wallstreetbets",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "strait of hormuz blockade satellite photo",
+      "score": 29364,
+      "comments": 601,
+      "sub": "wallstreetbets",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "Anyone know how I can cancel this? I dont want it",
+      "score": 22572,
+      "comments": 2025,
+      "sub": "wallstreetbets",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "Monday morning down the Hormuz…",
+      "score": 10264,
+      "comments": 159,
+      "sub": "wallstreetbets",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "Ah shit, here we go again",
+      "score": 8230,
+      "comments": 372,
+      "sub": "wallstreetbets",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "The Big Short and social media is the reason the market has not experienced any significant downturn since 2008",
+      "score": 5081,
+      "comments": 721,
+      "sub": "wallstreetbets",
+      "sentiment": "BEARISH"
+    },
+    {
+      "title": "Iran Unable to Find Mines It Planted in Strait of Hormuz, U.S. Says",
+      "score": 4571,
+      "comments": 390,
+      "sub": "wallstreetbets",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "This is either the easiest money ever or I’m finished",
+      "score": 3581,
+      "comments": 293,
+      "sub": "wallstreetbets",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "Trump says U.S. will blockade Strait of Hormuz after Iran peace talks fail",
+      "score": 3065,
+      "comments": 894,
+      "sub": "stocks",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "Fuck PLTR",
+      "score": 2654,
+      "comments": 168,
+      "sub": "wallstreetbets",
+      "sentiment": "BEARISH"
+    }
+  ],
+  "nq_relevant": [
+    {
+      "title": "$135 billion and counting: Meta's eye-watering bet to close the gap on OpenAI, Google and Anthropic",
+      "score": 898,
+      "sentiment": "NEUTRAL",
+      "sub": "wallstreetbets"
+    },
+    {
+      "title": "I sold 135 SPY + 50 QQQ and used the $$$ and $150,000 in margin to short stocks the 1st time and didn't go bankrupt and I have 650 USO.",
+      "score": 133,
+      "sentiment": "BEARISH",
+      "sub": "wallstreetbets"
+    },
+    {
+      "title": "AMZN rerating this week",
+      "score": 182,
+      "sentiment": "BULLISH",
+      "sub": "wallstreetbets"
+    },
+    {
+      "title": "What is a reliable and free stock analysis website?",
+      "score": 30,
+      "sentiment": "NEUTRAL",
+      "sub": "stocks"
+    },
+    {
+      "title": "Bezoz is still holding $RIVN at 90% of his portfolio, why?",
+      "score": 3,
+      "sentiment": "BEARISH",
+      "sub": "stocks"
+    },
+    {
+      "title": "Microsoft ($MSFT) is down ~31% from its ATH",
+      "score": 1033,
+      "sentiment": "BULLISH",
+      "sub": "stocks"
+    },
+    {
+      "title": "TSLA at $190 is not a prediction, its just math. bear with me",
+      "score": 0,
+      "sentiment": "NEUTRAL",
+      "sub": "stocks"
+    },
+    {
+      "title": "Deep ITM MSFT calls",
+      "score": 94,
+      "sentiment": "BULLISH",
+      "sub": "options"
+    },
+    {
+      "title": "anyone here actually using supply/demand for SPY/QQQ options?",
+      "score": 8,
+      "sentiment": "BULLISH",
+      "sub": "options"
+    },
+    {
+      "title": "How do you track whether your original reason for owning a stock is still true?",
+      "score": 8,
+      "sentiment": "NEUTRAL",
+      "sub": "investing"
+    }
+  ]
+}

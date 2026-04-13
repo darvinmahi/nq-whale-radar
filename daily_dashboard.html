@@ -566,6 +566,87 @@
       </button>
     </div>
 
+    <!-- ══ NEWS LIVE PANEL (Always visible) ══ -->
+    <div class="mini-card" id="news-live-panel" style="border-top:2px solid #a855f7;">
+      <div class="mini-card-title" style="color:#a855f7;">
+        <span>📰</span> Noticias Live — Market Impact
+        <span id="news-status" style="margin-left:auto;font-size:0.6rem;font-weight:500;color:var(--text2);">Cargando...</span>
+      </div>
+
+      <!-- Sentiment bar -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="flex:1;background:rgba(99,130,255,0.1);border-radius:6px;height:10px;overflow:hidden;display:flex;">
+          <div id="news-bull-bar" style="height:100%;background:#22d98a;transition:width 0.8s ease;width:33%;"></div>
+          <div id="news-neut-bar" style="height:100%;background:#f5d623;transition:width 0.8s ease;width:34%;"></div>
+          <div id="news-bear-bar" style="height:100%;background:#f0485a;transition:width 0.8s ease;width:33%;"></div>
+        </div>
+        <span id="news-sentiment-label" style="font-size:0.75rem;font-weight:700;color:var(--text2);min-width:65px;text-align:right;">—</span>
+      </div>
+
+      <!-- Stats row -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+        <div style="background:rgba(34,217,138,0.08);border:1px solid rgba(34,217,138,0.15);border-radius:8px;padding:7px;text-align:center;">
+          <div id="news-bull-count" style="font-size:1.1rem;font-weight:800;color:#22d98a;">0</div>
+          <div style="font-size:0.58rem;color:var(--text2);text-transform:uppercase;">Bullish</div>
+        </div>
+        <div style="background:rgba(245,214,35,0.08);border:1px solid rgba(245,214,35,0.15);border-radius:8px;padding:7px;text-align:center;">
+          <div id="news-neut-count" style="font-size:1.1rem;font-weight:800;color:#f5d623;">0</div>
+          <div style="font-size:0.58rem;color:var(--text2);text-transform:uppercase;">Neutral</div>
+        </div>
+        <div style="background:rgba(240,72,90,0.08);border:1px solid rgba(240,72,90,0.15);border-radius:8px;padding:7px;text-align:center;">
+          <div id="news-bear-count" style="font-size:1.1rem;font-weight:800;color:#f0485a;">0</div>
+          <div style="font-size:0.58rem;color:var(--text2);text-transform:uppercase;">Bearish</div>
+        </div>
+      </div>
+
+      <!-- High impact news list -->
+      <div id="news-high-impact" style="max-height:160px;overflow-y:auto;font-size:0.7rem;line-height:1.7;color:var(--text2);">
+        Esperando noticias...
+      </div>
+    </div>
+
+    <!-- ══ REDDIT SENTIMENT PANEL (Always visible) ══ -->
+    <div class="mini-card" id="reddit-sentiment-panel" style="border-top:2px solid #f97316;">
+      <div class="mini-card-title" style="color:#f97316;">
+        <span>🔥</span> Reddit Sentiment — Fear/Greed
+        <span id="reddit-status" style="margin-left:auto;font-size:0.6rem;font-weight:500;color:var(--text2);">Cargando...</span>
+      </div>
+
+      <!-- Fear/Greed gauge -->
+      <div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.2);border-radius:10px;padding:12px;margin-bottom:10px;text-align:center;">
+        <div style="font-size:0.65rem;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Fear / Greed Index</div>
+        <div id="reddit-fg-score" style="font-size:2rem;font-weight:800;color:#f97316;">—</div>
+        <div id="reddit-fg-label" style="font-size:0.72rem;font-weight:700;color:var(--text2);margin-top:2px;">—</div>
+        <!-- Score bar -->
+        <div style="margin-top:8px;background:linear-gradient(90deg,#f0485a,#f5d623,#22d98a);border-radius:6px;height:8px;position:relative;">
+          <div id="reddit-fg-marker" style="position:absolute;top:-3px;width:14px;height:14px;background:#fff;border-radius:50%;box-shadow:0 0 6px rgba(0,0,0,0.5);transition:left 0.8s ease;left:50%;transform:translateX(-50%);"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.55rem;color:var(--text2);margin-top:3px;">
+          <span>EXTREME FEAR</span><span>NEUTRAL</span><span>EXTREME GREED</span>
+        </div>
+      </div>
+
+      <!-- Reddit stats -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+        <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:8px;padding:8px;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;">Posts Analizados</div>
+          <div id="reddit-total-posts" style="font-size:1rem;font-weight:700;color:var(--accent);margin-top:2px;">—</div>
+        </div>
+        <div style="background:rgba(99,130,255,0.06);border:1px solid rgba(99,130,255,0.15);border-radius:8px;padding:8px;">
+          <div style="font-size:0.6rem;color:var(--text2);text-transform:uppercase;">NQ Relevantes</div>
+          <div id="reddit-nq-posts" style="font-size:1rem;font-weight:700;color:#38c9e8;margin-top:2px;">—</div>
+        </div>
+      </div>
+
+      <!-- Trending tickers -->
+      <div id="reddit-tickers" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;"></div>
+
+      <!-- Contrarian signal -->
+      <div id="reddit-contrarian" style="background:rgba(99,130,255,0.05);border:1px solid rgba(99,130,255,0.12);border-radius:8px;padding:8px;font-size:0.7rem;color:var(--text2);text-align:center;">
+        Analizando sentimiento...
+      </div>
+    </div>
+
     <!-- ══ JOBLESS CLAIMS PANEL (Thursday only) ══ -->
     <div class="mini-card" id="claims-panel" style="display:none;border-top:2px solid var(--orange);">
       <!-- Banner -->
@@ -3295,6 +3376,121 @@ function renderPolygonSessions(results, dateStr) {
 
 // Cargar Polygon al iniciar
 setTimeout(loadPolygonSessions, 2000);
+
+// ═══════════════════════════════════════════════════════════════════
+//  NEWS LIVE — Noticias de alto impacto
+// ═══════════════════════════════════════════════════════════════════
+async function loadNewsLive() {
+  const statusEl = document.getElementById('news-status');
+  try {
+    const r = await fetch('data/news_live.json?t=' + Date.now());
+    if (!r.ok) throw new Error('No file');
+    const data = await r.json();
+
+    const s = data.sentiment || {};
+    const bullPct = s.bull_pct || 0;
+    const bearPct = s.bear_pct || 0;
+    const neutPct = 100 - bullPct - bearPct;
+
+    document.getElementById('news-bull-bar').style.width = bullPct + '%';
+    document.getElementById('news-neut-bar').style.width = neutPct + '%';
+    document.getElementById('news-bear-bar').style.width = bearPct + '%';
+
+    document.getElementById('news-bull-count').textContent = s.bull_count || 0;
+    document.getElementById('news-bear-count').textContent = s.bear_count || 0;
+    document.getElementById('news-neut-count').textContent = s.neutral_count || 0;
+
+    const sentLabel = document.getElementById('news-sentiment-label');
+    sentLabel.textContent = s.label || 'NEUTRAL';
+    sentLabel.style.color = s.label === 'BULLISH' ? '#22d98a' : s.label === 'BEARISH' ? '#f0485a' : '#f5d623';
+
+    // High impact news
+    const hiDiv = document.getElementById('news-high-impact');
+    const hiNews = data.high_impact_news || [];
+    if (hiNews.length > 0) {
+      hiDiv.innerHTML = hiNews.map(n => {
+        const sentColor = n.sentiment === 'BULLISH' ? '#22d98a' : n.sentiment === 'BEARISH' ? '#f0485a' : '#f5d623';
+        const sentIcon = n.sentiment === 'BULLISH' ? '🟢' : n.sentiment === 'BEARISH' ? '🔴' : '🟡';
+        return `<div style="padding:3px 0;border-bottom:1px solid rgba(99,130,255,0.06);">
+          ${sentIcon} <a href="${n.link}" target="_blank" style="color:var(--text);text-decoration:none;" onmouseover="this.style.color='#a855f7'" onmouseout="this.style.color='var(--text)'">${n.title}</a>
+          <span style="color:${sentColor};font-size:0.6rem;margin-left:4px;">${n.source}</span>
+        </div>`;
+      }).join('');
+    } else {
+      hiDiv.innerHTML = '<div style="text-align:center;color:var(--text2);">Sin noticias de alto impacto</div>';
+    }
+
+    statusEl.textContent = `✅ ${data.total_news || 0} noticias`;
+    statusEl.style.color = '#22d98a';
+  } catch (e) {
+    statusEl.textContent = '⚠️ Ejecuta source_news.py';
+    statusEl.style.color = '#f5a623';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  REDDIT SENTIMENT — Fear/Greed Index
+// ═══════════════════════════════════════════════════════════════════
+async function loadRedditSentiment() {
+  const statusEl = document.getElementById('reddit-status');
+  try {
+    const r = await fetch('data/sentiment_reddit.json?t=' + Date.now());
+    if (!r.ok) throw new Error('No file');
+    const data = await r.json();
+
+    const fg = data.fear_greed || {};
+    const score = fg.score || 0;
+
+    // Score display
+    document.getElementById('reddit-fg-score').textContent = (score > 0 ? '+' : '') + score.toFixed(1);
+    const scoreEl = document.getElementById('reddit-fg-score');
+    scoreEl.style.color = score > 15 ? '#22d98a' : score < -15 ? '#f0485a' : '#f5d623';
+
+    // Label
+    const labelEl = document.getElementById('reddit-fg-label');
+    labelEl.textContent = fg.label || 'NEUTRAL';
+    labelEl.style.color = fg.label === 'EXTREME GREED' || fg.label === 'GREED' ? '#22d98a' :
+                           fg.label === 'EXTREME FEAR' || fg.label === 'FEAR' ? '#f0485a' : '#f5d623';
+
+    // Marker position (score -100 to +100 -> left 0% to 100%)
+    const markerPct = Math.max(0, Math.min(100, ((score + 100) / 200) * 100));
+    document.getElementById('reddit-fg-marker').style.left = markerPct + '%';
+
+    // Stats
+    document.getElementById('reddit-total-posts').textContent = data.total_posts || 0;
+    document.getElementById('reddit-nq-posts').textContent = data.nq_relevant_posts || 0;
+
+    // Trending tickers
+    const tickersDiv = document.getElementById('reddit-tickers');
+    const tickers = data.trending_tickers || {};
+    if (Object.keys(tickers).length > 0) {
+      tickersDiv.innerHTML = Object.entries(tickers).slice(0, 8).map(([t, c]) =>
+        `<span class="pill pill-blue" style="font-family:'JetBrains Mono',monospace;">$${t} <span style="opacity:0.6">${c}x</span></span>`
+      ).join('');
+    }
+
+    // Contrarian signal
+    const contrEl = document.getElementById('reddit-contrarian');
+    const interp = fg.interpretation || '';
+    if (interp.includes('SHORT')) {
+      contrEl.innerHTML = `⚠️ <b style="color:#f0485a;">Contrarian: SHORT signal</b> — Reddit demasiado optimista`;
+    } else if (interp.includes('LONG')) {
+      contrEl.innerHTML = `✅ <b style="color:#22d98a;">Contrarian: LONG signal</b> — Reddit en p\u00e1nico, posible reversi\u00f3n`;
+    } else {
+      contrEl.innerHTML = `📊 Sentimiento mixto — sin se\u00f1al contrarian clara`;
+    }
+
+    statusEl.textContent = `✅ ${data.total_posts} posts`;
+    statusEl.style.color = '#22d98a';
+  } catch (e) {
+    statusEl.textContent = '⚠️ Ejecuta source_sentiment.py';
+    statusEl.style.color = '#f5a623';
+  }
+}
+
+// Cargar News y Reddit al iniciar
+setTimeout(loadNewsLive, 2500);
+setTimeout(loadRedditSentiment, 3000);
 </script>
 
 <!-- 🐋 BOTÓN FLOTANTE — fuera de main-layout para siempre visible -->
