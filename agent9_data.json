@@ -1,11 +1,11 @@
 {
     "agent": 9,
     "name": "Silver Bullet Tracker",
-    "timestamp": "2026-04-14T16:02:25.650427+00:00Z",
-    "ny_time": "12:02",
+    "timestamp": "2026-04-14T17:39:34.563808+00:00Z",
+    "ny_time": "13:39",
     "status": "UPCOMING",
     "active_window": "NY PM SB",
-    "macro_confluence": "NEUTRAL-BULLISH",
+    "macro_confluence": "NEUTRAL",
     "action": "ESPERAR VENTANA",
-    "countdown": "En 1h 58m"
+    "countdown": "En 21 min"
 }
