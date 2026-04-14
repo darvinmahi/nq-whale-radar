@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-04-14T01:19:42.998303+00:00",
-  "prediction_price": 25582.75,
+  "timestamp": "2026-04-14T01:20:39.571021+00:00",
+  "prediction_price": 25583.0,
   "prediction_bias": "NEUTRAL",
-  "prediction_score": 50,
+  "prediction_score": 51,
   "agent_signals": {
     "COT": {
       "dir": 0,
       "raw": "NEUTRAL"
     },
     "VOLATILITY": {
-      "dir": 0,
-      "raw": "NEUTRAL"
+      "dir": 1,
+      "raw": "BULLISH"
     },
     "SMC": {
       "dir": -1,
@@ -18,11 +18,11 @@
     },
     "PROBABILITY": {
       "dir": 0,
-      "raw": "PROBABILIDAD BAJISTA MODERADA 📉"
+      "raw": null
     },
     "SENTIMENT": {
       "dir": 0,
-      "raw": "ESTABLE"
+      "raw": null
     },
     "SILVER_BULLET": {
       "dir": 0,

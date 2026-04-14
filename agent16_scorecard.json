@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-14T01:19:42.998303+00:00",
+  "generated_at": "2026-04-14T01:20:39.571021+00:00",
   "total_predictions": 500,
   "validated": 0,
   "win_rate_real": null,
@@ -65,18 +65,6 @@
   "worst_agent": "SILVER_BULLET (0.0%)",
   "last_10_outcomes": [
     {
-      "time": "2026-04-14T01:15:39.542367+00:00",
-      "outcome": "NEUTRAL",
-      "delta": 0.25,
-      "bias": "NEUTRAL"
-    },
-    {
-      "time": "2026-04-14T01:15:52.511754+00:00",
-      "outcome": "NEUTRAL",
-      "delta": -2.0,
-      "bias": "NEUTRAL"
-    },
-    {
       "time": "2026-04-14T01:16:05.459099+00:00",
       "outcome": "NEUTRAL",
       "delta": 0.25,
@@ -122,6 +110,18 @@
       "time": "2026-04-14T01:19:28.325376+00:00",
       "outcome": "NEUTRAL",
       "delta": -0.25,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-04-14T01:19:42.998303+00:00",
+      "outcome": "NEUTRAL",
+      "delta": 2.0,
+      "bias": "NEUTRAL"
+    },
+    {
+      "time": "2026-04-14T01:20:17.107022+00:00",
+      "outcome": "NEUTRAL",
+      "delta": -1.75,
       "bias": "NEUTRAL"
     }
   ],
