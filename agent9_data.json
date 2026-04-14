@@ -1,11 +1,20 @@
 {
     "agent": 9,
     "name": "Silver Bullet Tracker",
+<<<<<<< Updated upstream
     "timestamp": "2026-04-13T22:06:53.969303+00:00Z",
     "ny_time": "18:06",
+=======
+    "timestamp": "2026-04-14T01:19:42.947193+00:00Z",
+    "ny_time": "21:19",
+>>>>>>> Stashed changes
     "status": "INACTIVO",
     "active_window": "London SB (mañana)",
     "macro_confluence": "NEUTRAL",
     "action": "ESPERAR VENTANA",
+<<<<<<< Updated upstream
     "countdown": "Próxima sesión en 8h 54m"
+=======
+    "countdown": "Próxima sesión en 5h 41m"
+>>>>>>> Stashed changes
 }

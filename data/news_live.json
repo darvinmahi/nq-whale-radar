@@ -1,62 +1,54 @@
 {
-  "timestamp": "2026-04-13T01:32:08.416910+00:00Z",
+  "timestamp": "2026-04-14T01:02:42.952734+00:00Z",
   "total_news": 40,
-  "high_impact_count": 6,
+  "high_impact_count": 5,
   "sentiment": {
-    "score": 0.0,
-    "label": "NEUTRAL",
-    "bull_count": 4,
-    "bear_count": 4,
-    "neutral_count": 32,
+    "score": -22.5,
+    "label": "BEARISH",
+    "bull_count": 3,
+    "bear_count": 12,
+    "neutral_count": 25,
     "total": 40,
-    "bull_pct": 10.0,
-    "bear_pct": 10.0
+    "bull_pct": 7.5,
+    "bear_pct": 30.0
   },
   "high_impact_news": [
     {
-      "title": "April’s stock-market rebound is about to face its first major test as earnings season swings into gear",
-      "link": "https://www.marketwatch.com/story/aprils-stock-market-rebound-is-about-to-face-its-first-major-test-as-earnings-season-swings-into-gear-1210b246?mod=mw_rss_topstories",
-      "time": "Sun, 12 Apr 2026 20:00:00 GMT",
-      "source": "MarketWatch",
+      "title": "Fed nominee Warsh clears a hurdle to Senate hearing",
+      "link": "https://www.cnbc.com/2026/04/13/fed-chair-nominee-kevin-warsh-senate-confirmation-hearing.html",
+      "time": "Mon, 13 Apr 2026 20:32:31 GMT",
+      "source": "CNBC",
       "impact": "HIGH",
-      "sentiment": "NEUTRAL"
+      "sentiment": "BEARISH"
     },
     {
-      "title": "Here are some bargain bank stocks heading into earnings season",
-      "link": "https://www.marketwatch.com/story/here-are-some-bargain-bank-stocks-heading-into-earnings-season-d0e6b3da?mod=mw_rss_topstories",
-      "time": "Sat, 11 Apr 2026 18:55:00 GMT",
-      "source": "MarketWatch",
+      "title": "Asia markets open higher amid hopes of a U.S.-Iran deal; China trade data in focus  ",
+      "link": "https://www.cnbc.com/2026/04/14/asia-markets-today-us-iran-china-trade-data-nikkei225-hang-seng-oil.html",
+      "time": "Tue, 14 Apr 2026 00:09:52 GMT",
+      "source": "CNBC",
       "impact": "HIGH",
       "sentiment": "BULLISH"
     },
     {
-      "title": "Earnings playbook: JPMorgan Chase and Netflix kick off the reporting season",
-      "link": "https://www.cnbc.com/2026/04/12/earnings-playbook-jpm-nflx-kick-off-the-reporting-season.html",
-      "time": "Sun, 12 Apr 2026 11:15:21 GMT",
+      "title": "Oracle pops nearly 13%, leading bounce back rally in software stocks",
+      "link": "https://www.cnbc.com/2026/04/13/oracle-orcl-stock-rally-software-ai-risk.html",
+      "time": "Mon, 13 Apr 2026 22:38:17 GMT",
       "source": "CNBC",
       "impact": "HIGH",
       "sentiment": "NEUTRAL"
     },
     {
-      "title": "Vibe check from inside one of AI industry's main events: 'Claude mania'",
-      "link": "https://www.cnbc.com/2026/04/11/vibe-check-from-ai-industry-humanx-anthropic-is-talk-of-the-town.html",
-      "time": "Sat, 11 Apr 2026 12:00:01 GMT",
+      "title": "Suspect in attack at Sam Altman's house aimed to kill OpenAI CEO, warned of humanity's extinction from AI",
+      "link": "https://www.cnbc.com/2026/04/13/sam-altman-openai-ai-arson.html",
+      "time": "Mon, 13 Apr 2026 23:27:13 GMT",
       "source": "CNBC",
       "impact": "HIGH",
-      "sentiment": "NEUTRAL"
+      "sentiment": "BEARISH"
     },
     {
-      "title": "OpenAI identifies security issue involving third-party tool, says user data was not accessed",
-      "link": "https://www.cnbc.com/2026/04/11/openai-identifies-security-issue-involving-third-party-tool.html",
-      "time": "Sat, 11 Apr 2026 08:18:18 GMT",
-      "source": "CNBC",
-      "impact": "HIGH",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "Man arrested after Sam Altman's house hit with Molotov cocktail, OpenAI headquarters threatened",
-      "link": "https://www.cnbc.com/2026/04/10/sam-altman-house-hit-with-molotov-cocktail-openai-office-threatened.html",
-      "time": "Fri, 10 Apr 2026 23:17:40 GMT",
+      "title": "OpenAI touts Amazon alliance in memo, says Microsoft has 'limited our ability' to reach clients",
+      "link": "https://www.cnbc.com/2026/04/13/openai-touts-amazon-alliance-in-memo-microsoft-limited-our-ability.html",
+      "time": "Mon, 13 Apr 2026 15:40:42 GMT",
       "source": "CNBC",
       "impact": "HIGH",
       "sentiment": "NEUTRAL"
@@ -64,204 +56,204 @@
   ],
   "recent_news": [
     {
-      "title": "Move now to seize this potential stock-market crisis and opportunity",
-      "link": "https://www.marketwatch.com/story/move-now-to-seize-this-potential-stock-market-crisis-and-opportunity-3c61dea9?mod=mw_rss_topstories",
-      "time": "Mon, 13 Apr 2026 01:15:00 GMT",
+      "title": "Streaming viewers are OK with double the commercials as ‘subscription fatigue’ sets in",
+      "link": "https://www.marketwatch.com/story/streaming-viewers-are-ok-with-double-the-commercials-as-subscription-fatigue-sets-in-5fa4d005?mod=mw_rss_topstories",
+      "time": "Tue, 14 Apr 2026 01:01:00 GMT",
       "source": "MarketWatch",
       "impact": "LOW",
       "sentiment": "NEUTRAL"
     },
     {
-      "title": "Trump says he’s closing the Strait of Hormuz. Has he been reading MarketWatch?",
-      "link": "https://www.marketwatch.com/story/trump-says-hes-closing-the-strait-of-hormuz-has-he-been-reading-marketwatch-e059dd07?mod=mw_rss_topstories",
-      "time": "Mon, 13 Apr 2026 00:18:00 GMT",
+      "title": "WNBA No. 1 draft pick Azzi Fudd will make $500,000 as a rookie — more than a 500% raise over last year’s pick",
+      "link": "https://www.marketwatch.com/story/the-no-1-pick-in-tonights-wnba-draft-will-make-500-000-as-a-rookie-more-than-a-500-raise-over-last-years-pick-066b588c?mod=mw_rss_topstories",
+      "time": "Tue, 14 Apr 2026 00:09:00 GMT",
       "source": "MarketWatch",
       "impact": "LOW",
       "sentiment": "NEUTRAL"
     },
     {
-      "title": "Stock-market futures drop, oil surges back above $100 after failed talks between U.S. and Iran over the weekend",
-      "link": "https://www.marketwatch.com/story/stock-market-futures-drop-oil-surges-above-100-after-failed-talks-between-u-s-and-iran-over-the-weekend-7b741637?mod=mw_rss_topstories",
-      "time": "Sun, 12 Apr 2026 23:06:00 GMT",
+      "title": "Are you a ‘HENRY’? Why 90% of financial advisers will waive their minimums to get your business.",
+      "link": "https://www.marketwatch.com/story/are-you-a-henry-why-90-of-financial-advisers-will-waive-their-minimums-to-get-your-business-2b7bd083?mod=mw_rss_topstories",
+      "time": "Mon, 13 Apr 2026 23:56:00 GMT",
+      "source": "MarketWatch",
+      "impact": "LOW",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "Private credit not only won’t spark a financial crisis — it may be more stable than your bank",
+      "link": "https://www.marketwatch.com/story/private-credit-is-actually-built-to-survive-the-ghosts-of-the-great-financial-crisis-6eaa35d6?mod=mw_rss_topstories",
+      "time": "Mon, 13 Apr 2026 23:54:00 GMT",
       "source": "MarketWatch",
       "impact": "MEDIUM",
       "sentiment": "NEUTRAL"
     },
     {
-      "title": "Trump announces blockade of Strait of Hormuz as Vance leaves Pakistan talks with no deal. How financial markets are reacting.",
-      "link": "https://www.marketwatch.com/story/vance-leaves-pakistan-talks-with-no-deal-how-financial-markets-are-reacting-ef6916b3?mod=mw_rss_topstories",
-      "time": "Sun, 12 Apr 2026 21:22:00 GMT",
+      "title": "This is the defense sector’s fastest grower — and a $20 billion trade most investors are missing",
+      "link": "https://www.marketwatch.com/story/the-20-billion-drone-killer-trade-most-investors-are-missing-7fff2293?mod=mw_rss_topstories",
+      "time": "Mon, 13 Apr 2026 23:47:00 GMT",
       "source": "MarketWatch",
       "impact": "LOW",
-      "sentiment": "NEUTRAL"
+      "sentiment": "BEARISH"
     },
     {
-      "title": "‘I feel pressured’: My husband has early Alzheimer’s and wants to visit Europe, but I’m terrified of flying. What should I do?",
-      "link": "https://www.marketwatch.com/story/i-feel-pressured-my-husband-has-early-alzheimers-and-wants-to-visit-europe-but-im-terrified-of-flying-what-should-i-do-c5cc01bf?mod=mw_rss_topstories",
-      "time": "Sun, 12 Apr 2026 20:50:00 GMT",
+      "title": "If you’ve ever been tempted to ‘sell in May and go away’ — now is the time",
+      "link": "https://www.marketwatch.com/story/if-youve-ever-been-tempted-to-sell-in-may-and-go-away-now-is-the-time-7b8b3a04?mod=mw_rss_topstories",
+      "time": "Mon, 13 Apr 2026 23:44:00 GMT",
       "source": "MarketWatch",
       "impact": "LOW",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "‘I am at a crossroads’: I’m 37 and have $1.3 million. Do I stop working to spend time with my young kids?",
-      "link": "https://www.marketwatch.com/story/i-am-at-a-crossroads-im-37-and-have-1-3-million-do-i-stop-working-to-spend-time-with-my-young-kids-fb2f1b20?mod=mw_rss_topstories",
-      "time": "Sun, 12 Apr 2026 20:44:00 GMT",
-      "source": "MarketWatch",
-      "impact": "LOW",
-      "sentiment": "NEUTRAL"
+      "sentiment": "BEARISH"
     },
     {
       "title": "We asked our wedding guests to give money to St. Jude’s Children’s Hospital. Can we write off their donations?",
       "link": "https://www.marketwatch.com/story/we-asked-our-wedding-guests-to-give-money-to-st-judes-childrens-hospital-can-we-write-off-their-donations-0a326156?mod=mw_rss_topstories",
-      "time": "Sun, 12 Apr 2026 20:44:00 GMT",
+      "time": "Mon, 13 Apr 2026 22:39:00 GMT",
       "source": "MarketWatch",
       "impact": "LOW",
       "sentiment": "NEUTRAL"
     },
     {
-      "title": "April’s stock-market rebound is about to face its first major test as earnings season swings into gear",
-      "link": "https://www.marketwatch.com/story/aprils-stock-market-rebound-is-about-to-face-its-first-major-test-as-earnings-season-swings-into-gear-1210b246?mod=mw_rss_topstories",
-      "time": "Sun, 12 Apr 2026 20:00:00 GMT",
-      "source": "MarketWatch",
-      "impact": "HIGH",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "How Beyond Meat sank from a $14 billion plant-based protein powerhouse to a penny stock",
-      "link": "https://www.marketwatch.com/story/how-beyond-meat-sank-from-a-14-billion-plant-based-protein-powerhouse-to-a-penny-stock-464c9781?mod=mw_rss_topstories",
-      "time": "Sun, 12 Apr 2026 13:00:00 GMT",
+      "title": "Intel’s stock just had its best 9-day stretch on record. Can it go even higher?",
+      "link": "https://www.marketwatch.com/story/intels-stock-just-had-its-best-9-day-stretch-on-record-can-it-go-even-higher-13893363?mod=mw_rss_topstories",
+      "time": "Mon, 13 Apr 2026 22:38:00 GMT",
       "source": "MarketWatch",
       "impact": "LOW",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "Here are some bargain bank stocks heading into earnings season",
-      "link": "https://www.marketwatch.com/story/here-are-some-bargain-bank-stocks-heading-into-earnings-season-d0e6b3da?mod=mw_rss_topstories",
-      "time": "Sat, 11 Apr 2026 18:55:00 GMT",
-      "source": "MarketWatch",
-      "impact": "HIGH",
       "sentiment": "BULLISH"
     },
     {
-      "title": "Oil prices surge above $100 as U.S. Navy to blockade Iran's ports after peace talks fail",
+      "title": "‘I am at a crossroads’: I’m 37 and have $1.3 million. Do I stop working to spend time with my young kids?",
+      "link": "https://www.marketwatch.com/story/i-am-at-a-crossroads-im-37-and-have-1-3-million-do-i-stop-working-to-spend-time-with-my-young-kids-fb2f1b20?mod=mw_rss_topstories",
+      "time": "Mon, 13 Apr 2026 22:00:00 GMT",
+      "source": "MarketWatch",
+      "impact": "LOW",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "My friend’s girlfriend went ‘ballistic’ after learning he gives his kids $19,000 a year. Is this a red flag?",
+      "link": "https://www.marketwatch.com/story/my-friends-girlfriend-went-ballistic-after-he-gave-his-kids-19-000-a-year-is-this-a-red-flag-c894366f?mod=mw_rss_topstories",
+      "time": "Mon, 13 Apr 2026 21:44:00 GMT",
+      "source": "MarketWatch",
+      "impact": "LOW",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "Vance says 'the ball is in Iran's court' to move peace talks further, as U.S. blockade takes effect",
+      "link": "https://www.cnbc.com/2026/04/13/trump-vance-iran-hormuz-strait-blockade.html",
+      "time": "Mon, 13 Apr 2026 23:46:34 GMT",
+      "source": "CNBC",
+      "impact": "LOW",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "Fed nominee Warsh clears a hurdle to Senate hearing",
+      "link": "https://www.cnbc.com/2026/04/13/fed-chair-nominee-kevin-warsh-senate-confirmation-hearing.html",
+      "time": "Mon, 13 Apr 2026 20:32:31 GMT",
+      "source": "CNBC",
+      "impact": "HIGH",
+      "sentiment": "BEARISH"
+    },
+    {
+      "title": "Oil prices near $100 as U.S. Navy blockades Iran's ports after peace talks fail",
       "link": "https://www.cnbc.com/2026/04/12/oil-prices-iran-war-strait-hormuz-blockade.html",
-      "time": "Sun, 12 Apr 2026 22:22:21 GMT",
+      "time": "Mon, 13 Apr 2026 19:58:30 GMT",
       "source": "CNBC",
       "impact": "MEDIUM",
-      "sentiment": "BULLISH"
+      "sentiment": "NEUTRAL"
     },
     {
-      "title": "Trump blasts Pope Leo for criticism of U.S. foreign policy",
-      "link": "https://www.cnbc.com/2026/04/12/trump-pope-leo-catholic-church-iran.html",
-      "time": "Mon, 13 Apr 2026 01:27:58 GMT",
+      "title": "S&P 500 futures are little changed after index erases Iran war losses: Live updates",
+      "link": "https://www.cnbc.com/2026/04/13/stock-markets-today-live-updates.html",
+      "time": "Mon, 13 Apr 2026 23:22:55 GMT",
+      "source": "CNBC",
+      "impact": "MEDIUM",
+      "sentiment": "BEARISH"
+    },
+    {
+      "title": "Some brave traders who made a leveraged bet on chip stocks nearly doubled their return in almost 10 days",
+      "link": "https://www.cnbc.com/2026/04/13/brave-traders-with-leveraged-bet-on-semis-made-nearly-100percent-in-almost-10-days.html",
+      "time": "Mon, 13 Apr 2026 20:11:24 GMT",
       "source": "CNBC",
       "impact": "LOW",
       "sentiment": "NEUTRAL"
     },
     {
-      "title": "Eric Swalwell suspends campaign for California governor amid sexual misconduct allegations",
-      "link": "https://www.cnbc.com/2026/04/13/eric-swalwell-suspends-campaign-california-governor.html",
-      "time": "Mon, 13 Apr 2026 01:29:22 GMT",
+      "title": "Trump deletes Truth Social image depicting him as Jesus: 'It was me as a doctor'",
+      "link": "https://www.cnbc.com/2026/04/13/trump-jesus-truth-social-pope-leo.html",
+      "time": "Tue, 14 Apr 2026 00:21:50 GMT",
       "source": "CNBC",
       "impact": "LOW",
       "sentiment": "NEUTRAL"
     },
     {
-      "title": "Trump says U.S. will blockade Strait of Hormuz after Iran peace talks fail",
-      "link": "https://www.cnbc.com/2026/04/12/trump-iran-war-strait-of-hormuz.html",
-      "time": "Sun, 12 Apr 2026 22:19:12 GMT",
-      "source": "CNBC",
-      "impact": "LOW",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "Hungary's conservative icon Orban defeated by center-right opposition",
-      "link": "https://www.cnbc.com/2026/04/12/hungarians-vote-in-closely-watched-landmark-election-.html",
-      "time": "Sun, 12 Apr 2026 22:44:16 GMT",
-      "source": "CNBC",
-      "impact": "LOW",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "Earnings playbook: JPMorgan Chase and Netflix kick off the reporting season",
-      "link": "https://www.cnbc.com/2026/04/12/earnings-playbook-jpm-nflx-kick-off-the-reporting-season.html",
-      "time": "Sun, 12 Apr 2026 11:15:21 GMT",
+      "title": "Asia markets open higher amid hopes of a U.S.-Iran deal; China trade data in focus  ",
+      "link": "https://www.cnbc.com/2026/04/14/asia-markets-today-us-iran-china-trade-data-nikkei225-hang-seng-oil.html",
+      "time": "Tue, 14 Apr 2026 00:09:52 GMT",
       "source": "CNBC",
       "impact": "HIGH",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "Asia markets open lower as oil surges after U.S. moves to blockade Iran ports",
-      "link": "https://www.cnbc.com/2026/04/13/asia-pacific-market-us-iran-talks-blockade-oil-prices.html",
-      "time": "Mon, 13 Apr 2026 00:14:43 GMT",
-      "source": "CNBC",
-      "impact": "MEDIUM",
       "sentiment": "BULLISH"
     },
     {
-      "title": "‘The Super Mario Galaxy Movie’ rockets to $629 million worldwide at the box office",
-      "link": "https://www.cnbc.com/2026/04/12/the-super-mario-galaxy-movie-box-office.html",
-      "time": "Sun, 12 Apr 2026 18:39:41 GMT",
-      "source": "CNBC",
-      "impact": "LOW",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "How Kodak is trying to turn around its business after teetering on bankruptcy",
-      "link": "https://www.cnbc.com/2026/04/11/kodak-film-business-ceo-jim-continenza.html",
-      "time": "Sat, 11 Apr 2026 12:00:01 GMT",
-      "source": "CNBC",
-      "impact": "MEDIUM",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "Morgan Stanley predicts these beaten-down Chinese stocks can rebound on easing Middle East tensions",
-      "link": "https://www.cnbc.com/2026/04/12/morgan-stanley-chinese-stocks-that-can-recover-on-iran-ceasefire.html",
-      "time": "Sun, 12 Apr 2026 11:16:44 GMT",
-      "source": "CNBC",
-      "impact": "LOW",
-      "sentiment": "BULLISH"
-    },
-    {
-      "title": "Trump's 250-foot 'triumphal arch' would loom over Potomac, new renderings show",
-      "link": "https://www.cnbc.com/2026/04/10/trump-arch-renderings-arlington.html",
-      "time": "Sat, 11 Apr 2026 01:41:53 GMT",
-      "source": "CNBC",
-      "impact": "LOW",
-      "sentiment": "NEUTRAL"
-    },
-    {
-      "title": "Artemis II astronauts hurtle home from moon toward splashdown",
-      "link": "https://www.cnbc.com/2026/04/10/nasa-artemis-ii-astronauts-splashdown-orion-integrity.html",
-      "time": "Sat, 11 Apr 2026 00:35:35 GMT",
+      "title": "Oracle expands Bloom Energy deal days after receiving $400 million stock warrant",
+      "link": "https://www.cnbc.com/2026/04/13/oracle-expands-bloom-energy-deal-days-after-400-million-stock-warrant.html",
+      "time": "Mon, 13 Apr 2026 22:32:50 GMT",
       "source": "CNBC",
       "impact": "LOW",
       "sentiment": "BEARISH"
     },
     {
-      "title": "Berkshire electric utility's court win could save it billions",
-      "link": "https://www.cnbc.com/2026/04/11/berkshire-electric-utilitys-court-win-could-save-it-billions.html",
-      "time": "Sat, 11 Apr 2026 11:43:24 GMT",
+      "title": "Rep. Eric Swalwell resigns from U.S. House after sexual misconduct allegations",
+      "link": "https://www.cnbc.com/2026/04/13/eric-swalwell-resigns-congress.html",
+      "time": "Mon, 13 Apr 2026 23:17:57 GMT",
       "source": "CNBC",
       "impact": "LOW",
       "sentiment": "NEUTRAL"
     },
     {
-      "title": "Top Wall Street analysts prefer these dividend stocks for steady income ",
-      "link": "https://www.cnbc.com/2026/04/12/top-street-analysts-prefer-these-dividend-stocks-for-steady-income-.html",
-      "time": "Sun, 12 Apr 2026 11:18:07 GMT",
+      "title": "Oracle pops nearly 13%, leading bounce back rally in software stocks",
+      "link": "https://www.cnbc.com/2026/04/13/oracle-orcl-stock-rally-software-ai-risk.html",
+      "time": "Mon, 13 Apr 2026 22:38:17 GMT",
+      "source": "CNBC",
+      "impact": "HIGH",
+      "sentiment": "NEUTRAL"
+    },
+    {
+      "title": "Delta Air Lines unveils first new Delta One suite in premium cabin arms race",
+      "link": "https://www.cnbc.com/2026/04/13/delta-one-suite.html",
+      "time": "Mon, 13 Apr 2026 13:00:01 GMT",
       "source": "CNBC",
       "impact": "LOW",
       "sentiment": "NEUTRAL"
     },
     {
-      "title": "Allies yank support for Swalwell’s California governor run after sexual assault allegations",
-      "link": "https://www.cnbc.com/2026/04/11/eric-swalwell-sexual-assault-allegations.html",
-      "time": "Sat, 11 Apr 2026 22:48:29 GMT",
+      "title": "The Iran war is compounding California's energy crunch",
+      "link": "https://www.cnbc.com/2026/04/13/the-iran-war-is-compounding-californias-energy-crunch.html",
+      "time": "Mon, 13 Apr 2026 19:51:45 GMT",
       "source": "CNBC",
       "impact": "LOW",
-      "sentiment": "NEUTRAL"
+      "sentiment": "BEARISH"
+    },
+    {
+      "title": "Suspect in attack at Sam Altman's house aimed to kill OpenAI CEO, warned of humanity's extinction from AI",
+      "link": "https://www.cnbc.com/2026/04/13/sam-altman-openai-ai-arson.html",
+      "time": "Mon, 13 Apr 2026 23:27:13 GMT",
+      "source": "CNBC",
+      "impact": "HIGH",
+      "sentiment": "BEARISH"
+    },
+    {
+      "title": "Investor Joe Terranova says one public stock is a back door way to play the booming fortunes of private Anthropic",
+      "link": "https://www.cnbc.com/2026/04/13/one-public-stock-is-back-door-way-to-play-boom-in-private-anthropic.html",
+      "time": "Mon, 13 Apr 2026 19:35:20 GMT",
+      "source": "CNBC",
+      "impact": "LOW",
+      "sentiment": "BULLISH"
+    },
+    {
+      "title": "Jim Cramer says this is the real reason why stocks are shrugging off Iran war fears",
+      "link": "https://www.cnbc.com/2026/04/13/jim-cramer-stocks-rallying-despite-iran-war-why.html",
+      "time": "Mon, 13 Apr 2026 23:06:21 GMT",
+      "source": "CNBC",
+      "impact": "LOW",
+      "sentiment": "BEARISH"
     }
   ]
 }

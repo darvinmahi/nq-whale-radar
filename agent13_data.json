@@ -1,7 +1,11 @@
 {
     "agent": 13,
     "name": "Explorador de Inteligencia Alpha",
+<<<<<<< Updated upstream
     "last_crawl": "2026-04-13T22:06:53.998805+00:00Z",
+=======
+    "last_crawl": "2026-04-14T01:19:43.240250+00:00Z",
+>>>>>>> Stashed changes
     "insights": {
         "source": "Web Research & User DNA",
         "external_bias": "ESTUDIO DE BACKTESTING 3 AÑOS EN CURSO",

@@ -1,16 +1,29 @@
 {
   "agent": 4,
+<<<<<<< Updated upstream
   "timestamp": "2026-04-13T22:06:54.004562Z",
   "verdict": "⚪ NEUTRAL (49/100) — Sin sesgo claro — operar el rango o esperar catalizador.",
   "global_score": 49,
+=======
+  "timestamp": "2026-04-14T01:19:43.029470Z",
+  "verdict": "⚪ NEUTRAL (50/100) — Sin sesgo claro — operar el rango o esperar catalizador.",
+  "global_score": 50,
+>>>>>>> Stashed changes
   "global_label": "NEUTRAL",
   "icon": "⚪",
   "layers": {
     "positioning": 50,
+<<<<<<< Updated upstream
     "macro": 50.0,
     "liquidity": 58.0,
     "timing": 50.0,
     "algorithmic": 20.0,
+=======
+    "macro": 50,
+    "liquidity": 58.0,
+    "timing": 53.5,
+    "algorithmic": 27.0,
+>>>>>>> Stashed changes
     "order_flow": 50
   }
 }

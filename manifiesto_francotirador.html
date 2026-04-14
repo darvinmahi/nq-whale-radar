@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manifiesto del Francotirador | Whale Radar</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background: #060610; 
+            color: #e2e8f0; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            padding: 40px 20px;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 { color: #f59e0b; font-size: 32px; text-align: center; margin-bottom: 10px; }
+        .sub { color: #94a3b8; font-size: 16px; text-align: center; margin-bottom: 40px; font-style: italic; }
+        
+        .card { 
+            background: #0e0e1c; 
+            border: 1px solid #1e2235; 
+            border-radius: 12px; 
+            padding: 28px; 
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        
+        h2 { color: #38bdf8; font-size: 22px; border-bottom: 2px solid #1e2235; padding-bottom: 10px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;}
+        h3 { color: #a78bfa; font-size: 18px; margin: 25px 0 10px 0; }
+        
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 24px;
+        }
+
+        .success-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 24px;
+        }
+        
+        .list-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .list-item::before {
+            content: "•";
+            color: #38bdf8;
+            font-weight: bold;
+            font-size: 20px;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        .highlight { color: #f59e0b; font-weight: bold; }
+        .bull { color: #10b981; font-weight: bold; }
+        .bear { color: #ef4444; font-weight: bold; }
+
+        .math-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .math-card {
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .math-value { font-size: 24px; font-weight: bold; color: #38bdf8; }
+        .math-label { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+
+        @media (max-width: 600px) {
+            .math-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🧠 Manifiesto del Francotirador</h1>
+    <p class="sub">Lee esto obligatoriamente antes de las 9:30 AM. Apaga la emoción, enciende la estadística.</p>
+
+    <div class="warning-box">
+        <strong>⚠️ PREMISA VITAL: EL BACKTEST NO ES UNA GARANTÍA CIEGA</strong><br>
+        Tener un 70% de éxito matemático a largo plazo no significa que el trade de hoy no pueda ser perdedor. El mercado está diseñado para liquidar cuentas. Tu único escudo real es <strong>filtrar los días basura y respetar la gestión de riesgo.</strong> Tu mejor operación a veces es la que <strong>NO</strong> tomas.
+    </div>
+
+    <!-- NARRATIVA ESTADÍSTICA DIARIA -->
+    <div class="card">
+        <h2>🗓️ Narrativa Institucional (Qué pasa realmente cada día)</h2>
+        <p style="color:#94a3b8; margin-bottom: 20px; font-size: 14px;">Identifica qué día es hoy e interioriza el guion del mercado antes de abrir operaciones.</p>
+
+        <h3>🟡 LUNES (La Cacería de Liquidez)</h3>
+        <p class="list-item">Tras el fin de semana, el mercado abre a menudo con un "Gap" basado en el pánico minorista. El lunes sirve para cazar esos Stops tempranos en la apertura. Si barren abajo y a las 10:00 AM cerramos <span class="bull">BULL</span>, la tendencia semanal inició. ¡Compras!</p>
+
+        <h3>🔵 MARTES (La Expansión / El Día Fácil)</h3>
+        <p class="list-item">Si el lunes ya dictó la tendencia institucional, el martes es territorio de expansión sin sorpresas macro. Suele ser el Trade más seguro de la semana a las 10:00 AM para continuar la macro.</p>
+
+        <h3>⚪ MIÉRCOLES (El Matadero / Algorithmic Chop)</h3>
+        <p class="list-item">A mitad de de semana las instituciones "equilibran los libros". Picos violentos hacia arriba y hacia abajo para liquidar liquidez en ambas direcciones. <strong>QUÉDATE FUERA</strong> o usa 1/2 tamaño.</p>
+
+        <h3>🟠 JUEVES (La Falsa Esperanza)</h3>
+        <p class="list-item">Suele haber noticias tempranas (Desempleo/Jobless Claims). El retail entra en FOMO buscando compras, los Market Makers aprovechan esa liquidez para botar sus posiciones masivas. Si a las 10:00 AM ves <span class="bear">BEAR</span>, es hora de vender la descarga.</p>
+
+        <h3>🔴 VIERNES (Friday Dump - Riesgo Off)</h3>
+        <p class="list-item">Fondos de cobertura gigantes no van a dejar margen apalancado el fin de semana arriesgándose a un "cisne negro" de noticias. Liquidación masiva de mediodía en adelante. Si 10:00 AM dice <span class="bear">BEAR</span>, hay colapso.</p>
+    </div>
+
+    <!-- LOS 4 FILTROS DE PROTECCIÓN -->
+    <div class="card">
+        <h2>🛡️ Los 4 Filtros Anti-Caos (Checklist 9:55 AM)</h2>
+        <p style="color:#94a3b8; margin-bottom: 20px; font-size: 14px;">Si alguna de estas condiciones de da antes o durante las 10:00 AM, <strong>CIERRA LA PLATAFORMA.</strong></p>
+
+        <p class="list-item"><strong>1. Amplitud Minúscula:</strong> Si el rango de 9:30 a 10:00 fue de apenas 15-20 puntos de NQ, el mercado está muerto. El rompimiento será falso. Necesitas un mercado en expansión para operar.</p>
+        
+        <p class="list-item"><strong>2. Exceso Nocturno (Asia/London):</strong> Si en pre-market el NQ ya se disparó +150 puntos seguidos unilateralmente, NY suele abrir para corregir o lateralizar. Mucho cuidado con el agotamiento intradiario.</p>
+
+        <p class="list-item"><strong>3. Muro de Volumen (POC Inmediato):</strong> Si a las 10:00 te da entrada, pero al medir ves que 5 puntos enfrente tuyo está el POC masivo del día anterior en el gráfico, NO entres. Estás comprando frente a una alcabala institucional.</p>
+
+        <p class="list-item"><strong>4. Manipulación Extrema por Noticia:</strong> Si antes de las 10:00 hubo un bloque económico (como FED) y ves velas de 80 puntos de lado a lado... huye. Eso es cacería pura de stops por volatilidad.</p>
+    </div>
+
+    <!-- EL MEGAHACK APEX -->
+    <div class="card">
+        <h2>💰 El Hack Estadístico: APEX x 20 Cuentas</h2>
+        <p style="color:#94a3b8; margin-bottom: 20px; font-size: 14px;">La matemática a prueba de Trailing Drawdown.</p>
+
+        <div class="success-box">
+            <strong>🎯 Objetivo: El "Tiro de Gracia" ($200 por cuenta)</strong><br>
+            No busques un "Home Run" en 1 cuenta. Usa una copiadora de trades (Replikanto/Quantower) para ejecutar el mismo Sniper Shot en 20 cuentas APEX o Topstep en simultáneo.
+        </div>
+
+        <div class="math-grid">
+            <div class="math-card">
+                <div class="math-value">5 x MNQ</div>
+                <div class="math-label">Tamaño Sugerido ($10/punto)</div>
+            </div>
+            <div class="math-card">
+                <div class="math-value">20 Puntos NQ</div>
+                <div class="math-label">Objetivo de Precio (Target)</div>
+            </div>
+            <div class="math-card">
+                <div class="math-value">-$150 / -$200</div>
+                <div class="math-label">Stop Loss Fijo e Innegociable</div>
+            </div>
+            <div class="math-card">
+                <div class="math-value">$4,000 / día</div>
+                <div class="math-label">Ganancia Neta (20 cuentas)</div>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 25px;">Por qué funciona psicólogicamente:</h3>
+        <p style="font-size: 14px; text-align: justify;">Buscar 20 puntos en la explosión de las 10:00 AM es matemáticamente altísimamente probable y dura segundos. Es una entrada de francotirador.<br><br> Al arriesgar máximo $200 de los <strong>$2,500 de protección</strong> de APEX, estás evitando fallar por el "Trailing Drawdown". Las pruebas de fondeo se diseñaron para hacerte fallar por avaricia. Tienes que hackear su juego: Operar poco (una vez al día), ir por muy poco recorrido per-cuenta (20 pts), pero aprovechar el nivel institucional (x20 cuentas) para llevarte ganancias de locos. </p>
+    </div>
+
+    <button onclick="window.close()" style="width:100%;padding:15px;background:#38bdf8;border:none;border-radius:10px;color:#000;font-weight:bold;font-size:16px;text-transform:uppercase;cursor:pointer;letter-spacing:1px;margin-bottom:20px;">
+        Entendido. Iniciar Sesión 🚀
+    </button>
+
+</body>
+</html>

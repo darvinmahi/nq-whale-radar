@@ -1,6 +1,7 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
+<<<<<<< Updated upstream
   "timestamp": "2026-04-13T22:06:52.342181Z",
   "vix_value": 22.19,
   "vix_status": "NORMAL",
@@ -8,20 +9,37 @@
     "VXN": 22.19,
     "GEX_B": 2.3,
     "DIX": null
+=======
+  "timestamp": "2026-04-14T01:19:38.540321Z",
+  "input_source": "agent1_data.json",
+  "raw_inputs": {
+    "VXN": 22.19,
+    "GEX_B": 5.666,
+    "DIX": 45.84
+>>>>>>> Stashed changes
   },
   "vxn_analysis": {
     "level": "NORMAL",
     "signal": "NEUTRAL",
     "score": 50,
+<<<<<<< Updated upstream
     "description": "VXN 22.19 — Volatilidad normal.",
+=======
+    "description": "VXN 22.19 — Volatilidad normal. Entorno operativo estándar.",
+>>>>>>> Stashed changes
     "risk": "Monitorear si sube sobre 25"
   },
   "gex_analysis": {
     "level": "STRONG_POSITIVE",
     "signal": "BULLISH",
     "score": 70,
+<<<<<<< Updated upstream
     "description": "GEX +2.30B — Dealers comprando en caídas. Mercado amortiguado.",
     "impact": "Movimientos suaves. Dealers frenan volatilidad."
+=======
+    "description": "GEX +5.67B — Dealers comprando en caídas. Mercado amortiguado.",
+    "impact": "Los dealers frenan la volatilidad. Movimientos más suaves."
+>>>>>>> Stashed changes
   },
   "signal": "BULLISH",
   "score": 57

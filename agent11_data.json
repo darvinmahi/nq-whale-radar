@@ -1,11 +1,19 @@
 {
     "agent": 11,
+<<<<<<< Updated upstream
     "timestamp": "2026-04-13T22:06:56.137135+00:00Z",
+=======
+    "timestamp": "2026-04-14T01:19:52.440519+00:00Z",
+>>>>>>> Stashed changes
     "active_protocols": [],
     "details": {
         "swing": {
             "active": false,
+<<<<<<< Updated upstream
             "confidence": 49,
+=======
+            "confidence": 50,
+>>>>>>> Stashed changes
             "desc": "Confluencia de COT Alcista y Bias Ponderado positivo. Las instituciones están acumulando."
         },
         "ict": {
@@ -23,5 +31,9 @@
             "action": "ESPERAR VENTANA"
         }
     },
+<<<<<<< Updated upstream
     "master_recommendation": "⚪ NEUTRAL (49/100) — Sin sesgo claro — operar el rango o esperar catalizador."
+=======
+    "master_recommendation": "⚪ NEUTRAL (50/100) — Sin sesgo claro — operar el rango o esperar catalizador."
+>>>>>>> Stashed changes
 }

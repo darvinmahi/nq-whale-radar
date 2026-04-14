@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backtest OR Completo — NQ Whale Radar</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:#0d0d1a; color:#e2e8f0; font-family:'Segoe UI',Arial,sans-serif; padding:20px; }
+h1 { color:#f59e0b; font-size:20px; text-align:center; margin-bottom:4px; }
+.sub { color:#64748b; font-size:11px; text-align:center; margin-bottom:20px; }
+.card { background:#131325; border:1px solid #2d2d4e; border-radius:10px; padding:18px; margin-bottom:18px; }
+.card h2 { color:#38bdf8; font-size:14px; margin-bottom:12px; }
+.card h3 { color:#f59e0b; font-size:12px; margin-bottom:8px; }
+table { width:100%; border-collapse:collapse; font-size:11px; }
+th { background:#1a1a30; color:#94a3b8; font-size:10px; font-weight:600; padding:7px 8px; text-align:center;
+     border-bottom:2px solid #312e81; position:sticky; top:0; z-index:10; }
+td { padding:5px 8px; text-align:center; border-bottom:1px solid #1a1a2e; }
+.elite { background:#1a0f30; border-left:3px solid #a78bfa; }
+.fuerte { background:#0a1a15; border-left:3px solid #10b981; }
+.ok { background:#1a1a0a; border-left:3px solid #f59e0b; }
+.pos { color:#10b981; font-weight:700; }
+.neg { color:#ef4444; font-weight:700; }
+.bar { height:12px; border-radius:2px; display:inline-block; }
+.top-badge { display:inline-block; background:rgba(245,158,11,.15); border:1px solid #f59e0b;
+              color:#f59e0b; padding:2px 8px; border-radius:12px; font-size:10px; font-weight:700; margin:2px; }
+.day-tab { display:inline-block; padding:8px 18px; margin:3px; border-radius:20px; font-size:11px;
+            font-weight:700; cursor:pointer; border:1px solid #334155; color:#94a3b8; background:none; }
+.day-tab.active { background:rgba(56,189,248,.1); border-color:#38bdf8; color:#38bdf8; }
+.day-tab:hover { background:rgba(56,189,248,.05); }
+.summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0; }
+.sg-item { background:#0d0d1a; border:1px solid #1a1a2e; border-radius:8px; padding:10px; text-align:center; }
+.sg-label { font-size:9px; color:#64748b; text-transform:uppercase; letter-spacing:.05em; }
+.sg-value { font-size:18px; font-weight:900; margin-top:4px; }
+</style>
+</head>
+<body>
+
+<h1>📊 BACKTEST OR COMPLETO — NQ Whale Radar</h1>
+<p class="sub">2017-02-14 → 2026-03-25 · 1062 días · OR 15m / 30m / 45m · Todos los días reales</p>
+
+<div class="card">
+  <h2>🏆 TOP 10 Patrones (N≥5)</h2>
+  <table>
+    <tr><th>#</th><th>Día</th><th>OR TF</th><th>Dir</th><th>N</th><th>Accuracy</th><th>Reversal</th><th>Avg NY</th><th>Nota</th></tr>
+    <tr class="ok">
+      <td>1</td><td style="font-weight:700">MIÉRCOLES</td><td>15m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>41</td>
+      <td style="color:#f59e0b;font-weight:900;font-size:13px">61%</td>
+      <td>20%</td>
+      <td class="pos">+71pts</td>
+      <td>🔥 OK</td>
+    </tr>
+    <tr class="ok">
+      <td>2</td><td style="font-weight:700">JUEVES</td><td>15m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>65</td>
+      <td style="color:#94a3b8;font-weight:900;font-size:13px">58%</td>
+      <td>14%</td>
+      <td class="neg">-60pts</td>
+      <td></td>
+    </tr>
+    <tr class="ok">
+      <td>3</td><td style="font-weight:700">VIERNES</td><td>30m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>48</td>
+      <td style="color:#94a3b8;font-weight:900;font-size:13px">58%</td>
+      <td>15%</td>
+      <td class="pos">+69pts</td>
+      <td></td>
+    </tr>
+    <tr class="ok">
+      <td>4</td><td style="font-weight:700">MIÉRCOLES</td><td>45m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>76</td>
+      <td style="color:#94a3b8;font-weight:900;font-size:13px">57%</td>
+      <td>16%</td>
+      <td class="neg">-60pts</td>
+      <td></td>
+    </tr>
+    <tr class="ok">
+      <td>5</td><td style="font-weight:700">JUEVES</td><td>30m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>76</td>
+      <td style="color:#94a3b8;font-weight:900;font-size:13px">55%</td>
+      <td>13%</td>
+      <td class="neg">-59pts</td>
+      <td></td>
+    </tr>
+    <tr class="ok">
+      <td>6</td><td style="font-weight:700">JUEVES</td><td>45m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>80</td>
+      <td style="color:#94a3b8;font-weight:900;font-size:13px">55%</td>
+      <td>14%</td>
+      <td class="neg">-59pts</td>
+      <td></td>
+    </tr>
+    <tr class="ok">
+      <td>7</td><td style="font-weight:700">MIÉRCOLES</td><td>30m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>79</td>
+      <td style="color:#94a3b8;font-weight:900;font-size:13px">54%</td>
+      <td>22%</td>
+      <td class="neg">-46pts</td>
+      <td></td>
+    </tr>
+    <tr class="ok">
+      <td>8</td><td style="font-weight:700">MIÉRCOLES</td><td>45m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>76</td>
+      <td style="color:#94a3b8;font-weight:900;font-size:13px">53%</td>
+      <td>21%</td>
+      <td class="pos">+55pts</td>
+      <td></td>
+    </tr>
+    <tr class="ok">
+      <td>9</td><td style="font-weight:700">VIERNES</td><td>45m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>54</td>
+      <td style="color:#94a3b8;font-weight:900;font-size:13px">52%</td>
+      <td>11%</td>
+      <td class="pos">+54pts</td>
+      <td></td>
+    </tr>
+    <tr class="ok">
+      <td>10</td><td style="font-weight:700">LUNES</td><td>15m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>35</td>
+      <td style="color:#94a3b8;font-weight:900;font-size:13px">51%</td>
+      <td>23%</td>
+      <td class="pos">+35pts</td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+
+<div class="card" id="day-monday">
+  <h2>📅 LUNES — 196 días</h2>
+  <div class="summary-grid">
+    <div class="sg-item"><div class="sg-label">Total</div><div class="sg-value" style="color:#38bdf8">196</div></div>
+    <div class="sg-item"><div class="sg-label">BULL</div><div class="sg-value pos">55 (28%)</div></div>
+    <div class="sg-item"><div class="sg-label">BEAR</div><div class="sg-value neg">55 (28%)</div></div>
+    <div class="sg-item"><div class="sg-label">Rango Promedio</div><div class="sg-value" style="color:#f59e0b">123pts</div></div>
+  </div>
+  <table>
+    <tr><th>OR TF</th><th>OR Dir</th><th>N</th><th>NY BULL</th><th>NY BEAR</th><th>NY FLAT</th><th>Accuracy</th><th>Avg NY</th><th>Bar</th></tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>35</td>
+      <td class="pos">18 (51%)</td>
+      <td class="neg">8 (23%)</td>
+      <td>9</td>
+      <td style="color:#64748b;font-weight:900">51%</td>
+      <td class="pos">+35pts</td>
+      <td><div class="bar" style="width:41px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>50</td>
+      <td class="pos">12 (24%)</td>
+      <td class="neg">22 (44%)</td>
+      <td>16</td>
+      <td style="color:#64748b;font-weight:900">44%</td>
+      <td class="neg">-39pts</td>
+      <td><div class="bar" style="width:35px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>49</td>
+      <td class="pos">24 (49%)</td>
+      <td class="neg">11 (22%)</td>
+      <td>14</td>
+      <td style="color:#64748b;font-weight:900">49%</td>
+      <td class="pos">+25pts</td>
+      <td><div class="bar" style="width:39px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>49</td>
+      <td class="pos">12 (24%)</td>
+      <td class="neg">21 (43%)</td>
+      <td>16</td>
+      <td style="color:#64748b;font-weight:900">43%</td>
+      <td class="neg">-29pts</td>
+      <td><div class="bar" style="width:34px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>49</td>
+      <td class="pos">24 (49%)</td>
+      <td class="neg">11 (22%)</td>
+      <td>14</td>
+      <td style="color:#64748b;font-weight:900">49%</td>
+      <td class="pos">+29pts</td>
+      <td><div class="bar" style="width:39px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>54</td>
+      <td class="pos">13 (24%)</td>
+      <td class="neg">23 (43%)</td>
+      <td>18</td>
+      <td style="color:#64748b;font-weight:900">43%</td>
+      <td class="neg">-40pts</td>
+      <td><div class="bar" style="width:34px;background:#334155"></div></td>
+    </tr>
+  </table>
+</div>
+
+<div class="card" id="day-tuesday">
+  <h2>📅 MARTES — 227 días</h2>
+  <div class="summary-grid">
+    <div class="sg-item"><div class="sg-label">Total</div><div class="sg-value" style="color:#38bdf8">227</div></div>
+    <div class="sg-item"><div class="sg-label">BULL</div><div class="sg-value pos">60 (26%)</div></div>
+    <div class="sg-item"><div class="sg-label">BEAR</div><div class="sg-value neg">51 (22%)</div></div>
+    <div class="sg-item"><div class="sg-label">Rango Promedio</div><div class="sg-value" style="color:#f59e0b">119pts</div></div>
+  </div>
+  <table>
+    <tr><th>OR TF</th><th>OR Dir</th><th>N</th><th>NY BULL</th><th>NY BEAR</th><th>NY FLAT</th><th>Accuracy</th><th>Avg NY</th><th>Bar</th></tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>32</td>
+      <td class="pos">13 (41%)</td>
+      <td class="neg">10 (31%)</td>
+      <td>9</td>
+      <td style="color:#64748b;font-weight:900">41%</td>
+      <td class="pos">+19pts</td>
+      <td><div class="bar" style="width:32px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>64</td>
+      <td class="pos">20 (31%)</td>
+      <td class="neg">25 (39%)</td>
+      <td>19</td>
+      <td style="color:#64748b;font-weight:900">39%</td>
+      <td class="neg">-34pts</td>
+      <td><div class="bar" style="width:31px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>50</td>
+      <td class="pos">25 (50%)</td>
+      <td class="neg">11 (22%)</td>
+      <td>14</td>
+      <td style="color:#64748b;font-weight:900">50%</td>
+      <td class="pos">+35pts</td>
+      <td><div class="bar" style="width:40px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>67</td>
+      <td class="pos">13 (19%)</td>
+      <td class="neg">30 (45%)</td>
+      <td>24</td>
+      <td style="color:#64748b;font-weight:900">45%</td>
+      <td class="neg">-50pts</td>
+      <td><div class="bar" style="width:35px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>56</td>
+      <td class="pos">28 (50%)</td>
+      <td class="neg">6 (11%)</td>
+      <td>22</td>
+      <td style="color:#64748b;font-weight:900">50%</td>
+      <td class="pos">+43pts</td>
+      <td><div class="bar" style="width:40px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>70</td>
+      <td class="pos">16 (23%)</td>
+      <td class="neg">33 (47%)</td>
+      <td>21</td>
+      <td style="color:#64748b;font-weight:900">47%</td>
+      <td class="neg">-46pts</td>
+      <td><div class="bar" style="width:37px;background:#334155"></div></td>
+    </tr>
+  </table>
+</div>
+
+<div class="card" id="day-wednesday">
+  <h2>📅 MIÉRCOLES — 227 días</h2>
+  <div class="summary-grid">
+    <div class="sg-item"><div class="sg-label">Total</div><div class="sg-value" style="color:#38bdf8">227</div></div>
+    <div class="sg-item"><div class="sg-label">BULL</div><div class="sg-value pos">67 (30%)</div></div>
+    <div class="sg-item"><div class="sg-label">BEAR</div><div class="sg-value neg">67 (30%)</div></div>
+    <div class="sg-item"><div class="sg-label">Rango Promedio</div><div class="sg-value" style="color:#f59e0b">156pts</div></div>
+  </div>
+  <table>
+    <tr><th>OR TF</th><th>OR Dir</th><th>N</th><th>NY BULL</th><th>NY BEAR</th><th>NY FLAT</th><th>Accuracy</th><th>Avg NY</th><th>Bar</th></tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>41</td>
+      <td class="pos">25 (61%)</td>
+      <td class="neg">8 (20%)</td>
+      <td>8</td>
+      <td style="color:#f59e0b;font-weight:900">61%</td>
+      <td class="pos">+71pts</td>
+      <td><div class="bar" style="width:48px;background:#f59e0b"></div></td>
+    </tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>72</td>
+      <td class="pos">17 (24%)</td>
+      <td class="neg">35 (49%)</td>
+      <td>20</td>
+      <td style="color:#64748b;font-weight:900">49%</td>
+      <td class="neg">-35pts</td>
+      <td><div class="bar" style="width:38px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>56</td>
+      <td class="pos">28 (50%)</td>
+      <td class="neg">11 (20%)</td>
+      <td>17</td>
+      <td style="color:#64748b;font-weight:900">50%</td>
+      <td class="pos">+75pts</td>
+      <td><div class="bar" style="width:40px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>79</td>
+      <td class="pos">17 (22%)</td>
+      <td class="neg">43 (54%)</td>
+      <td>19</td>
+      <td style="color:#64748b;font-weight:900">54%</td>
+      <td class="neg">-46pts</td>
+      <td><div class="bar" style="width:43px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>76</td>
+      <td class="pos">40 (53%)</td>
+      <td class="neg">16 (21%)</td>
+      <td>20</td>
+      <td style="color:#64748b;font-weight:900">53%</td>
+      <td class="pos">+55pts</td>
+      <td><div class="bar" style="width:42px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>76</td>
+      <td class="pos">12 (16%)</td>
+      <td class="neg">43 (57%)</td>
+      <td>21</td>
+      <td style="color:#64748b;font-weight:900">57%</td>
+      <td class="neg">-60pts</td>
+      <td><div class="bar" style="width:45px;background:#334155"></div></td>
+    </tr>
+  </table>
+</div>
+
+<div class="card" id="day-thursday">
+  <h2>📅 JUEVES — 227 días</h2>
+  <div class="summary-grid">
+    <div class="sg-item"><div class="sg-label">Total</div><div class="sg-value" style="color:#38bdf8">227</div></div>
+    <div class="sg-item"><div class="sg-label">BULL</div><div class="sg-value pos">55 (24%)</div></div>
+    <div class="sg-item"><div class="sg-label">BEAR</div><div class="sg-value neg">73 (32%)</div></div>
+    <div class="sg-item"><div class="sg-label">Rango Promedio</div><div class="sg-value" style="color:#f59e0b">136pts</div></div>
+  </div>
+  <table>
+    <tr><th>OR TF</th><th>OR Dir</th><th>N</th><th>NY BULL</th><th>NY BEAR</th><th>NY FLAT</th><th>Accuracy</th><th>Avg NY</th><th>Bar</th></tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>44</td>
+      <td class="pos">19 (43%)</td>
+      <td class="neg">15 (34%)</td>
+      <td>10</td>
+      <td style="color:#64748b;font-weight:900">43%</td>
+      <td class="pos">+24pts</td>
+      <td><div class="bar" style="width:34px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>65</td>
+      <td class="pos">9 (14%)</td>
+      <td class="neg">38 (58%)</td>
+      <td>18</td>
+      <td style="color:#64748b;font-weight:900">58%</td>
+      <td class="neg">-60pts</td>
+      <td><div class="bar" style="width:46px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>63</td>
+      <td class="pos">30 (48%)</td>
+      <td class="neg">15 (24%)</td>
+      <td>18</td>
+      <td style="color:#64748b;font-weight:900">48%</td>
+      <td class="pos">+35pts</td>
+      <td><div class="bar" style="width:38px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>76</td>
+      <td class="pos">10 (13%)</td>
+      <td class="neg">42 (55%)</td>
+      <td>24</td>
+      <td style="color:#64748b;font-weight:900">55%</td>
+      <td class="neg">-59pts</td>
+      <td><div class="bar" style="width:44px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>62</td>
+      <td class="pos">30 (48%)</td>
+      <td class="neg">14 (23%)</td>
+      <td>18</td>
+      <td style="color:#64748b;font-weight:900">48%</td>
+      <td class="pos">+39pts</td>
+      <td><div class="bar" style="width:38px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>80</td>
+      <td class="pos">11 (14%)</td>
+      <td class="neg">44 (55%)</td>
+      <td>25</td>
+      <td style="color:#64748b;font-weight:900">55%</td>
+      <td class="neg">-59pts</td>
+      <td><div class="bar" style="width:44px;background:#334155"></div></td>
+    </tr>
+  </table>
+</div>
+
+<div class="card" id="day-friday">
+  <h2>📅 VIERNES — 185 días</h2>
+  <div class="summary-grid">
+    <div class="sg-item"><div class="sg-label">Total</div><div class="sg-value" style="color:#38bdf8">185</div></div>
+    <div class="sg-item"><div class="sg-label">BULL</div><div class="sg-value pos">46 (25%)</div></div>
+    <div class="sg-item"><div class="sg-label">BEAR</div><div class="sg-value neg">45 (24%)</div></div>
+    <div class="sg-item"><div class="sg-label">Rango Promedio</div><div class="sg-value" style="color:#f59e0b">109pts</div></div>
+  </div>
+  <table>
+    <tr><th>OR TF</th><th>OR Dir</th><th>N</th><th>NY BULL</th><th>NY BEAR</th><th>NY FLAT</th><th>Accuracy</th><th>Avg NY</th><th>Bar</th></tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>36</td>
+      <td class="pos">17 (47%)</td>
+      <td class="neg">7 (19%)</td>
+      <td>12</td>
+      <td style="color:#64748b;font-weight:900">47%</td>
+      <td class="pos">+69pts</td>
+      <td><div class="bar" style="width:37px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>15m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>52</td>
+      <td class="pos">11 (21%)</td>
+      <td class="neg">25 (48%)</td>
+      <td>16</td>
+      <td style="color:#64748b;font-weight:900">48%</td>
+      <td class="neg">-41pts</td>
+      <td><div class="bar" style="width:38px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>48</td>
+      <td class="pos">28 (58%)</td>
+      <td class="neg">7 (15%)</td>
+      <td>13</td>
+      <td style="color:#64748b;font-weight:900">58%</td>
+      <td class="pos">+69pts</td>
+      <td><div class="bar" style="width:46px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>30m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>59</td>
+      <td class="pos">9 (15%)</td>
+      <td class="neg">26 (44%)</td>
+      <td>24</td>
+      <td style="color:#64748b;font-weight:900">44%</td>
+      <td class="neg">-47pts</td>
+      <td><div class="bar" style="width:35px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="pos">BULL</span></td>
+      <td>54</td>
+      <td class="pos">28 (52%)</td>
+      <td class="neg">6 (11%)</td>
+      <td>20</td>
+      <td style="color:#64748b;font-weight:900">52%</td>
+      <td class="pos">+54pts</td>
+      <td><div class="bar" style="width:41px;background:#334155"></div></td>
+    </tr>
+    <tr class="">
+      <td>45m</td>
+      <td><span class="neg">BEAR</span></td>
+      <td>68</td>
+      <td class="pos">11 (16%)</td>
+      <td class="neg">32 (47%)</td>
+      <td>25</td>
+      <td style="color:#64748b;font-weight:900">47%</td>
+      <td class="neg">-43pts</td>
+      <td><div class="bar" style="width:37px;background:#334155"></div></td>
+    </tr>
+  </table>
+</div>
+
+<div style="text-align:center;margin-top:20px;color:#334155;font-size:10px">
+  Backtest OR Completo · 1062 días · 2017-02-14 → 2026-03-25 · NQ Whale Radar
+</div>
+</body></html>
