@@ -1,103 +1,78 @@
 {
-<<<<<<< Updated upstream
   "cycle": 1,
-  "timestamp": "2026-04-13T22:06:56.143803+00:00Z",
-  "last_update_human": "2026-04-13 22:06:56 UTC",
+  "timestamp": "2026-04-14T14:46:22.270935+00:00Z",
+  "last_update_human": "2026-04-14 14:46:22 UTC",
   "next_update_in_min": 15,
-  "engine_state": "OPTIMAL",
-  "total_time_sec": 3.8,
-=======
-  "cycle": 83,
-  "timestamp": "2026-04-14T01:19:52.543195+00:00Z",
-  "last_update_human": "2026-04-14 01:19:52 UTC",
-  "next_update_in_min": 15,
-  "engine_state": "OPTIMAL",
-  "total_time_sec": 14.2,
->>>>>>> Stashed changes
-  "agents_ok": 19,
-  "agents_failed": 0,
+  "engine_state": "CRITICAL",
+  "total_time_sec": 9.8,
+  "agents_ok": 21,
+  "agents_failed": 3,
   "details": {
     "Agent 0 · QA Commander [PRE]": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
+    },
+    "Agent 3 · Volatility Analyst": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-<<<<<<< Updated upstream
-      "time": 0.3
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 1.6
+      "time": 2.8
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
-=======
-      "time": 0.1
-    },
-    "Agent 3 · Volatility Analyst": {
-      "status": "✅ OK",
-      "time": 0.1
-    },
-    "Agent 1 · Data Collector": {
-      "status": "✅ OK",
-      "time": 4.4
->>>>>>> Stashed changes
-    },
-    "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 14 · Order Flow Expert": {
-      "status": "✅ OK",
-<<<<<<< Updated upstream
-      "time": 0.0
-    },
-    "Agent 13 · Research Scout": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 15 · Journal Writer": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 4 · Bias Engine": {
-=======
-      "time": 0.1
-    },
-    "Agent 7 · Probability Analyst": {
-      "status": "✅ OK",
-      "time": 0.1
     },
     "Agent 6 · SMC Detective": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
-    "Agent 4 · Bias Engine": {
+    "Agent 8 · Morgan Psychologist": {
+      "status": "❌ ERROR",
+      "time": 0.0,
+      "error": "json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 3 column 1 (char 16)"
+    },
+    "Source · Polygon Sessions": {
+      "status": "❌ ERROR",
+      "time": 0.0,
+      "error": "AttributeError: module 'source_polygon' has no attribute 'run'"
+    },
+    "Researcher · Trade Simulator": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
-    "Agent 12 · Backtest Engine": {
->>>>>>> Stashed changes
+    "Agent · Daily Trade Plan": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
+    "Source · News Live": {
+      "status": "✅ OK",
+      "time": 0.6
+    },
+    "Source · Reddit Sentiment": {
+      "status": "✅ OK",
+      "time": 4.3
+    },
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.0
     },
-    "Agent 14 · Order Flow Expert": {
+    "Agent 4 · Bias Engine": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.2
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
@@ -105,27 +80,20 @@
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-<<<<<<< Updated upstream
-      "time": 1.7
+      "time": 1.5
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 1.7
+      "time": 2.4
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.2
-=======
-      "time": 5.8
-    },
-    "Agent 10 · Learning Engine": {
-      "status": "✅ OK",
-      "time": 9.4
->>>>>>> Stashed changes
+      "time": 2.6
     },
     "Agent 11 · Strategy Crafter": {
-      "status": "✅ OK",
-      "time": 0.0
+      "status": "❌ ERROR",
+      "time": 0.0,
+      "error": "json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 4 column 1 (char 53)"
     },
     "Agent Sentinel · Guardian": {
       "status": "✅ OK",

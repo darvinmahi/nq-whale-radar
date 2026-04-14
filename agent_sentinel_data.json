@@ -1,19 +1,11 @@
 {
-<<<<<<< Updated upstream
-    "timestamp": "2026-04-13T22:06:56.138580",
-=======
-    "timestamp": "2026-04-14T02:19:52.456169",
->>>>>>> Stashed changes
+    "timestamp": "2026-04-14T14:46:22.265137",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-<<<<<<< Updated upstream
-            "size": 350186
-=======
-            "size": 356278
->>>>>>> Stashed changes
+            "size": 350633
         },
         "analisis_promax.html": {
             "exists": true,
@@ -21,33 +13,18 @@
         },
         "agent_live_data.js": {
             "exists": true,
-<<<<<<< Updated upstream
-            "size": 11024
+            "size": 17152
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 636
+            "size": 641
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 380
+            "size": 395
         }
     },
-    "verdict": "ATENCIÓN: Ciclo CPI (W2). Históricamente (3 años), el MEGÁFONO ocurre el 34.5% de las veces en este ciclo. Sesgo macro: NEUTRAL (49/100).",
-=======
-            "size": 11104
-        },
-        "agent1_data.json": {
-            "exists": true,
-            "size": 795
-        },
-        "agent4_data.json": {
-            "exists": true,
-            "size": 393
-        }
-    },
-    "verdict": "ATENCIÓN: Ciclo CPI (W2). Históricamente (3 años), el MEGÁFONO ocurre el 34.5% de las veces en este ciclo. Sesgo macro: NEUTRAL (50/100).",
->>>>>>> Stashed changes
+    "verdict": "ATENCIÓN: Ciclo CPI (W2). Históricamente (3 años), el MEGÁFONO ocurre el 34.5% de las veces en este ciclo. Sesgo macro: NEUTRAL-BULLISH (52/100).",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,

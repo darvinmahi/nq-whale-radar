@@ -1,16 +1,10 @@
 {
   "agent": 2,
-<<<<<<< Updated upstream
-  "timestamp": "2026-04-13T22:06:52.676868+00:00Z",
+  "timestamp": "2026-04-14T14:46:12.942603+00:00Z",
   "razonamiento": "Posicionamiento deteriorando (-9,867 semanal).",
   "signal": "NEUTRAL-BAJISTA",
   "strength": 55,
   "net_position": 36037,
-=======
-  "name": "COT Analyst",
-  "timestamp": "2026-04-14T01:19:38.535113Z",
-  "input_source": "agent1_data.json",
->>>>>>> Stashed changes
   "cot": {
     "current_net": 36037,
     "cot_index": 49.5,

@@ -1,20 +1,11 @@
 {
     "agent": 9,
     "name": "Silver Bullet Tracker",
-<<<<<<< Updated upstream
-    "timestamp": "2026-04-13T22:06:53.969303+00:00Z",
-    "ny_time": "18:06",
-=======
-    "timestamp": "2026-04-14T01:19:42.947193+00:00Z",
-    "ny_time": "21:19",
->>>>>>> Stashed changes
-    "status": "INACTIVO",
-    "active_window": "London SB (mañana)",
+    "timestamp": "2026-04-14T14:46:15.285176+00:00Z",
+    "ny_time": "10:46",
+    "status": "ACTIVE",
+    "active_window": "NY AM SB",
     "macro_confluence": "NEUTRAL",
-    "action": "ESPERAR VENTANA",
-<<<<<<< Updated upstream
-    "countdown": "Próxima sesión en 8h 54m"
-=======
-    "countdown": "Próxima sesión en 5h 41m"
->>>>>>> Stashed changes
+    "action": "BUSCAR FVG PARA ENTRADA",
+    "countdown": "14 min restantes"
 }

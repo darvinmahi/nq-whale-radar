@@ -1,11 +1,7 @@
 {
     "agent": 6,
     "name": "ICT & SMC Master",
-<<<<<<< Updated upstream
-    "timestamp": "2026-04-13T22:06:53.977247Z",
-=======
-    "timestamp": "2026-04-14T01:19:42.970596Z",
->>>>>>> Stashed changes
+    "timestamp": "2026-04-14T14:46:15.293045Z",
     "ict": {
         "pd_array": "PREMIUM",
         "equilibrium": 24816.595703125,
