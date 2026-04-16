@@ -6,11 +6,11 @@
       "day": "Jueves",
       "direction": "BULLISH",
       "ny_open": 26439.0,
-      "ny_close": 26483.0,
+      "ny_close": 26452.25,
       "ny_high": 26564.0,
       "ny_low": 26275.5,
       "ny_range": 288.5,
-      "ny_move": 44.0,
+      "ny_move": 13.25,
       "poc": 26432.5,
       "vah": 26470.0,
       "val": 26395.0,
@@ -23,5 +23,5 @@
     "NEUTRAL": 0
   },
   "total_thursdays": 1,
-  "updated_at": "2026-04-16T16:00:05 ET"
+  "updated_at": "2026-04-16T16:53:17 ET"
 }
