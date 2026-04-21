@@ -3,19 +3,19 @@
   "day": "tuesday",
   "day_es": "Martes",
   "status": "live",
-  "updated_at": "2026-04-21T11:52:47",
+  "updated_at": "2026-04-21T12:48:01",
   "chart_url": "martes_chart_20260421.html",
   "direction": "BEARISH",
   "ny_open": 26808.0,
-  "ny_close": 26727.0,
+  "ny_close": 26711.5,
   "ny_high": 26885.25,
   "ny_low": 26662.5,
   "ny_range": 222.75,
-  "ny_move": -81.0,
+  "ny_move": -96.5,
   "day_high": 26901.75,
   "day_low": 26662.5,
   "poc": 26811.25,
   "vah": 26848.75,
   "val": 26798.75,
-  "n_candles": 211
+  "n_candles": 222
 }
