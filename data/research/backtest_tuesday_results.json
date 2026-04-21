@@ -36,11 +36,11 @@
       "day": "Martes",
       "direction": "BEARISH",
       "ny_open": 26808.0,
-      "ny_close": 26617.0,
+      "ny_close": 26607.5,
       "ny_high": 26885.25,
       "ny_low": 26551.75,
       "ny_range": 333.5,
-      "ny_move": -191.0,
+      "ny_move": -200.5,
       "poc": 26811.25,
       "vah": 26848.75,
       "val": 26798.75,
@@ -53,5 +53,5 @@
     "NEUTRAL": 0
   },
   "total_tuesdays": 3,
-  "updated_at": "2026-04-21T16:00:59 ET"
+  "updated_at": "2026-04-21T17:09:02 ET"
 }
