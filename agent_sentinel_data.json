@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-04-21T22:04:54.728795",
+    "timestamp": "2026-04-22T14:29:53.821623",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,7 +13,7 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11024
+            "size": 11025
         },
         "agent1_data.json": {
             "exists": true,
@@ -21,10 +21,10 @@
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 381
+            "size": 380
         }
     },
-    "verdict": "ALERTA: Ciclo FOMC (W3). Dominio de TRAMPAS (31.6%). El precio suele barrer liquidez antes de la FED.",
+    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL en 51 puntos. Monitorea flujos finales.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
