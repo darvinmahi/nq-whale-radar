@@ -36,11 +36,11 @@
       "day": "Miércoles",
       "direction": "BULLISH",
       "ny_open": 26882.25,
-      "ny_close": 27078.0,
-      "ny_high": 27093.0,
+      "ny_close": 27115.5,
+      "ny_high": 27134.75,
       "ny_low": 26811.5,
-      "ny_range": 281.5,
-      "ny_move": 195.75,
+      "ny_range": 323.25,
+      "ny_move": 233.25,
       "poc": 26815.25,
       "vah": 26852.75,
       "val": 26777.75,
@@ -53,5 +53,5 @@
     "NEUTRAL": 0
   },
   "total_wednesdays": 3,
-  "updated_at": "2026-04-22T16:05:55 ET"
+  "updated_at": "2026-04-22T17:13:18 ET"
 }
