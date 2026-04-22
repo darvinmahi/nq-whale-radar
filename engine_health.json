@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-04-22T15:51:29.482540+00:00Z",
-  "last_update_human": "2026-04-22 15:51:29 UTC",
+  "timestamp": "2026-04-22T16:49:27.484203+00:00Z",
+  "last_update_human": "2026-04-22 16:49:27 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 9.9,
+  "total_time_sec": 11.4,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -18,21 +18,21 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.1
-    },
-    "Agent 9 · Silver Bullet": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 3.5
     },
     "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 7 · Probability Analyst": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
+    "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -59,27 +59,23 @@
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.3
-    },
-    "Agent 13 · Research Scout": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 4.6
     },
     "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 4 · Bias Engine": {
+    "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
+    },
+    "Agent 4 · Bias Engine": {
+      "status": "✅ OK",
+      "time": 0.3
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 10 · Learning Engine": {
-      "status": "✅ OK",
-      "time": 2.5
+      "time": 0.3
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
@@ -87,7 +83,11 @@
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 2.5
+      "time": 3.3
+    },
+    "Agent 10 · Learning Engine": {
+      "status": "✅ OK",
+      "time": 3.3
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
