@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-04-23T16:57:01.475497",
+    "timestamp": "2026-04-23T18:04:05.203610",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -21,10 +21,10 @@
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 381
+            "size": 393
         }
     },
-    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL en 49 puntos. Monitorea flujos finales.",
+    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL-BEARISH en 47 puntos. Monitorea flujos finales.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
