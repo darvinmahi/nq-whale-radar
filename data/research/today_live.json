@@ -3,19 +3,19 @@
   "day": "thursday",
   "day_es": "Jueves",
   "status": "live",
-  "updated_at": "2026-05-14T13:17:14",
+  "updated_at": "2026-05-14T15:15:12",
   "chart_url": "jueves_chart_20260514.html",
   "direction": "BULLISH",
   "ny_open": 29476.25,
-  "ny_close": 29720.0,
+  "ny_close": 29723.25,
   "ny_high": 29782.0,
   "ny_low": 29458.5,
   "ny_range": 323.5,
-  "ny_move": 243.75,
+  "ny_move": 247.0,
   "day_high": 29782.0,
   "day_low": 29448.25,
   "poc": 29560.75,
   "vah": 29623.25,
   "val": 29523.25,
-  "n_candles": 229
+  "n_candles": 253
 }
