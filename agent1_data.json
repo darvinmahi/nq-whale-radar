@@ -1,28 +1,28 @@
 {
   "agent": 1,
   "name": "Data Collector",
-  "timestamp": "2026-05-19T16:13:53.023671+00:00Z",
-  "price": 28867.25,
+  "timestamp": "2026-05-19T18:19:50.223123+00:00Z",
+  "price": 29096.25,
   "volume": 289614,
   "yahoo": {
     "NDX": {
-      "price": 28709.72,
-      "change_pct": -0.98,
+      "price": 28967.16,
+      "change_pct": -0.09,
       "stale": false
     },
     "VXN": {
-      "price": 24.45,
-      "change_pct": 0.99,
+      "price": 24.25,
+      "change_pct": 0.17,
       "stale": false
     },
     "NQ_futures": {
-      "price": 28867.25,
-      "change_pct": -0.79,
+      "price": 29096.25,
+      "change_pct": 0.0,
       "stale": false
     },
     "DXY": {
-      "price": 99.36,
-      "change_pct": 0.4,
+      "price": 99.24,
+      "change_pct": 0.27,
       "stale": false
     }
   },
