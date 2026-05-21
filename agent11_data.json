@@ -1,9 +1,7 @@
 {
     "agent": 11,
-    "timestamp": "2026-05-21T18:17:38.081945+00:00Z",
-    "active_protocols": [
-        "SILVER_BULLET_SNIPER"
-    ],
+    "timestamp": "2026-05-21T20:17:26.315601+00:00Z",
+    "active_protocols": [],
     "details": {
         "swing": {
             "active": false,
@@ -20,9 +18,9 @@
             "desc": "Miedo extremo detectado. Buscando capitulación para entrada contrarian apoyada por DIX."
         },
         "intraday": {
-            "active": true,
-            "window": "NY PM SB",
-            "action": "BUSCAR FVG PARA ENTRADA"
+            "active": false,
+            "window": "London SB (mañana)",
+            "action": "ESPERAR VENTANA"
         }
     },
     "master_recommendation": "⚪ NEUTRAL (49/100) — Sin sesgo claro — operar el rango o esperar catalizador."
