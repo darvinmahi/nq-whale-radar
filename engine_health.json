@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-05-22T15:44:21.172402+00:00Z",
-  "last_update_human": "2026-05-22 15:44:21 UTC",
+  "timestamp": "2026-05-22T17:44:10.980302+00:00Z",
+  "last_update_human": "2026-05-22 17:44:10 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 10.0,
+  "total_time_sec": 9.6,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -18,11 +18,11 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.4
+      "time": 0.5
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.9
+      "time": 2.7
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -45,11 +45,11 @@
       "time": 0.0,
       "error": "AttributeError: module 'source_polygon' has no attribute 'run'"
     },
-    "Researcher · Trade Simulator": {
+    "Agent · Daily Trade Plan": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent · Daily Trade Plan": {
+    "Researcher · Trade Simulator": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -61,11 +61,11 @@
       "status": "✅ OK",
       "time": 4.3
     },
-    "Agent 14 · Order Flow Expert": {
+    "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 13 · Research Scout": {
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -75,19 +75,19 @@
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 12 · Backtest Engine": {
-      "status": "✅ OK",
-      "time": 1.5
+      "time": 0.8
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 1.5
+      "time": 2.1
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.8
+      "time": 2.6
+    },
+    "Agent 12 · Backtest Engine": {
+      "status": "✅ OK",
+      "time": 2.6
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
