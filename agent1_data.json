@@ -1,28 +1,28 @@
 {
   "agent": 1,
   "name": "Data Collector",
-  "timestamp": "2026-06-01T21:56:49.694516+00:00Z",
-  "price": 30522.5,
-  "volume": 290551,
+  "timestamp": "2026-06-02T17:14:11.500195+00:00Z",
+  "price": 30695.25,
+  "volume": 292969,
   "yahoo": {
     "NDX": {
-      "price": 30513.86,
-      "change_pct": 0.6,
+      "price": 30642.16,
+      "change_pct": 0.42,
       "stale": false
     },
     "VXN": {
-      "price": 23.18,
-      "change_pct": 2.66,
+      "price": 23.54,
+      "change_pct": 1.55,
       "stale": false
     },
     "NQ_futures": {
-      "price": 30522.5,
-      "change_pct": 0.0,
+      "price": 30695.25,
+      "change_pct": 0.42,
       "stale": false
     },
     "DXY": {
-      "price": 99.16,
-      "change_pct": 0.0,
+      "price": 99.22,
+      "change_pct": 0.02,
       "stale": false
     }
   },
@@ -32,6 +32,6 @@
   },
   "cftc_cot": {},
   "cme": {
-    "NQ1_OI": 290551
+    "NQ1_OI": 292969
   }
 }
