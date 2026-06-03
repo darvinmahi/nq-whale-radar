@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-06-03T17:56:09.439986+00:00Z",
-  "last_update_human": "2026-06-03 17:56:09 UTC",
+  "timestamp": "2026-06-03T20:47:54.539626+00:00Z",
+  "last_update_human": "2026-06-03 20:47:54 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 9.0,
+  "total_time_sec": 9.4,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -18,13 +18,13 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.2
+      "time": 2.5
     },
-    "Agent 7 · Probability Analyst": {
+    "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -32,7 +32,7 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 8 · Morgan Psychologist": {
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -55,7 +55,7 @@
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 0.7
+      "time": 0.6
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
@@ -83,7 +83,7 @@
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 1.4
+      "time": 2.5
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
