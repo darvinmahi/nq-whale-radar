@@ -1,11 +1,11 @@
 {
     "agent": 11,
-    "timestamp": "2026-06-04T22:15:57.821389+00:00Z",
+    "timestamp": "2026-06-05T15:48:37.358625+00:00Z",
     "active_protocols": [],
     "details": {
         "swing": {
             "active": false,
-            "confidence": 47,
+            "confidence": 46,
             "desc": "Confluencia de COT Alcista y Bias Ponderado positivo. Las instituciones están acumulando."
         },
         "ict": {
@@ -19,9 +19,9 @@
         },
         "intraday": {
             "active": false,
-            "window": "London SB (mañana)",
+            "window": "NY PM SB",
             "action": "ESPERAR VENTANA"
         }
     },
-    "master_recommendation": "🟡 NEUTRAL-BEARISH (47/100) — Ligera inclinación bajista — preferir coberturas."
+    "master_recommendation": "🟡 NEUTRAL-BEARISH (46/100) — Ligera inclinación bajista — preferir coberturas."
 }
