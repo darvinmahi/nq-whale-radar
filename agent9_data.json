@@ -1,11 +1,11 @@
 {
     "agent": 9,
     "name": "Silver Bullet Tracker",
-    "timestamp": "2026-06-09T19:55:55.059266+00:00Z",
-    "ny_time": "15:55",
+    "timestamp": "2026-06-09T21:41:38.598594+00:00Z",
+    "ny_time": "17:41",
     "status": "INACTIVO",
     "active_window": "London SB (mañana)",
     "macro_confluence": "NEUTRAL-BEARISH",
     "action": "ESPERAR VENTANA",
-    "countdown": "Próxima sesión en 11h 05m"
+    "countdown": "Próxima sesión en 9h 19m"
 }
