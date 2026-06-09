@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-06-09T17:52:33.664654",
+    "timestamp": "2026-06-09T19:56:02.101004",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,15 +13,15 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11017
+            "size": 11032
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 640
+            "size": 644
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 393
+            "size": 392
         }
     },
     "verdict": "ATENCIÓN: Ciclo CPI (W2). Históricamente (3 años), el MEGÁFONO ocurre el 34.5% de las veces en este ciclo. Sesgo macro: NEUTRAL-BEARISH (47/100).",
