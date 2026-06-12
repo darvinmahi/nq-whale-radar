@@ -1,11 +1,11 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-06-12T16:11:30.733565Z",
-  "vix_value": 30.44,
+  "timestamp": "2026-06-12T18:22:18.222943Z",
+  "vix_value": 29.96,
   "vix_status": "PANIC",
   "raw_inputs": {
-    "VXN": 30.44,
+    "VXN": 29.96,
     "GEX_B": 2.3,
     "DIX": null
   },
@@ -13,7 +13,7 @@
     "level": "PANIC",
     "signal": "BEARISH",
     "score": 20,
-    "description": "VXN 30.44 — Pánico. No operar longs sin cobertura.",
+    "description": "VXN 29.96 — Pánico. No operar longs sin cobertura.",
     "risk": "Continuación bajista probable"
   },
   "gex_analysis": {

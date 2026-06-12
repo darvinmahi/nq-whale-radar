@@ -1,7 +1,7 @@
 {
     "agent": 8,
     "name": "Morgan Psychologist",
-    "timestamp": "2026-06-12T16:11:33.643429+00:00",
+    "timestamp": "2026-06-12T18:22:21.199927+00:00",
     "sentiment": {
         "status": "ESTABLE",
         "operational_risk": "BAJO",
@@ -11,6 +11,6 @@
     },
     "morgan_audit": {
         "institutional_alignment": "LOW",
-        "fear_index": "HIGH"
+        "fear_index": "MEDIUM"
     }
 }
