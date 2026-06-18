@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="120">
+  <title>NQ — Jueves 2026-06-18 | LIVE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+  <style>
+    :root {
+      --bg:#04020c; --card:#0c0a1e; --border:#1e1a3a;
+      --purple:#7c3aed; --cyan:#06b6d4; --green:#10b981;
+      --red:#ef4444; --amber:#f59e0b; --gray:#64748b;
+      --text:#e2e8f0; --muted:#94a3b8;
+      --bull:#10b981; --bear:#ef4444;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+    .mono{font-family:'JetBrains Mono',monospace}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+
+    .top-bar{background:linear-gradient(135deg,#0c0a1e,#110d2a);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .logo-badge{background:linear-gradient(135deg,var(--purple),#4f46e5);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;letter-spacing:1px;}
+    .back-btn{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.35);color:#a78bfa;font-size:13px;font-weight:600;padding:7px 16px;border-radius:8px;cursor:pointer;text-decoration:none;transition:all .2s;}
+    .back-btn:hover{background:rgba(124,58,237,.28)}
+
+    .page{max-width:1500px;margin:0 auto;padding:20px 18px}
+
+    .date-header{background:linear-gradient(135deg,#0c0a1e,#130f2a);border:1px solid var(--border);border-radius:16px;padding:18px 24px;position:relative;overflow:hidden;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .date-header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#f59e0b,var(--green),var(--cyan),var(--purple));}
+
+    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px;}
+    .stat-card{background:linear-gradient(135deg,#0c0a1e,#130f2a);border:1px solid var(--border);border-radius:12px;padding:12px 14px;text-align:center;transition:border-color .2s;}
+    .stat-card:hover{border-color:rgba(124,58,237,.4);}
+    .stat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+    .stat-value{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700}
+    .c-green{color:var(--green)} .c-red{color:var(--red)} .c-cyan{color:var(--cyan)}
+    .c-amber{color:var(--amber)} .c-purple{color:#a78bfa} .c-gray{color:var(--muted)}
+    .c-bull{color:var(--bull)} .c-bear{color:var(--bear)}
+
+    .setup-box{background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(124,58,237,.08));border:1px solid rgba(245,158,11,.3);border-radius:14px;padding:16px 20px;margin-bottom:16px;}
+    .setup-title{font-size:11px;font-weight:700;color:#fcd34d;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+    .setup-text{font-size:13px;color:var(--muted);line-height:1.7}
+
+    .chart-section-label{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;padding-left:4px;}
+    .chart-section-label::before{content:'';display:block;width:3px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--purple),var(--cyan));}
+
+    .chart-frame{background:linear-gradient(135deg,#09071a,#0e0b24);border:2px solid transparent;border-radius:20px;padding:3px;position:relative;margin-bottom:20px;box-shadow:0 0 0 1px rgba(124,58,237,0.35),0 20px 60px rgba(0,0,0,0.7);}
+    .chart-wrap{background:linear-gradient(180deg,#0c0a1e,#08061a);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;}
+    .chart-top{padding:14px 20px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#0c0a1e,#110d2a);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+    .chart-title{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px}
+    .leg-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .leg-i{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+    .leg-dash{width:18px;height:0;border-top:2px dashed}
+    #chart{width:100%;height:680px}
+    .foot{text-align:center;padding:20px;color:var(--muted);font-size:11px}
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="logo-badge">NQ RADAR</div>
+    <span style="color:var(--muted);font-size:13px;font-family:'JetBrains Mono',monospace">2026-06-18 · JUEVES · 5 MIN</span>
+    <div style="background:rgba(16,185,129,.18);border:1px solid rgba(16,185,129,.45);color:#6ee7b7;font-size:11px;font-weight:700;padding:4px 12px;border-radius:6px">✅ DATOS REALES NQ=F</div>
+  </div>
+  <a href="index.html" class="back-btn">← Panel Principal</a>
+</div>
+
+<div class="page">
+
+  <div class="date-header">
+    <div>
+      <div style="font-size:20px;font-weight:900;margin-bottom:4px">📅 Jueves 18 de Junio 2026 — Sesión NQ Futures</div>
+      <div style="color:var(--muted);font-size:12px">🌏 Asia (6PM ET Miércoles) → 🇬🇧 London 2AM → 🗽 NY Open 9:30AM → 🏁 Cierre 4PM ET</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      
+<div style="display:flex;align-items:center;gap:8px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);padding:6px 14px;border-radius:20px">
+  <span style="width:8px;height:8px;background:#ef4444;border-radius:50%;animation:pulse 1.2s ease-in-out infinite"></span>
+  <span style="color:#fca5a5;font-size:12px;font-weight:700">LIVE · 12:21 ET</span>
+</div>
+
+      <span style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);color:#10b981;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700">↑ BULLISH</span>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Day High</div><div class="stat-value c-cyan">30,675.75</div></div>
+    <div class="stat-card"><div class="stat-label">Day Low</div><div class="stat-value c-bear">30,096.00</div></div>
+    <div class="stat-card"><div class="stat-label">POC Pre-NY</div><div class="stat-value c-purple">30,408.50</div></div>
+    <div class="stat-card"><div class="stat-label">VAH</div><div class="stat-value c-cyan">30,471.00</div></div>
+    <div class="stat-card"><div class="stat-label">VAL</div><div class="stat-value c-green">30,321.00</div></div>
+    <div class="stat-card"><div class="stat-label">NY Open</div><div class="stat-value c-amber">30,594.50</div></div>
+    <div class="stat-card"><div class="stat-label">NY Low</div><div class="stat-value c-bear">30,391.00</div></div>
+    <div class="stat-card"><div class="stat-label">NY High</div><div class="stat-value c-bull">30,675.75</div></div>
+    <div class="stat-card"><div class="stat-label">NY Precio</div><div class="stat-value c-bull">30,655.25</div></div>
+    <div class="stat-card"><div class="stat-label">NY Range</div><div class="stat-value c-amber">284.75</div></div>
+    <div class="stat-card"><div class="stat-label">Move O→C</div><div class="stat-value c-bull">+60.75</div></div>
+    <div class="stat-card"><div class="stat-label">Velas</div><div class="stat-value c-gray">218</div></div>
+  </div>
+
+  <div class="setup-box">
+    <div class="setup-title">🎯 Setup del Jueves</div>
+    <div class="setup-text">Jueves: Jobless Claims 8:30 spike + trampa bajista 80%.</div>
+  </div>
+
+  <div class="chart-section-label">📊 Chart — 5 Min · Jueves 2026-06-18 (EN VIVO · auto-refresh 2min)</div>
+  <div class="chart-frame">
+  <div class="chart-wrap">
+    <div class="chart-top">
+      <span class="chart-title">NQ FUTURES — 5 MIN — 2026-06-18 JUEVES · 218 VELAS (NQ=F via yfinance)</span>
+      <div class="leg-row">
+        <div class="leg-i"><div class="leg-dash" style="border-color:#06b6d4"></div>VAH 30,471.00</div>
+        <div class="leg-i"><div class="leg-dash" style="border-color:#7c3aed"></div>POC 30,408.50</div>
+        <div class="leg-i"><div class="leg-dash" style="border-color:#10b981"></div>VAL 30,321.00</div>
+        <div class="leg-i"><div class="leg-dash" style="border-color:#f59e0b"></div>NY OPEN 30,594.50</div>
+      </div>
+    </div>
+    <div id="chart"></div>
+  </div>
+  </div>
+
+</div>
+
+<div class="foot">NQ Whale Radar © 2026 · 2026-06-18 · Jueves · 218 barras 5min · NQ=F via yfinance · Actualizado: 12:21 ET</div>
+
+<script>
+const POC       = 30408.5;
+const VAH       = 30471.0;
+const VAL       = 30321.0;
+const NY_OPEN_P = 30594.5;
+const ASIA_START_UTC   = 1781733600;
+const LONDON_START_UTC = 1781762400;
+const NY_OPEN_UTC      = 1781789400;
+const NY_CLOSE_UTC     = 1781812800;
+const candles = [{"time":1781733600,"open":30142.5,"high":30161.5,"low":30096.0,"close":30114.0},{"time":1781733900,"open":30114.25,"high":30184.0,"low":30114.25,"close":30182.5},{"time":1781734200,"open":30180.75,"high":30206.0,"low":30178.75,"close":30189.25},{"time":1781734500,"open":30189.5,"high":30205.75,"low":30182.0,"close":30187.25},{"time":1781734800,"open":30188.5,"high":30251.25,"low":30188.5,"close":30242.75},{"time":1781735100,"open":30244.0,"high":30259.0,"low":30219.0,"close":30228.75},{"time":1781735400,"open":30225.5,"high":30235.25,"low":30219.25,"close":30225.25},{"time":1781735700,"open":30226.25,"high":30248.0,"low":30225.75,"close":30235.0},{"time":1781736000,"open":30235.25,"high":30236.75,"low":30223.5,"close":30229.5},{"time":1781736300,"open":30230.75,"high":30251.75,"low":30230.0,"close":30250.0},{"time":1781736600,"open":30247.75,"high":30259.0,"low":30242.5,"close":30252.75},{"time":1781736900,"open":30252.25,"high":30255.0,"low":30232.0,"close":30236.5},{"time":1781737200,"open":30236.25,"high":30252.75,"low":30231.5,"close":30251.25},{"time":1781737500,"open":30251.25,"high":30252.0,"low":30225.0,"close":30249.0},{"time":1781737800,"open":30248.0,"high":30267.0,"low":30241.25,"close":30262.5},{"time":1781738100,"open":30262.0,"high":30274.75,"low":30259.5,"close":30274.0},{"time":1781738400,"open":30275.0,"high":30295.25,"low":30273.75,"close":30291.25},{"time":1781738700,"open":30290.75,"high":30300.0,"low":30288.5,"close":30290.75},{"time":1781739000,"open":30291.0,"high":30304.0,"low":30286.0,"close":30296.5},{"time":1781739300,"open":30298.0,"high":30298.0,"low":30272.75,"close":30283.25},{"time":1781739600,"open":30284.5,"high":30285.0,"low":30268.75,"close":30275.5},{"time":1781739900,"open":30275.25,"high":30290.75,"low":30269.25,"close":30284.5},{"time":1781740200,"open":30284.75,"high":30297.75,"low":30277.0,"close":30292.0},{"time":1781740500,"open":30292.0,"high":30312.25,"low":30284.5,"close":30312.25},{"time":1781740800,"open":30313.5,"high":30370.5,"low":30306.5,"close":30361.5},{"time":1781741100,"open":30362.5,"high":30412.25,"low":30360.5,"close":30401.5},{"time":1781741400,"open":30401.75,"high":30424.0,"low":30390.5,"close":30417.25},{"time":1781741700,"open":30420.5,"high":30432.25,"low":30396.75,"close":30397.0},{"time":1781742000,"open":30398.0,"high":30408.25,"low":30377.0,"close":30382.5},{"time":1781742300,"open":30381.75,"high":30385.25,"low":30356.0,"close":30383.25},{"time":1781742600,"open":30381.75,"high":30408.5,"low":30381.75,"close":30399.75},{"time":1781742900,"open":30400.5,"high":30414.0,"low":30378.0,"close":30411.75},{"time":1781743200,"open":30413.5,"high":30415.75,"low":30385.5,"close":30409.25},{"time":1781743500,"open":30409.5,"high":30414.5,"low":30393.75,"close":30397.75},{"time":1781743800,"open":30398.25,"high":30398.25,"low":30352.75,"close":30383.75},{"time":1781744100,"open":30383.0,"high":30384.25,"low":30362.5,"close":30368.25},{"time":1781744400,"open":30367.75,"high":30424.25,"low":30363.25,"close":30416.0},{"time":1781744700,"open":30415.75,"high":30430.0,"low":30403.0,"close":30417.0},{"time":1781745000,"open":30420.0,"high":30438.25,"low":30416.0,"close":30430.0},{"time":1781745300,"open":30429.75,"high":30433.75,"low":30395.75,"close":30405.0},{"time":1781745600,"open":30405.0,"high":30428.25,"low":30404.25,"close":30410.25},{"time":1781745900,"open":30410.75,"high":30434.0,"low":30404.25,"close":30407.5},{"time":1781746200,"open":30408.25,"high":30425.25,"low":30405.0,"close":30408.5},{"time":1781746500,"open":30408.0,"high":30411.5,"low":30395.25,"close":30397.25},{"time":1781746800,"open":30399.5,"high":30411.25,"low":30390.75,"close":30400.0},{"time":1781747100,"open":30397.0,"high":30397.25,"low":30368.0,"close":30379.25},{"time":1781747400,"open":30378.5,"high":30400.25,"low":30375.75,"close":30388.5},{"time":1781747700,"open":30388.25,"high":30393.5,"low":30368.75,"close":30380.0},{"time":1781748000,"open":30382.5,"high":30405.75,"low":30373.5,"close":30404.0},{"time":1781748300,"open":30403.25,"high":30423.25,"low":30402.0,"close":30417.5},{"time":1781748600,"open":30418.5,"high":30430.75,"low":30408.0,"close":30417.5},{"time":1781748900,"open":30419.0,"high":30420.25,"low":30401.0,"close":30402.75},{"time":1781749200,"open":30405.0,"high":30410.0,"low":30395.0,"close":30407.5},{"time":1781749500,"open":30407.75,"high":30408.5,"low":30396.0,"close":30403.75},{"time":1781749800,"open":30400.75,"high":30410.5,"low":30382.0,"close":30406.5},{"time":1781750100,"open":30406.25,"high":30408.75,"low":30392.25,"close":30405.0},{"time":1781750400,"open":30404.75,"high":30410.25,"low":30401.5,"close":30405.0},{"time":1781750700,"open":30407.0,"high":30412.75,"low":30392.5,"close":30401.25},{"time":1781751000,"open":30401.0,"high":30414.0,"low":30397.0,"close":30405.5},{"time":1781751300,"open":30407.0,"high":30407.75,"low":30395.5,"close":30400.25},{"time":1781751600,"open":30401.5,"high":30412.0,"low":30399.5,"close":30402.25},{"time":1781751900,"open":30401.75,"high":30406.75,"low":30388.0,"close":30390.0},{"time":1781752200,"open":30389.0,"high":30392.25,"low":30376.75,"close":30381.0},{"time":1781752500,"open":30379.75,"high":30389.5,"low":30378.0,"close":30388.5},{"time":1781752800,"open":30388.5,"high":30406.0,"low":30384.75,"close":30400.5},{"time":1781753100,"open":30401.25,"high":30410.25,"low":30396.25,"close":30403.5},{"time":1781753400,"open":30405.0,"high":30419.75,"low":30396.5,"close":30397.25},{"time":1781753700,"open":30397.0,"high":30400.0,"low":30370.75,"close":30374.0},{"time":1781754000,"open":30375.25,"high":30381.25,"low":30370.0,"close":30379.0},{"time":1781754300,"open":30378.25,"high":30394.75,"low":30378.25,"close":30394.25},{"time":1781754600,"open":30395.25,"high":30401.75,"low":30390.5,"close":30399.25},{"time":1781754900,"open":30398.5,"high":30409.0,"low":30396.0,"close":30398.75},{"time":1781755500,"open":30373.75,"high":30379.0,"low":30371.5,"close":30379.0},{"time":1781755800,"open":30380.25,"high":30381.25,"low":30353.5,"close":30357.25},{"time":1781756100,"open":30358.5,"high":30370.75,"low":30342.0,"close":30343.75},{"time":1781756400,"open":30343.5,"high":30346.5,"low":30329.5,"close":30333.5},{"time":1781756700,"open":30332.5,"high":30337.75,"low":30321.5,"close":30332.0},{"time":1781757000,"open":30330.5,"high":30335.25,"low":30312.0,"close":30320.0},{"time":1781757300,"open":30321.25,"high":30329.75,"low":30307.0,"close":30307.75},{"time":1781757600,"open":30306.0,"high":30314.5,"low":30294.25,"close":30296.25},{"time":1781757900,"open":30296.75,"high":30313.25,"low":30284.0,"close":30312.25},{"time":1781758200,"open":30312.75,"high":30344.75,"low":30310.25,"close":30339.75},{"time":1781758500,"open":30340.25,"high":30348.0,"low":30327.75,"close":30342.0},{"time":1781758800,"open":30341.0,"high":30355.5,"low":30325.0,"close":30352.0},{"time":1781759100,"open":30352.5,"high":30362.75,"low":30344.0,"close":30353.5},{"time":1781759400,"open":30354.0,"high":30359.25,"low":30336.0,"close":30340.0},{"time":1781759700,"open":30339.25,"high":30371.75,"low":30336.0,"close":30365.5},{"time":1781760000,"open":30365.5,"high":30372.25,"low":30358.25,"close":30361.5},{"time":1781760300,"open":30362.75,"high":30370.75,"low":30353.0,"close":30362.25},{"time":1781760600,"open":30363.25,"high":30378.25,"low":30360.75,"close":30366.75},{"time":1781760900,"open":30368.75,"high":30370.5,"low":30338.0,"close":30355.5},{"time":1781761200,"open":30354.5,"high":30368.75,"low":30349.75,"close":30354.25},{"time":1781761500,"open":30352.25,"high":30356.5,"low":30341.0,"close":30348.75},{"time":1781761800,"open":30348.5,"high":30350.0,"low":30336.75,"close":30344.5},{"time":1781762100,"open":30344.0,"high":30356.75,"low":30342.25,"close":30354.0},{"time":1781762400,"open":30353.75,"high":30369.0,"low":30320.0,"close":30362.0},{"time":1781762700,"open":30360.5,"high":30362.0,"low":30322.75,"close":30327.25},{"time":1781763000,"open":30326.5,"high":30345.25,"low":30323.0,"close":30343.0},{"time":1781763300,"open":30344.25,"high":30353.25,"low":30323.0,"close":30330.0},{"time":1781763600,"open":30328.75,"high":30350.75,"low":30326.25,"close":30342.25},{"time":1781763900,"open":30344.0,"high":30385.75,"low":30335.5,"close":30380.5},{"time":1781764200,"open":30380.25,"high":30381.0,"low":30360.75,"close":30368.0},{"time":1781764500,"open":30367.75,"high":30367.75,"low":30343.5,"close":30354.25},{"time":1781764800,"open":30352.75,"high":30353.75,"low":30335.0,"close":30350.5},{"time":1781765100,"open":30350.5,"high":30381.25,"low":30350.25,"close":30378.75},{"time":1781765400,"open":30381.0,"high":30381.0,"low":30369.0,"close":30372.75},{"time":1781765700,"open":30374.5,"high":30434.5,"low":30373.25,"close":30419.5},{"time":1781766000,"open":30419.5,"high":30428.25,"low":30406.25,"close":30428.25},{"time":1781766300,"open":30427.5,"high":30438.5,"low":30412.75,"close":30424.75},{"time":1781766600,"open":30426.25,"high":30427.25,"low":30387.75,"close":30394.25},{"time":1781766900,"open":30394.75,"high":30406.25,"low":30382.5,"close":30400.25},{"time":1781767200,"open":30402.75,"high":30418.5,"low":30399.0,"close":30414.5},{"time":1781767500,"open":30414.5,"high":30433.0,"low":30409.5,"close":30429.5},{"time":1781767800,"open":30428.25,"high":30428.25,"low":30400.75,"close":30420.0},{"time":1781768100,"open":30419.5,"high":30428.5,"low":30411.75,"close":30418.0},{"time":1781768400,"open":30418.5,"high":30424.75,"low":30412.25,"close":30424.75},{"time":1781768700,"open":30424.25,"high":30427.0,"low":30409.75,"close":30423.75},{"time":1781769000,"open":30422.5,"high":30424.75,"low":30408.0,"close":30411.5},{"time":1781769300,"open":30410.75,"high":30447.25,"low":30410.5,"close":30444.5},{"time":1781769600,"open":30445.25,"high":30465.0,"low":30440.25,"close":30453.0},{"time":1781769900,"open":30453.5,"high":30494.25,"low":30448.75,"close":30490.75},{"time":1781770200,"open":30490.25,"high":30500.0,"low":30476.0,"close":30482.5},{"time":1781770500,"open":30482.0,"high":30485.75,"low":30463.25,"close":30468.75},{"time":1781770800,"open":30467.5,"high":30471.0,"low":30427.75,"close":30437.25},{"time":1781771100,"open":30437.0,"high":30438.0,"low":30418.75,"close":30430.0},{"time":1781771400,"open":30429.25,"high":30448.0,"low":30422.0,"close":30437.25},{"time":1781771700,"open":30436.0,"high":30450.25,"low":30424.25,"close":30449.0},{"time":1781772000,"open":30450.5,"high":30469.0,"low":30443.5,"close":30451.5},{"time":1781772300,"open":30452.25,"high":30456.0,"low":30431.25,"close":30454.0},{"time":1781772600,"open":30454.25,"high":30454.25,"low":30420.75,"close":30430.25},{"time":1781772900,"open":30431.75,"high":30436.0,"low":30387.0,"close":30396.25},{"time":1781773200,"open":30397.5,"high":30421.25,"low":30387.5,"close":30421.0},{"time":1781773500,"open":30422.25,"high":30432.0,"low":30417.25,"close":30420.5},{"time":1781773800,"open":30418.75,"high":30433.5,"low":30406.25,"close":30427.75},{"time":1781774100,"open":30429.75,"high":30449.75,"low":30429.75,"close":30438.5},{"time":1781774400,"open":30437.25,"high":30437.75,"low":30423.25,"close":30429.5},{"time":1781774700,"open":30430.0,"high":30437.0,"low":30425.0,"close":30435.25},{"time":1781775000,"open":30434.75,"high":30442.25,"low":30424.5,"close":30429.5},{"time":1781775300,"open":30429.75,"high":30459.5,"low":30426.75,"close":30456.25},{"time":1781775600,"open":30456.5,"high":30463.75,"low":30450.75,"close":30459.5},{"time":1781775900,"open":30459.0,"high":30491.25,"low":30459.0,"close":30481.0},{"time":1781776200,"open":30481.75,"high":30490.0,"low":30480.0,"close":30483.0},{"time":1781776500,"open":30483.75,"high":30495.0,"low":30479.0,"close":30488.5},{"time":1781776800,"open":30490.25,"high":30491.5,"low":30471.75,"close":30475.0},{"time":1781777100,"open":30474.25,"high":30485.5,"low":30463.75,"close":30469.75},{"time":1781777400,"open":30469.25,"high":30487.25,"low":30462.5,"close":30483.25},{"time":1781777700,"open":30483.25,"high":30488.5,"low":30477.0,"close":30488.0},{"time":1781778000,"open":30489.25,"high":30494.75,"low":30472.0,"close":30472.0},{"time":1781778300,"open":30472.5,"high":30491.25,"low":30469.5,"close":30475.0},{"time":1781778600,"open":30475.25,"high":30486.0,"low":30451.5,"close":30458.25},{"time":1781778900,"open":30457.25,"high":30463.0,"low":30451.0,"close":30456.25},{"time":1781779200,"open":30455.75,"high":30458.75,"low":30427.25,"close":30429.75},{"time":1781779500,"open":30429.25,"high":30443.75,"low":30421.0,"close":30432.5},{"time":1781779800,"open":30433.25,"high":30442.25,"low":30428.5,"close":30431.5},{"time":1781780100,"open":30434.0,"high":30441.0,"low":30429.75,"close":30434.75},{"time":1781780400,"open":30435.75,"high":30457.0,"low":30427.75,"close":30446.25},{"time":1781780700,"open":30447.25,"high":30451.5,"low":30393.0,"close":30404.0},{"time":1781781000,"open":30403.0,"high":30410.75,"low":30383.75,"close":30407.75},{"time":1781781300,"open":30410.0,"high":30413.5,"low":30377.0,"close":30384.5},{"time":1781781600,"open":30381.25,"high":30398.75,"low":30368.0,"close":30386.75},{"time":1781781900,"open":30385.5,"high":30412.25,"low":30384.0,"close":30403.75},{"time":1781782200,"open":30402.0,"high":30418.0,"low":30393.5,"close":30408.25},{"time":1781782500,"open":30409.75,"high":30415.75,"low":30377.75,"close":30384.75},{"time":1781782800,"open":30381.75,"high":30397.5,"low":30355.0,"close":30392.75},{"time":1781783100,"open":30393.25,"high":30400.0,"low":30386.75,"close":30394.5},{"time":1781783400,"open":30393.0,"high":30421.5,"low":30385.5,"close":30417.5},{"time":1781783700,"open":30417.75,"high":30423.5,"low":30410.0,"close":30423.5},{"time":1781784000,"open":30423.75,"high":30431.75,"low":30411.5,"close":30420.0},{"time":1781784300,"open":30421.25,"high":30421.75,"low":30397.0,"close":30400.75},{"time":1781784600,"open":30399.75,"high":30440.25,"low":30398.5,"close":30432.25},{"time":1781784900,"open":30433.5,"high":30441.0,"low":30420.0,"close":30439.5},{"time":1781785200,"open":30438.75,"high":30463.5,"low":30438.25,"close":30463.5},{"time":1781785500,"open":30463.5,"high":30473.75,"low":30460.0,"close":30470.25},{"time":1781785800,"open":30470.75,"high":30483.75,"low":30458.0,"close":30461.0},{"time":1781786100,"open":30460.75,"high":30487.75,"low":30458.25,"close":30469.5},{"time":1781786400,"open":30470.75,"high":30492.5,"low":30463.0,"close":30477.5},{"time":1781786700,"open":30476.5,"high":30503.0,"low":30474.0,"close":30500.75},{"time":1781787000,"open":30500.75,"high":30506.5,"low":30487.25,"close":30500.25},{"time":1781787300,"open":30500.0,"high":30538.0,"low":30498.5,"close":30514.75},{"time":1781787600,"open":30514.0,"high":30515.25,"low":30467.5,"close":30473.75},{"time":1781787900,"open":30473.75,"high":30499.25,"low":30469.0,"close":30491.25},{"time":1781788200,"open":30490.5,"high":30523.5,"low":30480.0,"close":30516.0},{"time":1781788500,"open":30516.0,"high":30542.5,"low":30513.25,"close":30526.5},{"time":1781788800,"open":30527.5,"high":30556.0,"low":30526.0,"close":30540.75},{"time":1781789100,"open":30541.0,"high":30619.75,"low":30541.0,"close":30594.25},{"time":1781789400,"open":30594.5,"high":30615.5,"low":30482.25,"close":30486.0},{"time":1781789700,"open":30486.25,"high":30503.5,"low":30408.0,"close":30451.0},{"time":1781790000,"open":30452.25,"high":30483.5,"low":30391.0,"close":30402.5},{"time":1781790300,"open":30403.75,"high":30502.25,"low":30402.25,"close":30497.0},{"time":1781790600,"open":30497.25,"high":30540.5,"low":30456.25,"close":30463.25},{"time":1781790900,"open":30463.0,"high":30485.0,"low":30403.0,"close":30468.75},{"time":1781791200,"open":30469.25,"high":30530.5,"low":30449.5,"close":30514.75},{"time":1781791500,"open":30514.0,"high":30591.5,"low":30506.5,"close":30563.75},{"time":1781791800,"open":30564.5,"high":30570.0,"low":30500.75,"close":30523.0},{"time":1781792100,"open":30522.5,"high":30613.5,"low":30500.5,"close":30600.0},{"time":1781792400,"open":30599.25,"high":30644.0,"low":30566.75,"close":30623.25},{"time":1781792700,"open":30624.0,"high":30627.5,"low":30503.5,"close":30520.75},{"time":1781793000,"open":30520.25,"high":30547.0,"low":30463.5,"close":30546.75},{"time":1781793300,"open":30545.75,"high":30606.5,"low":30523.25,"close":30597.25},{"time":1781793600,"open":30597.5,"high":30610.25,"low":30551.5,"close":30573.25},{"time":1781793900,"open":30573.25,"high":30660.75,"low":30571.25,"close":30645.75},{"time":1781794200,"open":30647.0,"high":30647.75,"low":30594.75,"close":30616.25},{"time":1781794500,"open":30615.75,"high":30650.75,"low":30602.75,"close":30623.5},{"time":1781794800,"open":30623.75,"high":30634.25,"low":30584.25,"close":30622.5},{"time":1781795100,"open":30622.5,"high":30652.0,"low":30610.0,"close":30636.25},{"time":1781795400,"open":30637.0,"high":30675.75,"low":30627.75,"close":30628.25},{"time":1781795700,"open":30629.25,"high":30646.5,"low":30595.25,"close":30608.75},{"time":1781796000,"open":30608.75,"high":30632.25,"low":30580.75,"close":30594.75},{"time":1781796300,"open":30595.5,"high":30629.0,"low":30566.75,"close":30583.5},{"time":1781796600,"open":30582.5,"high":30616.5,"low":30563.75,"close":30589.75},{"time":1781796900,"open":30590.0,"high":30590.5,"low":30498.25,"close":30542.75},{"time":1781797200,"open":30543.25,"high":30576.25,"low":30517.0,"close":30537.25},{"time":1781797500,"open":30537.0,"high":30561.0,"low":30496.25,"close":30549.25},{"time":1781797800,"open":30550.5,"high":30625.0,"low":30549.25,"close":30601.5},{"time":1781798100,"open":30601.25,"high":30652.0,"low":30600.75,"close":30640.75},{"time":1781798400,"open":30641.0,"high":30666.25,"low":30631.75,"close":30638.5},{"time":1781798700,"open":30638.25,"high":30675.0,"low":30628.75,"close":30653.25},{"time":1781799000,"open":30651.75,"high":30664.5,"low":30639.25,"close":30655.25}];
+
+const chartEl = document.getElementById('chart');
+const chart = LightweightCharts.createChart(chartEl, {
+  width: chartEl.offsetWidth, height: 680,
+  layout: { background: { color: '#08061a' }, textColor: '#64748b', fontSize: 11, fontFamily: 'JetBrains Mono, monospace' },
+  grid: { vertLines: { color: 'rgba(124,58,237,0.06)' }, horzLines: { color: 'rgba(124,58,237,0.06)' } },
+  crosshair: { mode: LightweightCharts.CrosshairMode.Normal, vertLine: { color: 'rgba(6,182,212,0.5)', width: 1, style: 2 }, horzLine: { color: 'rgba(6,182,212,0.5)', width: 1, style: 2 } },
+  rightPriceScale: { borderColor: 'rgba(30,26,58,0.8)', textColor: '#64748b', scaleMargins: { top: 0.05, bottom: 0.05 } },
+  timeScale: {
+    borderColor: 'rgba(30,26,58,0.8)', timeVisible: true, secondsVisible: false,
+    tickMarkFormatter: (t) => {
+      const d = new Date(t*1000), h=((d.getUTCHours()-4+24)%24), m=d.getUTCMinutes();
+      return m===0 ? `${h}:00` : `${h}:${m.toString().padStart(2,'0')}`;
+    },
+  },
+  handleScroll: { mouseWheel:true, pressedMouseMove:true },
+  handleScale:  { mouseWheel:true, pinch:true },
+});
+
+const series = chart.addCandlestickSeries({
+  upColor:'rgba(16,185,129,0.08)', downColor:'rgba(139,92,246,0.08)',
+  borderUpColor:'#10b981', borderDownColor:'#8b5cf6',
+  wickUpColor:'#10b981', wickDownColor:'#8b5cf6',
+  borderVisible:true, wickVisible:true,
+  priceFormat: { type:'price', precision:2, minMove:0.25 },
+});
+series.setData(candles);
+
+// Price lines
+series.createPriceLine({ price:VAH,      color:'rgba(0,255,128,0.6)',   lineWidth:1, lineStyle:2, axisLabelVisible:true, title:`VAH ${VAH.toLocaleString()}` });
+series.createPriceLine({ price:POC,      color:'#00ff80',               lineWidth:2, lineStyle:0, axisLabelVisible:true, title:`POC ${POC.toLocaleString()}` });
+series.createPriceLine({ price:VAL,      color:'rgba(0,255,128,0.6)',   lineWidth:1, lineStyle:2, axisLabelVisible:true, title:`VAL ${VAL.toLocaleString()}` });
+series.createPriceLine({ price:NY_OPEN_P, color:'rgba(245,158,11,0.8)', lineWidth:1, lineStyle:3, axisLabelVisible:true, title:`NY OPEN ${NY_OPEN_P.toLocaleString()}` });
+
+// Session banners
+const topPrice = Math.max(...candles.map(c=>c.high)) + 300;
+function addBand(s,e,tc,bc) {
+  const b = chart.addAreaSeries({ topColor:tc, bottomColor:bc, lineColor:'rgba(0,0,0,0)', crosshairMarkerVisible:false });
+  b.setData([{time:s,value:topPrice},{time:e,value:topPrice}]);
+}
+addBand(ASIA_START_UTC,   LONDON_START_UTC, 'rgba(6,182,212,0.10)',  'rgba(6,182,212,0.03)');
+addBand(LONDON_START_UTC, NY_OPEN_UTC,      'rgba(245,158,11,0.10)', 'rgba(245,158,11,0.03)');
+addBand(NY_OPEN_UTC,      NY_CLOSE_UTC,     'rgba(0,255,128,0.08)',  'rgba(0,255,128,0.02)');
+
+// Session H/L
+function shL(from,to) {
+  const s=candles.filter(c=>c.time>=from&&c.time<=to);
+  return s.length?{h:Math.max(...s.map(c=>c.high)),l:Math.min(...s.map(c=>c.low))}:null;
+}
+const aHL=shL(ASIA_START_UTC, LONDON_START_UTC-1);
+if(aHL) {
+  series.createPriceLine({price:aHL.h,color:'rgba(6,182,212,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:`ASIA H`});
+  series.createPriceLine({price:aHL.l,color:'rgba(6,182,212,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:`ASIA L`});
+}
+const lHL=shL(LONDON_START_UTC, NY_OPEN_UTC-1);
+if(lHL) {
+  series.createPriceLine({price:lHL.h,color:'rgba(245,158,11,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:`LON H`});
+  series.createPriceLine({price:lHL.l,color:'rgba(245,158,11,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:`LON L`});
+}
+const nyHL=shL(NY_OPEN_UTC, NY_CLOSE_UTC);
+if(nyHL) {
+  series.createPriceLine({price:nyHL.h,color:'rgba(0,255,128,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:`NY H`});
+  series.createPriceLine({price:nyHL.l,color:'rgba(0,255,128,0.9)',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:`NY L`});
+}
+
+chart.timeScale().fitContent();
+window.addEventListener('resize', ()=>chart.applyOptions({width:chartEl.offsetWidth}));
+</script>
+
+</body>
+</html>
