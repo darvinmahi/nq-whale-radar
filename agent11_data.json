@@ -1,6 +1,6 @@
 {
     "agent": 11,
-    "timestamp": "2026-06-23T17:44:33.520977+00:00Z",
+    "timestamp": "2026-06-23T19:49:31.437838+00:00Z",
     "active_protocols": [],
     "details": {
         "swing": {
@@ -19,7 +19,7 @@
         },
         "intraday": {
             "active": false,
-            "window": "NY PM SB",
+            "window": "London SB (mañana)",
             "action": "ESPERAR VENTANA"
         }
     },
