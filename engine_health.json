@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-06-23T21:23:56.537730+00:00Z",
-  "last_update_human": "2026-06-23 21:23:56 UTC",
+  "timestamp": "2026-06-23T22:43:45.231949+00:00Z",
+  "last_update_human": "2026-06-23 22:43:45 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 9.9,
+  "total_time_sec": 10.7,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -22,9 +22,9 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.0
+      "time": 3.6
     },
-    "Agent 8 · Morgan Psychologist": {
+    "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -32,7 +32,7 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 9 · Silver Bullet": {
+    "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -55,17 +55,17 @@
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 0.6
+      "time": 1.1
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.3
+      "time": 4.5
     },
-    "Agent 14 · Order Flow Expert": {
+    "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 13 · Research Scout": {
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -75,17 +75,17 @@
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.1
-    },
-    "Agent 10 · Learning Engine": {
-      "status": "✅ OK",
-      "time": 2.5
+      "time": 0.0
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 2.5
+      "time": 0.6
     },
     "Agent 16 · Outcome Tracker": {
+      "status": "✅ OK",
+      "time": 1.6
+    },
+    "Agent 10 · Learning Engine": {
       "status": "✅ OK",
       "time": 2.6
     },
