@@ -1,7 +1,7 @@
 {
   "cycle": 1,
-  "timestamp": "2026-06-24T15:28:42.734989+00:00Z",
-  "last_update_human": "2026-06-24 15:28:42 UTC",
+  "timestamp": "2026-06-24T17:27:06.548678+00:00Z",
+  "last_update_human": "2026-06-24 17:27:06 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
   "total_time_sec": 8.8,
@@ -18,21 +18,21 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 1.7
-    },
-    "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 2.0
     },
     "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 9 · Silver Bullet": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
+    "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -51,7 +51,7 @@
     },
     "Researcher · Trade Simulator": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
     "Source · News Live": {
       "status": "✅ OK",
@@ -61,11 +61,11 @@
       "status": "✅ OK",
       "time": 4.3
     },
-    "Agent 14 · Order Flow Expert": {
+    "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 13 · Research Scout": {
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -79,15 +79,15 @@
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 2.0
+      "time": 2.1
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 2.1
+      "time": 2.2
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.7
+      "time": 2.5
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
