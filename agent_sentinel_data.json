@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-06-24T21:07:45.531213",
+    "timestamp": "2026-06-24T22:43:51.061125",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,15 +13,15 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11061
+            "size": 11033
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 643
+            "size": 641
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 380
+            "size": 381
         }
     },
     "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL en 50 puntos. Monitorea flujos finales.",
