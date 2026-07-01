@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-06-30T22:47:22.010828",
+    "timestamp": "2026-07-01T15:34:21.763946",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,18 +13,18 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11042
+            "size": 11026
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 642
+            "size": 640
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 380
+            "size": 392
         }
     },
-    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL en 50 puntos. Monitorea flujos finales.",
+    "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL-BEARISH fuerte. Busca seguir el flujo de la EMA 200.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
