@@ -171,11 +171,11 @@
       "day": "Jueves",
       "direction": "BEARISH",
       "ny_open": 30075.75,
-      "ny_close": 29539.0,
+      "ny_close": 29533.0,
       "ny_high": 30293.5,
       "ny_low": 29328.5,
       "ny_range": 965.0,
-      "ny_move": -536.75,
+      "ny_move": -542.75,
       "poc": 29988.75,
       "vah": 30201.25,
       "val": 29951.25,
@@ -188,5 +188,5 @@
     "NEUTRAL": 0
   },
   "total_thursdays": 12,
-  "updated_at": "2026-07-02T16:14:28 ET"
+  "updated_at": "2026-07-02T17:40:47 ET"
 }
