@@ -1,11 +1,11 @@
 {
     "agent": 11,
-    "timestamp": "2026-07-07T19:40:32.912139+00:00Z",
+    "timestamp": "2026-07-07T21:14:46.833574+00:00Z",
     "active_protocols": [],
     "details": {
         "swing": {
             "active": false,
-            "confidence": 47,
+            "confidence": 46,
             "desc": "Confluencia de COT Alcista y Bias Ponderado positivo. Las instituciones están acumulando."
         },
         "ict": {
@@ -23,5 +23,5 @@
             "action": "ESPERAR VENTANA"
         }
     },
-    "master_recommendation": "🟡 NEUTRAL-BEARISH (47/100) — Ligera inclinación bajista — preferir coberturas."
+    "master_recommendation": "🟡 NEUTRAL-BEARISH (46/100) — Ligera inclinación bajista — preferir coberturas."
 }
