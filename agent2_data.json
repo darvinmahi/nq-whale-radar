@@ -1,30 +1,30 @@
 {
   "agent": 2,
-  "timestamp": "2026-07-10T20:13:02.222166+00:00Z",
-  "razonamiento": "Sentimiento pesimista extremo.",
-  "signal": "EXTREMO BAJISTA",
-  "strength": 88,
-  "net_position": -11749,
+  "timestamp": "2026-07-10T21:32:07.856208+00:00Z",
+  "razonamiento": "Specs netos liquidando (+11,383). COT Index 30.",
+  "signal": "BAJISTA",
+  "strength": 66,
+  "net_position": 11383,
   "cot": {
-    "current_net": -11749,
-    "cot_index": 12.1,
-    "date": "2026-06-30",
-    "week_change": -57653
+    "current_net": 11383,
+    "cot_index": 30.2,
+    "date": "2026-07-07",
+    "week_change": -34521
   },
   "recent_weeks": [
     {
-      "date": "2026-06-30",
-      "nc_long": 135204,
-      "nc_short": 146953,
-      "c_long": 80601,
-      "c_short": 77023,
-      "r_long": 45188,
-      "r_short": 35930,
-      "oi": 296634,
-      "net_position": -11749,
-      "comm_net": 3578,
-      "retail_net": 9258,
-      "change": -47786
+      "date": "2026-07-07",
+      "nc_long": 151471,
+      "nc_short": 140088,
+      "c_long": 67794,
+      "c_short": 90836,
+      "r_long": 49674,
+      "r_short": 34584,
+      "oi": 303152,
+      "net_position": 11383,
+      "comm_net": -23042,
+      "retail_net": 15090,
+      "change": -24654
     },
     {
       "date": "03 Mar 2026",
