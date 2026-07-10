@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-07-09T22:28:15.327108",
+    "timestamp": "2026-07-10T15:26:32.462361",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,18 +13,18 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11044
+            "size": 10965
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 640
+            "size": 643
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 381
+            "size": 380
         }
     },
-    "verdict": "ATENCIÓN: Ciclo CPI (W2). Históricamente (3 años), el MEGÁFONO ocurre el 34.5% de las veces en este ciclo. Sesgo macro: NEUTRAL (50/100).",
+    "verdict": "ATENCIÓN: Ciclo CPI (W2). Históricamente (3 años), el MEGÁFONO ocurre el 34.5% de las veces en este ciclo. Sesgo macro: NEUTRAL (49/100).",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
