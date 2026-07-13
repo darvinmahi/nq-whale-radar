@@ -1,7 +1,7 @@
 {
   "cycle": 1,
-  "timestamp": "2026-07-13T19:11:22.418531+00:00Z",
-  "last_update_human": "2026-07-13 19:11:22 UTC",
+  "timestamp": "2026-07-13T20:36:47.094631+00:00Z",
+  "last_update_human": "2026-07-13 20:36:47 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
   "total_time_sec": 8.9,
@@ -18,7 +18,7 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
@@ -45,11 +45,11 @@
       "time": 0.0,
       "error": "AttributeError: module 'source_polygon' has no attribute 'run'"
     },
-    "Agent · Daily Trade Plan": {
+    "Researcher · Trade Simulator": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Researcher · Trade Simulator": {
+    "Agent · Daily Trade Plan": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -59,9 +59,9 @@
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.2
+      "time": 4.3
     },
-    "Agent 13 · Research Scout": {
+    "Agent 4 · Bias Engine": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -69,25 +69,25 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 4 · Bias Engine": {
+    "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.6
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 0.8
+      "time": 1.4
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 1.7
+      "time": 2.0
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.6
+      "time": 2.5
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
