@@ -1,20 +1,20 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-07-13T15:38:02.045917Z",
-  "vix_value": 24.89,
-  "vix_status": "NORMAL",
+  "timestamp": "2026-07-13T17:48:02.479302Z",
+  "vix_value": 26.41,
+  "vix_status": "ELEVATED",
   "raw_inputs": {
-    "VXN": 24.89,
+    "VXN": 26.41,
     "GEX_B": 2.3,
     "DIX": null
   },
   "vxn_analysis": {
-    "level": "NORMAL",
+    "level": "ELEVATED",
     "signal": "NEUTRAL",
-    "score": 50,
-    "description": "VXN 24.89 — Volatilidad normal.",
-    "risk": "Monitorear si sube sobre 25"
+    "score": 35,
+    "description": "VXN 26.41 — Volatilidad elevada. Reducir tamaño.",
+    "risk": "Movimientos erráticos probables"
   },
   "gex_analysis": {
     "level": "STRONG_POSITIVE",
@@ -24,5 +24,5 @@
     "impact": "Movimientos suaves. Dealers frenan volatilidad."
   },
   "signal": "BULLISH",
-  "score": 57
+  "score": 47
 }
