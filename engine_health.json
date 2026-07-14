@@ -1,7 +1,7 @@
 {
   "cycle": 1,
-  "timestamp": "2026-07-14T16:07:57.992515+00:00Z",
-  "last_update_human": "2026-07-14 16:07:57 UTC",
+  "timestamp": "2026-07-14T17:38:08.606155+00:00Z",
+  "last_update_human": "2026-07-14 17:38:08 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
   "total_time_sec": 8.7,
@@ -18,17 +18,17 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 1.8
+      "time": 1.7
     },
-    "Agent 9 · Silver Bullet": {
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 7 · Probability Analyst": {
+    "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -51,43 +51,43 @@
     },
     "Researcher · Trade Simulator": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 0.7
+      "time": 0.5
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
       "time": 4.3
     },
+    "Agent 14 · Order Flow Expert": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 14 · Order Flow Expert": {
+    "Agent 4 · Bias Engine": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.1
-    },
-    "Agent 4 · Bias Engine": {
-      "status": "✅ OK",
-      "time": 0.2
-    },
-    "Agent 16 · Outcome Tracker": {
-      "status": "✅ OK",
-      "time": 1.2
+      "time": 0.0
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 1.9
+      "time": 2.3
+    },
+    "Agent 16 · Outcome Tracker": {
+      "status": "✅ OK",
+      "time": 2.7
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.6
+      "time": 2.7
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
