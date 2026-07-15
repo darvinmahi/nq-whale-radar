@@ -1,15 +1,15 @@
 {
   "agent": 4,
-  "timestamp": "2026-07-15T17:43:27.711022Z",
-  "verdict": "🟡 NEUTRAL-BEARISH (47/100) — Ligera inclinación bajista — preferir coberturas.",
-  "global_score": 47,
-  "global_label": "NEUTRAL-BEARISH",
-  "icon": "🟡",
+  "timestamp": "2026-07-15T18:54:34.637151Z",
+  "verdict": "⚪ NEUTRAL (49/100) — Sin sesgo claro — operar el rango o esperar catalizador.",
+  "global_score": 49,
+  "global_label": "NEUTRAL",
+  "icon": "⚪",
   "layers": {
     "positioning": 50,
-    "macro": 52.15,
+    "macro": 52.6,
     "liquidity": 49.0,
-    "timing": 44.0,
+    "timing": 50.0,
     "algorithmic": 20.0,
     "order_flow": 50
   }

@@ -3,19 +3,19 @@
   "day": "wednesday",
   "day_es": "Miércoles",
   "status": "live",
-  "updated_at": "2026-07-15T13:43:30",
+  "updated_at": "2026-07-15T14:54:37",
   "chart_url": "miercoles_chart_20260715.html",
   "direction": "BEARISH",
   "ny_open": 29955.25,
-  "ny_close": 29619.5,
+  "ny_close": 29664.75,
   "ny_high": 29977.5,
   "ny_low": 29397.0,
   "ny_range": 580.5,
-  "ny_move": -335.75,
+  "ny_move": -290.5,
   "day_high": 30062.5,
   "day_low": 29397.0,
   "poc": 29933.0,
   "vah": 30020.5,
   "val": 29870.5,
-  "n_candles": 234
+  "n_candles": 248
 }
