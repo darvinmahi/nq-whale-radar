@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-07-15T22:28:03.864117",
+    "timestamp": "2026-07-16T14:52:25.980527",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,15 +13,15 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11011
+            "size": 10948
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 1152
+            "size": 1153
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 380
+            "size": 393
         }
     },
     "verdict": "ALERTA: Ciclo FOMC (W3). Dominio de TRAMPAS (31.6%). El precio suele barrer liquidez antes de la FED.",
