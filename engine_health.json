@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-07-20T15:01:32.504502+00:00Z",
-  "last_update_human": "2026-07-20 15:01:32 UTC",
+  "timestamp": "2026-07-20T16:51:06.749303+00:00Z",
+  "last_update_human": "2026-07-20 16:51:06 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 9.5,
+  "total_time_sec": 11.1,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -18,11 +18,11 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.4
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.9
+      "time": 4.0
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -40,11 +40,6 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Source · Polygon Sessions": {
-      "status": "❌ ERROR",
-      "time": 0.0,
-      "error": "AttributeError: module 'source_polygon' has no attribute 'run'"
-    },
     "Agent · Daily Trade Plan": {
       "status": "✅ OK",
       "time": 0.0
@@ -53,13 +48,18 @@
       "status": "✅ OK",
       "time": 0.0
     },
+    "Source · Polygon Sessions": {
+      "status": "❌ ERROR",
+      "time": 0.0,
+      "error": "AttributeError: module 'source_polygon' has no attribute 'run'"
+    },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 0.9
+      "time": 1.5
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.6
+      "time": 4.4
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
@@ -71,23 +71,23 @@
     },
     "Agent 4 · Bias Engine": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 12 · Backtest Engine": {
-      "status": "✅ OK",
-      "time": 1.0
+      "time": 0.2
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
       "time": 1.4
     },
+    "Agent 12 · Backtest Engine": {
+      "status": "✅ OK",
+      "time": 1.5
+    },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.0
+      "time": 2.7
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
