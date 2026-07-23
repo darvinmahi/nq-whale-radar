@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-07-23T16:53:13.741120+00:00Z",
-  "last_update_human": "2026-07-23 16:53:13 UTC",
+  "timestamp": "2026-07-23T18:07:12.324058+00:00Z",
+  "last_update_human": "2026-07-23 18:07:12 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 8.8,
+  "total_time_sec": 10.2,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -22,17 +22,17 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.1
-    },
-    "Agent 7 · Probability Analyst": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 3.1
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 8 · Morgan Psychologist": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -55,7 +55,7 @@
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 0.7
+      "time": 0.8
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
@@ -79,15 +79,15 @@
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 1.5
+      "time": 1.4
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 1.8
+      "time": 1.7
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.4
+      "time": 2.7
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
