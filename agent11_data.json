@@ -1,7 +1,9 @@
 {
     "agent": 11,
-    "timestamp": "2026-07-28T16:55:53.177687+00:00Z",
-    "active_protocols": [],
+    "timestamp": "2026-07-28T18:06:34.918242+00:00Z",
+    "active_protocols": [
+        "SILVER_BULLET_SNIPER"
+    ],
     "details": {
         "swing": {
             "active": false,
@@ -18,9 +20,9 @@
             "desc": "Miedo extremo detectado. Buscando capitulación para entrada contrarian apoyada por DIX."
         },
         "intraday": {
-            "active": false,
+            "active": true,
             "window": "NY PM SB",
-            "action": "ESPERAR VENTANA"
+            "action": "BUSCAR FVG PARA ENTRADA"
         }
     },
     "master_recommendation": "🟡 NEUTRAL-BEARISH (46/100) — Ligera inclinación bajista — preferir coberturas."
