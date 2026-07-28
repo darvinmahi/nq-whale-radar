@@ -3,7 +3,7 @@
   "day": "tuesday",
   "day_es": "Martes",
   "status": "closed",
-  "updated_at": "2026-07-28T17:04:24",
+  "updated_at": "2026-07-28T18:31:01",
   "chart_url": "martes_chart_20260728.html",
   "direction": "BEARISH",
   "ny_open": 27950.25,
@@ -15,7 +15,7 @@
   "day_high": 28228.0,
   "day_low": 27603.5,
   "poc": 27977.0,
-  "vah": 28039.5,
-  "val": 27864.5,
-  "n_candles": 262
+  "vah": 28064.5,
+  "val": 27889.5,
+  "n_candles": 263
 }

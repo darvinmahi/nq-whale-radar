@@ -252,8 +252,8 @@
       "ny_range": 476.5,
       "ny_move": -33.5,
       "poc": 27977.0,
-      "vah": 28039.5,
-      "val": 27864.5,
+      "vah": 28064.5,
+      "val": 27889.5,
       "chart_url": "martes_chart_20260728.html"
     }
   ],
@@ -263,5 +263,5 @@
     "NEUTRAL": 0
   },
   "total_tuesdays": 17,
-  "updated_at": "2026-07-28T17:04:24 ET"
+  "updated_at": "2026-07-28T18:31:01 ET"
 }
