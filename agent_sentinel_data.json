@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-07-27T21:34:51.724018",
+    "timestamp": "2026-07-28T15:11:34.389530",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,18 +13,18 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11027
+            "size": 11025
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 637
+            "size": 644
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 380
+            "size": 392
         }
     },
-    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL en 48 puntos. Monitorea flujos finales.",
+    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL-BEARISH en 47 puntos. Monitorea flujos finales.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
