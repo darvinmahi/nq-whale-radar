@@ -1,5 +1,5 @@
 {
-  "total_sessions": 15,
+  "total_sessions": 16,
   "sessions": [
     {
       "date": "2026-04-16",
@@ -225,13 +225,28 @@
       "vah": 29172.0,
       "val": 28972.0,
       "chart_url": "jueves_chart_20260723.html"
+    },
+    {
+      "date": "2026-07-30",
+      "day": "Jueves",
+      "direction": "BULLISH",
+      "ny_open": 27875.75,
+      "ny_close": 28336.25,
+      "ny_high": 28367.0,
+      "ny_low": 27813.25,
+      "ny_range": 553.75,
+      "ny_move": 460.5,
+      "poc": 27489.5,
+      "vah": 27627.0,
+      "val": 27402.0,
+      "chart_url": "jueves_chart_20260730.html"
     }
   ],
   "directions": {
-    "BULLISH": 9,
+    "BULLISH": 10,
     "BEARISH": 6,
     "NEUTRAL": 0
   },
-  "total_thursdays": 15,
-  "updated_at": "2026-07-23T17:56:38 ET"
+  "total_thursdays": 16,
+  "updated_at": "2026-07-30T17:09:45 ET"
 }
