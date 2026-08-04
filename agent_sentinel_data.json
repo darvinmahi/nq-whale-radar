@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-08-04T19:02:39.183138",
+    "timestamp": "2026-08-04T20:50:30.874220",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,7 +13,7 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 10986
+            "size": 10964
         },
         "agent1_data.json": {
             "exists": true,
@@ -21,7 +21,7 @@
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 380
+            "size": 381
         }
     },
     "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL fuerte. Busca seguir el flujo de la EMA 200.",
