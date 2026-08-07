@@ -1,11 +1,13 @@
 {
     "agent": 11,
-    "timestamp": "2026-08-07T00:35:43.742045+00:00Z",
-    "active_protocols": [],
+    "timestamp": "2026-08-07T14:04:47.277796+00:00Z",
+    "active_protocols": [
+        "SILVER_BULLET_SNIPER"
+    ],
     "details": {
         "swing": {
             "active": false,
-            "confidence": 49,
+            "confidence": 51,
             "desc": "Confluencia de COT Alcista y Bias Ponderado positivo. Las instituciones están acumulando."
         },
         "ict": {
@@ -18,10 +20,10 @@
             "desc": "Miedo extremo detectado. Buscando capitulación para entrada contrarian apoyada por DIX."
         },
         "intraday": {
-            "active": false,
-            "window": "London SB (mañana)",
-            "action": "ESPERAR VENTANA"
+            "active": true,
+            "window": "NY AM SB",
+            "action": "BUSCAR FVG PARA ENTRADA"
         }
     },
-    "master_recommendation": "⚪ NEUTRAL (49/100) — Sin sesgo claro — operar el rango o esperar catalizador."
+    "master_recommendation": "⚪ NEUTRAL (51/100) — Sin sesgo claro — operar el rango o esperar catalizador."
 }
