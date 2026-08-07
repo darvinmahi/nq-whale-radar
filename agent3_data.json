@@ -1,11 +1,11 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-08-06T15:06:24.698534Z",
-  "vix_value": 24.15,
+  "timestamp": "2026-08-07T00:35:34.107448Z",
+  "vix_value": 24.69,
   "vix_status": "NORMAL",
   "raw_inputs": {
-    "VXN": 24.15,
+    "VXN": 24.69,
     "GEX_B": 2.3,
     "DIX": null
   },
@@ -13,7 +13,7 @@
     "level": "NORMAL",
     "signal": "NEUTRAL",
     "score": 50,
-    "description": "VXN 24.15 — Volatilidad normal.",
+    "description": "VXN 24.69 — Volatilidad normal.",
     "risk": "Monitorear si sube sobre 25"
   },
   "gex_analysis": {
