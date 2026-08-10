@@ -1,11 +1,11 @@
 {
-    "timestamp": "2026-08-07T22:02:56.591088",
+    "timestamp": "2026-08-10T14:12:44.649951",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-            "size": 350190
+            "size": 350193
         },
         "analisis_promax.html": {
             "exists": true,
@@ -21,10 +21,10 @@
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 381
+            "size": 380
         }
     },
-    "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL fuerte. Busca seguir el flujo de la EMA 200.",
+    "verdict": "ATENCIÓN: Ciclo CPI (W2). Históricamente (3 años), el MEGÁFONO ocurre el 34.5% de las veces en este ciclo. Sesgo macro: NEUTRAL (49/100).",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
