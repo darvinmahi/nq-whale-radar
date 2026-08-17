@@ -1,11 +1,11 @@
 {
-    "timestamp": "2026-08-14T21:46:20.743692",
+    "timestamp": "2026-08-17T13:31:58.506093",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-            "size": 350193
+            "size": 350188
         },
         "analisis_promax.html": {
             "exists": true,
@@ -13,18 +13,18 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11026
+            "size": 10964
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 641
+            "size": 635
         },
         "agent4_data.json": {
             "exists": true,
             "size": 380
         }
     },
-    "verdict": "ATENCIÓN: Ciclo CPI (W2). Históricamente (3 años), el MEGÁFONO ocurre el 34.5% de las veces en este ciclo. Sesgo macro: NEUTRAL (50/100).",
+    "verdict": "ALERTA: Ciclo FOMC (W3). Dominio de TRAMPAS (31.6%). El precio suele barrer liquidez antes de la FED.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
