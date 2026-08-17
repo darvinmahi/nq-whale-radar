@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-08-17T15:16:06.206355",
+    "timestamp": "2026-08-17T15:46:39.465757",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,7 +13,7 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11011
+            "size": 10969
         },
         "agent1_data.json": {
             "exists": true,
