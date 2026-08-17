@@ -3,19 +3,19 @@
   "day": "monday",
   "day_es": "Lunes",
   "status": "live",
-  "updated_at": "2026-08-17T14:22:34",
+  "updated_at": "2026-08-17T15:05:34",
   "chart_url": "lunes_chart_20260817.html",
   "direction": "BEARISH",
   "ny_open": 30218.5,
-  "ny_close": 30094.75,
+  "ny_close": 30120.75,
   "ny_high": 30287.5,
   "ny_low": 30079.25,
   "ny_range": 208.25,
-  "ny_move": -123.75,
+  "ny_move": -97.75,
   "day_high": 30343.0,
   "day_low": 30079.25,
   "poc": 30292.5,
   "vah": 30330.0,
   "val": 30205.0,
-  "n_candles": 241
+  "n_candles": 250
 }
