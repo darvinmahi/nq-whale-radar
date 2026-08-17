@@ -261,11 +261,11 @@
       "day": "Lunes",
       "direction": "BEARISH",
       "ny_open": 30218.5,
-      "ny_close": 30083.5,
+      "ny_close": 30080.25,
       "ny_high": 30287.5,
       "ny_low": 30066.5,
       "ny_range": 221.0,
-      "ny_move": -135.0,
+      "ny_move": -138.25,
       "poc": 30292.5,
       "vah": 30330.0,
       "val": 30205.0,
@@ -278,5 +278,5 @@
     "NEUTRAL": 0
   },
   "total_mondays": 18,
-  "updated_at": "2026-08-17T16:14:34 ET"
+  "updated_at": "2026-08-17T16:50:11 ET"
 }
