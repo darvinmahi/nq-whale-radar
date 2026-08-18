@@ -1,7 +1,7 @@
 {
   "agent": 1,
   "name": "Data Collector",
-  "timestamp": "2026-08-18T21:13:41.737042+00:00Z",
+  "timestamp": "2026-08-18T21:44:22.789183+00:00Z",
   "price": 29559.5,
   "volume": 297363,
   "yahoo": {
@@ -21,8 +21,8 @@
       "stale": false
     },
     "DXY": {
-      "price": 99.65,
-      "change_pct": 0.01,
+      "price": 99.64,
+      "change_pct": -0.01,
       "stale": false
     }
   },
