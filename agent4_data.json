@@ -1,15 +1,15 @@
 {
   "agent": 4,
-  "timestamp": "2026-08-17T21:46:49.937332Z",
-  "verdict": "⚪ NEUTRAL (49/100) — Sin sesgo claro — operar el rango o esperar catalizador.",
-  "global_score": 49,
+  "timestamp": "2026-08-18T13:35:03.980546Z",
+  "verdict": "⚪ NEUTRAL (48/100) — Sin sesgo claro — operar el rango o esperar catalizador.",
+  "global_score": 48,
   "global_label": "NEUTRAL",
   "icon": "⚪",
   "layers": {
     "positioning": 50,
     "macro": 50.0,
     "liquidity": 67.0,
-    "timing": 50.0,
+    "timing": 44.0,
     "algorithmic": 20.0,
     "order_flow": 50
   }
