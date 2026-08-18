@@ -1,13 +1,13 @@
 {
     "agent": 11,
-    "timestamp": "2026-08-18T14:22:31.578906+00:00Z",
+    "timestamp": "2026-08-18T14:59:09.654376+00:00Z",
     "active_protocols": [
         "SILVER_BULLET_SNIPER"
     ],
     "details": {
         "swing": {
             "active": false,
-            "confidence": 48,
+            "confidence": 47,
             "desc": "Confluencia de COT Alcista y Bias Ponderado positivo. Las instituciones están acumulando."
         },
         "ict": {
@@ -25,5 +25,5 @@
             "action": "BUSCAR FVG PARA ENTRADA"
         }
     },
-    "master_recommendation": "⚪ NEUTRAL (48/100) — Sin sesgo claro — operar el rango o esperar catalizador."
+    "master_recommendation": "🟡 NEUTRAL-BEARISH (47/100) — Ligera inclinación bajista — preferir coberturas."
 }
