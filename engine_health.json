@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-08-19T18:59:53.063643+00:00Z",
-  "last_update_human": "2026-08-19 18:59:53 UTC",
+  "timestamp": "2026-08-19T19:26:56.748135+00:00Z",
+  "last_update_human": "2026-08-19 19:26:56 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 9.0,
+  "total_time_sec": 9.6,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -22,7 +22,7 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.0
+      "time": 2.6
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -51,15 +51,15 @@
     },
     "Researcher · Trade Simulator": {
       "status": "✅ OK",
-      "time": 0.1
+      "time": 0.0
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 0.6
+      "time": 0.8
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.4
+      "time": 4.5
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
@@ -69,25 +69,25 @@
       "status": "✅ OK",
       "time": 0.0
     },
+    "Agent 15 · Journal Writer": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
     "Agent 4 · Bias Engine": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 15 · Journal Writer": {
-      "status": "✅ OK",
-      "time": 0.5
-    },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 0.8
+      "time": 1.0
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 1.1
+      "time": 1.3
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.6
+      "time": 2.4
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
