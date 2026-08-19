@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-08-18T21:44:29.486032+00:00Z",
-  "last_update_human": "2026-08-18 21:44:29 UTC",
+  "timestamp": "2026-08-19T13:36:21.037161+00:00Z",
+  "last_update_human": "2026-08-19 13:36:21 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 9.7,
+  "total_time_sec": 9.2,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -22,17 +22,17 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.0
+      "time": 2.0
+    },
+    "Agent 7 · Probability Analyst": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -45,21 +45,21 @@
       "time": 0.0,
       "error": "AttributeError: module 'source_polygon' has no attribute 'run'"
     },
-    "Researcher · Trade Simulator": {
+    "Agent · Daily Trade Plan": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent · Daily Trade Plan": {
+    "Researcher · Trade Simulator": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 0.8
+      "time": 0.7
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.6
+      "time": 4.3
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
@@ -79,15 +79,15 @@
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 0.7
-    },
-    "Agent 10 · Learning Engine": {
-      "status": "✅ OK",
-      "time": 2.1
+      "time": 1.1
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 2.1
+      "time": 2.0
+    },
+    "Agent 10 · Learning Engine": {
+      "status": "✅ OK",
+      "time": 2.9
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
