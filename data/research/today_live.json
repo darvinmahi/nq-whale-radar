@@ -3,7 +3,7 @@
   "day": "wednesday",
   "day_es": "Miércoles",
   "status": "closed",
-  "updated_at": "2026-08-19T16:15:20",
+  "updated_at": "2026-08-19T16:51:11",
   "chart_url": "miercoles_chart_20260819.html",
   "direction": "BEARISH",
   "ny_open": 29696.0,
@@ -17,5 +17,5 @@
   "poc": 29543.0,
   "vah": 29605.5,
   "val": 29505.5,
-  "n_candles": 263
+  "n_candles": 264
 }

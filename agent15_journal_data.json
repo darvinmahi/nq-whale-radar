@@ -1,16 +1,16 @@
 {
   "agent": 15,
   "name": "Journal Writer",
-  "generated_at": "2026-08-19T20:15:16.487282+00:00Z",
+  "generated_at": "2026-08-19T20:51:08.759333+00:00Z",
   "entries": [
     {
       "date": "2026-08-19",
       "display_date": "August 19, 2026",
       "weekday": "Wednesday",
-      "generated_at": "2026-08-19T20:15:16.486791+00:00Z",
-      "nq_price": 29530.5,
-      "nq_change_pct": -0.19,
-      "bias_score": 51,
+      "generated_at": "2026-08-19T20:51:08.758655+00:00Z",
+      "nq_price": 29524.25,
+      "nq_change_pct": -0.21,
+      "bias_score": 50,
       "bias_label": "NEUTRAL",
       "cot_signal": "NEUTRAL-BAJISTA",
       "cot_net": 36037,
@@ -18,12 +18,11 @@
       "session_tag": "NY PM",
       "tag_color": "#7c3aed",
       "key_observations": [
-        "NQ futures cotizando en 29,530 (▼ 0.19% en el día).",
+        "NQ futures cotizando en 29,524 (▼ 0.21% en el día).",
         "COT: posición neta de large non-commercials = +36,037. Señal: NEUTRAL-BAJISTA.",
-        "Motor de Bias: NEUTRAL (51/100).",
         "Volatilidad VXN: 30.04 (▲ 1.50)."
       ],
-      "summary": "El día cerró con NQ en 29,530. El bias del motor es neutral, alineado con una señal COT neutral-bajista. NQ futures cotizando en 29,530 (▼ 0.19% en el día)."
+      "summary": "El día cerró con NQ en 29,524. El bias del motor es neutral, alineado con una señal COT neutral-bajista. NQ futures cotizando en 29,524 (▼ 0.21% en el día)."
     },
     {
       "date": "2026-08-18",
