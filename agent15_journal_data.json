@@ -1,14 +1,14 @@
 {
   "agent": 15,
   "name": "Journal Writer",
-  "generated_at": "2026-08-20T14:25:15.184498+00:00Z",
+  "generated_at": "2026-08-20T15:01:34.934652+00:00Z",
   "entries": [
     {
       "date": "2026-08-20",
       "display_date": "August 20, 2026",
       "weekday": "Thursday",
-      "generated_at": "2026-08-20T14:25:15.184015+00:00Z",
-      "nq_price": 29368.25,
+      "generated_at": "2026-08-20T15:01:34.933476+00:00Z",
+      "nq_price": 29368.0,
       "nq_change_pct": -0.49,
       "bias_score": 49,
       "bias_label": "NEUTRAL",
