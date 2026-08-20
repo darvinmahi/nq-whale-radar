@@ -1,28 +1,28 @@
 {
   "cycle": 1,
-  "timestamp": "2026-08-20T20:53:04.782932+00:00Z",
-  "last_update_human": "2026-08-20 20:53:04 UTC",
+  "timestamp": "2026-08-20T21:18:10.251891+00:00Z",
+  "last_update_human": "2026-08-20 21:18:10 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 9.9,
+  "total_time_sec": 11.0,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
     "Agent 0 · QA Commander [PRE]": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 3 · Volatility Analyst": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.2
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.9
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.9
+      "time": 4.5
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -55,11 +55,11 @@
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 0.8
+      "time": 0.7
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.3
+      "time": 4.2
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
@@ -79,15 +79,15 @@
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 0.9
+      "time": 0.4
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 1.4
+      "time": 1.7
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.7
+      "time": 2.2
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
