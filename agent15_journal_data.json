@@ -1,13 +1,13 @@
 {
   "agent": 15,
   "name": "Journal Writer",
-  "generated_at": "2026-08-21T16:58:11.065507+00:00Z",
+  "generated_at": "2026-08-21T17:25:32.217836+00:00Z",
   "entries": [
     {
       "date": "2026-08-21",
       "display_date": "August 21, 2026",
       "weekday": "Friday",
-      "generated_at": "2026-08-21T16:58:11.064337+00:00Z",
+      "generated_at": "2026-08-21T17:25:32.215848+00:00Z",
       "nq_price": 29401.75,
       "nq_change_pct": 0.35,
       "bias_score": 49,
@@ -15,8 +15,8 @@
       "cot_signal": "NEUTRAL-BAJISTA",
       "cot_net": 36037,
       "vxn": 30.04,
-      "session_tag": "NY AM",
-      "tag_color": "#a855f7",
+      "session_tag": "NY PM",
+      "tag_color": "#7c3aed",
       "key_observations": [
         "NQ futures cotizando en 29,401 (▲ 0.35% en el día).",
         "COT: posición neta de large non-commercials = +36,037. Señal: NEUTRAL-BAJISTA.",
