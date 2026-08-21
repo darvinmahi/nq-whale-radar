@@ -246,11 +246,11 @@
       "day": "Viernes",
       "direction": "BEARISH",
       "ny_open": 29469.25,
-      "ny_close": 29383.0,
+      "ny_close": 29387.75,
       "ny_high": 29488.75,
       "ny_low": 29220.0,
       "ny_range": 268.75,
-      "ny_move": -86.25,
+      "ny_move": -81.5,
       "poc": 29361.75,
       "vah": 29474.25,
       "val": 29299.25,
@@ -263,5 +263,5 @@
     "NEUTRAL": 0
   },
   "total_fridays": 17,
-  "updated_at": "2026-08-21T16:14:03 ET"
+  "updated_at": "2026-08-21T16:46:00 ET"
 }
