@@ -1,7 +1,7 @@
 {
   "cycle": 1,
-  "timestamp": "2026-08-21T19:44:37.324433+00:00Z",
-  "last_update_human": "2026-08-21 19:44:37 UTC",
+  "timestamp": "2026-08-21T20:14:03.463621+00:00Z",
+  "last_update_human": "2026-08-21 20:14:03 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
   "total_time_sec": 10.2,
@@ -18,11 +18,11 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.5
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.5
+      "time": 3.8
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
@@ -32,62 +32,62 @@
       "status": "✅ OK",
       "time": 0.0
     },
+    "Agent 8 · Morgan Psychologist": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
     "Agent 6 · SMC Detective": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.2
-    },
     "Source · Polygon Sessions": {
       "status": "❌ ERROR",
-      "time": 0.2,
+      "time": 0.0,
       "error": "AttributeError: module 'source_polygon' has no attribute 'run'"
-    },
-    "Researcher · Trade Simulator": {
-      "status": "✅ OK",
-      "time": 0.3
     },
     "Agent · Daily Trade Plan": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.0
+    },
+    "Researcher · Trade Simulator": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 1.4
+      "time": 0.7
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.7
-    },
-    "Agent 14 · Order Flow Expert": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 4.4
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },
+    "Agent 14 · Order Flow Expert": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
     "Agent 4 · Bias Engine": {
       "status": "✅ OK",
-      "time": 0.2
+      "time": 0.0
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.9
-    },
-    "Agent 16 · Outcome Tracker": {
-      "status": "✅ OK",
-      "time": 1.5
+      "time": 0.2
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 1.6
+      "time": 1.4
+    },
+    "Agent 16 · Outcome Tracker": {
+      "status": "✅ OK",
+      "time": 1.9
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 1.8
+      "time": 2.1
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
