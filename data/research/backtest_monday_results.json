@@ -275,12 +275,12 @@
       "date": "2026-08-24",
       "day": "Lunes",
       "direction": "BEARISH",
-      "ny_open": 29235.5,
-      "ny_close": 29108.75,
+      "ny_open": 29234.75,
+      "ny_close": 29109.0,
       "ny_high": 29243.0,
       "ny_low": 28946.75,
       "ny_range": 296.25,
-      "ny_move": -126.75,
+      "ny_move": -125.75,
       "poc": 29204.25,
       "vah": 29366.75,
       "val": 29141.75,
@@ -293,5 +293,5 @@
     "NEUTRAL": 0
   },
   "total_mondays": 19,
-  "updated_at": "2026-08-24T16:18:07 ET"
+  "updated_at": "2026-08-24T16:55:23 ET"
 }
