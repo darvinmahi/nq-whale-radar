@@ -1,11 +1,11 @@
 {
-    "timestamp": "2026-08-21T21:45:34.435629",
+    "timestamp": "2026-08-24T13:41:44.223357",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-            "size": 350188
+            "size": 350187
         },
         "analisis_promax.html": {
             "exists": true,
@@ -13,18 +13,18 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 10963
+            "size": 11025
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 639
+            "size": 638
         },
         "agent4_data.json": {
             "exists": true,
             "size": 380
         }
     },
-    "verdict": "ALERTA: Ciclo FOMC (W3). Dominio de TRAMPAS (31.6%). El precio suele barrer liquidez antes de la FED.",
+    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL en 49 puntos. Monitorea flujos finales.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
