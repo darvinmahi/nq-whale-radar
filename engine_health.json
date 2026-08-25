@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-08-24T21:50:57.859739+00:00Z",
-  "last_update_human": "2026-08-24 21:50:57 UTC",
+  "timestamp": "2026-08-25T13:40:15.923235+00:00Z",
+  "last_update_human": "2026-08-25 13:40:15 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 8.4,
+  "total_time_sec": 10.8,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -22,17 +22,17 @@
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 1.8
+      "time": 3.8
+    },
+    "Agent 7 · Probability Analyst": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
     "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -45,11 +45,11 @@
       "time": 0.0,
       "error": "AttributeError: module 'source_polygon' has no attribute 'run'"
     },
-    "Researcher · Trade Simulator": {
+    "Agent · Daily Trade Plan": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent · Daily Trade Plan": {
+    "Researcher · Trade Simulator": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -59,7 +59,7 @@
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.2
+      "time": 4.4
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
@@ -71,23 +71,23 @@
     },
     "Agent 4 · Bias Engine": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.5
-    },
-    "Agent 16 · Outcome Tracker": {
-      "status": "✅ OK",
-      "time": 1.0
+      "time": 0.1
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 1.5
+      "time": 1.4
+    },
+    "Agent 16 · Outcome Tracker": {
+      "status": "✅ OK",
+      "time": 1.9
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.3
+      "time": 2.6
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
