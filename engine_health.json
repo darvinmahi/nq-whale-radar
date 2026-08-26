@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-08-26T14:34:24.980667+00:00Z",
-  "last_update_human": "2026-08-26 14:34:24 UTC",
+  "timestamp": "2026-08-26T16:09:25.086473+00:00Z",
+  "last_update_human": "2026-08-26 16:09:25 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 8.9,
+  "total_time_sec": 10.7,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -18,13 +18,13 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.5
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 1.8
+      "time": 4.4
     },
-    "Agent 9 · Silver Bullet": {
+    "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -32,7 +32,7 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 7 · Probability Analyst": {
+    "Agent 9 · Silver Bullet": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -55,11 +55,15 @@
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 0.7
+      "time": 4.1
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.4
+      "time": 4.5
+    },
+    "Agent 4 · Bias Engine": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
@@ -67,15 +71,11 @@
     },
     "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 4 · Bias Engine": {
-      "status": "✅ OK",
       "time": 0.1
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.6
+      "time": 0.1
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
@@ -87,11 +87,11 @@
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.6
+      "time": 1.7
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent Sentinel · Guardian": {
       "status": "✅ OK",
