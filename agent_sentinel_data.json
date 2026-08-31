@@ -1,11 +1,11 @@
 {
-    "timestamp": "2026-08-28T22:48:01.171999",
+    "timestamp": "2026-08-31T19:18:13.394808",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-            "size": 350187
+            "size": 350194
         },
         "analisis_promax.html": {
             "exists": true,
@@ -13,18 +13,18 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11026
+            "size": 11070
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 640
+            "size": 637
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 392
+            "size": 380
         }
     },
-    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL-BEARISH en 47 puntos. Monitorea flujos finales.",
+    "verdict": "CIERRE: Última semana del mes. El mercado busca claridad tras GDP. Sesgo NEUTRAL en 49 puntos. Monitorea flujos finales.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
