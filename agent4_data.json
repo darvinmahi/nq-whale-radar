@@ -1,13 +1,13 @@
 {
   "agent": 4,
-  "timestamp": "2026-09-01T20:00:02.622788Z",
+  "timestamp": "2026-09-01T22:26:58.982831Z",
   "verdict": "🟡 NEUTRAL-BEARISH (47/100) — Ligera inclinación bajista — preferir coberturas.",
   "global_score": 47,
   "global_label": "NEUTRAL-BEARISH",
   "icon": "🟡",
   "layers": {
     "positioning": 50,
-    "macro": 48.65,
+    "macro": 48.85,
     "liquidity": 67.0,
     "timing": 44.0,
     "algorithmic": 20.0,
