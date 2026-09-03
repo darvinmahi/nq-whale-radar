@@ -1,13 +1,13 @@
 {
   "agent": 4,
-  "timestamp": "2026-09-03T16:45:08.269660Z",
+  "timestamp": "2026-09-03T19:30:06.312539Z",
   "verdict": "🔵 NEUTRAL-BULLISH (52/100) — Ligera inclinación alcista — esperar confirmación.",
   "global_score": 52,
   "global_label": "NEUTRAL-BULLISH",
   "icon": "🔵",
   "layers": {
     "positioning": 50,
-    "macro": 53.5,
+    "macro": 52.95,
     "liquidity": 67.0,
     "timing": 56.0,
     "algorithmic": 20.0,
