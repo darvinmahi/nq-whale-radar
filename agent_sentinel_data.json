@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-09-03T21:49:58.471464",
+    "timestamp": "2026-09-04T16:39:19.217618",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
@@ -13,18 +13,18 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11087
+            "size": 11068
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 641
+            "size": 637
         },
         "agent4_data.json": {
             "exists": true,
-            "size": 394
+            "size": 380
         }
     },
-    "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL-BULLISH fuerte. Busca seguir el flujo de la EMA 200.",
+    "verdict": "INFO: Ciclo NFP (W1). Probabilidad de EXPANSIÓN: 67.9%. Sesgo NEUTRAL fuerte. Busca seguir el flujo de la EMA 200.",
     "stats_3yr": {
         "w1_expansion": 67.9,
         "w2_megaphone": 34.5,
