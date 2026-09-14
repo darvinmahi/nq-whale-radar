@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-09-14T18:15:56.999603+00:00Z",
-  "last_update_human": "2026-09-14 18:15:56 UTC",
+  "timestamp": "2026-09-14T21:56:00.669109+00:00Z",
+  "last_update_human": "2026-09-14 21:56:00 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 10.3,
+  "total_time_sec": 9.2,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -18,19 +18,11 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.7
+      "time": 0.3
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 3.4
-    },
-    "Agent 9 · Silver Bullet": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
-    "Agent 8 · Morgan Psychologist": {
-      "status": "✅ OK",
-      "time": 0.0
+      "time": 2.8
     },
     "Agent 6 · SMC Detective": {
       "status": "✅ OK",
@@ -38,28 +30,36 @@
     },
     "Agent 7 · Probability Analyst": {
       "status": "✅ OK",
-      "time": 0.2
+      "time": 0.0
+    },
+    "Agent 8 · Morgan Psychologist": {
+      "status": "✅ OK",
+      "time": 0.0
+    },
+    "Agent 9 · Silver Bullet": {
+      "status": "✅ OK",
+      "time": 0.1
     },
     "Source · Polygon Sessions": {
       "status": "❌ ERROR",
       "time": 0.0,
       "error": "AttributeError: module 'source_polygon' has no attribute 'run'"
     },
-    "Agent · Daily Trade Plan": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Researcher · Trade Simulator": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
+    },
+    "Agent · Daily Trade Plan": {
+      "status": "✅ OK",
+      "time": 0.1
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 2.4
+      "time": 1.1
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.4
+      "time": 4.2
     },
     "Agent 13 · Research Scout": {
       "status": "✅ OK",
@@ -71,15 +71,15 @@
     },
     "Agent 4 · Bias Engine": {
       "status": "✅ OK",
-      "time": 0.3
+      "time": 0.0
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.5
+      "time": 0.1
     },
     "Agent 16 · Outcome Tracker": {
       "status": "✅ OK",
-      "time": 0.6
+      "time": 1.6
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
@@ -87,7 +87,7 @@
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 2.2
+      "time": 2.1
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
