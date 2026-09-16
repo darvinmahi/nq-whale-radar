@@ -1,19 +1,19 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-09-16T20:17:10.492291Z",
-  "vix_value": 21.45,
+  "timestamp": "2026-09-16T23:04:37.675237Z",
+  "vix_value": 22.44,
   "vix_status": "NORMAL",
   "raw_inputs": {
-    "VXN": 21.45,
+    "VXN": 22.44,
     "GEX_B": 2.3,
     "DIX": null
   },
   "vxn_analysis": {
     "level": "NORMAL",
-    "signal": "BULLISH",
-    "score": 65,
-    "description": "VXN 21.45 — Volatilidad normal.",
+    "signal": "NEUTRAL",
+    "score": 50,
+    "description": "VXN 22.44 — Volatilidad normal.",
     "risk": "Monitorear si sube sobre 25"
   },
   "gex_analysis": {
@@ -24,5 +24,5 @@
     "impact": "Movimientos suaves. Dealers frenan volatilidad."
   },
   "signal": "BULLISH",
-  "score": 67
+  "score": 57
 }
