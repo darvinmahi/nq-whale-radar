@@ -1,10 +1,10 @@
 {
   "cycle": 1,
-  "timestamp": "2026-10-13T23:30:39.516726+00:00Z",
-  "last_update_human": "2026-10-13 23:30:39 UTC",
+  "timestamp": "2026-10-14T17:40:48.758150+00:00Z",
+  "last_update_human": "2026-10-14 17:40:48 UTC",
   "next_update_in_min": 15,
   "engine_state": "DEGRADED",
-  "total_time_sec": 8.5,
+  "total_time_sec": 9.9,
   "agents_ok": 23,
   "agents_failed": 1,
   "details": {
@@ -18,11 +18,15 @@
     },
     "Agent 2 · COT Analyst": {
       "status": "✅ OK",
-      "time": 0.2
+      "time": 0.3
     },
     "Agent 1 · Data Collector": {
       "status": "✅ OK",
-      "time": 2.3
+      "time": 2.7
+    },
+    "Agent 7 · Probability Analyst": {
+      "status": "✅ OK",
+      "time": 0.0
     },
     "Agent 8 · Morgan Psychologist": {
       "status": "✅ OK",
@@ -36,10 +40,6 @@
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 7 · Probability Analyst": {
-      "status": "✅ OK",
-      "time": 0.0
-    },
     "Source · Polygon Sessions": {
       "status": "❌ ERROR",
       "time": 0.0,
@@ -47,25 +47,25 @@
     },
     "Researcher · Trade Simulator": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent · Daily Trade Plan": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Source · News Live": {
       "status": "✅ OK",
-      "time": 1.0
+      "time": 1.2
     },
     "Source · Reddit Sentiment": {
       "status": "✅ OK",
-      "time": 4.5
+      "time": 4.4
     },
-    "Agent 13 · Research Scout": {
+    "Agent 14 · Order Flow Expert": {
       "status": "✅ OK",
       "time": 0.0
     },
-    "Agent 14 · Order Flow Expert": {
+    "Agent 13 · Research Scout": {
       "status": "✅ OK",
       "time": 0.0
     },
@@ -75,35 +75,35 @@
     },
     "Agent 15 · Journal Writer": {
       "status": "✅ OK",
-      "time": 0.4
-    },
-    "Agent 16 · Outcome Tracker": {
-      "status": "✅ OK",
-      "time": 1.2
+      "time": 0.0
     },
     "Agent 12 · Backtest Engine": {
       "status": "✅ OK",
-      "time": 1.4
+      "time": 1.1
+    },
+    "Agent 16 · Outcome Tracker": {
+      "status": "✅ OK",
+      "time": 1.1
     },
     "Agent 10 · Learning Engine": {
       "status": "✅ OK",
-      "time": 1.7
+      "time": 2.0
     },
     "Agent 11 · Strategy Crafter": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.3
     },
     "Agent Sentinel · Guardian": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.2
     },
     "Agent 5 · File Injector": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     },
     "Agent 0 · QA Commander [POST]": {
       "status": "✅ OK",
-      "time": 0.0
+      "time": 0.1
     }
   }
 }
