@@ -1,11 +1,11 @@
 {
     "agent": 11,
-    "timestamp": "2026-10-15T17:28:54.225724+00:00Z",
+    "timestamp": "2026-10-15T20:27:47.565164+00:00Z",
     "active_protocols": [],
     "details": {
         "swing": {
             "active": false,
-            "confidence": 48,
+            "confidence": 50,
             "desc": "Confluencia de COT Alcista y Bias Ponderado positivo. Las instituciones están acumulando."
         },
         "ict": {
@@ -19,9 +19,9 @@
         },
         "intraday": {
             "active": false,
-            "window": "NY PM SB",
+            "window": "London SB (mañana)",
             "action": "ESPERAR VENTANA"
         }
     },
-    "master_recommendation": "⚪ NEUTRAL (48/100) — Sin sesgo claro — operar el rango o esperar catalizador."
+    "master_recommendation": "⚪ NEUTRAL (50/100) — Sin sesgo claro — operar el rango o esperar catalizador."
 }
