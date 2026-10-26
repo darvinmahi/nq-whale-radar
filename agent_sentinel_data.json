@@ -1,11 +1,11 @@
 {
-    "timestamp": "2026-10-23T23:39:43.017670",
+    "timestamp": "2026-10-26T18:56:02.827952",
     "status": "HEALTHY",
     "alerts": [],
     "integrity_check": {
         "index.html": {
             "exists": true,
-            "size": 350197
+            "size": 350199
         },
         "analisis_promax.html": {
             "exists": true,
@@ -13,11 +13,11 @@
         },
         "agent_live_data.js": {
             "exists": true,
-            "size": 11043
+            "size": 11025
         },
         "agent1_data.json": {
             "exists": true,
-            "size": 639
+            "size": 640
         },
         "agent4_data.json": {
             "exists": true,
