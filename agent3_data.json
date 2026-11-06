@@ -1,20 +1,20 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-11-05T20:23:27.622999Z",
-  "vix_value": 25.08,
-  "vix_status": "ELEVATED",
+  "timestamp": "2026-11-06T00:59:55.544202Z",
+  "vix_value": 36.3,
+  "vix_status": "EXTREME_PANIC",
   "raw_inputs": {
-    "VXN": 25.08,
+    "VXN": 36.3,
     "GEX_B": 2.3,
     "DIX": null
   },
   "vxn_analysis": {
-    "level": "ELEVATED",
-    "signal": "NEUTRAL",
-    "score": 35,
-    "description": "VXN 25.08 — Volatilidad elevada. Reducir tamaño.",
-    "risk": "Movimientos erráticos probables"
+    "level": "EXTREME_PANIC",
+    "signal": "BEARISH",
+    "score": 5,
+    "description": "VXN 36.30 — Pánico extremo.",
+    "risk": "Evitar posiciones direccionales"
   },
   "gex_analysis": {
     "level": "STRONG_POSITIVE",
@@ -23,6 +23,6 @@
     "description": "GEX +2.30B — Dealers comprando en caídas. Mercado amortiguado.",
     "impact": "Movimientos suaves. Dealers frenan volatilidad."
   },
-  "signal": "BULLISH",
-  "score": 47
+  "signal": "BEARISH",
+  "score": 28
 }
