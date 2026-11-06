@@ -1,20 +1,20 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-11-06T19:45:13.360532Z",
-  "vix_value": 38.26,
-  "vix_status": "EXTREME_PANIC",
+  "timestamp": "2026-11-06T23:52:23.428527Z",
+  "vix_value": 33.31,
+  "vix_status": "PANIC",
   "raw_inputs": {
-    "VXN": 38.26,
+    "VXN": 33.31,
     "GEX_B": 2.3,
     "DIX": null
   },
   "vxn_analysis": {
-    "level": "EXTREME_PANIC",
+    "level": "PANIC",
     "signal": "BEARISH",
-    "score": 5,
-    "description": "VXN 38.26 — Pánico extremo.",
-    "risk": "Evitar posiciones direccionales"
+    "score": 20,
+    "description": "VXN 33.31 — Pánico. No operar longs sin cobertura.",
+    "risk": "Continuación bajista probable"
   },
   "gex_analysis": {
     "level": "STRONG_POSITIVE",
@@ -24,5 +24,5 @@
     "impact": "Movimientos suaves. Dealers frenan volatilidad."
   },
   "signal": "BEARISH",
-  "score": 28
+  "score": 38
 }
