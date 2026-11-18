@@ -485,12 +485,12 @@
       "date": "2026-11-17",
       "day": "Martes",
       "direction": "BEARISH",
-      "ny_open": 27338.0,
+      "ny_open": 27338.5,
       "ny_close": 27153.25,
       "ny_high": 27351.0,
       "ny_low": 26658.5,
       "ny_range": 692.5,
-      "ny_move": -184.75,
+      "ny_move": -185.25,
       "poc": 27372.5,
       "vah": 27435.0,
       "val": 27260.0,
@@ -503,5 +503,5 @@
     "NEUTRAL": 0
   },
   "total_tuesdays": 33,
-  "updated_at": "2026-11-17T16:26:30 ET"
+  "updated_at": "2026-11-17T21:59:52 ET"
 }
