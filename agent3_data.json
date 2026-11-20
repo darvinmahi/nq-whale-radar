@@ -1,11 +1,11 @@
 {
   "agent": 3,
   "name": "Volatility Analyst",
-  "timestamp": "2026-11-20T02:26:56.663688Z",
-  "vix_value": 36.36,
+  "timestamp": "2026-11-20T20:50:48.635623Z",
+  "vix_value": 36.48,
   "vix_status": "EXTREME_PANIC",
   "raw_inputs": {
-    "VXN": 36.36,
+    "VXN": 36.48,
     "GEX_B": 2.3,
     "DIX": null
   },
@@ -13,7 +13,7 @@
     "level": "EXTREME_PANIC",
     "signal": "BEARISH",
     "score": 5,
-    "description": "VXN 36.36 — Pánico extremo.",
+    "description": "VXN 36.48 — Pánico extremo.",
     "risk": "Evitar posiciones direccionales"
   },
   "gex_analysis": {
