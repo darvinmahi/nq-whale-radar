@@ -1,5 +1,5 @@
 {
-  "total_sessions": 30,
+  "total_sessions": 31,
   "sessions": [
     {
       "date": "2026-04-13",
@@ -450,13 +450,28 @@
       "vah": 27954.0,
       "val": 27629.0,
       "chart_url": "lunes_chart_20261116.html"
+    },
+    {
+      "date": "2026-11-23",
+      "day": "Lunes",
+      "direction": "BEARISH",
+      "ny_open": 26878.5,
+      "ny_close": 26801.75,
+      "ny_high": 27137.0,
+      "ny_low": 26450.25,
+      "ny_range": 686.75,
+      "ny_move": -76.75,
+      "poc": 25874.5,
+      "vah": 26037.0,
+      "val": 25787.0,
+      "chart_url": "lunes_chart_20261123.html"
     }
   ],
   "directions": {
     "BULLISH": 14,
-    "BEARISH": 16,
+    "BEARISH": 17,
     "NEUTRAL": 0
   },
-  "total_mondays": 30,
-  "updated_at": "2026-11-16T17:38:31 ET"
+  "total_mondays": 31,
+  "updated_at": "2026-11-23T19:28:18 ET"
 }
