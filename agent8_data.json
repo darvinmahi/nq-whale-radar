@@ -1,12 +1,12 @@
 {
     "agent": 8,
     "name": "Morgan Psychologist",
-    "timestamp": "2026-11-24T22:50:30.877429+00:00",
+    "timestamp": "2026-11-25T22:03:05.662205+00:00",
     "sentiment": {
-        "status": "ALERTA: PÁNICO EXTREMO",
-        "operational_risk": "ALTO (Volatilidad Desatada)",
+        "status": "ESTABLE",
+        "operational_risk": "BAJO",
         "alerts": [
-            "Capitulación en curso. El mercado está barriendo manos débiles. Busca niveles SMC para soporte."
+            "Sentimiento equilibrado. Ejecución técnica recomendada."
         ]
     },
     "morgan_audit": {
